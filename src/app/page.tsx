@@ -1,6 +1,6 @@
 export default function page() {
   return (
-    <div>
+    <div className="container">
       <h1>Hello, world!</h1>
     </div>
   );

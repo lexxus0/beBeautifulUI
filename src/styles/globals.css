@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 *,
 ::before,
 ::after {
@@ -45,4 +47,24 @@ h5,
 h6,
 span {
   overflow-wrap: break-word;
+}
+
+.container {
+  width: 375px;
+  padding-inline: 20px;
+  margin-inline: auto;
+}
+
+@media screen and (min-width: 744px) {
+  .container {
+    width: 744px;
+    padding-inline: 40px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .container {
+    width: 1440px;
+    padding-inline: 72px;
+  }
 }
