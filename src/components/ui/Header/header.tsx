@@ -1,6 +1,6 @@
 'use client';
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Icon from "@/components/elements/icon";
 
@@ -8,12 +8,16 @@ import styles from "./header.module.css";
 import clsx from 'clsx';
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Navigation from "../Navigation/navigation";
+import MobileMenu from "../MobileMenu/mobileMenu";
 
 const buildCssClasses = ({ isActive }: { isActive: boolean }) =>
   clsx(styles.link, isActive && styles.activeLink);
 
 export default function Header() {
+  const [menu, setMenu] = useState(false)
   const pathname = usePathname();
+
   return (
     <header className={styles.header}>
       <Image
@@ -37,6 +41,7 @@ export default function Header() {
         height={64}
         className={styles.imgDesktop}
       />
+      <Navigation />
       <div className={styles.wrapperNav}>
       <div className={styles.linkWrapper}>
       <Link
@@ -51,10 +56,11 @@ export default function Header() {
       >
         Зареєструватися
       </Link>      </div>
-      <button className={styles.btnBurger}>
+      <button className={styles.btnBurger} onClick={()=> {setMenu(true)}}>
         <Icon name="icon-burger-menu" className={styles.iconBurger} />
       </button>
       </div>
+      {menu && <MobileMenu onClose={()=> {setMenu(false)}}/>}
     </header>
   );
 }
