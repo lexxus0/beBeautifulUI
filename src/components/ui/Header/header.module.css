@@ -1,0 +1,153 @@
+.header {
+    width: 375px;
+    padding: 10px 20px;
+    margin-inline: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .imgMob {
+    display: block;
+  }
+  
+  .imgTablet {
+    display: none;
+  }
+  
+  .imgDesktop {
+    display: none;
+  }
+  
+  .linkWrapper {
+    display: none;
+  }
+  
+  .btnBurger {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .iconBurger {
+    width: 40px;
+    height: 40px;
+  }
+  
+  @media screen and (min-width: 744px) {
+    .header {
+      width: 744px;
+      padding-inline: 40px;
+    }
+    .imgMob {
+      display: none;
+    }
+  
+    .imgTablet {
+      display: block;
+    }
+  
+    .imgDesktop {
+      display: none;
+    }
+  
+    .wrapperNav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+  
+    .linkWrapper {
+      border: 1px solid #2d2d2d;
+      border-radius: 8px;
+      /* width: 218px; */
+      height: 34px;
+      background-color: rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: 0.02em;
+      color: #2d2d2d;
+    }
+  
+    .link {
+      padding: 6px 13px;
+    }
+  
+    .activeLink {
+      position: relative;
+      z-index: 2;
+      left: -1px;
+      border: 0.4px solid #f8f7f5;
+      border-radius: 8px;
+      padding: 6px 18px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.1),
+        0 4px 4px 0 rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.05);
+      background: linear-gradient(
+        180deg,
+        rgba(26, 25, 24, 0.4) 0%,
+        rgba(101, 101, 101, 0.24) 50%,
+        rgba(26, 25, 24, 0.2) 100%
+      );
+    }
+  
+    .btnBurger {
+      width: 32px;
+      height: 32px;
+    }
+  
+    .iconBurger {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  
+  @media screen and (min-width: 1440px) {
+    .header {
+      width: 1440px;
+      padding-inline: 72px;
+    }
+    .imgMob {
+      display: none;
+    }
+  
+    .imgTablet {
+      display: none;
+    }
+  
+    .imgDesktop {
+      display: block;
+    }
+  
+    .linkWrapper {
+      /* width: 310px; */
+      height: 42px;
+      font-weight: 600;
+      font-size: 16px;
+  
+    }
+  
+    .link {
+      padding: 11px 17px;
+      /* width: 140px; */
+      text-align: center;
+    }
+  
+    .link:last-child {
+      min-width: 160px;
+    }
+  
+    .activeLink {
+      left: 0;
+      padding: 11px 18px;
+    }
+  
+    .btnBurger {
+      display: none;
+    }
+  }
+  
+  
