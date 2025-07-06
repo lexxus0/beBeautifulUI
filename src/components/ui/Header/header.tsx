@@ -6,6 +6,7 @@ import Navigation from "../Navigation/navigation";
 import MobileMenu from "../MobileMenu/mobile-menu";
 import Logo from "@/components/elements/logo";
 import AuthMenu from "../AuthMenu/auth-menu";
+// import UserMenu from "../UserMenu/user-menu";
 
 import styles from "./header.module.css";
 
@@ -23,6 +24,9 @@ export default function Header() {
         <div className="hidden md:block">
           <AuthMenu />
         </div>
+        {/* <div className="hidden md:block">
+          <UserMenu />
+        </div> */}
         <button
           className={styles.btnBurger}
           onClick={() => {

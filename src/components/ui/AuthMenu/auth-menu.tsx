@@ -30,7 +30,7 @@ export default function AuthMenu() {
       <Link
         href="/register"
         className={buildCssClasses({
-            isActive: pathname === "/register" || pathname === "/",
+            isActive: pathname === "/register" || pathname !== "/login",
             additionalClass: "signUp",
         })}
       >

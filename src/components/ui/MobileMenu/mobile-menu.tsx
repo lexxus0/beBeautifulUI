@@ -1,9 +1,10 @@
 import React from "react";
-
-import styles from "./mobileMenu.module.css";
 import Navigation from "../Navigation/navigation";
 import Icon from "@/components/elements/icon";
 import AuthMenu from "../AuthMenu/auth-menu";
+import UserMenu from "../UserMenu/user-menu";
+
+import styles from "./mobile-menu.module.css";
 
 type MobileMenuProps = {
   onClose?: () => void;
@@ -11,16 +12,19 @@ type MobileMenuProps = {
 
 export default function MobileMenu({ onClose }: MobileMenuProps) {
   return (
-    // <div className={styles.backdrop}>
-      <div className={styles.modal}>
-        <button className={styles.closeBtn} onClick={onClose}>
-          <Icon name="icon-close" className={styles.icon} />
-        </button>
-        <Navigation />
-        <div className="block md:hidden">
-          <AuthMenu />
-        </div>
+    <div className={styles.modal}>
+      <button className={styles.closeBtn} onClick={onClose}>
+        <Icon name="icon-close" className={styles.iconClose} />
+      </button>
+      <UserMenu />
+      <div className="relative">
+        <input className={styles.input} placeholder="Пошук..."/>
+        <Icon name="icon-search" className={styles.iconSearch} />
       </div>
-    // </div>
+      <Navigation />
+      <div className="block md:hidden">
+        <AuthMenu />
+      </div>
+    </div>
   );
 }
