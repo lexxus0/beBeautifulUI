@@ -14,7 +14,6 @@ export default function Navigation() {
     { href: "/book", label: "Книга рецепців" },
   ];
   return (
-    // <div className={styles.nav}>
     <ul className={styles.nav}>
       {links.map((link) => (
         <li key={link.href} className={styles.itemNav}>
@@ -22,9 +21,8 @@ export default function Navigation() {
         </li>
       ))}
       <li>
-        <Icon name='icon-basket' className="w-8 h-8 -ml-[7px]"/>
+        <Icon name='icon-basket' className="hidden lg:block lg:w-8 lg:h-8 lg:-ml-[7px]"/>
       </li>
     </ul>
-    // </div>
   );
 }

@@ -1,5 +1,8 @@
 .nav {
-  display: none;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    gap: 16px;
 }
 
 /* .listNav {
@@ -15,14 +18,13 @@
 }
 
 @media screen and (min-width: 744px) {
-}
 .itemNav {
 
+}
 }
 
 @media screen and (min-width: 1440px) {
   .nav {
-    display: flex;
     flex-direction: row;
     align-items: center;
     gap: 32px;
