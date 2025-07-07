@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
 import { Roboto, Lato, Poppins, Open_Sans, Inter} from "next/font/google";
 import "../styles/globals.css";
 import { sourceSansPro } from "@/fonts/fonts";
+import Header from "@/components/ui/Header/header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -54,6 +54,7 @@ export default function RootLayout({
         ${inter.variable}
         ${sourceSansPro.variable}
       `}>
+        <Header/>
         {children}
       </body>
     </html>
