@@ -7,31 +7,10 @@
   align-items: center;
 }
 
-.logo {
-  width: 40px;
-  height: 40px;
-  fill: red;
-}
-
-.btnBurger {
-  width: 40px;
-  height: 40px;
-}
-
-.iconBurger {
-  width: 40px;
-  height: 40px;
-}
-
 @media screen and (min-width: 744px) {
   .header {
     width: 744px;
     padding-inline: 40px;
-  }
-
-  .logo {
-    width: 56px;
-    height: 56px;
   }
 
   .wrapperNav {
@@ -39,30 +18,11 @@
     align-items: center;
     gap: 20px;
   }
-
-  .btnBurger {
-    width: 32px;
-    height: 32px;
-  }
-
-  .iconBurger {
-    width: 32px;
-    height: 32px;
-  }
 }
 
 @media screen and (min-width: 1440px) {
   .header {
     width: 1440px;
     padding-inline: 72px;
-  }
-
-  .logo {
-    width: 64px;
-    height: 64px;
-  }
-
-  .btnBurger {
-    display: none;
   }
 }

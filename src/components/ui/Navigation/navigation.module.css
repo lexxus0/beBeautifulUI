@@ -5,16 +5,18 @@
 }
 
 .link {
+  font-family: var(--font-lato);
   font-weight: 400;
   font-size: 18px;
   line-height: 1.5;
   letter-spacing: 0.01em;
-  color: #fdfdfd;
+  color: var(--color-white-30);
   padding: 4px;
 }
 
 .activeLink {
-  border-left: 1px solid #fdfdfd;
+  border-left: 1px solid var(--color-white-30);
+  font-weight: 700;
 }
 
 @media screen and (min-width: 1440px) {
@@ -25,12 +27,12 @@
   }
   .link {
     font-weight: 600;
-    color: #1e0e00;
+    color: var(--color-black-20);
     padding: 10px;
   }
 
   .activeLink {
     border-left: none;
-    border-bottom: 1px solid #1e0e00;
+    border-bottom: 1px solid var(--color-black-20);
   }
 }

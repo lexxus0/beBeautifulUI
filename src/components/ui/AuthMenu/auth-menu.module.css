@@ -8,17 +8,21 @@
   display: flex;
   align-items: center;
   gap: 15px;
+  font-family: var(--font-poppins);
   font-weight: 500;
   font-size: 14px;
   line-height: 1.5;
-  color: #fdfdfd;
+  color: var(--color-white-30);
 }
 
 @media screen and (max-width: 743px) {
   .link {
     width: calc((100% - 15px) / 2);
     padding: 4px 4px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
   }
 }
 
@@ -27,23 +31,25 @@
   border-left: 1px solid #697a9e;
   border-radius: 8px;
   padding: 7px 18px;
-  background: #2d2d2d;
+  background: var(--color-black-10);
   text-align: center;
 }
 
 @media screen and (min-width: 744px) {
   .linkWrapper {
-    border-top: 1px solid #2d2d2d;
-    border-bottom: 1px solid #2d2d2d;
+    border-top: 1px solid var(--color-black-10);
+    border-bottom: 1px solid var(--color-black-10);
     width: 218px;
     height: 34px;
     background-color: rgba(0, 0, 0, 0.2);
     gap: 10px;
-    font-weight: 300;
-    color: #2d2d2d;
+    font-family: var(--font-lato);
+    font-weight: 600;
+    color: var(--color-black-10);
   }
 
   .link {
+    display: block;
     text-align: center;
   }
 
@@ -58,7 +64,7 @@
   }
 
   .activeLink {
-    border: 0.4px solid #f8f7f5;
+    border: 0.4px solid var(--color-white-10);
     border-radius: 8px;
     padding: 6px 8px;
     backdrop-filter: blur(20px);
@@ -77,7 +83,6 @@
   .linkWrapper {
     width: 310px;
     height: 42px;
-    font-weight: 600;
     font-size: 16px;
   }
 

@@ -6,7 +6,7 @@ import styles from "./user-menu.module.css";
 
 export default function UserMenu() {
   return (
-    <div className="flex items-center justify-between pb-1 border-b-1 border-b-[#fdfdfd] mb-8 xl:pb-0 xl:border-none xl:mb-0">
+    <div className={styles.wrapper}>
       <Icon
         name="icon-basket"
         className="hidden lg:block lg:w-8 lg:h-8 lg:mr-8"
@@ -27,16 +27,14 @@ export default function UserMenu() {
           height={40}
           className="hidden xl:block"
         />
-        <p className="font-semibold text-base text-[#fdfdfd] xl:text-lg xl:text-[#2d2d2d]">
-          Іванка
-        </p>
+        <p className={styles.text}>Іванка</p>
       </div>
       <div className="flex gap-4 items-center xl:hidden">
         <button>
-          <Icon name="icon-edit" className={styles.icon} />
+          <Icon name="icon-edit" className="w-6 h-6 fill-white-30" />
         </button>
         <button>
-          <Icon name="icon-logout" className={styles.icon} />
+          <Icon name="icon-logout" className="w-6 h-6 fill-white-30" />
         </button>
       </div>
     </div>

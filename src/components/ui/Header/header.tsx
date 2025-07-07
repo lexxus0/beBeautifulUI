@@ -24,16 +24,16 @@ export default function Header() {
         <div className="hidden md:block">
           <AuthMenu />
         </div>
-        {/* <div className="hidden md:block">
+        {/* <div className="hidden lg:block">
           <UserMenu />
         </div> */}
         <button
-          className={styles.btnBurger}
+          className='w-10 h-10 md:w-8 md:h-8 lg:hidden'
           onClick={() => {
             setMenu(true);
           }}
         >
-          <Icon name="icon-burger-menu" className={styles.iconBurger} />
+          <Icon name="icon-burger-menu" className='w-10 h-10 md:w-8 md:h-8' />
         </button>
       </div>
       {menu && (
