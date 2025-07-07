@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
-import { Roboto, Lato, Poppins, Open_Sans, Inter} from "next/font/google";
+import { Roboto, Lato, Poppins, Open_Sans, Inter } from "next/font/google";
 import "../styles/globals.css";
+import { Providers } from "@/store/provider";
 import { sourceSansPro } from "@/fonts/fonts";
 
 export const metadata: Metadata = {
@@ -46,15 +47,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body   className={`
+      <body
+        className={`
         ${roboto.variable}
         ${lato.variable}
         ${poppins.variable}
         ${openSans.variable}
         ${inter.variable}
         ${sourceSansPro.variable}
-      `}>
-        {children}
+      `}
+      >
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
