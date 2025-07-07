@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Roboto, Lato, Poppins, Open_Sans, Inter} from "next/font/google";
+// import { Geist, Geist_Mono } from "next/font/google";
+import { Roboto, Lato, Poppins, Open_Sans, Inter } from "next/font/google";
 import "../styles/globals.css";
+import { Providers } from "@/store/provider";
 import { sourceSansPro } from "@/fonts/fonts";
 import Header from "@/components/ui/Header/header";
 
@@ -46,7 +49,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body   className={`
+      <body
+        className={`
         ${roboto.variable}
         ${lato.variable}
         ${poppins.variable}
@@ -56,6 +60,9 @@ export default function RootLayout({
       `}>
         <Header/>
         {children}
+      `}
+      >
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
