@@ -1,11 +1,19 @@
-import React from "react";
+import { Product } from "@/types/types";
 
 export interface ProductHeaderProps {
-  name: string;
+  product: Product;
 }
 
-const ProductHeader = ({ name }: ProductHeaderProps) => {
-  return <div>ProductHeader</div>;
+const ProductHeader = ({ product }: ProductHeaderProps) => {
+  return (
+    <section>
+      <h1>{product.name}</h1>
+      <p>{product.category}</p>
+      <div>
+        <span>{product.inStock ? "У наявності" : "Немає в наявності"}</span>
+      </div>
+    </section>
+  );
 };
 
 export default ProductHeader;

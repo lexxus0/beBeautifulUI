@@ -1,11 +1,18 @@
+import { Product } from "@/types/types";
 import React from "react";
 
 export interface ProductGalleryProps {
-  // define your props here
+  images: [string];
 }
 
-const ProductGallery = (props: ProductGalleryProps) => {
-  return <div>ProductGallery</div>;
+const ProductGallery = (images: ProductGalleryProps) => {
+  console.log(images);
+
+  return (
+    <img src={images} alt="Product photo">
+      ProductGallery
+    </img>
+  );
 };
 
 export default ProductGallery;
