@@ -76,6 +76,9 @@
   letter-spacing: 0.02em;
   text-align: center;
 }
+.links:hover {
+  text-decoration: underline;
+}
 .links span {
   margin: 0 4px;
 }
