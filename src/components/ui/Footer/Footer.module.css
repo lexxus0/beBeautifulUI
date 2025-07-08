@@ -99,6 +99,7 @@
   }
   .nav {
     grid-template-columns: 1fr 1fr;
+    gap: 24px;
   }
   .navLink {
     font-weight: 400;
@@ -128,5 +129,8 @@
   }
   .socialWrap {
     gap: 48px;
+  }
+  .nav {
+    gap: 30px;
   }
 }
