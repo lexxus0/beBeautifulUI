@@ -1,0 +1,53 @@
+.footer {
+  background: #000;
+}
+.footerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+.logo {
+}
+.logoIcon {
+  width: 148px;
+  height: 136px;
+  fill: #fff;
+}
+.nav {
+}
+.navLink {
+}
+.socials {
+}
+.navLink {
+}
+.iconSocials {
+}
+.footerBottom {
+}
+.links {
+}
+.divider {
+}
+.copyright {
+}
+
+@media screen and (min-width: 744px) {
+  .footerContainer {
+    gap: 48px;
+  }
+  .logoIcon {
+    width: 208px;
+    height: 204px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .footerContainer {
+    gap: 93px;
+  }
+  .logoIcon {
+    width: 148px;
+    height: 136px;
+  }
+}

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Roboto, Lato, Poppins, Open_Sans, Inter} from "next/font/google";
-// import { Geist, Geist_Mono } from "next/font/google";
 import { Roboto, Lato, Poppins, Open_Sans, Inter } from "next/font/google";
+// import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
 import { Providers } from "@/store/provider";
 import { sourceSansPro } from "@/fonts/fonts";
 import Header from "@/components/ui/Header/header";
+import Footer from "@/components/ui/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -57,12 +57,12 @@ export default function RootLayout({
         ${openSans.variable}
         ${inter.variable}
         ${sourceSansPro.variable}
-      `}>
-        <Header/>
-        {children}
       `}
       >
+        <Header />
+
         <Providers>{children}</Providers>
+        <Footer/>
       </body>
     </html>
   );
