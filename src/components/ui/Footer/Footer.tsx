@@ -19,7 +19,7 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div className={`container ${styles.footerContainer}`}>
         <div className={styles.footerTop}>
-          <div>
+          <div className={styles.footerMain}>
             <Link href="/" className={styles.logo}>
               <Logo className={styles.logoIcon} />
             </Link>
@@ -32,26 +32,38 @@ const Footer = () => {
               ))}
             </nav>
           </div>
-          <ul className={styles.socials}>
-            <li>
-              <Link href="https://www.facebook.com" className={styles.navLink}>
-                <Icon name="icon-facebook" className={styles.iconSocials} />
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="https://www.instagram.com/"
-                className={styles.navLink}
-              >
-                <Icon name="icon-instagram" className={styles.iconSocials} />
-              </Link>
-            </li>
-            <li>
-              <Link href="https://www.linkedin.com/" className={styles.navLink}>
-                <Icon name="icon-linkedin" className={styles.iconSocials} />
-              </Link>
-            </li>
-          </ul>
+          <div className={styles.socialWrap}>
+            <a href="mailto:hello@sciencebebeautiful.com" className={styles.emailLink}>
+              hello@sciencebebeautiful.com
+            </a>
+
+            <ul className={styles.socials}>
+              <li>
+                <Link
+                  href="https://www.facebook.com"
+                  className={styles.socialLink}
+                >
+                  <Icon name="icon-facebook" className={styles.iconSocials} />
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="https://www.instagram.com/"
+                  className={styles.socialLink}
+                >
+                  <Icon name="icon-instagram" className={styles.iconSocials} />
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="https://www.linkedin.com/"
+                  className={styles.socialLink}
+                >
+                  <Icon name="icon-linkedin" className={styles.iconSocials} />
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div className={styles.footerBottom}>
