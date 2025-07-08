@@ -34,34 +34,43 @@ const Footer: FC = () => {
             </nav>
           </div>
           <div className={styles.socialWrap}>
-            <a href="mailto:hello@sciencebebeautiful.com" className={styles.emailLink}>
+            <a
+              href="mailto:hello@sciencebebeautiful.com"
+              className={styles.emailLink}
+            >
               hello@sciencebebeautiful.com
             </a>
 
             <ul className={styles.socials}>
               <li>
-                <Link
+                <a
                   href="https://www.facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={styles.socialLink}
                 >
                   <Icon name="icon-facebook" className={styles.iconSocials} />
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
+                <a
                   href="https://www.instagram.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={styles.socialLink}
                 >
                   <Icon name="icon-instagram" className={styles.iconSocials} />
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
+                <a
                   href="https://www.linkedin.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={styles.socialLink}
                 >
                   <Icon name="icon-linkedin" className={styles.iconSocials} />
-                </Link>
+                </a>
               </li>
             </ul>
           </div>

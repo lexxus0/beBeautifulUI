@@ -36,6 +36,10 @@
   font-family: var(--font-lato);
   font-weight: 700;
   font-size: 20px;
+  transition: all 0.5s ease;
+}
+.navLink:hover {
+  text-decoration: underline;
 }
 .socialWrap {
   display: flex;
@@ -49,6 +53,10 @@
   font-size: 18px;
   line-height: 150%;
   letter-spacing: 0.02em;
+  transition: all 0.5s ease;
+}
+.emailLink:hover {
+  text-decoration: underline;
 }
 .socials {
   display: flex;
