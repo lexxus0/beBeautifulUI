@@ -13,15 +13,14 @@
   display: flex;
   flex-direction: column;
   gap: 42px;
-  /* margin-bottom: 42px */
 }
 .footerMain {
   display: flex;
   flex-direction: column;
-  /* ; */
 }
 .logo {
   margin-inline: auto;
+  margin-bottom: 36px;
 }
 .logoIcon {
   width: 148px;
@@ -69,7 +68,8 @@
   letter-spacing: 0.02em;
   text-align: center;
 }
-.links {
+.links span {
+  margin: 0 4px;
 }
 .divider {
   margin-top: 14px;
@@ -85,12 +85,10 @@
   }
   .footerTop {
     gap: 62px;
-    /* margin-bottom: 62px */
   }
   .footerMain {
     flex-direction: row;
     justify-content: space-between;
-    /* margin-bottom: 62px; */
   }
   .logo {
     margin: 0;
@@ -119,10 +117,10 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    /* margin-bottom: 94px */
   }
   .footerMain {
     gap: 172px;
+    align-items: center;
   }
   .logoIcon {
     width: 148px;
