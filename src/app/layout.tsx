@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Roboto, Lato, Poppins, Open_Sans, Inter} from "next/font/google";
 // import { Geist, Geist_Mono } from "next/font/google";
 import { Roboto, Lato, Poppins, Open_Sans, Inter } from "next/font/google";
 import "../styles/globals.css";
@@ -57,11 +56,9 @@ export default function RootLayout({
         ${openSans.variable}
         ${inter.variable}
         ${sourceSansPro.variable}
-      `}>
-        <Header/>
-        {children}
       `}
       >
+        <Header />
         <Providers>{children}</Providers>
       </body>
     </html>
