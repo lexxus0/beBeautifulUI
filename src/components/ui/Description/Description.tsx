@@ -1,0 +1,37 @@
+import styles from "./Description.module.css";
+
+const Description = () => {
+  return (
+    <section className={styles.description}>
+      <div className={styles.top}>
+        <h3>
+          Science Be Beautiful - <span>це більше, ніж просто засоби</span>
+        </h3>
+        <p>
+          Це формули, в яких працює кожна молекула. Це засоби, що створені на
+          перетині науки й ніжності — з повагою до шкіри, дому, ритму життя.
+        </p>
+      </div>
+
+      <h2>Science Be Beautiful</h2>
+
+      <div className={styles.bottom}>
+        <p>
+          Це не про “догляд для жінок і дітей”. Це про жінку, яка знає, чого
+          хоче. Яка не вибирає між натуральним і ефективним. Яка хоче бути
+          красивою — на своїх умовах, і жити в чистому просторі без компромісів.
+        </p>
+        <p>
+          Science Be Beautiful -
+          <span>
+            це коли турбота починається ще до відкриття баночки. Це не про
+            маскування. Це про чесний догляд. Про безпечний дім. Про те, щоб
+            було просто. Дієво. І красиво.
+          </span>
+        </p>
+      </div>
+    </section>
+  );
+};
+
+export default Description;
