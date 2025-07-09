@@ -4,8 +4,8 @@ import History from "@/components/ui/History";
 export default function page() {
   return (
     <div className="container">
-      <FAQ />
       <History/>
+      <FAQ />
     </div>
   );
 }

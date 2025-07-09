@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import styles from "./History.module.css";
 
-const paragraphs = [
+const paragraphs: string[] = [
   "Засновано у 2018 році жінкою-хіміком, яка перетворила знання на догляд. Бренд народився на перетині науки, краси та внутрішнього вибору: дбати про себе - свідомо, точно, глибоко.",
   "Кожен засіб створено вручну в лабораторії з сертифікованих активів із Франції, Німеччини, Швейцарії, США та Ізраїлю.",
   "У виробництві застосовуються стандарти GMP та ISO 22716, а формули тестуються на фокус-групах та в лабораторних умовах.",
@@ -13,9 +13,8 @@ const paragraphs = [
   "Це формули, створені жінкою - для жінки. Формули, в яких працює кожна молекула. І кожне рішення - про любов.",
 ];
 
-const History = () => {
-  const [showAll, setShowAll] = useState(false);
-
+const History: React.FC = () => {
+  const [showAll, setShowAll] = useState<boolean>(false);
   const visibleParagraphs = showAll ? paragraphs : paragraphs.slice(0, 2);
 
   return (
@@ -25,7 +24,6 @@ const History = () => {
         <br />
         Формули з любов’ю. І наукою.
       </h2>
-
       <div className={styles.wrapContent}>
         <Image
           src="/images/history.png"
@@ -34,14 +32,15 @@ const History = () => {
           height={500}
           className={styles.image}
         />
-
         <div className={styles.historyTextWrap}>
           <h3>
-            Science Be Beautiful<span className={styles.hyphen}> — </span><span className={styles.afterHyphen}>створено з формули та досвіду</span>
+            Science Be Beautiful<span className={styles.hyphen}> — </span>
+            <span className={styles.afterHyphen}>
+              створено з формули та досвіду
+            </span>
           </h3>
-
           <div className={styles.text}>
-            {visibleParagraphs.map((p, index) => {
+            {visibleParagraphs.map((p: string, index: number) => {
               const isLastVisible = index === visibleParagraphs.length - 1;
               const shouldAddDots = !showAll && isLastVisible;
               return (
@@ -51,15 +50,13 @@ const History = () => {
                 </p>
               );
             })}
-
-            
           </div>
           <button
-              onClick={() => setShowAll((prev) => !prev)}
-              className={styles.toggleBtn}
-            >
-              {showAll ? "Сховати" : "Дивитись більше"}
-            </button>
+            onClick={() => setShowAll((prev: boolean) => !prev)}
+            className={styles.toggleBtn}
+          >
+            {showAll ? "Сховати" : "Дивитись більше"}
+          </button>
         </div>
       </div>
     </section>
