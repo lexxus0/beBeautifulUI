@@ -20,9 +20,13 @@ const History = () => {
 
   return (
     <section className={styles.history}>
-      <h2>Історія, що надихає. Формули з любов’ю. І наукою.</h2>
+      <h2>
+        Історія, що надихає.
+        <br />
+        Формули з любов’ю. І наукою.
+      </h2>
 
-      <div className={styles.imageWrap}>
+      <div className={styles.wrapContent}>
         <Image
           src="/images/history.png"
           alt="Science Be Beautiful"
@@ -30,34 +34,34 @@ const History = () => {
           height={500}
           className={styles.image}
         />
+
+        <div className={styles.historyTextWrap}>
+          <h3>
+            Science Be Beautiful<span className={styles.hyphen}> — </span><span className={styles.afterHyphen}>створено з формули та досвіду</span>
+          </h3>
+
+          <div className={styles.text}>
+            {visibleParagraphs.map((p, index) => {
+              const isLastVisible = index === visibleParagraphs.length - 1;
+              const shouldAddDots = !showAll && isLastVisible;
+              return (
+                <p key={index}>
+                  {p}
+                  {shouldAddDots && <span className={styles.dots}>...</span>}
+                </p>
+              );
+            })}
+
+            
+          </div>
+          <button
+              onClick={() => setShowAll((prev) => !prev)}
+              className={styles.toggleBtn}
+            >
+              {showAll ? "Сховати" : "Дивитись більше"}
+            </button>
+        </div>
       </div>
-
-      <h3>
-        Science Be Beautiful — <span>створено з формули та досвіду</span>
-      </h3>
-
-      <div className={styles.text}>
-        {visibleParagraphs.map((p, index) => {
-          const isLastVisible = index === visibleParagraphs.length - 1;
-          const shouldAddDots = !showAll && isLastVisible;
-          return (
-            <p key={index}>
-              {p}
-              {shouldAddDots && <span className={styles.dots}>...</span>}
-            </p>
-          );
-        })}
-
-        <button
-        onClick={() => setShowAll((prev) => !prev)}
-        className={styles.toggleBtn}
-      >
-        {showAll ? "Сховати" : "Дивитись більше"}
-      </button>
-      
-      </div>
-
-      
     </section>
   );
 };
