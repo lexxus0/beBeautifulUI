@@ -4,7 +4,6 @@ import Icon from "@/components/elements/icon";
 import styles from "./Footer.module.css";
 import Link from "next/link";
 
-const Footer: FC = () => {
   const navData = [
     ["Про бренд", "/about"],
     ["Каталог", "/products"],
@@ -15,6 +14,8 @@ const Footer: FC = () => {
     ["FAQ", "/faq"],
     ["Контакти", "/contacts"],
   ];
+
+const Footer: FC = () => {
 
   return (
     <footer className={styles.footer}>
