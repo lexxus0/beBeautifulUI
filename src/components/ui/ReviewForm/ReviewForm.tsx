@@ -14,6 +14,13 @@ const ReviewForm: React.FC = () => {
     // Here you would handle sending the review to your backend or API
   };
 
+  const handleSend = () => {
+    if (message.trim()) {
+      console.log(message);
+      setMessage("");
+    }
+  };
+
   if (submitted) {
     return <div className={styles.success}>Дякуємо за ваш відгук!</div>;
   }
@@ -69,8 +76,11 @@ const ReviewForm: React.FC = () => {
           onChange={e => setMessage(e.target.value)}
           required
         />
-        <button type="button" className={styles.sendBtn} tabIndex={-1} aria-label="Надіслати">
-          {/* You can add a send icon here if you have one, e.g. <img src="/send.svg" alt="Send" /> */}
+        <button type="button" className={styles.sendBtn} tabIndex={-1} aria-label="Надіслати" onClick={handleSend}>
+          {/* mingcute_send-line.svg icon as inline SVG */}
+          <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M3.05 4.05a.75.75 0 0 1 .82-.17l16 7a.75.75 0 0 1 0 1.34l-16 7A.75.75 0 0 1 3 18.75v-5.5a.75.75 0 0 1 .75-.75h7.19a.25.25 0 0 0 .09-.48l-7.19-3.15A.75.75 0 0 1 3.05 4.05Z"/>
+          </svg>
         </button>
       </div>
       <div className={styles.addImageRow}>

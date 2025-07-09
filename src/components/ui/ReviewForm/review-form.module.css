@@ -1,7 +1,6 @@
 .form {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 16px;
   width: 335px;
   margin: 0 auto;
@@ -29,17 +28,33 @@
   background: #fff;
   border: 1px solid #2d2d2d;
   border-radius: 8px;
-  padding: 16px;
+
   margin: 0;
   width: 335px;
   box-sizing: border-box;
 }
 .input {
   height: 56px;
+  padding: 8px;
+  padding-top: 27px;
+}
+.inputsRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 335px;
+  margin: 0 auto;
 }
 .textarea {
   min-height: 120px;
-  resize: vertical;
+  padding: 16px;
+  border: 0.40px solid rgba(62, 79, 52, 0.8);
+  border-radius: 8px;
+padding: 16px;
+width: 335px;
+height: 220px;
 }
 
 .submit {
@@ -114,12 +129,17 @@
 }
 
 .helperRow {
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: #2d2d2d;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  gap: 8px;
-  margin-bottom: 0;
+  gap: 32px;
+  margin: 8px 0 8px 0;
 }
 .helperIcon {
   width: 32px;
@@ -162,7 +182,8 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 8px;
+  justify-content: flex-start;
+  gap: 16px;
   margin: 8px 0 0 0;
 }
 .addImageIcon {
@@ -173,9 +194,11 @@
 }
 .addImageLabel {
   font-family: 'Roboto', sans-serif;
-  font-size: 16px;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
   color: #2d2d2d;
-  vertical-align: middle;
 }
 
 /* Tablet styles */
