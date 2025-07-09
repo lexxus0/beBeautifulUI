@@ -1,11 +1,12 @@
 import styles from "./Description.module.css";
 
-const Description = () => {
+const Description: React.FC = () => {
   return (
     <section className={styles.description}>
       <div className={styles.top}>
         <h3>
-          Science Be Beautiful - <br /><span>це більше, ніж просто засоби</span>
+          Science Be Beautiful - <br />
+          <span>це більше, ніж просто засоби</span>
         </h3>
         <p>
           Це формули, в яких працює кожна молекула. Це засоби, що створені на
@@ -17,10 +18,11 @@ const Description = () => {
 
       <div className={styles.bottom}>
         <p>
-          Це не про “догляд для жінок і дітей”.<br /> Це про <strong>жінку</strong>,
-          яка знає, чого хоче.<br /> Яка не вибирає між натуральним і ефективним.<br /> Яка
-          хоче бути красивою — на своїх умовах, і жити в чистому просторі без
-          компромісів.
+          Це не про “догляд для жінок і дітей”.
+          <br /> Це про <strong>жінку</strong>, яка знає, чого хоче.
+          <br /> Яка не вибирає між натуральним і ефективним.
+          <br /> Яка хоче бути красивою — на своїх умовах, і жити в чистому
+          просторі без компромісів.
         </p>
         <p>
           <span>Science Be Beautiful - </span>
