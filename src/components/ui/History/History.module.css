@@ -1,0 +1,70 @@
+.history {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.history h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.history .imageWrap {
+  max-width: 800px;
+  margin: 0 auto 30px;
+  overflow: hidden;
+}
+
+.history .imageWrap .image {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.history h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.history h3 span {
+  font-weight: 400;
+  display: block;
+  margin-top: 4px;
+}
+
+.history .text {
+  max-width: 800px;
+  margin: 0 auto 24px;
+}
+
+.history .text p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.history .text p .dots {
+  display: inline;
+  font-weight: bold;
+}
+
+.history .toggleBtn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: underline;
+
+  display: block;
+  margin-left: auto;
+  margin-top: 8px;
+  padding: 0;
+  color: inherit;
+}
+
+
+
+@media screen and (min-width: 744px) {}
+
+@media screen and (min-width: 1440px) {}
