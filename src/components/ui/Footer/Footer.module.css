@@ -40,6 +40,7 @@
 }
 .navLink:hover {
   text-decoration: underline;
+  text-decoration-skip-ink: none;
 }
 .socialWrap {
   display: flex;
@@ -57,13 +58,12 @@
 }
 .emailLink:hover {
   text-decoration: underline;
+  text-decoration-skip-ink: none;
 }
 .socials {
   display: flex;
   flex-direction: row;
   gap: 24px;
-}
-.socialLink {
 }
 .iconSocials {
   width: 26px;
@@ -76,8 +76,9 @@
   letter-spacing: 0.02em;
   text-align: center;
 }
-.links:hover {
+.links a:hover {
   text-decoration: underline;
+  text-decoration-skip-ink: none;
 }
 .links span {
   margin: 0 4px;
@@ -85,8 +86,6 @@
 .divider {
   margin-top: 14px;
   margin-bottom: 24px;
-}
-.copyright {
 }
 
 @media screen and (min-width: 744px) {

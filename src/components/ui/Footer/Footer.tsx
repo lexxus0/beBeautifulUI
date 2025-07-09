@@ -78,11 +78,11 @@ const Footer: FC = () => {
         </div>
 
         <div className={styles.footerBottom}>
-          <p className={styles.links}>
+          <div className={styles.links}>
             <Link href="/privacy-policy">Політика конфіденційності</Link>
             <span>|</span>
             <Link href="/terms">Умови використання</Link>
-          </p>
+          </div>
           <hr className={styles.divider} />
           <p className={styles.copyright}>
             &copy; 2025 Science Be Beautiful. All rights reserved.
