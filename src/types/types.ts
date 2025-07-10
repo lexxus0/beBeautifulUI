@@ -48,3 +48,16 @@ export interface IProductResponse {
   data: IProduct[];
   pagination: IPagination;
 }
+
+export interface IReview {
+  name: string;
+  location: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+}
+
+export interface IReviewResponse {
+  data: IReview[];
+  pagination: IPagination;
+}
