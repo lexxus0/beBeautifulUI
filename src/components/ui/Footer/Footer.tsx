@@ -1,10 +1,8 @@
-import type { FC } from "react";
 import Logo from "@/components/elements/logo";
 import Icon from "@/components/elements/icon";
 import styles from "./Footer.module.css";
 import Link from "next/link";
 
-const Footer: FC = () => {
   const navData = [
     ["Про бренд", "/about"],
     ["Каталог", "/products"],
@@ -15,6 +13,8 @@ const Footer: FC = () => {
     ["FAQ", "/faq"],
     ["Контакти", "/contacts"],
   ];
+
+const Footer: React.FC = () => {
 
   return (
     <footer className={styles.footer}>
@@ -77,11 +77,11 @@ const Footer: FC = () => {
         </div>
 
         <div className={styles.footerBottom}>
-          <p className={styles.links}>
+          <div className={styles.links}>
             <Link href="/privacy-policy">Політика конфіденційності</Link>
             <span>|</span>
             <Link href="/terms">Умови використання</Link>
-          </p>
+          </div>
           <hr className={styles.divider} />
           <p className={styles.copyright}>
             &copy; 2025 Science Be Beautiful. All rights reserved.
