@@ -16,6 +16,7 @@
   color: #2d2d2d;
   text-align: center;
   margin-bottom: 0;
+  margin-top: 16px;
 }
 
 .input, .textarea {
@@ -32,6 +33,9 @@
   margin: 0;
   width: 335px;
   box-sizing: border-box;
+}
+.starsRoWrapper{
+  padding-top: 24px;
 }
 .input {
   height: 56px;
@@ -97,8 +101,8 @@ height: 220px;
   border: none;
   padding: 0;
   cursor: pointer;
-  width: 21px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -107,7 +111,7 @@ height: 220px;
 .starBtn:active {
   transform: scale(0.95);
 }
-.starBtn img {
+.starBtn svg {
   width: 21px;
   height: 20px;
   display: block;
@@ -202,28 +206,75 @@ height: 220px;
 }
 
 /* Tablet styles */
-@media (min-width: 768px) {
+@media (min-width: 744px) {
   .form {
-    gap: 32px;
-    max-width: 600px;
+    gap: 24px;
+    width: 664px;
   }
   .title {
+    font-weight: 400;
     font-size: 28px;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
   }
+  .inputsRow {
+    width: 664px;
+    flex-direction: row;
+  }
+  .starBtn{
+    width: 48px;
+    height: 48px;
+  }
+  .starBtn svg {
+    width: 31px;
+    height: 29px;
+  }
+
+  .starsLabel {
+    font-size: 20px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    margin-top: 8px;
+  }
+  .helperRow{
+    margin-bottom: 0;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+  /* .starsRoWrapper{
+    padding-top: 16px;
+  } */
+  .addImageRow{
+    margin: 0;
+}
   .textarea {
-    min-height: 160px;
-    font-size: 18px;
+    border: 0.40px solid rgba(62, 79, 52, 0.8);
+    border-radius: 8px;
+    padding: 16px;
+    width: 664px;
+    height: 220px;
   }
   .submit {
+    margin-top: 32px;
     font-size: 20px;
-    max-width: 360px;
     padding: 18px 0;
     border-radius: 18px;
+    border: 1px solid #2d2d2d;
+    border-radius: 8px;
+    padding: 16px 32px;
+    width: 436px;
+    height: 56px;
+    font-weight: 400;
+    line-height: 1.2;
+    align-self: center;
+
   }
 }
 
 /* Desktop styles */
-@media (min-width: 1200px) {
+@media (min-width: 1440px) {
   .form {
     gap: 40px;
     max-width: 700px;
