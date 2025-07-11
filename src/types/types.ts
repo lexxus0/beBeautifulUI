@@ -7,8 +7,8 @@ export interface Product {
   _id: string;
   name: string;
   sku: string;
-  volumeOptions: string[]; // можливо: ["300ml", "500ml"]
-  priceByVolume: number[]; // ціни відповідно до volumeOptions
+  volumeOptions: string[];
+  priceByVolume: number[];
   stockQuantity: number;
   features: string[];
   description: string;
@@ -22,6 +22,6 @@ export interface Product {
   isPromoted: boolean;
   imageUrl: string;
   inStock: boolean;
-  createdAt: string; // ISO-дата
-  updatedAt: string; // ISO-дата
+  createdAt: string;
+  updatedAt: string;
 }

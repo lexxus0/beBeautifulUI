@@ -8,7 +8,8 @@ const getProductById = async (id: string): Promise<Product> => {
   const res = await fetch(
     `https://be-beautiful-backend.onrender.com/api/products/${id}`
   );
-  return res.json();
+  const json = await res.json();
+  return json.data;
 };
 export default async function ProductDetails({
   params,
@@ -16,11 +17,10 @@ export default async function ProductDetails({
   params: { productId: string };
 }) {
   const product = await getProductById(params.productId);
-
   return (
-    <section>
-      <ProductHeader product={product.data} />
-      <ProductGallery images={[product.data.imageUrl]} />
+    <section className="container">
+      <ProductHeader product={product} />
+      <ProductGallery product={product} />
       <ProductDescription product={product} />
       <ProductActions product={product} />
     </section>

@@ -1,10 +1,11 @@
+import { Product } from "@/types/types";
 import React from "react";
 
 export interface ProductActionsProps {
-  // define your props here
+  product: Product;
 }
 
-const ProductActions = (props: ProductActionsProps) => {
+const ProductActions = (product: ProductActionsProps) => {
   return <div>ProductActions</div>;
 };
 

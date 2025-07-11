@@ -1,10 +1,11 @@
+import { Product } from "@/types/types";
 import React from "react";
 
 export interface ProductDescriptionProps {
-  // define your props here
+  product: Product;
 }
 
-const ProductDescription = (props: ProductDescriptionProps) => {
+const ProductDescription = (product: ProductDescriptionProps) => {
   return <div>ProductDescription</div>;
 };
 
