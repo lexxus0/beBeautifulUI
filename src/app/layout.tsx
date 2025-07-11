@@ -5,7 +5,7 @@ import "../styles/globals.css";
 import { Providers } from "@/store/provider";
 import { sourceSansPro } from "@/fonts/fonts";
 import Header from "@/components/ui/Header/header";
-import Footer from "@/components/ui/Footer";
+import Footer from "@/components/ui/Footer/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",

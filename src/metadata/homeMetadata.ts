@@ -35,7 +35,7 @@ const homeMetadata = {
     images: ["https://sciencebebeautiful.com/images/og-image.jpg"],
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.png",
   },
 };
 
