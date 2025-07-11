@@ -1,0 +1,135 @@
+.history {
+  padding: 40px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid var(--color-yellow);
+}
+.history h2 {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 150%;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: var(--color-black-10);
+  width: 330px;
+  margin-bottom: 24px;
+}
+.wrapContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.image {
+  border-radius: 4px;
+  width: 335px;
+  height: 380px;
+  object-fit: cover;
+}
+.historyTextWrap {
+  display: flex;
+  flex-direction: column;
+}
+.history h3 {
+  font-family: var(--font-source-sans-pro);
+  font-weight: 400;
+  font-size: 31px;
+  line-height: 150%;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.hyphen {
+  font-family: var(--font-lato);
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 140%;
+}
+.history .afterHyphen {
+  font-family: var(--font-lato);
+  font-size: 18px;
+  letter-spacing: 0.01em;
+}
+.history .text {
+  max-width: 800px;
+  margin: 0 auto 24px;
+}
+.history .text > *:not(:last-child) {
+  margin-bottom: 16px;
+}
+.history .text p {
+  font-family: var(--font-roboto);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.02em;
+}
+.history .text p .dots {
+  display: inline;
+  font-weight: bold;
+}
+.history .toggleBtn {
+  font-family: var(--font-open-sans);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 120%;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  text-align: right;
+}
+
+@media screen and (min-width: 744px) {
+  .history h2 {
+    font-weight: 400;
+    font-size: 42px;
+    line-height: 140%;
+    margin-bottom: 32px;
+    width: 100%;
+  }
+  .wrapContent {
+    flex-direction: row;
+  }
+  .image {
+    width: 322px;
+    height: 488px;
+  }
+  .history h3 {
+    font-weight: 600;
+    font-size: 27px;
+    text-align: start;
+  }
+  .history .afterHyphen {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 140%;
+  }
+  .history .text p {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .history h2 {
+    font-weight: 400;
+    font-size: 80px;
+    line-height: 120%;
+    width: 1296px;
+  }
+  .wrapContent {
+    gap: 122px;
+  }
+  .image {
+    width: 526px;
+    height: 762px;
+  }
+  .history h3 {
+    font-size: 32px;
+  }
+  .history .afterHyphen {
+    font-size: 28px;
+  }
+  .history .text p {
+    font-weight: 400;
+    font-size: 20px;
+  }
+}
