@@ -1,7 +1,7 @@
 import ProductActions from "@/components/ui/ProductActions";
-import ProductDescription from "@/components/ui/ProductDescription";
+import ProductDescription from "@/components/ui/ProductDescription/ProductDescription";
 import ProductGallery from "@/components/ui/ProductGallery";
-import ProductHeader from "@/components/ui/ProductHeader";
+import ProductHeader from "@/components/ui/ProductHeader/ProductHeader";
 import { Product } from "@/types/types";
 
 const getProductById = async (id: string): Promise<Product> => {

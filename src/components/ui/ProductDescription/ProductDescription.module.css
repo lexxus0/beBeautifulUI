@@ -1,0 +1,36 @@
+.accordionWrapper {
+    border-top: 1px solid #ccc;
+    padding-top: 1rem;
+    font-size: 0.9rem;
+    color: #2D2D2D;
+
+}
+
+.accordionItem {
+    margin-bottom: 1rem;
+    color: #2D2D2D;
+
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.5rem;
+}
+
+.accordionHeader {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    color: #2D2D2D;
+
+    font-weight: 500;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+}
+
+.accordionContent {
+    margin-top: 0.5rem;
+    color: #2D2D2D;
+    line-height: 1.5;
+}
