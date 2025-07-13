@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 export default function FAQ() {
   const [activeIndexes, setActiveIndexes] = useState<number[]>([]);
@@ -58,8 +59,8 @@ export default function FAQ() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <h2 className="font-lato font-semibold text-3xl text-center text-[#333] mb-8">
+    <div>
+      <h2 className="font-lato font-semibold text-3xl text-center text-[#333] mb-8 md:text-5xl md:uppercase md:mt-10">
         Часті запитання
       </h2>
       {FAQ.map((item, index) => {
@@ -71,12 +72,13 @@ export default function FAQ() {
             onClick={() => toggleAccordion(index)}
           >
             <div className="flex items-center gap-6">
-              <span className="font-lato font-semibold text-3xl text-[#2d2d2d]">
+              <span className="font-lato font-semibold text-3xl text-[#2d2d2d] md:text-4xl">
                 {item.num}
               </span>
-              <h3 className="font-roboto font-light text-lg text-[#2d2d2d]">
+              <h3 className="font-roboto font-light text-lg text-[#2d2d2d] md:text-2xl md:font-semibold">
                 {item.question}
               </h3>
+              <FaArrowRightLong className="ml-auto w-10 h-7" />
             </div>
             <div
               className={`font-lato text-base text-[#666] mt-2 transition-all duration-300 ease-in-out ${

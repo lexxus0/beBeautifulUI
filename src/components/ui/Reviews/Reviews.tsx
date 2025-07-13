@@ -24,7 +24,7 @@ export default function Reviews() {
         {reviews.map((review: IReview) => (
           <div
             key={review.createdAt}
-            className="px-6 py-4  bg-gray-200 rounded-lg w-[295px]"
+            className="px-6 py-4  bg-gray-200 rounded-lg w-full"
           >
             <div className="flex items-center gap-4 mb-6">
               <div className="size-[100px] rounded-3xl bg-[#2d2d2d]"></div>
