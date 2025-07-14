@@ -73,9 +73,17 @@
   font-weight: 400;
   font-size: 20px;
   line-height: 120%;
-  text-decoration: underline;
-  text-decoration-skip-ink: none;
   text-align: right;
+  border-bottom: 0.8px solid rgba(45, 45, 45, 0.8);
+  padding: 10px;
+  width: fit-content;
+  height: 44px;
+  transition: all 0.3s ease;
+  margin-left: auto;
+}
+.history .toggleBtn:hover {
+  border-bottom: 1.8px solid #403e3e;
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.24);
 }
 
 @media screen and (min-width: 744px) {
