@@ -49,6 +49,21 @@ export interface IProductResponse {
   pagination: IPagination;
 }
 
+export type CategoryData = {
+  title: string;
+  description: string;
+  imageMobile: string;
+  imageDesktop: string;
+  href: string;
+};
+
+export type CategoryCardProps = {
+  title: string;
+  description: string;
+  imageMobile: string;
+  imageDesktop: string;
+  href: string;
+};
 export interface IReview {
   name: string;
   location: string;
