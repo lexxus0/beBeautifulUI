@@ -10,7 +10,7 @@ export const metadata = homeMetadata;
 export default function page() {
   return (
     <div className="container">
-      <Description />
+      <Category/>
       <History />
       <Certificates />
       <FAQ />
