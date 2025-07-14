@@ -1,13 +1,6 @@
 import Link from "next/link";
 import styles from "./CategoryCard.module.scss";
-
-type CategoryCardProps = {
-  title: string;
-  description: string;
-  imageMobile: string;
-  imageDesktop: string;
-  href: string;
-};
+import { CategoryCardProps } from "@/types/types";
 
 const CategoryCard = ({
   title,

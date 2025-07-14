@@ -48,3 +48,19 @@ export interface IProductResponse {
   data: IProduct[];
   pagination: IPagination;
 }
+
+export type CategoryData = {
+  title: string;
+  description: string;
+  imageMobile: string;
+  imageDesktop: string;
+  href: string;
+};
+
+export type CategoryCardProps = {
+  title: string;
+  description: string;
+  imageMobile: string;
+  imageDesktop: string;
+  href: string;
+};
