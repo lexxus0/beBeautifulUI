@@ -2,7 +2,7 @@ import styles from "./Description.module.css";
 
 const Description: React.FC = () => {
   return (
-    <section className={styles.description}>
+    <section className={`container ${styles.description}`}>
       <div className={styles.top}>
         <h3>
           Science Be Beautiful - <br />
