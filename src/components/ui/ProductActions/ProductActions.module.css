@@ -1,0 +1,70 @@
+.actionsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.actioncontainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.volume,
+.quantity {
+    margin-bottom: 8px;
+    color: #2D2D2D;
+    font-size: 18px;
+    font-family: Lato;
+    font-weight: 400;
+    line-height: 27px;
+    letter-spacing: 0.18px;
+}
+
+.volumeOptions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.volumeButton {
+    width: 100px;
+    height: 48px;
+    padding: 12px 20.5px;
+    border-radius: 8px;
+    border: 1px #2D2D2D solid;
+    justify-content: center;
+    align-items: center;
+}
+
+.volumeButton:hover {
+    border-color: #000;
+}
+
+.active {
+    color: #E9DDCE;
+    border-color: black;
+    background-color: #2d2d2d;
+}
+
+.selectQuantityParagraph {
+    color: #2D2D2D;
+    font-size: 18px;
+    font-family: Lato;
+    font-weight: 400;
+    line-height: 27px;
+    letter-spacing: 0.18px;
+    word-wrap: break-word;
+}
+
+.selectQuantity {
+    width: 100px;
+    color: #2D2D2D;
+    padding: 11px 27px;
+    font-size: 16px;
+    font-family: Poppins;
+    font-weight: 400;
+    line-height: 22.40px;
+    letter-spacing: 0.06px;
+    border: 2px #2D2D2D solid;
+    border-radius: 8px;
+}

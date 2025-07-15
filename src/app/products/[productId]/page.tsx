@@ -1,4 +1,4 @@
-import ProductActions from "@/components/ui/ProductActions";
+import ProductActions from "@/components/ui/ProductActions/ProductActions";
 import ProductDescription from "@/components/ui/ProductDescription/ProductDescription";
 import ProductGallery from "@/components/ui/ProductGallery";
 import ProductHeader from "@/components/ui/ProductHeader/ProductHeader";
