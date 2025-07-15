@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import styles from "./History.module.css";
+import styles from "./History.module.scss";
 import historyData from "./historyParagraphs.json"
 
 
