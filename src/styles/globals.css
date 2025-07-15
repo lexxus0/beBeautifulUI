@@ -98,6 +98,15 @@ body {
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
+.add-to-cart-btn-bg {
+  background: linear-gradient(
+    180deg,
+    #2d2d2d 4.33%,
+    rgba(124, 124, 124, 0.96) 60.1%,
+    #2d2d2d 86.06%
+  );
+}
+
 @media screen and (min-width: 744px) {
   .certificate-bg {
     width: 314px;

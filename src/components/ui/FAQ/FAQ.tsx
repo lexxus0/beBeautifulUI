@@ -59,7 +59,7 @@ export default function FAQ() {
   };
 
   return (
-    <div>
+    <div className="md:mb-16">
       <h2 className="font-lato font-semibold text-3xl text-center text-[#333] mb-8 md:text-5xl md:uppercase md:mt-10">
         Часті запитання
       </h2>
