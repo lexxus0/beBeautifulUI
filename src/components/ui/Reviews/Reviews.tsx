@@ -33,7 +33,7 @@ export default function Reviews() {
   };
 
   return (
-    <div className="mb-20">
+    <div className="container mb-20">
       <h2 className="font-lato font-semibold text-3xl text-[#2d2d2d] mb-8 text-left md:text-center md:text-[40px] md:font-normal">
         Краса, яку підтверджують наші клієнти
       </h2>
