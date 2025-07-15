@@ -13,7 +13,7 @@ const Category = () => {
         <h2 className={styles.title}>
           Продукти без синтетичного “шуму” — тільки те, що працює
         </h2>
-        <Link href="/catalog" className={styles.link}>
+        <Link href="/products" className={styles.link}>
           Перейти до каталогу
         </Link>
       </div>

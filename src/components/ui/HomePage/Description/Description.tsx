@@ -1,4 +1,4 @@
-import styles from "./Description.module.css";
+import styles from "./Description.module.scss";
 
 const Description: React.FC = () => {
   return (

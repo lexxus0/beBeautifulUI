@@ -1,6 +1,6 @@
 import Logo from "@/components/elements/logo";
 import Icon from "@/components/elements/icon";
-import styles from "./Footer.module.css";
+import styles from "./Footer.module.scss";
 import Link from "next/link";
 
   const navData = [

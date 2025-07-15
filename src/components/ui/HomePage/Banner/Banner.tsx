@@ -6,7 +6,7 @@ const Banner = () => {
     <section className={styles.banner}>
       <div className={styles.imageWrapper}>
         <div className={`container ${styles.bannerContainer}`}>
-          <div className={styles.titleDesktop}>Створено Жінкою для Жінки</div>
+          <div className={styles.titleDesktop}>Створено жінкою для жінки</div>
           <a
             href="https://www.facebook.com"
             target="_blank"
@@ -17,7 +17,7 @@ const Banner = () => {
           </a>
         </div>
       </div>
-      <div className={styles.titleMobile}>Створено Жінкою для Жінки</div>
+      <div className={styles.titleMobile}>Створено жінкою для жінки</div>
     </section>
   );
 };
