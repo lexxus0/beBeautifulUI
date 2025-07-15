@@ -3,18 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 import styles from "./History.module.css";
+import historyData from "./historyParagraphs.json"
 
-const paragraphs: string[] = [
-  "Засновано у 2018 році жінкою-хіміком, яка перетворила знання на догляд. Бренд народився на перетині науки, краси та внутрішнього вибору: дбати про себе - свідомо, точно, глибоко.",
-  "Кожен засіб створено вручну в лабораторії з сертифікованих активів із Франції, Німеччини, Швейцарії, США та Ізраїлю.",
-  "У виробництві застосовуються стандарти GMP та ISO 22716, а формули тестуються на фокус-групах та в лабораторних умовах.",
-  "Кожен актив має паспорт якості, кожна партія проходить контроль стабільності.",
-  "Science Be Beautiful - це бренд, що обирає точність замість гучності. Результат замість обіцянок. Турботу, яка працює - для шкіри, дому та відчуття зв'язку з собою.",
-  "Це формули, створені жінкою - для жінки. Формули, в яких працює кожна молекула. І кожне рішення - про любов.",
-];
 
 const History: React.FC = () => {
   const [showAll, setShowAll] = useState<boolean>(false);
+  const paragraphs: string[] = historyData.paragraphs;
   const visibleParagraphs = showAll ? paragraphs : paragraphs.slice(0, 2);
 
   return (
