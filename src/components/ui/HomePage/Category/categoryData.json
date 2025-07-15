@@ -4,27 +4,27 @@
     "description": "Делікатне очищення і природний блиск. Без обтяження. Без випадіння.",
     "imageMobile": "/images/categories/hair-mobile.png",
     "imageDesktop": "/images/categories/hair.png",
-    "href": "/catalog/hair"
+    "href": "/products/hair"
   },
   {
     "title": "Обличчя",
     "description": "Турбота, що відчувається з першого дотику. Формули, створені з любовʼю до шкіри.",
     "imageMobile": "/images/categories/face-mobile.png",
     "imageDesktop": "/images/categories/face.png",
-    "href": "/catalog/face"
+    "href": "/products/face"
   },
   {
     "title": "Тіло",
     "description": "Щоденна ніжність для тіла. Легкість, комфорт і баланс у кожному русі.",
     "imageMobile": "/images/categories/body-mobile.png",
     "imageDesktop": "/images/categories/body.png",
-    "href": "/catalog/body"
+    "href": "/products/body"
   },
   {
     "title": "Товари для дому",
     "description": "Чистота, яка дихає спокоєм. Мінімум складників — максимум дії.",
     "imageMobile": "/images/categories/for-home-mobile.png",
     "imageDesktop": "/images/categories/for-home.png",
-    "href": "/catalog/home"
+    "href": "/products/home"
   }
 ]
