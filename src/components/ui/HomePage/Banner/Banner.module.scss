@@ -1,0 +1,83 @@
+.banner {
+  width: 100%;
+
+  .imageWrapper {
+    position: relative;
+    width: 100%;
+    background-image: url("/images/hero-bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 210px;
+
+    @media (min-width: 768px) {
+      height: 586px;
+    }
+
+    @media (min-width: 1024px) {
+      height: 859px;
+    }
+
+    .bannerContainer {
+      position: relative;
+      height: 100%;
+    }
+  }
+
+  .chatIcon {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    z-index: 2;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    .icon {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .titleDesktop {
+    display: none;
+
+    @media (min-width: 768px) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 139px;
+      right: 40px;
+      z-index: 2;
+      backdrop-filter: blur(40px);
+      background: rgba(0, 0, 0, 0.1);
+      color: white;
+      font-size: 18px;
+      width: 278px;
+      height: 130px;
+      border: 0.1px solid #ffffff37;
+      border-radius: 8px;
+      text-align: center;
+      padding: 10px;
+    }
+    @media (min-width: 1440px) {
+      width: 493px;
+      height: 196px;
+      right: 66px;
+    }
+  }
+
+  .titleMobile {
+    background: black;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    padding: 20px;
+    display: block;
+
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+}

@@ -18,7 +18,7 @@ const History: React.FC = () => {
   const visibleParagraphs = showAll ? paragraphs : paragraphs.slice(0, 2);
 
   return (
-    <section className={styles.history}>
+    <section className={`container ${styles.history}`}>
       <h2>
         Історія, що надихає.
         <br />
