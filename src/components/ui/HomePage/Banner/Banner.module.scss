@@ -4,7 +4,7 @@
   .imageWrapper {
     position: relative;
     width: 100%;
-    background-image: url('/images/hero-bg.png');
+    background-image: url("/images/hero-bg.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -16,6 +16,11 @@
 
     @media (min-width: 1024px) {
       height: 859px;
+    }
+
+    .bannerContainer {
+      position: relative;
+      height: 100%;
     }
   }
 
@@ -39,19 +44,27 @@
 
     @media (min-width: 768px) {
       display: flex;
+      align-items: center;
+      justify-content: center;
       position: absolute;
-      top: 79px;
+      top: 139px;
       right: 40px;
       z-index: 2;
-      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(40px);
+      background: rgba(0, 0, 0, 0.1);
       color: white;
       font-size: 18px;
       width: 278px;
       height: 130px;
-      align-items: center;
-      justify-content: center;
+      border: 0.1px solid #ffffff37;
+      border-radius: 8px;
       text-align: center;
       padding: 10px;
+    }
+    @media (min-width: 1440px) {
+      width: 493px;
+      height: 196px;
+      right: 66px;
     }
   }
 
