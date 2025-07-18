@@ -1,3 +1,5 @@
+import { ChangeEventHandler } from "react";
+
 export interface IModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -76,3 +78,28 @@ export interface IReviewResponse {
   data: IReview[];
   pagination: IPagination;
 }
+
+export interface RegisterFormInputs {
+  name: string;
+  email: string;
+  password: string;
+  agree: boolean;
+}
+
+export interface LoginFormInputs {
+  email: string;
+  password: string;
+}
+
+export interface InputGroupProps {
+  id: string;
+  name: string;
+  label: string;
+  type?: string;
+  value: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  error?: string;
+  showToggle?: boolean;
+  onToggle?: () => void;
+}
+

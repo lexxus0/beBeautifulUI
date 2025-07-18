@@ -1,0 +1,41 @@
+.successMessage {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 1000;
+  font-weight: 600;
+  user-select: none;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+//   max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+}
+.button {
+  background: black;
+  color: white;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.5s ease;
+
+  &:hover {
+    background: rgba(45, 45, 45, 0.64);
+  }
+}
+
+.errorMsg {
+  color: #f44336;
+  font-size: 13px;
+  margin-left: 4px;
+}

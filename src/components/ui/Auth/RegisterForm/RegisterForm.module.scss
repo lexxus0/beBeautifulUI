@@ -1,0 +1,62 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+//   max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+}
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #898989;
+
+  input[type="checkbox"] {
+   width: 18px;
+    height: 18px;
+    accent-color: #afb0b2;
+    margin-top: 3px;
+    cursor: pointer;
+  }
+
+  .text {
+    line-height: 1.4;
+
+    a {
+      color: #afb0b2;
+      text-decoration: none;
+      transition: all 0.3s ease;
+
+      &:hover {
+        text-decoration: underline;
+        color: #f44336;
+      }
+    }
+  }
+}
+
+.agreement {
+  color: #afb0b2;
+}
+.button {
+  background: black;
+  color: white;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.5s ease;
+
+  &:hover {
+    background: rgba(45, 45, 45, 0.64);
+  }
+}
+
+.errorMsg {
+  color: #f44336;
+  font-size: 13px;
+  margin-left: 4px;
+}
