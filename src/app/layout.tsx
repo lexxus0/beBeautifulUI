@@ -61,7 +61,7 @@ export default function RootLayout({
       >
         <Header />
         <Providers>{children}</Providers>
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );

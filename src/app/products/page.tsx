@@ -1,5 +1,5 @@
 "use client";
-import ProductsList from "@/components/products/ProductsList";
+import ProductsList from "@/components/ui/products/ProductsList";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchProducts } from "@/store/products/operations";
 import { selectProducts } from "@/store/products/selectors";
