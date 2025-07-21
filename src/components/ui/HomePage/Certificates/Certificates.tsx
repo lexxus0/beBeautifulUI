@@ -1,6 +1,6 @@
 export default function Certificates() {
   return (
-    <div className="mt-10">
+    <div className="mt-10 container">
       <h3 className="font-lato font-semibold text-3xl text-center mb-5.5 md:text-[42px] lg:text-[80px]">
         Турбота, яку можна подарувати
       </h3>

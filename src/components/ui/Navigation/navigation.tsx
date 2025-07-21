@@ -14,7 +14,7 @@ export default function Navigation() {
 
   const links = [
     { href: "/main", label: "Головна" },
-    { href: "/catalog", label: "Каталог" },
+    { href: "/products", label: "Каталог" },
     { href: "/aboutus", label: "Про нас" },
     { href: "/blog", label: "Блог" },
     { href: "/book", label: "Книга рецепців" },

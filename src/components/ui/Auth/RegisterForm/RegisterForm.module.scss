@@ -1,10 +1,39 @@
+.successMessage {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  font-weight: 600;
+  user-select: none;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.errorMessage {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  color: white;
+  background-color: #e74c3c;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
 .form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-//   max-width: 500px;
+  gap: 16px;
   margin: 0 auto;
   width: 100%;
+
+  @media (min-width: 1440px) {
+    gap: 24px;
+  }
 }
 .checkbox {
   display: flex;
@@ -14,44 +43,49 @@
   color: #898989;
 
   input[type="checkbox"] {
-   width: 18px;
-    height: 18px;
+    width: 19px;
+    height: 19px;
+    min-width: 19px;
+    min-height: 19px;
     accent-color: #afb0b2;
-    margin-top: 3px;
     cursor: pointer;
   }
 
   .text {
-    line-height: 1.4;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 0.02em;
 
     a {
       color: #afb0b2;
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: text-decoration 0.3s ease;
 
       &:hover {
         text-decoration: underline;
-        color: #f44336;
       }
     }
   }
 }
 
-.agreement {
-  color: #afb0b2;
-}
 .button {
+  height: 56px;
   background: black;
   color: white;
   padding: 14px 24px;
   border-radius: 8px;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 120%;
   transition: background 0.5s ease;
 
   &:hover {
     background: rgba(45, 45, 45, 0.64);
+  }
+  @media (min-width: 744px) {
+    font-weight: 500;
+    font-size: 16px;
   }
 }
 
@@ -59,4 +93,15 @@
   color: #f44336;
   font-size: 13px;
   margin-left: 4px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

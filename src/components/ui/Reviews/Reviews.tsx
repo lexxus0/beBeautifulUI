@@ -33,11 +33,11 @@ export default function Reviews() {
   };
 
   return (
-    <div>
-      <h2 className="font-lato font-semibold text-3xl text-[#2d2d2d] mb-8 text-left">
+    <div className="container mb-20">
+      <h2 className="font-lato font-semibold text-3xl text-[#2d2d2d] mb-8 text-left md:text-center md:text-[40px] md:font-normal">
         Краса, яку підтверджують наші клієнти
       </h2>
-      <div className="flex flex-nowrap gap-16 flex-col">
+      <div className="flex flex-nowrap gap-16 flex-col lg:flex-row lg:flex-wrap">
         {reviews.map((review: IReview) => {
           const isExpanded = expandedReviews[review.createdAt];
           const isLong = review.comment.length > CHARACTER_LIMIT;
@@ -49,7 +49,7 @@ export default function Reviews() {
           return (
             <div
               key={review.createdAt}
-              className="px-6 py-4 bg-gray-200 rounded-2xl w-full relative"
+              className="px-6 py-4 bg-gray-200 rounded-2xl w-full relative lg:w-[616px]"
             >
               <p className="absolute right-5">
                 {convertDayToString(review.createdAt)}
@@ -86,7 +86,7 @@ export default function Reviews() {
                 {isLong && (
                   <button
                     onClick={() => toggleExpand(review.createdAt)}
-                    className="text-sm ml-auto "
+                    className="text-sm ml-auto mt-3"
                   >
                     {isExpanded ? "Сховати" : "Дивитись більше"}
                   </button>
@@ -100,7 +100,7 @@ export default function Reviews() {
                   </button>
                   <p>1</p>
                   <button>
-                    <BiDislike />
+                    <BiDislike className="text-red-600" />
                   </button>
                   <p>0</p>
                 </div>

@@ -35,7 +35,7 @@ const InputGroup: FC<InputGroupProps> = ({
 
       {showToggle && (
         <span className={styles.toggle} onClick={onToggle}>
-          {type === "password" ? <IoEyeSharp /> : <BsFillEyeSlashFill />}
+          {type === "password" ? <IoEyeSharp size={18}/> : <BsFillEyeSlashFill size={18}/>}
         </span>
       )}
 

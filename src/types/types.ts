@@ -66,6 +66,7 @@ export type CategoryCardProps = {
   imageDesktop: string;
   href: string;
 };
+
 export interface IReview {
   name: string;
   location: string;
@@ -77,6 +78,17 @@ export interface IReview {
 export interface IReviewResponse {
   data: IReview[];
   pagination: IPagination;
+}
+
+export interface IUser {
+  name?: string;
+  email: string;
+  password?: string;
+}
+
+export interface IUserResponse {
+  accessToken: string;
+  refreshToken: string;
 }
 
 export interface RegisterFormInputs {
@@ -102,4 +114,3 @@ export interface InputGroupProps {
   showToggle?: boolean;
   onToggle?: () => void;
 }
-

@@ -8,11 +8,18 @@ import { schemaLogin } from "@/validation/authValidation";
 import styles from "./LoginForm.module.scss";
 import { LoginFormInputs } from "@/types/types";
 import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { loginUser } from "@/store/auth/operations";
+import { selectError } from "@/store/auth/selectors";
 
 const LoginForm = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const error = useAppSelector(selectError);
+
   const [showPassword, setShowPassword] = useState(false);
   const [showSuccessMsg, setShowSuccessMsg] = useState(false);
+  const [showErrorMsg, setShowErrorMsg] = useState(false);
 
   const {
     control,
@@ -26,20 +33,30 @@ const LoginForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
-    console.log("Login data:", data);
-    setShowSuccessMsg(true);
+  const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
+    console.log("Данні для входу:", data);
+    const resultAction = await dispatch(loginUser(data));
 
-    setTimeout(() => {
-      setShowSuccessMsg(false);
-      router.push("/");
-    }, 2000);
+    if (loginUser.fulfilled.match(resultAction)) {
+      setShowSuccessMsg(true);
+      setTimeout(() => {
+        setShowSuccessMsg(false);
+        router.push("/");
+      }, 2000);
+    } else {
+      console.error("Помилка входу:", resultAction.payload);
+      setShowErrorMsg(true);
+      setTimeout(() => setShowErrorMsg(false), 3000);
+    }
   };
 
   return (
     <>
       {showSuccessMsg && (
         <div className={styles.successMessage}>Вхід успішний!</div>
+      )}
+      {showErrorMsg && error && (
+        <div className={styles.errorMessage}>Помилка входу</div>
       )}
 
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
