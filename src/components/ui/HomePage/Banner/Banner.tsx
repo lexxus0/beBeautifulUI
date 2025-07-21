@@ -1,4 +1,4 @@
-import Icon from "@/components/elements/icon";
+import Icon from "@/components/elements/Icon";
 import styles from "./Banner.module.scss";
 
 const Banner = () => {

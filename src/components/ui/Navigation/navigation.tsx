@@ -1,10 +1,11 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Icon from "@/components/elements/icon";
+import Icon from "@/components/elements/Icon";
 
-import styles from "./navigation.module.css";
+import styles from "./Navigation.module.css";
 import clsx from "clsx";
+import BasketIcon from "@/components/elements/BasketIcon";
 
 const buildCssClasses = ({ isActive }: { isActive: boolean }) =>
   clsx(styles.link, isActive && styles.activeLink);
@@ -34,7 +35,8 @@ export default function Navigation() {
         </li>
       ))}
       <li>
-        <Icon name="icon-basket" className="hidden lg:block lg:w-8 lg:h-8" />
+      <BasketIcon className="hidden lg:block lg:w-8 lg:h-8 fill-black-10"/>
+        {/* <Icon name="icon-basket" className="hidden lg:block lg:w-8 lg:h-8" /> */}
       </li>
     </ul>
   );

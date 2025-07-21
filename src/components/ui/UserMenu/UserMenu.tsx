@@ -1,8 +1,8 @@
-import Icon from "@/components/elements/icon";
+import Icon from "@/components/elements/Icon";
 import Image from "next/image";
 import React from "react";
 
-import styles from "./user-menu.module.css";
+import styles from "./UserMenu.module.css";
 
 export default function UserMenu() {
   return (

@@ -1,10 +1,10 @@
 import React from "react";
-import Navigation from "../Navigation/navigation";
-import Icon from "@/components/elements/icon";
-import AuthMenu from "../AuthMenu/auth-menu";
-import UserMenu from "../UserMenu/user-menu";
+import Navigation from "../Navigation/Navigation";
+import Icon from "@/components/elements/Icon";
+import AuthMenu from "../AuthMenu/AuthMenu";
+import UserMenu from "../UserMenu/UserMenu";
 
-import styles from "./mobile-menu.module.css";
+import styles from "./MobileMenu.module.css";
 
 type MobileMenuProps = {
   onClose?: () => void;
