@@ -5,14 +5,22 @@ import axios from "axios";
 export const instance = axios.create({
   baseURL: "https://be-beautiful-backend.onrender.com/api",
   // baseURL: "http://localhost:3001/api",
-});
+ });
 
 export const setAuthHeader = (token: string) => {
   instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+
+  if (typeof window !== "undefined") {
+    localStorage.setItem("accessToken", token);
+  }
 };
 
 export const clearAuthHeader = () => {
   instance.defaults.headers.common.Authorization = "";
+
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("accessToken");
+  }
 };
 
 export const handleError = (error: unknown, defaultMessage: string) => {
