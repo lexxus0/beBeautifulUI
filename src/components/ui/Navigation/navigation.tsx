@@ -13,7 +13,7 @@ export default function Navigation() {
   const pathname = usePathname();
 
   const links = [
-    { href: "/main", label: "Головна" },
+    { href: "/", label: "Головна" },
     { href: "/catalog", label: "Каталог" },
     { href: "/aboutus", label: "Про нас" },
     { href: "/blog", label: "Блог" },

@@ -21,7 +21,7 @@ export default function Certificates() {
       <button className="border hidden md:block  my-10 border-[#2d2d2d] rounded-sm text-lg font-inter w-[434px] mx-auto h-14">
         Детальніше
       </button>
-      <div className="flex flex-col gap-3 md:flex-row md:flex-wrap">
+      <div className="flex flex-col gap-3 md:flex-row md:flex-wrap justify-center">
         <div className="certificate-bg">
           <p className="certificate-text">500</p>
         </div>

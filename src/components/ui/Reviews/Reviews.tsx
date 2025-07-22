@@ -6,7 +6,7 @@ import { fetchReviews } from "@/store/reviews/operations";
 import { selectReviews } from "@/store/reviews/selectors";
 import { IReview } from "@/types/types";
 import { useEffect, useState } from "react";
-import defaultImage from "../../../../public/images/def.jpg";
+import defaultImage from "/public/images/def.jpg";
 import Image from "next/image";
 import { convertDayToString } from "@/helpers/covertDateToString";
 import { BiLike, BiDislike } from "react-icons/bi";

@@ -92,6 +92,10 @@ body {
 }
 
 .certificate-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 180px;
   background: linear-gradient(180deg, #2d2d2d 0%, #4e4e4e 54.29%, #2d2d2d 100%);
   cursor: pointer;
   border-radius: 8px;
@@ -100,6 +104,7 @@ body {
 
 @media screen and (min-width: 744px) {
   .certificate-bg {
+    height: 210px;
     width: 314px;
   }
 }
@@ -113,7 +118,7 @@ body {
   font-family: "Lato", sans-serif;
   font-weight: 400;
   background: linear-gradient(180deg, #7e3b01 0%, #eacc93 54.29%, #1e0e00 100%);
-  font-size: 40px;
+  font-size: 80px;
   text-align: center;
   padding-block: 20px;
   line-height: 120%;
