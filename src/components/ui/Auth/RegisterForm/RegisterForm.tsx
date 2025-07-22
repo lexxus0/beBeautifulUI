@@ -41,8 +41,12 @@ const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
   });
 
   const onSubmit: SubmitHandler<RegisterFormInputs> = async (data) => {
-    console.log("Данні для реєстрації:", data);
-    const resultAction = await dispatch(registerUser(data));
+    const fixedData = {
+    ...data,
+    agree: data.agree ? "true" : "false",
+  };
+    console.log("Данні для реєстрації:", fixedData);
+    const resultAction = await dispatch(registerUser(fixedData));
 
     if (registerUser.fulfilled.match(resultAction)) {
       const { accessToken } = resultAction.payload;

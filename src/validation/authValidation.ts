@@ -11,7 +11,10 @@ export const schemaRegister = yup.object({
     .string()
     .min(6, "Мінімум 6 символів")
     .required("Введіть пароль"),
-  agree: yup.boolean().oneOf([true], "Потрібна згода").required(),
+  agree: yup
+    .boolean()
+    .oneOf([true], "Потрібна згода")
+    .required(),
 });
 
 export const schemaLogin = yup.object({
