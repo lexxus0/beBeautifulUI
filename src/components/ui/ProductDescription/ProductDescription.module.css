@@ -9,10 +9,10 @@
 .accordionItem {
     margin-bottom: 1rem;
     color: #2D2D2D;
-
-    border-bottom: 1px solid #ccc;
     padding-bottom: 0.5rem;
 }
+
+
 
 .accordionHeader {
     display: flex;
@@ -25,12 +25,14 @@
     border: none;
     text-align: left;
     cursor: pointer;
-    padding: 0.5rem 0;
     font-size: 1rem;
 }
 
 .accordionContent {
-    margin-top: 0.5rem;
+    margin-top: 16px;
     color: #2D2D2D;
     line-height: 1.5;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ccc;
+
 }

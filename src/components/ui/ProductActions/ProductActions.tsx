@@ -16,8 +16,8 @@ const ProductActions = ({ product }: ProductActionsProps) => {
   const [quantity, setQuantity] = useState<number>(1);
   return (
     <div className={css.actionsWrapper}>
-      <div className={css.actioncontainer}>
-        <p className={css.volume}>Об'єм</p>
+      <p className={css.volume}>Об'єм</p>
+      <div className={css.actionValueButton}>
         {product.volumeOptions.length !== 0 ? (
           product.volumeOptions.map((vol) => (
             <button
@@ -40,8 +40,8 @@ const ProductActions = ({ product }: ProductActionsProps) => {
         )}
       </div>
 
-      <div className={css.actioncontainer}>
-        <p className={css.selectQuantityParagraph}>Кількість</p>
+      <div className={css.quantitycontainer}>
+        <p className={css.quantity}>Кількість</p>
         <select
           value={quantity}
           onChange={(e) => setQuantity(Number(e.target.value))}
@@ -53,6 +53,15 @@ const ProductActions = ({ product }: ProductActionsProps) => {
             </option>
           ))}
         </select>
+      </div>
+
+      <div className={css.addButtonContainer}>
+        <button className={css.addShoppingCartButton} type="button">
+          Додати до кошика
+        </button>
+        <button className={css.addToFavoriteButton} type="button">
+          Додати до обраного
+        </button>
       </div>
     </div>
   );

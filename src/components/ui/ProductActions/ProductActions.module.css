@@ -1,13 +1,14 @@
 .actionsWrapper {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+
 }
 
-.actioncontainer {
+.actionValueButton {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    flex-direction: row;
+    gap: 20px;
+    margin-bottom: 16px;
 }
 
 .volume,
@@ -46,15 +47,7 @@
     background-color: #2d2d2d;
 }
 
-.selectQuantityParagraph {
-    color: #2D2D2D;
-    font-size: 18px;
-    font-family: Lato;
-    font-weight: 400;
-    line-height: 27px;
-    letter-spacing: 0.18px;
-    word-wrap: break-word;
-}
+
 
 .selectQuantity {
     width: 100px;
@@ -67,4 +60,42 @@
     letter-spacing: 0.06px;
     border: 2px #2D2D2D solid;
     border-radius: 8px;
+}
+
+.quantitycontainer {
+    margin-bottom: 32px;
+}
+
+.addButtonContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+.addShoppingCartButton {
+    font-size: 20px;
+    font-family: Open Sans;
+    font-weight: 400;
+    line-height: 24px;
+    color: white;
+    border-radius: 8px;
+    background: #2D2D2D;
+    padding: 16px 32px;
+    width: 335px;
+
+}
+
+.addToFavoriteButton {
+    font-size: 20px;
+    font-family: Open Sans;
+    font-weight: 400;
+    line-height: 24px;
+    border-radius: 8px;
+    width: 335px;
+    color: white;
+    padding: 16px 32px;
+    background: linear-gradient(180deg, rgba(45, 45, 45, 0.80) 0%, rgba(148.34, 147.63, 147.63, 0.80) 65%, rgba(45, 45, 45, 0.80) 100%);
+    overflow: hidden;
 }
