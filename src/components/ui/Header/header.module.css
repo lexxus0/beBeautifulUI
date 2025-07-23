@@ -1,6 +1,7 @@
 .header {
   width: 375px;
-  padding: 10px 20px;
+  /* padding: 6px 20px; */
+  padding-inline: 20px;
   margin-inline: auto;
   display: flex;
   justify-content: space-between;
@@ -24,5 +25,10 @@
   .header {
     width: 1440px;
     padding-inline: 72px;
+  }
+
+  .iconUser{
+    width: 20px;
+    height: 26px;
   }
 }

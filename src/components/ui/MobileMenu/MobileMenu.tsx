@@ -22,7 +22,7 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
         <Icon name="icon-search" className={styles.iconSearch} />
       </div>
       <Navigation />
-      <div className="block md:hidden">
+      <div>
         <AuthMenu />
       </div>
     </div>

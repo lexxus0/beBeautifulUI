@@ -25,7 +25,7 @@ export default function AuthMenu() {
           additionalClass: "signIn",
         })}
       >
-        <Icon name="icon-login" className="w-[19px] h-[19px] md:hidden" />
+        <Icon name="icon-login" className="w-[19px] h-[19px] lg:hidden" />
         Увійти
       </Link>
       <Link
@@ -35,7 +35,7 @@ export default function AuthMenu() {
           additionalClass: "signUp",
         })}
       >
-        <Icon name="icon-register" className="w-[19px] h-[19px] md:hidden" />
+        <Icon name="icon-register" className="w-[19px] h-[19px] lg:hidden" />
         Зареєструватися
       </Link>
     </div>
