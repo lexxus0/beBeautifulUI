@@ -1,7 +1,8 @@
 .nav {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
+  margin-bottom: 32px;
 }
 
 .link {
@@ -11,12 +12,26 @@
   line-height: 1.5;
   letter-spacing: 0.01em;
   color: var(--color-white-30);
-  padding: 4px;
+  padding: 8px 16px;
+}
+
+.link:hover {
+  font-weight: 700;
+  border-left: 1px solid var(--color-black-10);
+  border-radius: 8px;
+  width: 300px;
+  background-color: #e4e4e4;
+  color: var(--color-black-10);
 }
 
 .activeLink {
-  border-left: 1px solid var(--color-white-30);
   font-weight: 700;
+  border-left: 1px solid var(--color-black-10);
+  border-radius: 8px;
+  width: 300px;
+  height: 48px;
+  background-color: #e4e4e4;
+  color: var(--color-black-10);
 }
 
 @media screen and (min-width: 1440px) {
