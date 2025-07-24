@@ -1,10 +1,19 @@
+"use client";
+
+import React, { useState } from "react";
 import Icon from "@/components/elements/Icon";
 import Image from "next/image";
-import React from "react";
 
 import styles from "./UserMenu.module.css";
+import AccountMenu from "../AccountMenu/AccountMenu";
 
 export default function UserMenu() {
+  const [openModal, setOpenModal] = useState(false);
+
+  const onToggleModal = () => {
+    setOpenModal(prev => !prev);  
+  };
+
   return (
     <div className={styles.wrapper}>
       <Icon
@@ -28,6 +37,13 @@ export default function UserMenu() {
           className="hidden xl:block"
         />
         <p className={styles.text}>Іванка</p>
+        <button
+          onClick={onToggleModal}
+          className="w-[18px] h-[9px] flex items-center justify-center
+        text-white-30 lg:text-black-10 hover:text-black-10 lg:hover:text-gray-10"
+        >
+          <Icon name="icon-arrow-down" className="w-[10px] h-[6px]" />
+        </button>
       </div>
       <div className="flex gap-4 items-center xl:hidden">
         <button>
@@ -37,6 +53,7 @@ export default function UserMenu() {
           <Icon name="icon-logout" className="w-6 h-6 fill-white-30" />
         </button>
       </div>
+      {openModal && <AccountMenu onClose={()=> setOpenModal(false)}/>}
     </div>
   );
 }

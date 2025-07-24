@@ -21,7 +21,7 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
         <input className={styles.input} placeholder="Пошук..."/>
         <Icon name="icon-search" className={styles.iconSearch} />
       </div>
-      <Navigation />
+      <Navigation onClose={onClose}/>
       <div>
         <AuthMenu />
       </div>

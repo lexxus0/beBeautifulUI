@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import Icon from "@/components/elements/Icon";
 import Link from "next/link";
