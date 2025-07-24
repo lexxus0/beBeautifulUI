@@ -13,13 +13,18 @@ export default function Icon({
   color = "currentColor",
   useGradient,
 }: IconsProps) {
+  let fillColor = color;
+
+  if (useGradient) {
+    if (name === "icon-star") {
+      fillColor = "url(#star-gold-gradient)";
+    } else if (name === "icon-heart") {
+      fillColor = "url(#gold-gradient)";
+    }
+  }
+
   return (
-    <svg
-      width={width}
-      height={height}
-      fill={useGradient ? "url(#gold-gradient)" : color}
-      aria-hidden="true"
-    >
+    <svg width={width} height={height} fill={fillColor} aria-hidden="true">
       <use xlinkHref={`/symbol-defs.svg#${name}`} />
     </svg>
   );

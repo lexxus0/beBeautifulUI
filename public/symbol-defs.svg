@@ -5,8 +5,13 @@
       <stop offset="54%" stop-color="#EACC93"/>
       <stop offset="100%" stop-color="#1E0E00"/>
     </linearGradient>
+    <linearGradient id="star-gold-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+  <stop offset="0%" stop-color="#C48E28" />
+  <stop offset="50%" stop-color="#C09E5C" />
+  <stop offset="100%" stop-color="#C48E28" />
+</linearGradient>
 <symbol id="icon-star" viewBox="0 0 34 32">
-<path d="M7.093 31.835l2.645-11.334-8.796-7.62 11.586-1.003 4.538-10.69 4.538 10.688 11.584 1.003-8.796 7.62 2.647 11.334-9.973-6.016-9.973 6.018z"></path>
+<path d="M7.093 31.835l2.645-11.334-8.796-7.62 11.586-1.003 4.538-10.69 4.538 10.688 11.584 1.003-8.796 7.62 2.647 11.334-9.973-6.016-9.973 6.018z" fill="url(#star-gold-gradient)"></path>
 </symbol>
 <symbol id="icon-down-arrow" viewBox="0 0 56 32">
 <path d="M49.68 1.808l4.24 4.244-23.108 23.116c-0.37 0.373-0.811 0.668-1.296 0.87s-1.005 0.306-1.53 0.306c-0.525 0-1.045-0.104-1.53-0.306s-0.925-0.498-1.296-0.87l-23.12-23.116 4.24-4.24 21.7 21.696 21.7-21.7z"></path>

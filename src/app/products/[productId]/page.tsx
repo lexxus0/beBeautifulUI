@@ -1,6 +1,6 @@
 import ProductActions from "@/components/ui/ProductActions/ProductActions";
 import ProductDescription from "@/components/ui/ProductDescription/ProductDescription";
-import ProductGallery from "@/components/ui/ProductGallery";
+import ProductGallery from "@/components/ui/ProductGallery/ProductGallery";
 import ProductHeader from "@/components/ui/ProductHeader/ProductHeader";
 import { Product } from "@/types/types";
 

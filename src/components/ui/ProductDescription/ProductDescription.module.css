@@ -35,3 +35,13 @@
     border-bottom: 1px solid #ccc;
 
 }
+
+.arrow {
+    transition: transform 0.3s ease;
+
+}
+
+
+.arrowRotated {
+    transform: rotate(-180deg);
+}

@@ -19,7 +19,18 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
       <div className={css.accordionItem}>
         <button onClick={() => handleClick(0)} className={css.accordionHeader}>
           <span>Опис продукту:</span>
-          <Icon name="icon-down-arrow" width={12} height={24} color="#2D2D2D" />
+          <div
+            className={`${css.arrow} ${
+              activeIndex === 0 ? css.arrowRotated : ""
+            }`}
+          >
+            <Icon
+              name="icon-down-arrow"
+              width={12}
+              height={24}
+              color="#2D2D2D"
+            />
+          </div>
         </button>
         {activeIndex === 0 && (
           <div className={css.accordionContent}>{product.description}</div>
@@ -29,7 +40,18 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
       <div className={css.accordionItem}>
         <button onClick={() => handleClick(1)} className={css.accordionHeader}>
           <span>Чому цей шампунь — більше, ніж очищення</span>
-          <Icon name="icon-down-arrow" width={12} height={24} color="#2D2D2D" />
+          <div
+            className={`${css.arrow} ${
+              activeIndex === 1 ? css.arrowRotated : ""
+            }`}
+          >
+            <Icon
+              name="icon-down-arrow"
+              width={12}
+              height={24}
+              color="#2D2D2D"
+            />
+          </div>
         </button>
         {activeIndex === 1 && (
           <div className={css.accordionContent}>
@@ -41,7 +63,18 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
       <div className={css.accordionItem}>
         <button onClick={() => handleClick(2)} className={css.accordionHeader}>
           <span>Основні активні компоненти:</span>
-          <Icon name="icon-down-arrow" width={12} height={24} color="#2D2D2D" />
+          <div
+            className={`${css.arrow} ${
+              activeIndex === 2 ? css.arrowRotated : ""
+            }`}
+          >
+            <Icon
+              name="icon-down-arrow"
+              width={12}
+              height={24}
+              color="#2D2D2D"
+            />
+          </div>
         </button>
         {activeIndex === 2 && (
           <div className={css.accordionContent}>
@@ -57,7 +90,18 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
       <div className={css.accordionItem}>
         <button onClick={() => handleClick(3)} className={css.accordionHeader}>
           <span>Повний склад (INCI):</span>
-          <Icon name="icon-down-arrow" width={12} height={24} color="#2D2D2D" />
+          <div
+            className={`${css.arrow} ${
+              activeIndex === 3 ? css.arrowRotated : ""
+            }`}
+          >
+            <Icon
+              name="icon-down-arrow"
+              width={12}
+              height={24}
+              color="#2D2D2D"
+            />
+          </div>
         </button>
         {activeIndex === 3 && (
           <div className={css.accordionContent}>
@@ -69,7 +113,18 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
       <div className={css.accordionItem}>
         <button onClick={() => handleClick(4)} className={css.accordionHeader}>
           <span>Спосіб застосування:</span>
-          <Icon name="icon-down-arrow" width={12} height={24} color="#2D2D2D" />
+          <div
+            className={`${css.arrow} ${
+              activeIndex === 4 ? css.arrowRotated : ""
+            }`}
+          >
+            <Icon
+              name="icon-down-arrow"
+              width={12}
+              height={24}
+              color="#2D2D2D"
+            />
+          </div>
         </button>
         {activeIndex === 4 && (
           <div className={css.accordionContent}>{product.instructions}</div>
@@ -79,7 +134,18 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
       <div className={css.accordionItem}>
         <button onClick={() => handleClick(5)} className={css.accordionHeader}>
           <span>Застереження:</span>
-          <Icon name="icon-down-arrow" width={12} height={24} color="#2D2D2D" />
+          <div
+            className={`${css.arrow} ${
+              activeIndex === 5 ? css.arrowRotated : ""
+            }`}
+          >
+            <Icon
+              name="icon-down-arrow"
+              width={12}
+              height={24}
+              color="#2D2D2D"
+            />
+          </div>
         </button>
         {activeIndex === 5 && (
           <div className={css.accordionContent}>
@@ -91,7 +157,18 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
       <div className={css.accordionItem}>
         <button onClick={() => handleClick(6)} className={css.accordionHeader}>
           <span>Термін придатності:</span>
-          <Icon name="icon-down-arrow" width={12} height={24} color="#2D2D2D" />
+          <div
+            className={`${css.arrow} ${
+              activeIndex === 6 ? css.arrowRotated : ""
+            }`}
+          >
+            <Icon
+              name="icon-down-arrow"
+              width={12}
+              height={24}
+              color="#2D2D2D"
+            />
+          </div>
         </button>
         {activeIndex === 6 && (
           <div className={css.accordionContent}>

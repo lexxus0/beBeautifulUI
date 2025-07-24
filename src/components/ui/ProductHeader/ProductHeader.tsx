@@ -9,13 +9,14 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
   return (
     <div>
       <div className={css.categoryContainer}>
-        <h3 className={css.category}>
-          {/* {product.category.charAt(0).toUpperCase() + product.category.slice(1)} */}
-          {product.name}
-        </h3>
+        <h3 className={css.category}>{product.name}</h3>
 
         <div className="flex items-center justify-center gap-2">
-          <div className="w-2 h-2 bg-[#8db078] rounded-full " />
+          <div
+            className={`w-2 h-2 rounded-full ${
+              product.inStock ? "bg-[#8db078]" : "bg-[#AF1818]"
+            }`}
+          />
           <p className={css.inStock}>
             {product.inStock ? "У наявності" : "Немає в наявності"}
           </p>
