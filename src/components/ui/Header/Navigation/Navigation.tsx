@@ -2,7 +2,6 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Icon from "@/components/elements/Icon";
-// import BasketIcon from "@/components/elements/BasketIcon";
 
 import styles from "./Navigation.module.css";
 import clsx from "clsx";
@@ -35,11 +34,12 @@ export default function Navigation({ onClose }: NavigationProps) {
             isActive: !isAuthPage && pathname === link.href,
           })}
         >
-          <Link href={link.href} onClick={onClose}>{link.label}</Link>
+          <Link href={link.href} onClick={onClose}>
+            {link.label}
+          </Link>
         </li>
       ))}
       <li>
-      {/* <BasketIcon className="hidden lg:block lg:w-8 lg:h-8 fill-black-10"/> */}
         <Icon name="icon-basket" className="hidden lg:block lg:w-8 lg:h-8" />
       </li>
     </ul>

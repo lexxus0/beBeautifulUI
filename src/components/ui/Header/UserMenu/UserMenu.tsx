@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import Icon from "@/components/elements/Icon";
 import Image from "next/image";
+import Icon from "@/components/elements/Icon";
+import AccountMenu from "../AccountMenu/AccountMenu";
 
 import styles from "./UserMenu.module.css";
-import AccountMenu from "../AccountMenu/AccountMenu";
 
 export default function UserMenu() {
   const [openModal, setOpenModal] = useState(false);

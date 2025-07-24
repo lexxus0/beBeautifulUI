@@ -18,10 +18,10 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
       </button>
       <UserMenu />
       <div className="relative">
-        <input className={styles.input} placeholder="Пошук..."/>
+        <input className={styles.input} placeholder="Пошук..." />
         <Icon name="icon-search" className={styles.iconSearch} />
       </div>
-      <Navigation onClose={onClose}/>
+      <Navigation onClose={onClose} />
       <div>
         <AuthMenu />
       </div>

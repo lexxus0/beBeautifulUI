@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import Icon from "@/components/elements/Icon";
-import Navigation from "../Navigation/Navigation";
-import MobileMenu from "../MobileMenu/MobileMenu";
+import Navigation from "./Navigation/Navigation";
+import MobileMenu from "./MobileMenu/MobileMenu";
 import Logo from "@/components/elements/Logo";
-// import AuthMenu from "../AuthMenu/AuthMenu";
-import UserMenu from "../UserMenu/UserMenu";
-// import HeaderActions from "../HeaderActions/HeaderActions";
+// import AuthMenu from "./AuthMenu/AuthMenu";
+import UserMenu from "./UserMenu/UserMenu";
+// import HeaderActions from "./HeaderActions/HeaderActions";
 
 import styles from "./Header.module.css";
 
