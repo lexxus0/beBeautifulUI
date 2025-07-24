@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 import Icon from "../../elements/Icons";
 
-import * as css from "@/components/ui/ProductGallery/ProductGallery.module.css";
+import css from "@/components/ui/ProductGallery/ProductGallery.module.css";
 
 export interface ProductGalleryProps {
   product: Product;
