@@ -19,7 +19,7 @@ const homeMetadata = {
     siteName: "Science Be Beautiful",
     images: [
       {
-        url: "https://sciencebebeautiful.com/images/og-image.jpg",
+        url: "https://be-beautiful-ui.vercel.app/images/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Science Be Beautiful — догляд без компромісів",
@@ -32,7 +32,7 @@ const homeMetadata = {
     title: "Science Be Beautiful — догляд, що працює",
     description:
       "Натуральна та ефективна косметика для жінок, які знають, чого хочуть. Створено жінкою-хіміком.",
-    images: ["https://sciencebebeautiful.com/images/og-image.jpg"],
+    images: ["https://be-beautiful-ui.vercel.app/images/og-image.jpg"],
   },
   icons: {
     icon: "/favicon.ico",
