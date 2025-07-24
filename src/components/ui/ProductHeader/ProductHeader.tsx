@@ -5,12 +5,15 @@ export interface ProductHeaderProps {
 }
 
 const ProductHeader = ({ product }: ProductHeaderProps) => {
+  console.log(product);
   return (
     <div>
       <div className={css.categoryContainer}>
         <h3 className={css.category}>
-          {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
+          {/* {product.category.charAt(0).toUpperCase() + product.category.slice(1)} */}
+          {product.name}
         </h3>
+
         <div className="flex items-center justify-center gap-2">
           <div className="w-2 h-2 bg-[#8db078] rounded-full " />
           <p className={css.inStock}>

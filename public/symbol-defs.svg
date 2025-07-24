@@ -1,0 +1,18 @@
+<svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+ <linearGradient id="gold-gradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1E0E00"/>
+      <stop offset="54%" stop-color="#EACC93"/>
+      <stop offset="100%" stop-color="#1E0E00"/>
+    </linearGradient>
+<symbol id="icon-star" viewBox="0 0 34 32">
+<path d="M7.093 31.835l2.645-11.334-8.796-7.62 11.586-1.003 4.538-10.69 4.538 10.688 11.584 1.003-8.796 7.62 2.647 11.334-9.973-6.016-9.973 6.018z"></path>
+</symbol>
+<symbol id="icon-down-arrow" viewBox="0 0 56 32">
+<path d="M49.68 1.808l4.24 4.244-23.108 23.116c-0.37 0.373-0.811 0.668-1.296 0.87s-1.005 0.306-1.53 0.306c-0.525 0-1.045-0.104-1.53-0.306s-0.925-0.498-1.296-0.87l-23.12-23.116 4.24-4.24 21.7 21.696 21.7-21.7z"></path>
+</symbol>
+<symbol id="icon-heart" viewBox="0 0 34 32">
+<path d="M16.8 32l-2.32-2.302c-8.24-8.144-13.68-13.532-13.68-20.107 0-5.389 3.872-9.591 8.8-9.591 2.784 0 5.456 1.413 7.2 3.627 1.744-2.215 4.416-3.627 7.2-3.627 4.928 0 8.8 4.203 8.8 9.591 0 6.574-5.44 11.963-13.68 20.107l-2.32 2.302z" fill="url(#gold-gradient)"></path>
+</symbol>
+</defs>
+</svg>

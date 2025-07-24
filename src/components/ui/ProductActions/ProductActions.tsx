@@ -4,6 +4,7 @@ import { Product } from "@/types/types";
 import React, { useState } from "react";
 
 import css from "@/components/ui/ProductActions/ProductActions.module.css";
+import Icon from "@/components/elements/Icons";
 
 export interface ProductActionsProps {
   product: Product;
@@ -60,7 +61,8 @@ const ProductActions = ({ product }: ProductActionsProps) => {
           Додати до кошика
         </button>
         <button className={css.addToFavoriteButton} type="button">
-          Додати до обраного
+          <p>Додати до обраного</p>
+          <Icon name="icon-heart" width={20} height={20} useGradient />
         </button>
       </div>
     </div>
