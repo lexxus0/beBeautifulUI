@@ -1,0 +1,39 @@
+.modal {
+  position: absolute;
+  top: 54px;
+  right: 72px;
+  z-index: 99;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.link {
+  font-family: var(--font-lato);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: var(--color-white-30);
+  padding: 8px 16px;
+  transition: font-weight 0.3s ease, border-radius 0.3s ease, color 0.3s ease,
+    background-color 0.3s ease;
+
+  &:hover {
+    font-weight: 700;
+    border-left: 1px solid var(--color-black-10);
+    border-radius: 8px;
+    background-color: #e4e4e4;
+    color: var(--color-black-10);
+  }
+  &:active {
+    font-weight: 700;
+    border-left: 1px solid var(--color-black-10);
+    border-radius: 8px;
+    background-color: #e4e4e4;
+    color: var(--color-black-10);
+  }
+}

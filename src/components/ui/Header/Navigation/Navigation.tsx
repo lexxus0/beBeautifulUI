@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Icon from "@/components/elements/Icon";
 
-import styles from "./Navigation.module.css";
+import styles from "./Navigation.module.scss";
 import clsx from "clsx";
 
 type NavigationProps = {

@@ -4,7 +4,7 @@ import Icon from "@/components/elements/Icon";
 import AuthMenu from "../AuthMenu/AuthMenu";
 import UserMenu from "../UserMenu/UserMenu";
 
-import styles from "./MobileMenu.module.css";
+import styles from "./MobileMenu.module.scss";
 
 type MobileMenuProps = {
   onClose?: () => void;

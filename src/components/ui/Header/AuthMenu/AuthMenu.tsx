@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Icon from "@/components/elements/Icon";
 
-import styles from "./AuthMenu.module.css";
+import styles from "./AuthMenu.module.scss";
 import clsx from "clsx";
 
 const buildCssClasses = ({

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Icon from "@/components/elements/Icon";
 import AccountMenu from "../AccountMenu/AccountMenu";
 
-import styles from "./UserMenu.module.css";
+import styles from "./UserMenu.module.scss";
 
 export default function UserMenu() {
   const [openModal, setOpenModal] = useState(false);

@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import styles from "./AccountMenu.module.css";
+import styles from "./AccountMenu.module.scss";
 
 type AccountMenuProps = {
   onClose?: () => void;

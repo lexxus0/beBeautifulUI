@@ -5,29 +5,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
 
-@media screen and (min-width: 744px) {
-  .header {
+  @media (min-width: 744px) {
     width: 744px;
     padding-inline: 40px;
   }
 
-  .wrapperNav {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-}
-
-@media screen and (min-width: 1440px) {
-  .header {
+  @media (min-width: 1440px) {
     width: 1440px;
     padding-inline: 72px;
   }
+}
 
-  .iconUser {
-    width: 20px;
-    height: 26px;
+.wrapperNav {
+  @media screen and (min-width: 744px) {
+    display: flex;
+    align-items: center;
+    gap: 20px;
   }
 }

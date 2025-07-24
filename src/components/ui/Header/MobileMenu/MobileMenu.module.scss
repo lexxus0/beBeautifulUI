@@ -14,6 +14,10 @@
   );
   overflow-y: auto;
   outline: none;
+
+  @media (min-width: 1440px) {
+    display: none;
+  }
 }
 
 .closeBtn {
@@ -49,14 +53,14 @@
     rgba(45, 45, 45, 0.6) 100%
   );
   margin-bottom: 32px;
-}
 
-.input::placeholder {
-  font-weight: 275;
-  font-size: 12px;
-  line-height: 1.34;
-  letter-spacing: 0em;
-  color: #caced7;
+  &::placeholder {
+    font-weight: 275;
+    font-size: 12px;
+    line-height: 1.34;
+    letter-spacing: 0em;
+    color: #caced7;
+  }
 }
 
 .iconSearch {
@@ -67,10 +71,4 @@
   height: 20px;
   stroke: var(--color-white-30);
   fill: transparent;
-}
-
-@media screen and (min-width: 1440px) {
-  .modal {
-    display: none;
-  }
 }
