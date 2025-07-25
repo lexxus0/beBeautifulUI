@@ -1,0 +1,15 @@
+.starAssessment {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 24px;
+}
+
+.fidbackQuantity {
+    margin-left: 4px;
+    color: #2D2D2D;
+    font-family: Roboto;
+    line-height: 18px;
+    letter-spacing: 0.24px;
+}
