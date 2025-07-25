@@ -1,0 +1,124 @@
+.category {
+  padding: 40px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+  border-bottom: 1px solid var(--color-yellow);
+
+  @media (min-width: 744px) {
+    padding: 70px 0;
+  }
+
+  @media (min-width: 1440px) {
+    padding: 88px 0;
+    gap: 80px;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+
+  @media (min-width: 744px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 0;
+  }
+}
+
+.title {
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 140%;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: var(--color-black-10);
+
+  @media (min-width: 744px) {
+    width: 319px;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 120%;
+  }
+  @media (min-width: 1440px) {
+    width: 757px;
+    font-weight: 400;
+    font-size: 42px;
+    line-height: 140%;
+  }
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 120%;
+  border: 1px solid #403e3e;
+  border-radius: 8px;
+  background: transparent;
+  width: 335px;
+  height: 56px;
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+
+  &:hover {
+    color: #555;
+    border-color: #555;
+    box-shadow: 0 4px 8px 0 rgba(45, 45, 45, 0.24);
+  }
+
+  &:active{
+    color: #fff;
+    border-color: #555;
+    background: var(--color-black-10); 
+  }
+
+  @media (min-width: 744px) {
+    width: 322px;
+    height: 40px;
+  }
+  @media (min-width: 1440px) {
+    width: 306px;
+    height: 56px;
+  }
+}
+
+.cardsWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  gap: 24px;
+
+  & > * {
+    width: 100%;
+  }
+
+  @media (min-width: 744px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px;
+
+    & > * {
+      width: calc(50% - 12px);
+    }
+  }
+
+  @media (min-width: 1440px) {
+    gap: 4px;
+
+    & > * {
+      width: calc(25% - 3px);
+    }
+  }
+}

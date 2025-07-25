@@ -1,5 +1,33 @@
 @import "tailwindcss";
 
+@theme {
+  --font-roboto: "Roboto", sans-serif;
+  --font-lato: "Lato", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-open-sans: "Open Sans", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-source-sans-pro: "Source Sans Pro", sans-serif;
+  --font-montserrat: "Montserrat", sans-serif;
+
+  --breakpoint-xs: 320px;
+  --breakpoint-sm: 375px;
+  --breakpoint-md: 744px;
+  --breakpoint-lg: 1440px;
+
+  --color-white: #ffffff;
+  --color-white-10: #f8f7f5;
+  --color-white-20: #f6f6f6;
+  --color-white-30: #fdfdfd;
+
+  --color-black: #000000;
+  --color-black-10: #2d2d2d;
+  --color-black-20: #1e0e00;
+  --color-black-30: #333333;
+
+  --color-green: #3e4f34;
+  --color-yellow: #e9ddce;
+}
+
 *,
 ::before,
 ::after {
@@ -7,24 +35,12 @@
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  border: 0;
   outline: 0;
 }
 
 ol,
 ul {
   list-style: none;
-}
-
-img,
-svg,
-video,
-canvas,
-picture {
-  display: block;
-  max-width: 100%;
 }
 
 button {
@@ -49,6 +65,12 @@ span {
   overflow-wrap: break-word;
 }
 
+body {
+  background-color: var(--color-white-10);
+  font-family: var(--font-roboto, sans-serif);
+  color: var(--color-black-10);
+}
+
 .container {
   width: 375px;
   padding-inline: 20px;
@@ -67,4 +89,52 @@ span {
     width: 1440px;
     padding-inline: 72px;
   }
+}
+
+.certificate-bg {
+  background: linear-gradient(180deg, #2d2d2d 0%, #4e4e4e 54.29%, #2d2d2d 100%);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.add-to-cart-btn-bg {
+  background: linear-gradient(
+    180deg,
+    #2d2d2d 4.33%,
+    rgba(124, 124, 124, 0.96) 60.1%,
+    #2d2d2d 86.06%
+  );
+}
+
+@media screen and (min-width: 744px) {
+  .certificate-bg {
+    width: 314px;
+  }
+}
+
+.certificate-bg:hover {
+  transform: scale(1.05) rotate(-1deg);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(234, 204, 147, 0.5);
+}
+
+.certificate-text {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  background: linear-gradient(180deg, #7e3b01 0%, #eacc93 54.29%, #1e0e00 100%);
+  font-size: 40px;
+  text-align: center;
+  padding-block: 20px;
+  line-height: 120%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background 0.6s ease;
+}
+
+.certificate-bg:hover .certificate-text {
+  background: linear-gradient(180deg, #ffd89b 0%, #eacc93 54.29%, #ff9c33 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
