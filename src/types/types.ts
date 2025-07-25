@@ -22,6 +22,7 @@ export interface IProduct {
   name: string;
   sku: string;
   volumeOptions: string[];
+  priceByVolume: number[];
   priceByVolume: {
     volume: string;
     price: number;

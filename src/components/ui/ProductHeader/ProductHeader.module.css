@@ -1,0 +1,48 @@
+.categoryContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.category {
+    color: #2D2D2D;
+    font-size: 22px;
+    font-family: Source Sans Pro;
+    font-weight: 600;
+    line-height: 33px;
+    letter-spacing: 0.22px;
+    word-wrap: break-word;
+
+}
+
+.inStock {
+    color: #2D2D2D;
+    font-size: 12px;
+    font-family: Roboto;
+    font-weight: 300;
+    line-height: 18px;
+    letter-spacing: 0.24px;
+    word-wrap: break-word;
+}
+
+.features {
+    color: #2D2D2D;
+    font-size: 14px;
+    font-family: Roboto;
+    font-weight: 300;
+    line-height: 21px;
+    letter-spacing: 0.28px;
+    word-wrap: break-word;
+}
+
+.volumeOption {
+    color: #2D2D2D;
+    font-size: 16px;
+    font-family: Roboto;
+    font-weight: 300;
+    line-height: 24px;
+    letter-spacing: 0.32px;
+    word-wrap: break-word;
+    margin-bottom: 16px;
+}
