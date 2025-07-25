@@ -1,7 +1,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Icon from "@/components/elements/Icon";
+import BasketBlackIcon from "@/components/elements/BasketBlackIcon";
 
 import styles from "./Navigation.module.scss";
 import clsx from "clsx";
@@ -40,7 +40,7 @@ export default function Navigation({ onClose }: NavigationProps) {
         </li>
       ))}
       <li>
-        <Icon name="icon-basket" className="hidden lg:block lg:w-8 lg:h-8" />
+        <BasketBlackIcon className="hidden lg:block lg:w-8 lg:h-8"/>
       </li>
     </ul>
   );

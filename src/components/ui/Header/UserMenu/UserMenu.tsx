@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import BasketBlackIcon from "@/components/elements/BasketBlackIcon";
 import Icon from "@/components/elements/Icon";
 import AccountMenu from "../AccountMenu/AccountMenu";
 
@@ -11,16 +12,12 @@ export default function UserMenu() {
   const [openModal, setOpenModal] = useState(false);
 
   const onToggleModal = () => {
-    setOpenModal(prev => !prev);  
+    setOpenModal((prev) => !prev);
   };
 
   return (
     <div className={styles.wrapper}>
-      <Icon
-        name="icon-basket"
-        className="hidden lg:block lg:w-8 lg:h-8 lg:mr-8"
-      />
-
+      <BasketBlackIcon className="hidden lg:block lg:w-8 lg:h-8 lg:mr-8" />
       <div className="flex gap-[13px] items-center">
         <Image
           src="/images/user.png"
@@ -53,7 +50,7 @@ export default function UserMenu() {
           <Icon name="icon-logout" className="w-6 h-6 fill-white-30" />
         </button>
       </div>
-      {openModal && <AccountMenu onClose={()=> setOpenModal(false)}/>}
+      {openModal && <AccountMenu onClose={() => setOpenModal(false)} />}
     </div>
   );
 }

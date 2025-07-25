@@ -6,8 +6,8 @@ import Navigation from "./Navigation/Navigation";
 import MobileMenu from "./MobileMenu/MobileMenu";
 import Logo from "@/components/elements/Logo";
 // import AuthMenu from "./AuthMenu/AuthMenu";
-// import UserMenu from "./UserMenu/UserMenu";
-import HeaderActions from "./HeaderActions/HeaderActions";
+import UserMenu from "./UserMenu/UserMenu";
+// import HeaderActions from "./HeaderActions/HeaderActions";
 
 import styles from "./Header.module.scss";
 
@@ -26,12 +26,12 @@ export default function Header() {
           {/* <div className="hidden md:block">
           <AuthMenu />
         </div> */}
-          {/* <div className="hidden lg:block">
+          <div className="hidden lg:block">
           <UserMenu />
-        </div> */}
-        <div className="hidden md:block">
-          <HeaderActions />
         </div>
+        {/* <div className="hidden md:block">
+          <HeaderActions />
+        </div> */}
           <button
             className="w-10 h-10 flex items-center justify-center lg:hidden"
             onClick={() => {
