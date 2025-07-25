@@ -5,17 +5,18 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "your-domain.com",
         pathname: "/images/**",
       },
       {
         protocol: "https",
         hostname: "picsum.photos",
         pathname: "/**",
-        hostname: "picsum.photos",
       },
       {
         protocol: "https",
         hostname: "i.ibb.co",
+        pathname: "/**", // додай, якщо хочеш дозволити всі шляхи
       },
     ],
   },
