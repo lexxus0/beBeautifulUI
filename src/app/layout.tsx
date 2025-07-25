@@ -4,7 +4,7 @@ import { Roboto, Lato, Poppins, Open_Sans, Inter } from "next/font/google";
 import "../styles/globals.css";
 import { Providers } from "@/store/provider";
 import { sourceSansPro } from "@/fonts/fonts";
-import Header from "@/components/ui/Header/header";
+import Header from "@/components/ui/Header/Header";
 import Footer from "@/components/ui/Footer/Footer";
 
 export const metadata: Metadata = {

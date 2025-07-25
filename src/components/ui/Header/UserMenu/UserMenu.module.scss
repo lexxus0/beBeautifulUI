@@ -5,6 +5,14 @@
   padding-bottom: 4px;
   border-bottom: 1px solid var(--color-white-30);
   margin-bottom: 32px;
+  position: relative;
+
+  @media (min-width: 1440px) {
+    padding-bottom: 0;
+    padding-inline: 72px;
+    border: none;
+    margin-bottom: 0;
+  }
 }
 
 .text {
@@ -13,17 +21,9 @@
   font-weight: 600;
   font-size: 16px;
   color: var(--color-white-30);
-}
+  margin-right: 3px;
 
-@media screen and (min-width: 1440px) {
-  .wrapper {
-    padding-bottom: 0;
-    padding-inline: 72px;
-    border: none;
-    margin-bottom: 0;
-  }
-
-  .text {
+  @media (min-width: 1440px) {
     font-family: var(--font-lato);
     font-style: normal;
     font-size: 18px;

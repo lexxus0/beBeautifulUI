@@ -15,7 +15,7 @@
   color: var(--color-white-30);
 }
 
-@media screen and (max-width: 743px) {
+/* @media screen and (max-width: 743px) { */
   .link {
     width: calc((100% - 15px) / 2);
     padding: 4px 4px;
@@ -24,7 +24,7 @@
     justify-content: center;
     gap: 11px;
   }
-}
+/* } */
 
 .activeLink {
   border-right: 1px solid #697a9e;
@@ -34,7 +34,7 @@
   background: var(--color-black-10);
   text-align: center;
 }
-
+/* 
 @media screen and (min-width: 744px) {
   .linkWrapper {
     border-top: 1px solid var(--color-black-10);
@@ -99,4 +99,4 @@
   .activeLink {
     padding: 11px 18px;
   }
-}
+} */

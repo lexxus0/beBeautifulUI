@@ -1,9 +1,11 @@
+"use client";
+
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Icon from "@/components/elements/icon";
+import Icon from "@/components/elements/Icon";
 
-import styles from "./auth-menu.module.css";
+import styles from "./AuthMenu.module.scss";
 import clsx from "clsx";
 
 const buildCssClasses = ({
@@ -25,7 +27,7 @@ export default function AuthMenu() {
           additionalClass: "signIn",
         })}
       >
-        <Icon name="icon-login" className="w-[19px] h-[19px] md:hidden" />
+        <Icon name="icon-login" className="w-[19px] h-[19px] lg:hidden" />
         Увійти
       </Link>
       <Link
@@ -35,7 +37,7 @@ export default function AuthMenu() {
           additionalClass: "signUp",
         })}
       >
-        <Icon name="icon-register" className="w-[19px] h-[19px] md:hidden" />
+        <Icon name="icon-register" className="w-[19px] h-[19px] lg:hidden" />
         Зареєструватися
       </Link>
     </div>

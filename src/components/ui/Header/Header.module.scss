@@ -1,0 +1,26 @@
+.header {
+  width: 375px;
+  padding-inline: 20px;
+  margin-inline: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (min-width: 744px) {
+    width: 744px;
+    padding-inline: 40px;
+  }
+
+  @media (min-width: 1440px) {
+    width: 1440px;
+    padding-inline: 72px;
+  }
+}
+
+.wrapperNav {
+  @media screen and (min-width: 744px) {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+}
