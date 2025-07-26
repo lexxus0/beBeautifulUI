@@ -1,7 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useAppSelector } from "@/store/hooks";
+import { selectUser } from "@/store/auth/selectors";
+import { useViewport } from "@/helpers/hooks/useViewport";
 import BasketBlackIcon from "@/components/elements/BasketBlackIcon";
 import Icon from "@/components/elements/Icon";
 import AccountMenu from "../AccountMenu/AccountMenu";
@@ -9,48 +12,72 @@ import AccountMenu from "../AccountMenu/AccountMenu";
 import styles from "./UserMenu.module.scss";
 
 export default function UserMenu() {
+  const user = useAppSelector(selectUser);
+  console.log("user: ", user);
+
   const [openModal, setOpenModal] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const { width } = useViewport();
+  const isDesktop = width !== null && width >= 1440;
 
   const onToggleModal = () => {
     setOpenModal((prev) => !prev);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
+        setOpenModal(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} ref={wrapperRef}>
       <BasketBlackIcon className="hidden lg:block lg:w-8 lg:h-8 lg:mr-8" />
       <div className="flex gap-[13px] items-center">
-        <Image
-          src="/images/user.png"
-          alt="VocabBuilder"
-          width={48}
-          height={48}
-          className="block xl:hidden"
-        />
-        <Image
-          src="/images/user-dek.png"
-          alt="VocabBuilder"
-          width={40}
-          height={40}
-          className="hidden xl:block"
-        />
-        <p className={styles.text}>Іванка</p>
+        {user ? (
+          <Image
+            src={user.avatar}
+            alt={user.name}
+            fill
+            className="w-10 h-10 rounded-lg lg:w-12 lg:h-12 object-cover"
+          />
+        ) : (
+          // <span>{user.name.charAt(0)}</span>
+          <span
+            className="w-12 h-12 rounded-lg border-1 border-black-10 bg-gray-10
+    text-2xl font-medium text-white-30 flex items-center justify-center"
+          >
+            US
+          </span>
+        )}
+        {user ? (
+          <p className={styles.text}>{user.name}</p>
+        ) : (
+          <p className={styles.text}>User</p>
+        )}
         <button
           onClick={onToggleModal}
-          className="w-[18px] h-[9px] flex items-center justify-center
+          className="hidden lg:flex w-[18px] h-[9px] items-center justify-center
         text-white-30 lg:text-black-10 hover:text-black-10 lg:hover:text-gray-10"
         >
           <Icon name="icon-arrow-down" className="w-[10px] h-[6px]" />
         </button>
       </div>
-      <div className="flex gap-4 items-center xl:hidden">
-        <button>
-          <Icon name="icon-edit" className="w-6 h-6 fill-white-30" />
-        </button>
-        <button>
-          <Icon name="icon-logout" className="w-6 h-6 fill-white-30" />
-        </button>
-      </div>
-      {openModal && <AccountMenu onClose={() => setOpenModal(false)} />}
+      {isDesktop ? (
+        openModal && <AccountMenu onClose={() => setOpenModal(false)} />
+      ) : (
+        <div className="flex gap-4 items-center lg:hidden">
+          <AccountMenu />
+        </div>
+      )}
     </div>
   );
 }

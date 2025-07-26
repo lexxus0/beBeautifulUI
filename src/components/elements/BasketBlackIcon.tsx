@@ -1,11 +1,5 @@
-// components/icons/CustomIcon.tsx
 import * as React from "react";
 
-// interface BasketIconProps extends React.SVGProps<SVGSVGElement> {
-//   className?: string;
-// }
-
-// const CustomIcon: React.FC<SvgIconProps> = ({ className, ...props }) => (
 export default function BasketBlackIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg

@@ -1,8 +1,8 @@
 import React from "react";
 import Navigation from "../Navigation/Navigation";
 import Icon from "@/components/elements/Icon";
-import AuthMenu from "../AuthMenu/AuthMenu";
 import UserMenu from "../UserMenu/UserMenu";
+// import AuthMenu from "../AuthMenu/AuthMenu";
 
 import styles from "./MobileMenu.module.scss";
 
@@ -22,9 +22,9 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
         <Icon name="icon-search" className={styles.iconSearch} />
       </div>
       <Navigation onClose={onClose} />
-      <div>
+      {/* <div>
         <AuthMenu />
-      </div>
+      </div> */}
     </div>
   );
 }

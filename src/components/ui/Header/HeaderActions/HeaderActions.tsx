@@ -21,7 +21,7 @@ export default function HeaderActions() {
         <p className="font-lato font-semibold text-sm">{lang}</p>
       </button>
       <Link
-        href="/login"
+        href="/auth"
         className="w-[34px] h-[34px] lg:w-[38px] lg:h-[38px] border border-black-10 rounded-lg 
       flex items-center justify-center transition-all duration-300 ease-in-out 
       hover:border-gray-10 hover:text-gray-10"

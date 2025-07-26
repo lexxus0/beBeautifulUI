@@ -60,9 +60,11 @@ export default function RootLayout({
         ${sourceSansPro.variable}
       `}
       >
-        <Header />
-        <Providers>{children}</Providers>
-        <Footer />
+        <Providers>
+          <Header />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

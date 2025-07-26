@@ -1,5 +1,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
+import { useAppSelector } from "@/store/hooks";
+import { selectIsLoggedIn } from "@/store/auth/selectors";
 import Link from "next/link";
 import BasketBlackIcon from "@/components/elements/BasketBlackIcon";
 
@@ -15,6 +17,7 @@ const buildCssClasses = ({ isActive }: { isActive: boolean }) =>
 
 export default function Navigation({ onClose }: NavigationProps) {
   const pathname = usePathname();
+  const isLoggenIn = useAppSelector(selectIsLoggedIn);
 
   const links = [
     { href: "/", label: "Головна" },
@@ -40,7 +43,9 @@ export default function Navigation({ onClose }: NavigationProps) {
         </li>
       ))}
       <li>
-        <BasketBlackIcon className="hidden lg:block lg:w-8 lg:h-8"/>
+        {!isLoggenIn && (
+          <BasketBlackIcon className="hidden lg:block lg:w-8 lg:h-8" />
+        )}
       </li>
     </ul>
   );
