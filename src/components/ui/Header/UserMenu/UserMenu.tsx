@@ -10,6 +10,7 @@ import Icon from "@/components/elements/Icon";
 import AccountMenu from "../AccountMenu/AccountMenu";
 
 import styles from "./UserMenu.module.scss";
+import LangSwitcher from "../LangSwitcher/LangSwitcher";
 
 export default function UserMenu() {
   const user = useAppSelector(selectUser);
@@ -40,6 +41,7 @@ export default function UserMenu() {
 
   return (
     <div className={styles.wrapper} ref={wrapperRef}>
+      <LangSwitcher className="mr-6"/>
       <BasketBlackIcon className="hidden lg:block lg:w-8 lg:h-8 lg:mr-8" />
       <div className="flex gap-[13px] items-center">
         {user ? (

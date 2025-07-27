@@ -1,23 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
-import { useAppSelector } from "@/store/hooks";
-import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
+// import { useAppSelector } from "@/store/hooks";
+// import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
 import Icon from "@/components/elements/Icon";
 import Navigation from "./Navigation/Navigation";
 import MobileMenu from "./MobileMenu/MobileMenu";
 import Logo from "@/components/elements/Logo";
-// import AuthMenu from "./AuthMenu/AuthMenu";
-import UserMenu from "./UserMenu/UserMenu";
-import HeaderActions from "./HeaderActions/HeaderActions";
 import BasketBlackIcon from "@/components/elements/BasketBlackIcon";
+import LangSwitcher from "./LangSwitcher/LangSwitcher";
+import UserIcon from "./UserIcon/UserIcon";
+// import UserMenu from "./UserMenu/UserMenu";
 
 import styles from "./Header.module.scss";
 
 export default function Header() {
-  const isLoggenIn = useAppSelector(selectIsLoggedIn);
-  const user = useAppSelector(selectUser);
-  console.log("user: ", user);
+  // const isLoggenIn = useAppSelector(selectIsLoggedIn);
+  // const user = useAppSelector(selectUser);
+  // console.log("user: ", user);
 
   const [menu, setMenu] = useState(false);
 
@@ -28,18 +28,24 @@ export default function Header() {
         <div className="hidden lg:block">
           <Navigation />
         </div>
-
+        {/* <UserMenu /> */}
         <div className={styles.wrapperNav}>
-          {isLoggenIn ? (
+          {/* {isLoggenIn || user !== null ? (
             <div className="hidden lg:block">
               <UserMenu />
             </div>
           ) : (
-            <div className="hidden lg:block">
-              <HeaderActions />
+            <div className="hidden md:flex gap-6">
+              <LangSwitcher />
+              <UserIcon className="hidden lg:flex"/>
+
             </div>
-          )}
-          <BasketBlackIcon className="w-8 h-8 lg:hidden" />
+          )} */}
+          <div className="hidden md:flex gap-6">
+            <LangSwitcher />
+            <UserIcon className="hidden lg:flex" />
+          </div>
+          <BasketBlackIcon className="w-7 h-7 lg:hidden" />
           <button
             className="w-10 h-10 flex items-center justify-center lg:hidden"
             onClick={() => {
