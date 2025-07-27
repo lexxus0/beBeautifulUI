@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { handleError, instance, setAuthHeader } from "../init";
+import { clearAuthHeader, handleError, instance, setAuthHeader } from "../init";
 import { IUser, IUserResponse } from "@/types/types";
 import { RootState } from "../store";
 
@@ -65,3 +65,19 @@ export const getCurrentUser = createAsyncThunk<
     return thunkAPI.rejectWithValue(handleError(e, "Failed to load user."));
   }
 });
+
+export const signoutUser = createAsyncThunk<void, void, { state: RootState }>(
+  "users/signout",
+  async (_, { getState, rejectWithValue }) => {
+    const token = getState().auth.accessToken;
+    if (!token) return rejectWithValue("User is not authenticated.");
+
+    try {
+      setAuthHeader(token);
+      await instance.post("auth/logout");
+      clearAuthHeader();
+    } catch (e) {
+      return rejectWithValue(handleError(e, "Failed to signout."));
+    }
+  }
+);

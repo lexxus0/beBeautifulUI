@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser, loginUser, refreshUser } from "./operations";
+import {
+  registerUser,
+  loginUser,
+  refreshUser,
+  signoutUser,
+} from "./operations";
 import { IUser } from "@/types/types";
 interface AuthState {
   user: IUser | null;
@@ -63,6 +68,12 @@ const authSlice = createSlice({
       .addCase(refreshUser.rejected, (state, action) => {
         state.isRefreshing = false;
         state.isLoggedIn = false;
+        state.error = action.payload as string;
+      })
+      .addCase(signoutUser.fulfilled, () => {
+        return initialState;
+      })
+      .addCase(signoutUser.rejected, (state, action) => {
         state.error = action.payload as string;
       });
   },
