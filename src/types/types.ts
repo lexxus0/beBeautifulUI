@@ -1,3 +1,5 @@
+import { ChangeEventHandler } from "react";
+
 export interface IModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -20,6 +22,7 @@ export interface IProduct {
   name: string;
   sku: string;
   volumeOptions: string[];
+  priceByVolume: number[];
   priceByVolume: {
     volume: string;
     price: number;
@@ -47,4 +50,68 @@ export interface IProduct {
 export interface IProductResponse {
   data: IProduct[];
   pagination: IPagination;
+}
+
+export type CategoryData = {
+  title: string;
+  description: string;
+  imageMobile: string;
+  imageDesktop: string;
+  href: string;
+};
+
+export type CategoryCardProps = {
+  title: string;
+  description: string;
+  imageMobile: string;
+  imageDesktop: string;
+  href: string;
+};
+
+export interface IReview {
+  name: string;
+  location: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+}
+
+export interface IReviewResponse {
+  data: IReview[];
+  pagination: IPagination;
+}
+
+export interface IUser {
+  name?: string;
+  email: string;
+  password?: string;
+}
+
+export interface IUserResponse {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface RegisterFormInputs {
+  name: string;
+  email: string;
+  password: string;
+  agree: boolean;
+}
+
+export interface LoginFormInputs {
+  email: string;
+  password: string;
+}
+
+export interface InputGroupProps {
+  id: string;
+  name: string;
+  label: string;
+  type?: string;
+  value: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  error?: string;
+  showToggle?: boolean;
+  onToggle?: () => void;
 }

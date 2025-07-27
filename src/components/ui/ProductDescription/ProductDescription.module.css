@@ -1,0 +1,47 @@
+.accordionWrapper {
+    padding-top: 1rem;
+    font-size: 0.9rem;
+    color: #2D2D2D;
+
+}
+
+.accordionItem {
+    margin-bottom: 1rem;
+    color: #2D2D2D;
+    padding-bottom: 0.5rem;
+}
+
+
+
+.accordionHeader {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    color: #2D2D2D;
+
+    font-weight: 500;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.accordionContent {
+    margin-top: 16px;
+    color: #2D2D2D;
+    line-height: 1.5;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ccc;
+
+}
+
+.arrow {
+    transition: transform 0.3s ease;
+
+}
+
+
+.arrowRotated {
+    transform: rotate(-180deg);
+}

@@ -1,5 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import productsReducer from "@/store/products/slice";
+import reviewsReducer from "@/store/reviews/slice";
+import authReducer from "@/store/auth/slice";
 
 import {
   persistStore,
@@ -18,9 +20,20 @@ const productsPersistConfig = {
   storage,
 };
 
+const reviewsPersistConfig = {
+  key: "reviews",
+  storage,
+};
+const authPersistConfig = {
+  key: "auth",
+  storage,
+};
+
 export const store = configureStore({
   reducer: {
     products: persistReducer(productsPersistConfig, productsReducer),
+    reviews: persistReducer(reviewsPersistConfig, reviewsReducer),
+    auth: persistReducer(authPersistConfig, authReducer),
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

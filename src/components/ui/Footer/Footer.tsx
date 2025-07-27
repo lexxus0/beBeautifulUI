@@ -1,6 +1,6 @@
-import Logo from "@/components/elements/logo";
-import Icon from "@/components/elements/icon";
-import styles from "./Footer.module.css";
+import Logo from "@/components/elements/Logo";
+import Icon from "@/components/elements/Icon";
+import styles from "./Footer.module.scss";
 import Link from "next/link";
 
   const navData = [
@@ -18,7 +18,8 @@ const Footer: React.FC = () => {
 
   return (
     <footer className={styles.footer}>
-      <div className={`container ${styles.footerContainer}`}>
+      <div className="container">
+        <div className={styles.footerContainer}>
         <div className={styles.footerTop}>
           <div className={styles.footerMain}>
             <Link href="/" className={styles.logo}>
@@ -86,6 +87,7 @@ const Footer: React.FC = () => {
           <p className={styles.copyright}>
             &copy; 2025 Science Be Beautiful. All rights reserved.
           </p>
+        </div>
         </div>
       </div>
     </footer>

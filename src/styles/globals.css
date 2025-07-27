@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --font-roboto: 'Roboto', sans-serif;
-  --font-lato: 'Lato', sans-serif;
-  --font-poppins: 'Poppins', sans-serif;
-  --font-open-sans: 'Open Sans', sans-serif;
-  --font-inter: 'Inter', sans-serif;
-  --font-source-sans-pro: 'Source Sans Pro', sans-serif;
-  --font-montserrat: 'Montserrat', sans-serif;
+  --font-roboto: "Roboto", sans-serif;
+  --font-lato: "Lato", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-open-sans: "Open Sans", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-source-sans-pro: "Source Sans Pro", sans-serif;
+  --font-montserrat: "Montserrat", sans-serif;
 
   --breakpoint-xs: 320px;
   --breakpoint-sm: 375px;
@@ -26,6 +26,8 @@
 
   --color-green: #3e4f34;
   --color-yellow: #e9ddce;
+  --color-gray: #ededed;
+  --color-gray-10: #898989;
 }
 
 *,
@@ -89,4 +91,52 @@ body {
     width: 1440px;
     padding-inline: 72px;
   }
+}
+
+.certificate-bg {
+  background: linear-gradient(180deg, #2d2d2d 0%, #4e4e4e 54.29%, #2d2d2d 100%);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.add-to-cart-btn-bg {
+  background: linear-gradient(
+    180deg,
+    #2d2d2d 4.33%,
+    rgba(124, 124, 124, 0.96) 60.1%,
+    #2d2d2d 86.06%
+  );
+}
+
+@media screen and (min-width: 744px) {
+  .certificate-bg {
+    width: 314px;
+  }
+}
+
+.certificate-bg:hover {
+  transform: scale(1.05) rotate(-1deg);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(234, 204, 147, 0.5);
+}
+
+.certificate-text {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  background: linear-gradient(180deg, #7e3b01 0%, #eacc93 54.29%, #1e0e00 100%);
+  font-size: 40px;
+  text-align: center;
+  padding-block: 20px;
+  line-height: 120%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background 0.6s ease;
+}
+
+.certificate-bg:hover .certificate-text {
+  background: linear-gradient(180deg, #ffd89b 0%, #eacc93 54.29%, #ff9c33 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
