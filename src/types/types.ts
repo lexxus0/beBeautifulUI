@@ -121,3 +121,12 @@ export interface InputGroupProps {
   filledClassName?: string;
   icon?: React.ReactNode;
 }
+
+export interface ProfileFormInputs {
+  name: string;
+  firstname: string;
+  date: string;
+  phone: string;
+  email: string;
+  password: string;
+}
