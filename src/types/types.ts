@@ -114,4 +114,10 @@ export interface InputGroupProps {
   error?: string;
   showToggle?: boolean;
   onToggle?: () => void;
+  variant?: "default" | "custom";
+  inputClassName?: string;
+  groupClassName?: string;
+  labelClassName?: string;
+  filledClassName?: string;
+  icon?: React.ReactNode;
 }
