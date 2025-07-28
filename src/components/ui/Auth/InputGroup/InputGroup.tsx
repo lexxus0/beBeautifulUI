@@ -38,19 +38,20 @@ const InputGroup: FC<InputGroupProps> = ({
           {label}
         </label>
 
-        {hasError && <span className={styles.errorIcon}>!</span>}
-
-       {showToggle && onToggle && (
-          <span
-            className={`${styles.toggle} ${hasError ? styles.toggleError : ""}`}
-            onClick={onToggle}
-          >
-            {isPassword ? (
-              <IoEyeSharp size={18} />
-            ) : (
-              <BsFillEyeSlashFill size={18} />
-            )}
-          </span>
+        {isPassword && showToggle ? (
+          hasError ? (
+            <span className={styles.errorIcon}>!</span>
+          ) : (
+            <span className={styles.toggle} onClick={onToggle}>
+              {type === "password" ? (
+                <IoEyeSharp size={18} />
+              ) : (
+                <BsFillEyeSlashFill size={18} />
+              )}
+            </span>
+          )
+        ) : (
+          hasError && <span className={styles.errorIcon}>!</span>
         )}
       </div>
 

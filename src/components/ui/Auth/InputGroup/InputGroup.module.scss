@@ -59,28 +59,24 @@
       pointer-events: none;
       transition: all 0.2s ease;
       padding: 0 4px;
+      background: var(--color-white-10);
     }
 
-    .toggle {
+    .toggle,
+    .errorIcon {
       position: absolute;
       top: 50%;
       right: 12px;
       transform: translateY(-50%);
+      z-index: 2;
+    }
+
+    .toggle {
       cursor: pointer;
       user-select: none;
-      z-index: 2;
-
-      &.toggleError {
-        top: 50%;
-        transform: translateY(-50%);
-      }
     }
 
     .errorIcon {
-      position: absolute;
-      top: 50%;
-      right: 38px;
-      transform: translateY(-50%);
       width: 20px;
       height: 20px;
       background-color: #f44336;
@@ -91,7 +87,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 2;
       pointer-events: none;
     }
   }
