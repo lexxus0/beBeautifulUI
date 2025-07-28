@@ -44,7 +44,9 @@ export default function Navigation({ onClose }: NavigationProps) {
       ))}
       <li>
         {!isLoggenIn && (
-          <BasketBlackIcon className="hidden lg:block lg:w-8 lg:h-8" />
+          <button type="button" onClick={()=>{}} className="hidden lg:block lg:w-8 lg:h-8">
+            <BasketBlackIcon className="lg:w-8 lg:h-8" />
+          </button>
         )}
       </li>
     </ul>

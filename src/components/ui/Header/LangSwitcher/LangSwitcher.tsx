@@ -14,6 +14,7 @@ export default function LangSwitcher({ className }: LangSwitcherProps) {
 
   return (
     <button
+      type="button"
       onClick={toggleLang}
       className={clsx(
         "w-[30px] h-[30px] lg:w-[38px] lg:h-[38px]",

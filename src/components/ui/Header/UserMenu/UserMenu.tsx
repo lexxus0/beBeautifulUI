@@ -16,7 +16,7 @@ type UserMenuProps = {
   onCloseMobileModal?: () => void;
 };
 
-export default function UserMenu({onCloseMobileModal}: UserMenuProps) {
+export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
   const user = useAppSelector(selectUser);
   console.log("user: ", user);
 
@@ -45,8 +45,15 @@ export default function UserMenu({onCloseMobileModal}: UserMenuProps) {
 
   return (
     <div className={styles.wrapper} ref={wrapperRef}>
-      <LangSwitcher className="hidden lg:block mr-6"/>
-      <BasketBlackIcon className="hidden lg:block lg:w-8 lg:h-8 lg:mr-8" />
+      <LangSwitcher className="hidden lg:block mr-6" />
+      <button
+        type="button"
+        onClick={() => {}}
+        className="hidden lg:w-8 lg:h-8 lg:block lg:mr-8"
+      >
+        <BasketBlackIcon className="lg:w-8 lg:h-8" />
+      </button>
+
       <div className="flex gap-[13px] items-center">
         {user ? (
           <Image
@@ -70,6 +77,7 @@ export default function UserMenu({onCloseMobileModal}: UserMenuProps) {
           <p className={styles.text}>User</p>
         )}
         <button
+          type="button"
           onClick={onToggleModal}
           className="hidden lg:flex w-[18px] h-[9px] items-center justify-center
         text-white-30 lg:text-black-10 hover:text-black-10 lg:hover:text-gray-10"
@@ -81,7 +89,7 @@ export default function UserMenu({onCloseMobileModal}: UserMenuProps) {
         openModal && <AccountMenu onClose={() => setOpenModal(false)} />
       ) : (
         <div className="flex gap-4 items-center lg:hidden">
-          <AccountMenu onClose={onCloseMobileModal}/>
+          <AccountMenu onClose={onCloseMobileModal} />
         </div>
       )}
     </div>
