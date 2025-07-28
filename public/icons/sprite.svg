@@ -57,6 +57,9 @@
 <symbol id="icon-arrow-down" viewBox="0 0 53 32">
 <path d="M48.975 0l4.359 4.759-23.755 25.922c-0.381 0.418-0.833 0.75-1.332 0.976s-1.033 0.343-1.573 0.343c-0.54 0-1.075-0.116-1.573-0.343s-0.951-0.558-1.332-0.976l-23.768-25.922 4.359-4.755 22.308 24.33 22.308-24.334z"></path>
 </symbol>
+<symbol id="icon-to-top" viewBox="0 0 16 32">
+<path stroke="currentColor" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="1.7778" d="M7.987 31.111l0.013-29.868M0.889 12.622l7.111-11.733 7.111 11.733"></path>
+</symbol>
 </defs>
 </svg>
 

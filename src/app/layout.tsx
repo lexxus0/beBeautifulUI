@@ -4,8 +4,9 @@ import { Roboto, Lato, Poppins, Open_Sans, Inter } from "next/font/google";
 import "../styles/globals.css";
 import { Providers } from "@/store/provider";
 import { sourceSansPro } from "@/fonts/fonts";
-import Header from "@/components/ui/Header/Header";
+import Header from "@/components/ui/Header/header";
 import Footer from "@/components/ui/Footer/Footer";
+import ScrollToTop from "@/components/ui/ScrollToTop/ScrollToTop";
 
 export const metadata: Metadata = {
   title: "Science Be Beautiful",
@@ -63,6 +64,7 @@ export default function RootLayout({
         <Header />
         <Providers>{children}</Providers>
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );

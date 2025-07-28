@@ -1,78 +1,123 @@
 .inputGroup {
-  position: relative;
   display: flex;
   flex-direction: column;
-}
-.input {
-  width: 100%;
-  height: 48px;
-  padding: 16px 12px;
-  border: 1px solid black;
-  border-radius: 8px;
-  background: var(--color-white-10);
-  color: black;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 150%;
-  letter-spacing: 0.02em;
-  outline: none;
-  transition: border 0.2s;
-}
-.input:focus {
-  border-color: black;
-}
-.label {
-  position: absolute;
-  left: 12px;
-  top: 14px;
-  color: var(--color-black-10);
-  font-size: 14px;
-  pointer-events: none;
-  transition: all 0.2s ease;
-  padding: 0 4px;
-}
-.filled + .label,
-.input:focus + .label {
-  top: -8px;
-  font-weight: 300;
-  font-size: 12px;
-  line-height: 150%;
-  letter-spacing: 0.02em;
-  color: #afb0b2;
-  background: var(--color-white-10);
-}
-.toggle {
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  cursor: pointer;
-  user-select: none;
-}
-.errorInput {
-  border-color: #f44336;
-}
-.errorMsg {
-  color: #f44336;
-  font-size: 13px;
-  margin-left: 4px;
-}
+  position: relative;
 
-@media (min-width: 744px) {
+  .inputWrapper {
+    position: relative;
+
+    .input {
+      width: 100%;
+      height: 48px;
+      padding: 16px 40px 16px 12px;
+      border: 1px solid black;
+      border-radius: 8px;
+      background: var(--color-white-10);
+      color: black;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 150%;
+      letter-spacing: 0.02em;
+      outline: none;
+      transition: border 0.2s;
+
+      &:focus {
+        border-color: black;
+      }
+
+      &.errorInput {
+        border-color: #f44336;
+
+        & + .label {
+          color: #f44336;
+        }
+      }
+
+      &.filled + .label,
+      &:focus + .label {
+        top: -8px;
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 150%;
+        letter-spacing: 0.02em;
+        color: #afb0b2;
+        background: var(--color-white-10);
+      }
+
+      &.errorInput.filled + .label,
+      &.errorInput:focus + .label {
+        color: #f44336;
+      }
+    }
+
+    .label {
+      position: absolute;
+      left: 12px;
+      top: 14px;
+      color: var(--color-black-10);
+      font-size: 14px;
+      pointer-events: none;
+      transition: all 0.2s ease;
+      padding: 0 4px;
+      background: var(--color-white-10);
+    }
+
+    .toggle,
+    .errorIcon {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+
+    .toggle {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .errorIcon {
+      width: 20px;
+      height: 20px;
+      background-color: #f44336;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 9;
+    }
+  }
+
+  .errorMsg {
+    color: #f44336;
+    font-size: 13px;
+    margin-left: 4px;
+    margin-top: 4px;
+  }
 }
 
 @media (min-width: 1440px) {
-  .input {
-    height: 56px;
-    font-size: 16px;
-  }
-  .label {
-    top: 16px;
-    font-size: 16px;
-  }
-  .filled + .label,
-  .input:focus + .label {
-    top: -12px;
-    font-size: 16px;
+  .inputGroup {
+    .inputWrapper {
+      .input {
+        height: 56px;
+        font-size: 16px;
+      }
+
+      .label {
+        top: 16px;
+        font-size: 16px;
+      }
+
+      .input.filled + .label,
+      .input:focus + .label {
+        top: -12px;
+        font-size: 16px;
+      }
+    }
   }
 }
