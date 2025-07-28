@@ -8,11 +8,15 @@ import { useViewport } from "@/helpers/hooks/useViewport";
 import BasketBlackIcon from "@/components/elements/BasketBlackIcon";
 import Icon from "@/components/elements/Icon";
 import AccountMenu from "../AccountMenu/AccountMenu";
-
-import styles from "./UserMenu.module.scss";
 import LangSwitcher from "../LangSwitcher/LangSwitcher";
 
-export default function UserMenu() {
+import styles from "./UserMenu.module.scss";
+
+type UserMenuProps = {
+  onCloseMobileModal?: () => void;
+};
+
+export default function UserMenu({onCloseMobileModal}: UserMenuProps) {
   const user = useAppSelector(selectUser);
   console.log("user: ", user);
 
@@ -41,7 +45,7 @@ export default function UserMenu() {
 
   return (
     <div className={styles.wrapper} ref={wrapperRef}>
-      <LangSwitcher className="mr-6"/>
+      <LangSwitcher className="hidden lg:block mr-6"/>
       <BasketBlackIcon className="hidden lg:block lg:w-8 lg:h-8 lg:mr-8" />
       <div className="flex gap-[13px] items-center">
         {user ? (
@@ -54,7 +58,7 @@ export default function UserMenu() {
         ) : (
           // <span>{user.name.charAt(0)}</span>
           <span
-            className="w-12 h-12 rounded-lg border-1 border-black-10 bg-gray-10
+            className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg border-1 border-black-10 bg-gray-10
     text-2xl font-medium text-white-30 flex items-center justify-center"
           >
             US
@@ -77,7 +81,7 @@ export default function UserMenu() {
         openModal && <AccountMenu onClose={() => setOpenModal(false)} />
       ) : (
         <div className="flex gap-4 items-center lg:hidden">
-          <AccountMenu />
+          <AccountMenu onClose={onCloseMobileModal}/>
         </div>
       )}
     </div>
