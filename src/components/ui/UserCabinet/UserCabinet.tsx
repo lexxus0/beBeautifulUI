@@ -12,8 +12,8 @@ export default function UserCabinet() {
   return (
     <div className="container py-6 md:pt-4 md:pb-10 lg:pt-10 lg:pb-15 ">
       <h2 className="font-lato font-semibold text-2xl lg:text-[42px] text-[#49454f] mb-8">Редагувати профіль</h2>
-      <div className="w-full  md:w-[436px] mx-auto mb-10 lg:w-full lg:flex gap-[134px] items-center">
-      <div className="relative w-45 h-45 lg:w-[306px] lg:h-[306px] mb-12 mx-auto md:mb-[50px] lg:mx-0">
+      <div className="w-full  md:w-[436px] mx-auto mb-10 lg:w-full lg:flex gap-[134px] items-center lg:mb-[156px] relative">
+      <div className="relative w-45 h-45 lg:w-[306px] lg:h-[306px] mb-12 mx-auto md:mb-[50px] lg:mx-0 lg:mb-0">
       {user ? (
         <Image
           src={user.avatar}
@@ -36,7 +36,7 @@ export default function UserCabinet() {
       </div>
  <ProfileForm/>
  </div>
- <button type='button' className="font-open-sans text-lg md:text-xl mx-auto flex gap-3 items-center p-3">
+ <button type='button' className="font-open-sans text-lg md:text-xl mx-auto flex gap-3 items-center p-3 lg:ml-0">
   <Icon name='icon-logout' className="w-6 h-6"/>
   Вихід
  </button>

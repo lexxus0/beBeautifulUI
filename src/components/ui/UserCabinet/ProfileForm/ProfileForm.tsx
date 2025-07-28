@@ -145,7 +145,7 @@ export default function ProfileForm() {
         />
       )}
     />
-<div className="flex flex-col gap-6 mt-10 lg:absolute lg:flex-row ">
+<div className="flex flex-col gap-6 mt-10 lg:absolute -bottom-[130px] left-[220px] lg:flex-row lg:mt-0 ">
     <button type="submit" className={styles.btnSubmit}>
       Зберегти зміни
     </button>
@@ -154,91 +154,5 @@ export default function ProfileForm() {
     </button>
     </div>
   </form>
-    // <div>
-    //   <InputGroup
-    //     id="name"
-    //     name="name"
-    //     label="Імʼя"
-    //     type="text"
-    //     variant="custom"
-    //     value={""}
-    //     onChange={() => {}}
-    //     inputClassName={styles.input}
-    //     filledClassName={styles.filled}
-    //     groupClassName={styles.groupInput}
-    //     labelClassName={styles.label}
-    //     icon={<Icon name="icon-edit" className="w-[18px] h-[18px] absolute right-4 top-1/2 -translate-y-1/2" />}
-    //   />
-    //   <InputGroup
-    //     id="firstname"
-    //     name="firstname"
-    //     label="Прізвище"
-    //     type="text"
-    //     variant="custom"
-    //     value={""}
-    //     onChange={() => {}}
-    //     inputClassName={styles.input}
-    //     groupClassName={styles.groupInput}
-    //     labelClassName={styles.label}
-    //     icon={<Icon name="icon-edit" className="w-[18px] h-[18px] absolute right-4 top-1/2 -translate-y-1/2" />}
-
-    //   />
-    //   <InputGroup
-    //     id="date"
-    //     name="date"
-    //     label="День/Місяць/Рік"
-    //     type="text"
-    //     variant="custom"
-    //     value={""}
-    //     onChange={() => {}}
-    //     inputClassName={styles.input}
-    //     groupClassName={styles.groupInput}
-    //     labelClassName={styles.label}
-    //     icon={<Icon name="icon-edit" className="w-[18px] h-[18px] absolute right-4 top-1/2 -translate-y-1/2" />}
-
-    //   />
-    //   <InputGroup
-    //     id="phone"
-    //     name="phone"
-    //     label="Телефон"
-    //     type="text"
-    //     variant="custom"
-    //     value={""}
-    //     onChange={() => {}}
-    //     inputClassName={styles.input}
-    //     groupClassName={styles.groupInput}
-    //     labelClassName={styles.label}
-    //     icon={<Icon name="icon-edit" className="w-[18px] h-[18px] absolute right-4 top-1/2 -translate-y-1/2" />}
-
-    //   />
-    //   <InputGroup
-    //     id="email"
-    //     name="email"
-    //     label="E-mail"
-    //     type="text"
-    //     variant="custom"
-    //     value={""}
-    //     onChange={() => {}}
-    //     inputClassName={styles.input}
-    //     groupClassName={styles.groupInput}
-    //     labelClassName={styles.label}
-    //     icon={<Icon name="icon-edit" className="w-[18px] h-[18px] absolute right-4 top-1/2 -translate-y-1/2" />}
-
-    //   />
-    //   <InputGroup
-    //     id="password"
-    //     name="password"
-    //     label="Пароль"
-    //     type="text"
-    //     variant="custom"
-    //     value={""}
-    //     onChange={() => {}}
-    //     inputClassName={styles.input}
-    //     groupClassName={styles.groupInput}
-    //     labelClassName={styles.label}
-    //     icon={<Icon name="icon-edit" className="w-[18px] h-[18px] absolute right-4 top-1/2 -translate-y-1/2" />}
-
-    //   />
-    // </div>
   );
 }

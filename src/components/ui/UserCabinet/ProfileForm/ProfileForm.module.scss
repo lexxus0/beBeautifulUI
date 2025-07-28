@@ -21,7 +21,7 @@
   color: var(--color-black-10);
 
   @media (min-width: 1440px) {
-    width: 416px;
+    // width: 416px;
   }
 }
 
@@ -53,6 +53,9 @@
   @media (min-width: 744px) {
     font-size: 20px;
   }
+  @media (min-width: 1440px) {
+    width: 416px;
+     }
 }
 
 .btn {
@@ -67,5 +70,8 @@
 
   @media (min-width: 744px) {
     font-size: 20px;
+  }
+  @media (min-width: 1440px) {
+ width: 416px;
   }
 }
