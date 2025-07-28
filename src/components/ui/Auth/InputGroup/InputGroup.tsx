@@ -40,7 +40,7 @@ const InputGroup: FC<InputGroupProps> = ({
 
         {hasError && <span className={styles.errorIcon}>!</span>}
 
-       {showToggle && onToggle && (
+        {showToggle && onToggle && (
           <span
             className={`${styles.toggle} ${hasError ? styles.toggleError : ""}`}
             onClick={onToggle}
