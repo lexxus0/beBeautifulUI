@@ -40,6 +40,7 @@ export default function UserCabinet() {
       </div>
       <button
         type="button"
+        onClick={() => {}}
         className="font-open-sans text-lg md:text-xl mx-auto flex gap-3 items-center p-3 lg:ml-0"
       >
         <Icon name="icon-logout" className="w-6 h-6" />

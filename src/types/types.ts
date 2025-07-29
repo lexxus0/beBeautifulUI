@@ -108,7 +108,7 @@ export interface InputGroupProps {
   id: string;
   name: string;
   label: string;
-  type?: 'text' | 'password';
+  type?: "text" | "password";
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   error?: string;
@@ -120,13 +120,4 @@ export interface InputGroupProps {
   labelClassName?: string;
   filledClassName?: string;
   icon?: React.ReactNode;
-}
-
-export interface ProfileFormInputs {
-  name: string;
-  firstname: string;
-  date: string;
-  phone: string;
-  email: string;
-  password: string;
 }
