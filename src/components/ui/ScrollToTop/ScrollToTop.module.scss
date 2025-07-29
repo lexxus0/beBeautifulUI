@@ -1,10 +1,27 @@
-.scrollToTop {
+.wrapper {
   position: fixed;
+  bottom: 40px;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  pointer-events: none;
+
+  .container {
+    pointer-events: none;
+  }
+}
+
+.inner {
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.scrollToTop {
+  pointer-events: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  bottom: 40px;
-  right: 40px;
   width: 56px;
   height: 56px;
   background: transparent;

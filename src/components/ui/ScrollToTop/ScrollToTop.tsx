@@ -25,9 +25,15 @@ const ScrollToTop: React.FC = () => {
   if (!isVisible) return null;
 
   return (
-    <button className={styles.scrollToTop} onClick={scrollToTop}>
-      <span className={styles.icon}>↑</span>
-    </button>
+     <div className={styles.wrapper}>
+      <div className="container">
+        <div className={styles.inner}>
+          <button className={styles.scrollToTop} onClick={scrollToTop}>
+            <span className={styles.icon}>↑</span>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
