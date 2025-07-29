@@ -1,13 +1,13 @@
 "use client";
 
-import { Product } from "@/types/types";
+import { IProduct } from "@/types/types";
 import React, { useState } from "react";
 
 import css from "@/components/ui/ProductActions/ProductActions.module.css";
 import Icon from "@/components/elements/Icons";
 
 export interface ProductActionsProps {
-  product: Product;
+  product: IProduct;
 }
 
 const ProductActions = ({ product }: ProductActionsProps) => {
@@ -19,7 +19,7 @@ const ProductActions = ({ product }: ProductActionsProps) => {
     <div className={css.actionsWrapper}>
       <p className={css.volume}>Об'єм</p>
       <div className={css.actionValueButton}>
-        {product.volumeOptions.length !== 0 ? (
+        {product.volumeOptions && product.volumeOptions.length !== 0 ? (
           product.volumeOptions.map((vol) => (
             <button
               key={vol}
