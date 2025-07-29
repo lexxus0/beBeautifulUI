@@ -1,5 +1,6 @@
 import React from "react";
 // import { useAppDispatch } from "@/store/hooks";
+// import { signoutUser } from "@/store/auth/operations";
 import Link from "next/link";
 import Icon from "@/components/elements/Icon";
 
@@ -14,7 +15,7 @@ export default function AccountMenu({ onClose }: AccountMenuProps) {
   // const dispatch = useAppDispatch();
 
   // const handleLogout = () => {
-  //   dispatch(logoutUser());
+  //   dispatch(signoutUser());
   // };
 
   const links = [
@@ -43,7 +44,7 @@ export default function AccountMenu({ onClose }: AccountMenuProps) {
           </li>
         ))}
         <li className={styles.list}>
-          <button onClick={() => {}} className={styles.btn}>
+          <button type="button" onClick={()=>{}} className={styles.btn}>
             <Icon
               name="icon-logout"
               className="w-5 h-5 fill-white-20 lg:fill-current"

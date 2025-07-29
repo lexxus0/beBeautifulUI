@@ -1,9 +1,9 @@
 import React from "react";
 import Navigation from "../Navigation/Navigation";
-// import { useAppSelector } from "@/store/hooks";
-// import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
+import { useAppSelector } from "@/store/hooks";
+import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
 import Icon from "@/components/elements/Icon";
-// import UserMenu from "../UserMenu/UserMenu";
+import UserMenu from "../UserMenu/UserMenu";
 import LangSwitcher from "../LangSwitcher/LangSwitcher";
 import UserIcon from "../UserIcon/UserIcon";
 
@@ -14,29 +14,29 @@ type MobileMenuProps = {
 };
 
 export default function MobileMenu({ onClose }: MobileMenuProps) {
-  //  const isLoggenIn = useAppSelector(selectIsLoggedIn);
-  // const user = useAppSelector(selectUser);
-  // console.log("user: ", user);
+   const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const user = useAppSelector(selectUser);
+  console.log("user: ", user);
 
   return (
     <div className={styles.modal}>
       <LangSwitcher className="absolute top-5 left-4" />
-      <button className={styles.closeBtn} onClick={onClose}>
+      <button type="button" className={styles.closeBtn} onClick={onClose}>
         <Icon name="icon-close" className={styles.iconClose} />
       </button>
       {/* <UserMenu /> */}
-      {/* {isLoggenIn || user !== null ? (
+      {isLoggedIn ? (
             <div className="">
-              <UserMenu />
+              <UserMenu onCloseMobileModal={onClose}/>
             </div>
           ) : (
             <div className="">
               <UserIcon/>
             </div>
-          )} */}
-      <div className="flex justify-center">
+          )}
+      {/* <div className="flex justify-center">
         <UserIcon onClose={onClose} />
-      </div>
+      </div> */}
       <div className="border-t border-t-white-30 pt-8 mt-1">
         <div className="relative">
           <input className={styles.input} placeholder="Пошук..." />
