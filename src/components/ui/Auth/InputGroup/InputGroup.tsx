@@ -24,43 +24,54 @@ const InputGroup: FC<InputGroupProps> = ({
   filledClassName,
   icon,
 }) => {
+  const isPassword = type === "password";
+  const hasError = Boolean(error);
+
   const isDefault = variant === "default";
   return (
     <div className={clsx(isDefault ? styles.inputGroup : "", groupClassName)}>
-      {icon && <span>{icon}</span>}
+      <div className={styles.inputWrapper}>
+        {icon && <span>{icon}</span>}
       <input
-        id={id}
-        name={name}
-        type={type}
-        value={value}
-        onChange={onChange}
-        className={clsx(
+          id={id}
+          name={name}
+          type={type}
+          value={value}
+          onChange={onChange}
+          className={clsx(
           isDefault && styles.input,
           isDefault && value && styles.filled,
-          isDefault && error && styles.errorInput,
+          isDefault &&   hasError && styles.errorInput,
           icon && "pl-10",
-          inputClassName,
+            inputClassName,
           filledClassName
         )}
-      />
-      <label
+        />
+
+        <label
         htmlFor={id}
         className={clsx(isDefault && styles.label, labelClassName)}
       >
-        {label}
-      </label>
+          {label}
+        </label>
 
-      {showToggle && (
-        <span className={clsx(isDefault && styles.toggle)} onClick={onToggle}>
-          {type === "password" ? (
-            <IoEyeSharp size={18} />
-          ) : (
-            <BsFillEyeSlashFill size={18} />
-          )}
-        </span>
-      )}
+        {hasError && <span className={styles.errorIcon}>!</span>}
 
-      {error && isDefault && <p className={styles.errorMsg}>{error}</p>}
+        {showToggle && onToggle && (
+          <span
+            className={`${styles.toggle} ${hasError ? styles.toggleError : ""}`}
+            onClick={onToggle}
+          >
+            {isPassword ? (
+              <IoEyeSharp size={18} />
+            ) : (
+              <BsFillEyeSlashFill size={18} />
+            )}
+          </span>
+        )}
+      </div>
+
+      {hasError && isDefault && <p className={styles.errorMsg}>{error}</p>}
     </div>
   );
 };

@@ -108,7 +108,7 @@ export interface InputGroupProps {
   id: string;
   name: string;
   label: string;
-  type?: string;
+  type?: 'text' | 'password';
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   error?: string;
