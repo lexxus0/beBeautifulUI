@@ -17,7 +17,7 @@ const ProductActions = ({ product }: ProductActionsProps) => {
   const [quantity, setQuantity] = useState<number>(1);
   return (
     <div className={css.actionsWrapper}>
-      <p className={css.volume}>Об'єм</p>
+      <p className={css.volume}>Об&apos;єм</p>
       <div className={css.actionValueButton}>
         {product.volumeOptions && product.volumeOptions.length !== 0 ? (
           product.volumeOptions.map((vol) => (
