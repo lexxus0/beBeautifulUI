@@ -5,8 +5,8 @@ import clsx from "clsx";
 
 interface IconProps {
   name: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   className?: string;
 }
 

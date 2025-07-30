@@ -1,11 +1,11 @@
 "use client";
-import type { Metadata } from "next";
+// import type { Metadata } from "next";
 import { Roboto, Lato, Poppins, Open_Sans, Inter } from "next/font/google";
 // import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
 import { Providers } from "@/store/provider";
 import { sourceSansPro } from "@/fonts/fonts";
-import Header from "@/components/ui/Header/Header";
+import Header from "@/components/ui/Header/header";
 import Footer from "@/components/ui/Footer/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop/ScrollToTop";
 import { useAppDispatch } from "@/store/hooks";
