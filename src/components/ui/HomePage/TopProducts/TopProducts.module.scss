@@ -246,6 +246,11 @@
     .icon {
       width: 32px;
       height: 32px;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover .icon {
+      transform: scale(1.2);
     }
   }
 
@@ -290,11 +295,18 @@
 
   .link {
     color: var(--color-black-10);
-    text-decoration: underline;
     font-weight: 400;
     font-size: 20px;
     line-height: 120%;
-    text-decoration-skip-ink: none;
+    border-bottom: 0.8px solid rgba(45, 45, 45, 0.8);
+    width: fit-content;
+    margin-inline: auto;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-bottom: 1.8px solid #403e3e;
+      box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.24);
+    }
   }
 
   @media (max-width: 743px) {
