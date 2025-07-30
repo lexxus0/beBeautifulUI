@@ -22,7 +22,6 @@ export interface IProduct {
   name: string;
   sku: string;
   volumeOptions: string[];
-  priceByVolume: number[];
   priceByVolume: {
     volume: string;
     price: number;
@@ -108,10 +107,14 @@ export interface InputGroupProps {
   id: string;
   name: string;
   label: string;
-  type?: 'text' | 'password';
+  type?: "text" | "password";
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   error?: string;
   showToggle?: boolean;
   onToggle?: () => void;
+  variant?: "default" | "custom";
+  inputClassName?: string;
+  labelClassName?: string;
+  icon?: React.ReactNode;
 }

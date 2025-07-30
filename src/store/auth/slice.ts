@@ -4,6 +4,7 @@ import {
   loginUser,
   refreshUser,
   signoutUser,
+  getCurrentUser,
 } from "./operations";
 import { IUser } from "@/types/types";
 interface AuthState {
@@ -69,6 +70,14 @@ const authSlice = createSlice({
         state.isRefreshing = false;
         state.isLoggedIn = false;
         state.error = action.payload as string;
+      })
+      .addCase(getCurrentUser.rejected, (state, action) => {
+        state.isRefreshing = false;
+        state.isLoggedIn = false;
+        state.error = action.payload as string;
+      })
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.user = action.payload;
       })
       .addCase(signoutUser.fulfilled, () => {
         return initialState;

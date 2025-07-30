@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+"use client";
+// import type { Metadata } from "next";
 import { Roboto, Lato, Poppins, Open_Sans, Inter } from "next/font/google";
 // import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
@@ -7,12 +8,15 @@ import { sourceSansPro } from "@/fonts/fonts";
 import Header from "@/components/ui/Header/header";
 import Footer from "@/components/ui/Footer/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop/ScrollToTop";
+import { useAppDispatch } from "@/store/hooks";
+import { useEffect } from "react";
+import { refreshUser } from "@/store/auth/operations";
 
-export const metadata: Metadata = {
-  title: "Science Be Beautiful",
-  description:
-    "Чесна українська косметика, створена жінкою-хіміком. Активи з Європи. Натуральні формули, що дбають про шкіру та простір навколо.",
-};
+// export const metadata: Metadata = {
+//   title: "Science Be Beautiful",
+//   description:
+//     "Чесна українська косметика, створена жінкою-хіміком. Активи з Європи. Натуральні формули, що дбають про шкіру та простір навколо.",
+// };
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -61,11 +65,24 @@ export default function RootLayout({
         ${sourceSansPro.variable}
       `}
       >
-        <Header />
-        <Providers>{children}</Providers>
-        <Footer />
+        <Providers>
+          <ReduxInitializer />
+          <Header />
+          {children}
+          <Footer />
+        </Providers>
         <ScrollToTop />
       </body>
     </html>
   );
+}
+
+function ReduxInitializer() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
+
+  return null;
 }

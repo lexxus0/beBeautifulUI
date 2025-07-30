@@ -1,16 +1,22 @@
-'use client';
+"use client";
 
-import React from 'react';
-import clsx from 'clsx';
+import React from "react";
+import clsx from "clsx";
 
 interface IconProps {
   name: string;
+  width?: number;
+  height?: number;
   className?: string;
 }
 
-export default function Icon({ name, className }: IconProps) {
+export default function Icon({ width, height, name, className }: IconProps) {
   return (
-    <svg className={clsx('fill-current', className)}>
+    <svg
+      width={width}
+      height={height}
+      className={clsx("fill-current", className)}
+    >
       <use xlinkHref={`/icons/sprite.svg#${name}`} />
     </svg>
   );

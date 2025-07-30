@@ -44,7 +44,7 @@ export const refreshUser = createAsyncThunk<
 
   try {
     setAuthHeader(accessToken);
-    const res = await instance.post("auth/current", {
+    const res = await instance.post("auth/refresh", {
       refreshToken: persistedToken,
     });
     return res.data.data;

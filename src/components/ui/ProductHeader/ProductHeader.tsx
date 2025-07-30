@@ -1,7 +1,7 @@
-import { Product } from "@/types/types";
+import { IProduct } from "@/types/types";
 import css from "@/components/ui/ProductHeader/ProductHeader.module.css";
 export interface ProductHeaderProps {
-  product: Product;
+  product: IProduct;
 }
 
 const ProductHeader = ({ product }: ProductHeaderProps) => {
@@ -22,9 +22,9 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
           </p>
         </div>
       </div>
-      <p className={css.features}>{product.features.join(" | ")}</p>
+      <p className={css.features}>{product.features && product.features.length > 0 ? product.features.join(" | ") : ""}</p>
       <p className={css.volumeOption}>
-        {product.volumeOptions?.length
+        {product.volumeOptions && product.volumeOptions.length > 0
           ? product.volumeOptions.join(" / ")
           : product.stockQuantity + " ml"}
       </p>
