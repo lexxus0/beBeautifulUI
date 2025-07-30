@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "title": "Shampoo",
+    "underTitle": "Шампунь",
+    "price": "280 ₴",
+    "imageMobile": "/images/topProducts/shampoo-mob.png",
+    "imageDesktop": "/images/topProducts/shampoo.png"
+  },
+  {
+    "id": 2,
+    "title": "Hair oil",
+    "underTitle": "Олія для волосся",
+    "price": "320 ₴",
+    "imageMobile": "/images/topProducts/oil-mob.png",
+    "imageDesktop": "/images/topProducts/oil.png"
+  },
+  {
+    "id": 3,
+    "title": "Hair conditioner",
+    "underTitle": "Кондиціонер",
+    "price": "300 ₴",
+    "imageMobile": "/images/topProducts/conditioner-mob.png",
+    "imageDesktop": "/images/topProducts/conditioner.png"
+  },
+  {
+    "id": 4,
+    "title": "Box",
+    "underTitle": "Набір догляду за волоссям",
+    "price": "750 ₴",
+    "imageMobile": "/images/topProducts/product-box-mob.png",
+    "imageDesktop": "/images/topProducts/product-box.png"
+  }
+]
