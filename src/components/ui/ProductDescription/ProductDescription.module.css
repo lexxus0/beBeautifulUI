@@ -38,7 +38,8 @@
 
 .arrow {
     transition: transform 0.3s ease;
-
+    width: 12px;
+    height: 24px;
 }
 
 

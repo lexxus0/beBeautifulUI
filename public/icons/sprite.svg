@@ -80,7 +80,9 @@
 <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2.1818" d="M25.613 20.987l-4.72 4.72c-0.187 0.187-0.36 0.533-0.4 0.787l-0.253 1.8c-0.093 0.653 0.36 1.107 1.013 1.013l1.8-0.253c0.253-0.040 0.613-0.213 0.787-0.4l4.72-4.72c0.813-0.813 1.2-1.76 0-2.96-1.187-1.187-2.133-0.8-2.947 0.013z"></path>
 <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2.1818" d="M24.933 21.667c0.4 1.44 1.52 2.56 2.96 2.96"></path>
 <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.1818" d="M4.547 29.333c0-5.16 5.133-9.333 11.453-9.333 1.387 0 2.72 0.2 3.96 0.573"></path>
+
+<symbol id="icon-star" viewBox="0 0 24 24">
+<path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2l-2.81 6.63L2 9.24l5.46 4.73L5.82 21z"/>
 </symbol>
 </defs>
 </svg>
-
