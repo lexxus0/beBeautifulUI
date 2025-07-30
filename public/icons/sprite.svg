@@ -60,6 +60,8 @@
 <symbol id="icon-to-top" viewBox="0 0 16 32">
 <path stroke="currentColor" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="1.7778" d="M7.987 31.111l0.013-29.868M0.889 12.622l7.111-11.733 7.111 11.733"></path>
 </symbol>
+<symbol id="icon-star" viewBox="0 0 24 24">
+<path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2l-2.81 6.63L2 9.24l5.46 4.73L5.82 21z"/>
+</symbol>
 </defs>
 </svg>
-
