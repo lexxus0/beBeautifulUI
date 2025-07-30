@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
@@ -7,6 +8,7 @@ import BasketBlackIcon from "@/components/elements/BasketBlackIcon";
 
 import styles from "./Navigation.module.scss";
 import clsx from "clsx";
+import { useHasMounted } from "@/helpers/hooks/useHasMounted";
 
 type NavigationProps = {
   onClose?: () => void;
@@ -16,6 +18,7 @@ const buildCssClasses = ({ isActive }: { isActive: boolean }) =>
   clsx(styles.link, isActive && styles.activeLink);
 
 export default function Navigation({ onClose }: NavigationProps) {
+  const hasMounted = useHasMounted();
   const pathname = usePathname();
   const isLoggenIn = useAppSelector(selectIsLoggedIn);
 
@@ -43,7 +46,7 @@ export default function Navigation({ onClose }: NavigationProps) {
         </li>
       ))}
       <li>
-        {!isLoggenIn && (
+        {hasMounted && !isLoggenIn && (
           <button type="button" onClick={()=>{}} className="hidden lg:block lg:w-8 lg:h-8">
             <BasketBlackIcon className="lg:w-8 lg:h-8" />
           </button>

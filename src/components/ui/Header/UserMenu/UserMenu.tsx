@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useAppSelector } from "@/store/hooks";
 import { selectUser } from "@/store/auth/selectors";
 import { useViewport } from "@/helpers/hooks/useViewport";
+import { useHasMounted } from "@/helpers/hooks/useHasMounted";
 import BasketBlackIcon from "@/components/elements/BasketBlackIcon";
 import Icon from "@/components/elements/Icon";
 import AccountMenu from "../AccountMenu/AccountMenu";
@@ -17,8 +18,9 @@ type UserMenuProps = {
 };
 
 export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
+  const hasMounted = useHasMounted();
   const user = useAppSelector(selectUser);
-  console.log("user: ", user);
+  // console.log("user: ", user);
 
   const [openModal, setOpenModal] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -42,6 +44,8 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  if (!hasMounted) return null;
 
   return (
     <div className={styles.wrapper} ref={wrapperRef}>
