@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
 import { useHasMounted } from "@/helpers/hooks/useHasMounted";
-import Icon from "@/components/elements/Icon";
+import Icon from "@/components/elements/icon";
 import Navigation from "./Navigation/Navigation";
 import MobileMenu from "./MobileMenu/MobileMenu";
 import Logo from "@/components/elements/Logo";
@@ -20,7 +20,7 @@ export default function Header() {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const user = useAppSelector(selectUser);
   console.log("user: ", user);
-  // console.log("isLoggedIn", isLoggedIn);
+  console.log("isLoggedIn", isLoggedIn);
 
   const [menu, setMenu] = useState(false);
 

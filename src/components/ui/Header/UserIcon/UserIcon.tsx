@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Icon from "@/components/elements/Icon";
+import Icon from "@/components/elements/icon";
 import clsx from "clsx";
 
 type UserIconProps = {

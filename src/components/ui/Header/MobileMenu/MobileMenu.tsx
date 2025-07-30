@@ -2,7 +2,7 @@ import React from "react";
 import Navigation from "../Navigation/Navigation";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
-import Icon from "@/components/elements/Icon";
+import Icon from "@/components/elements/icon";
 import UserMenu from "../UserMenu/UserMenu";
 import LangSwitcher from "../LangSwitcher/LangSwitcher";
 import UserIcon from "../UserIcon/UserIcon";

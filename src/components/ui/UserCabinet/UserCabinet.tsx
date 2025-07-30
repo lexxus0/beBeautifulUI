@@ -3,7 +3,7 @@ import { selectUser } from "@/store/auth/selectors";
 import { useAppSelector } from "@/store/hooks";
 import Image from "next/image";
 import ProfileForm from "./ProfileForm/ProfileForm";
-import Icon from "@/components/elements/Icon";
+import Icon from "@/components/elements/icon";
 
 import styles from "./UserCabinet.module.scss";
 

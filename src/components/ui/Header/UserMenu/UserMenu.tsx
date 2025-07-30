@@ -7,7 +7,7 @@ import { selectUser } from "@/store/auth/selectors";
 import { useViewport } from "@/helpers/hooks/useViewport";
 import { useHasMounted } from "@/helpers/hooks/useHasMounted";
 import BasketBlackIcon from "@/components/elements/BasketBlackIcon";
-import Icon from "@/components/elements/Icon";
+import Icon from "@/components/elements/icon";
 import AccountMenu from "../AccountMenu/AccountMenu";
 import LangSwitcher from "../LangSwitcher/LangSwitcher";
 

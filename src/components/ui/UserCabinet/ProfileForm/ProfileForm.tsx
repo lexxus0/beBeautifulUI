@@ -4,7 +4,7 @@ import {
   ProfileFormInputs,
   schemaProfile,
 } from "@/validation/profileValidation";
-import Icon from "@/components/elements/Icon";
+import Icon from "@/components/elements/icon";
 import InputGroup from "../../Auth/InputGroup/InputGroup";
 import styles from "./ProfileForm.module.scss";
 

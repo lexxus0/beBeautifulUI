@@ -2,7 +2,7 @@ import React from "react";
 // import { useAppDispatch } from "@/store/hooks";
 // import { signoutUser } from "@/store/auth/operations";
 import Link from "next/link";
-import Icon from "@/components/elements/Icon";
+import Icon from "@/components/elements/icon";
 
 import styles from "./AccountMenu.module.scss";
 import clsx from "clsx";
