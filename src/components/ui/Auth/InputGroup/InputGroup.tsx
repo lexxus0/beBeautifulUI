@@ -19,39 +19,35 @@ const InputGroup: FC<InputGroupProps> = ({
   onToggle,
   variant = "default",
   inputClassName,
-  groupClassName,
   labelClassName,
-  filledClassName,
   icon,
 }) => {
   const isPassword = type === "password";
   const hasError = Boolean(error);
-
   const isDefault = variant === "default";
+
   return (
-    <div className={clsx(isDefault ? styles.inputGroup : "", groupClassName)}>
+    <div className={styles.inputGroup}>
       <div className={styles.inputWrapper}>
-        {icon && <span>{icon}</span>}
-      <input
+        {!hasError && icon && <span>{icon}</span>}
+        <input
           id={id}
           name={name}
           type={type}
           value={value}
           onChange={onChange}
           className={clsx(
-          isDefault && styles.input,
-          isDefault && value && styles.filled,
-          isDefault &&   hasError && styles.errorInput,
-          icon && "pl-10",
+            isDefault && styles.input,
+            value && styles.filled,
+            hasError && styles.errorInput,
             inputClassName,
-          filledClassName
-        )}
+          )}
         />
 
         <label
-        htmlFor={id}
-        className={clsx(isDefault && styles.label, labelClassName)}
-      >
+          htmlFor={id}
+          className={clsx(isDefault && styles.label, labelClassName)}
+        >
           {label}
         </label>
 
@@ -70,8 +66,7 @@ const InputGroup: FC<InputGroupProps> = ({
           </span>
         )}
       </div>
-
-      {hasError && isDefault && <p className={styles.errorMsg}>{error}</p>}
+      {hasError && <p className={styles.errorMsg}>{error}</p>}
     </div>
   );
 };

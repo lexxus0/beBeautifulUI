@@ -46,14 +46,14 @@ export default function ProfileForm() {
   const renderIcon = (
     <Icon
       name="icon-edit"
-      className="w-[18px] h-[18px] absolute right-4 top-1/2 -translate-y-1/2"
+      className="w-[18px] h-[18px] absolute right-3 top-1/2 -translate-y-1/2"
     />
   );
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="lg:w-[856px] lg:h-[208px] lg:flex lg:flex-col lg:flex-wrap lg:gap-y-8 lg:gap-x-6"
+      className="lg:w-[856px] lg:grid lg:grid-cols-2 lg:gap-y-8 lg:gap-x-6"
     >
       {fields.map(({ name, label, type }) => (
         <Controller
@@ -69,8 +69,6 @@ export default function ProfileForm() {
               error={errors[name]?.message}
               icon={renderIcon}
               inputClassName={styles.input}
-              filledClassName={styles.filled}
-              groupClassName={styles.groupInput}
               labelClassName={styles.label}
               {...field}
             />

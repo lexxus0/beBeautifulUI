@@ -1,15 +1,5 @@
-.groupInput {
-  position: relative;
-  display: flex;
-  gap: 8px;
-  flex-direction: column;
-
-  @media (min-width: 1440px) {
-    gap: 0;
-  }
-}
-
 .input {
+  border: transparent;
   border-bottom: 1px solid #2d2d2d;
   border-radius: 8px;
   padding: 13px 12px;
@@ -20,10 +10,6 @@
   line-height: 1.5;
   letter-spacing: 0.02em;
   color: var(--color-black-10);
-
-  @media (min-width: 1440px) {
-    // width: 416px;
-  }
 }
 
 .label {
@@ -38,7 +24,13 @@
 }
 
 .input:focus + .label {
-  display: none;
+  top: -8px;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 150%;
+  letter-spacing: 0.02em;
+  color: #afb0b2;
+  background: var(--color-white-10);
 }
 
 .btnSubmit {
