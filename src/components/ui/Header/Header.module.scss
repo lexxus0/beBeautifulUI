@@ -18,9 +18,10 @@
 }
 
 .wrapperNav {
-  @media screen and (min-width: 744px) {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  @media (min-width: 744px) {
     gap: 20px;
   }
 }

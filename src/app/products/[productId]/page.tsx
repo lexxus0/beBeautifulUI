@@ -2,9 +2,9 @@ import ProductActions from "@/components/ui/ProductActions/ProductActions";
 import ProductDescription from "@/components/ui/ProductDescription/ProductDescription";
 import ProductGallery from "@/components/ui/ProductGallery/ProductGallery";
 import ProductHeader from "@/components/ui/ProductHeader/ProductHeader";
-import { Product } from "@/types/types";
+import { IProduct } from "@/types/types";
 
-const getProductById = async (id: string): Promise<Product> => {
+const getProductById = async (id: string): Promise<IProduct> => {
   const res = await fetch(
     `https://be-beautiful-backend.onrender.com/api/products/${id}`
   );
