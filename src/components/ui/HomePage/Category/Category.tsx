@@ -10,20 +10,20 @@ const Category = () => {
   return (
     <section className="container">
       <div className={styles.category}>
-      <div className={styles.header}>
-        <h2 className={styles.title}>
-          Продукти без синтетичного “шуму” — тільки те, що працює
-        </h2>
-        <Link href="/products" className={styles.link}>
-          Перейти до каталогу
-        </Link>
-      </div>
+        <div className={styles.header}>
+          <h2 className={styles.title}>
+            Продукти без синтетичного “шуму” — тільки те, що працює
+          </h2>
+          <Link href="/products" className={styles.link}>
+            Перейти до каталогу
+          </Link>
+        </div>
 
-      <div className={styles.cardsWrapper}>
-        {categories.map((item) => (
-          <CategoryCard key={item.title} {...item} />
-        ))}
-      </div>
+        <div className={styles.cardsWrapper}>
+          {categories.map((item) => (
+            <CategoryCard key={item.title} {...item} />
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -118,3 +118,12 @@ export interface InputGroupProps {
   labelClassName?: string;
   icon?: React.ReactNode;
 }
+
+export interface TopProduct {
+  id: number;
+  title: string;
+  underTitle: string;
+  price: string;
+  imageMobile: string;
+  imageDesktop: string;
+}

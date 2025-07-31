@@ -1,13 +1,31 @@
-.scrollToTop {
+.wrapper {
   position: fixed;
+  bottom: 40px;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  pointer-events: none;
+
+  .container {
+    pointer-events: none;
+  }
+}
+
+.inner {
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.scrollToTop {
+  pointer-events: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  bottom: 40px;
-  right: 40px;
   width: 56px;
   height: 56px;
-  background: transparent;
+  background: #e5e7eb;
+  backdrop-filter: blur(40px);
   border-radius: 8px;
   border: 1px solid var(--color-black-10);
   opacity: 0.7;

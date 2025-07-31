@@ -5,6 +5,7 @@ import styles from "./ScrollToTop.module.scss";
 
 const ScrollToTop: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -15,6 +16,22 @@ const ScrollToTop: React.FC = () => {
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
+  useEffect(() => {
+    const footer = document.getElementById("footer");
+    if (!footer) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsFooterVisible(entry.isIntersecting),
+      {
+        root: null,
+        threshold: 0,
+      }
+    );
+
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -22,13 +39,20 @@ const ScrollToTop: React.FC = () => {
     });
   };
 
-  if (!isVisible) return null;
+  if (!isVisible || isFooterVisible) return null;
 
   return (
-    <button className={styles.scrollToTop} onClick={scrollToTop}>
-      <span className={styles.icon}>↑</span>
-    </button>
+    <div className={styles.wrapper}>
+      <div className="container">
+        <div className={styles.inner}>
+          <button className={styles.scrollToTop} onClick={scrollToTop}>
+            <span className={styles.icon}>↑</span>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
 export default ScrollToTop;
+
