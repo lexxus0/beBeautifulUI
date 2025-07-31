@@ -81,14 +81,16 @@ export interface IReviewResponse {
 }
 
 export interface IUser {
+  userId: string;
   name?: string;
-  email: string;
+  email?: string;
   password?: string;
 }
 
 export interface IUserResponse {
   accessToken: string;
   refreshToken: string;
+  userId: string;
 }
 
 export interface RegisterFormInputs {

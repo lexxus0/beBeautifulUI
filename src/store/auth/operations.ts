@@ -73,8 +73,7 @@ export const signoutUser = createAsyncThunk<void, void, { state: RootState }>(
     if (!token) return rejectWithValue("User is not authenticated.");
 
     try {
-      setAuthHeader(token);
-      await instance.post("auth/logout");
+      await instance.post("auth/logout", { accessToken: token });
       clearAuthHeader();
     } catch (e) {
       return rejectWithValue(handleError(e, "Failed to signout."));

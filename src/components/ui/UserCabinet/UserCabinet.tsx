@@ -1,13 +1,15 @@
 "use client";
 import { selectUser } from "@/store/auth/selectors";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Image from "next/image";
 import ProfileForm from "./ProfileForm/ProfileForm";
 import Icon from "@/components/shared/Icon";
 
 import styles from "./UserCabinet.module.scss";
+import { signoutUser } from "@/store/auth/operations";
 
 export default function UserCabinet() {
+  const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   return (
     <div className="container py-6 md:pt-4 md:pb-10 lg:pt-10 lg:pb-15 ">
@@ -40,7 +42,9 @@ export default function UserCabinet() {
       </div>
       <button
         type="button"
-        onClick={() => {}}
+        onClick={() => {
+          dispatch(signoutUser());
+        }}
         className="font-open-sans text-lg md:text-xl mx-auto flex gap-3 items-center p-3 lg:ml-0"
       >
         <Icon name="icon-logout" className="w-6 h-6" />
