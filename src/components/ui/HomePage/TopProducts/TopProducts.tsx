@@ -1,10 +1,10 @@
 "use client";
 
-import Icon from "@/components/elements/Icon";
 import styles from "./TopProducts.module.scss";
 import Link from "next/link";
 import products from "./topProducts.json";
 import { TopProduct } from "@/types/types";
+import Icon from "@/components/shared/Icon";
 
 const TopProducts: React.FC = () => {
   return (
