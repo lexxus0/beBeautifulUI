@@ -1,6 +1,8 @@
 import React from "react";
-// import { useAppDispatch } from "@/store/hooks";
-// import { signoutUser } from "@/store/auth/operations";
+import { useAppDispatch } from "@/store/hooks";
+import { signoutUser } from "@/store/auth/operations";
+import { persistor } from "@/store/store";
+// import { useRouter } from "next/router";
 import Link from "next/link";
 
 import styles from "./AccountMenu.module.scss";
@@ -12,11 +14,18 @@ type AccountMenuProps = {
 };
 
 export default function AccountMenu({ onClose }: AccountMenuProps) {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+  // const router = useRouter();
 
-  // const handleLogout = () => {
-  //   dispatch(signoutUser());
-  // };
+  const handleLogout = async () => {
+    try {
+      await dispatch(signoutUser()).unwrap();
+      await persistor.purge();
+      // router.push('/');
+    } catch (e) {
+      console.error("Logout error:", e);
+    }
+  };
 
   const links = [
     { href: "/cabinet", label: "Особистий кабінет", icon: "icon-user-edit" },
@@ -44,7 +53,7 @@ export default function AccountMenu({ onClose }: AccountMenuProps) {
           </li>
         ))}
         <li className={styles.list}>
-          <button type="button" onClick={() => {}} className={styles.btn}>
+          <button type="button" onClick={handleLogout} className={styles.btn}>
             <Icon
               name="icon-logout"
               className="w-5 h-5 fill-white-20 lg:fill-current"

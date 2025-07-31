@@ -4,23 +4,23 @@ import React, { useState } from "react";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
 import { useHasMounted } from "@/helpers/hooks/useHasMounted";
+import Icon from "@/components/shared/Icon";
 import Navigation from "./Navigation/Navigation";
 import MobileMenu from "./MobileMenu/MobileMenu";
+import Logo from "@/components/shared/Logo";
 import BasketBlackIcon from "@/components/elements/BasketBlackIcon";
 import LangSwitcher from "./LangSwitcher/LangSwitcher";
 import UserIcon from "./UserIcon/UserIcon";
 import UserMenu from "./UserMenu/UserMenu";
 
 import styles from "./Header.module.scss";
-import Logo from "@/components/shared/Logo";
-import Icon from "@/components/shared/Icon";
 
 export default function Header() {
   const hasMounted = useHasMounted();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const user = useAppSelector(selectUser);
   console.log("user: ", user);
-  // console.log("isLoggedIn", isLoggedIn);
+  console.log("isLoggedIn", isLoggedIn);
 
   const [menu, setMenu] = useState(false);
 
@@ -33,7 +33,6 @@ export default function Header() {
         <div className="hidden lg:block">
           <Navigation />
         </div>
-        {/* <UserMenu /> */}
         <div className={styles.wrapperNav}>
           {isLoggedIn ? (
             <div className="hidden lg:block">
@@ -45,11 +44,6 @@ export default function Header() {
               <UserIcon className="hidden lg:flex" />
             </div>
           )}
-          {/* <div className="hidden md:flex gap-6">
-            <LangSwitcher />
-            <UserIcon className="hidden lg:flex" />
-          </div> */}
-          <LangSwitcher className="hidden md:block lg:hidden" />
           <button
             type="button"
             onClick={() => {}}
