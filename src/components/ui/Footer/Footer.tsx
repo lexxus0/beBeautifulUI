@@ -1,7 +1,7 @@
-import Icon from "../../elements/Icon";
+import Logo from "@/components/shared/Logo";
 import styles from "./Footer.module.scss";
 import Link from "next/link";
-import Logo from "../../elements/Logo";
+import Icon from "@/components/shared/Icon";
 
 const navData = [
   ["Про бренд", "/about"],

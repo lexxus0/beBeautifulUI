@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Icon from "@/components/elements/Icon";
+import Icon from "@/components/shared/Icon";
 import styles from "./Rate.module.css";
 
 const Rate = () => {

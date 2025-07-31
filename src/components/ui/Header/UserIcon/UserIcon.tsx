@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Icon from "@/components/elements/Icon";
 import clsx from "clsx";
+import Icon from "@/components/shared/Icon";
 
 type UserIconProps = {
   onClose?: () => void;
@@ -19,10 +19,7 @@ export default function UserIcon({ onClose, className }: UserIconProps) {
         className
       )}
     >
-      <Icon
-        name="icon-user"
-        className="w-[25px] h-[30px]"
-      />
+      <Icon name="icon-user" className="w-[25px] h-[30px]" />
     </Link>
   );
 }

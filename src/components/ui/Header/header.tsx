@@ -4,16 +4,16 @@ import React, { useState } from "react";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
 import { useHasMounted } from "@/helpers/hooks/useHasMounted";
-import Icon from "../../elements/Icon";
 import Navigation from "./Navigation/Navigation";
 import MobileMenu from "./MobileMenu/MobileMenu";
-import Logo from "../../elements/Logo";
 import BasketBlackIcon from "@/components/elements/BasketBlackIcon";
 import LangSwitcher from "./LangSwitcher/LangSwitcher";
 import UserIcon from "./UserIcon/UserIcon";
 import UserMenu from "./UserMenu/UserMenu";
 
 import styles from "./Header.module.scss";
+import Logo from "@/components/shared/Logo";
+import Icon from "@/components/shared/Icon";
 
 export default function Header() {
   const hasMounted = useHasMounted();

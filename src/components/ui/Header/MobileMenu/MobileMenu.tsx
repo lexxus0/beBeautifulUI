@@ -2,19 +2,19 @@ import React from "react";
 import Navigation from "../Navigation/Navigation";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
-import Icon from "@/components/elements/Icon";
 import UserMenu from "../UserMenu/UserMenu";
 import LangSwitcher from "../LangSwitcher/LangSwitcher";
 import UserIcon from "../UserIcon/UserIcon";
 
 import styles from "./MobileMenu.module.scss";
+import Icon from "@/components/shared/Icon";
 
 type MobileMenuProps = {
   onClose?: () => void;
 };
 
 export default function MobileMenu({ onClose }: MobileMenuProps) {
-   const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const user = useAppSelector(selectUser);
   console.log("user: ", user);
 
@@ -26,14 +26,14 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
       </button>
       {/* <UserMenu /> */}
       {isLoggedIn ? (
-            <div className="">
-              <UserMenu onCloseMobileModal={onClose}/>
-            </div>
-          ) : (
-            <div className="">
-              <UserIcon/>
-            </div>
-          )}
+        <div className="">
+          <UserMenu onCloseMobileModal={onClose} />
+        </div>
+      ) : (
+        <div className="">
+          <UserIcon />
+        </div>
+      )}
       {/* <div className="flex justify-center">
         <UserIcon onClose={onClose} />
       </div> */}

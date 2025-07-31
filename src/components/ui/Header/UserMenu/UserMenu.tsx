@@ -7,11 +7,11 @@ import { selectUser } from "@/store/auth/selectors";
 import { useViewport } from "@/helpers/hooks/useViewport";
 import { useHasMounted } from "@/helpers/hooks/useHasMounted";
 import BasketBlackIcon from "@/components/elements/BasketBlackIcon";
-import Icon from "@/components/elements/Icon";
 import AccountMenu from "../AccountMenu/AccountMenu";
 import LangSwitcher from "../LangSwitcher/LangSwitcher";
 
 import styles from "./UserMenu.module.scss";
+import Icon from "@/components/shared/Icon";
 
 type UserMenuProps = {
   onCloseMobileModal?: () => void;

@@ -2,10 +2,10 @@ import React from "react";
 // import { useAppDispatch } from "@/store/hooks";
 // import { signoutUser } from "@/store/auth/operations";
 import Link from "next/link";
-import Icon from "@/components/elements/Icon";
 
 import styles from "./AccountMenu.module.scss";
 import clsx from "clsx";
+import Icon from "@/components/shared/Icon";
 
 type AccountMenuProps = {
   onClose?: () => void;
@@ -44,7 +44,7 @@ export default function AccountMenu({ onClose }: AccountMenuProps) {
           </li>
         ))}
         <li className={styles.list}>
-          <button type="button" onClick={()=>{}} className={styles.btn}>
+          <button type="button" onClick={() => {}} className={styles.btn}>
             <Icon
               name="icon-logout"
               className="w-5 h-5 fill-white-20 lg:fill-current"
