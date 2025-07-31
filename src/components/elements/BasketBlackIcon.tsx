@@ -22,8 +22,8 @@ export default function BasketBlackIcon(props: React.SVGProps<SVGSVGElement>) {
     >
       <g clipPath={`url(#${clipPathId})`}>
         <path
-          fill="#2D2D2D"
-          stroke="#000"
+          fill="#000"
+          stroke="currentColor"
           strokeWidth="0.4"
           d="m24.966 10.77.057.097H30.5a1.3 1.3 0 0 1 1.3 1.3v.937a40.25 40.25 0 0 1-3.991 17.475l-.26.526a1.25 1.25 0 0 1-1.125.695H5.578a1.27 1.27 0 0 1-1.128-.698A40.25 40.25 0 0 1 .2 13.101v-.934a1.3 1.3 0 0 1 1.3-1.3h5.477l.057-.098L13.018.793l1.489.89-5.328 8.88-.182.304h14.006l-.182-.304-5.33-8.88 1.49-.891z"
         />
