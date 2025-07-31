@@ -24,19 +24,15 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
       <button type="button" className={styles.closeBtn} onClick={onClose}>
         <Icon name="icon-close" className={styles.iconClose} />
       </button>
-      {/* <UserMenu /> */}
       {isLoggedIn ? (
             <div className="">
               <UserMenu onCloseMobileModal={onClose}/>
             </div>
           ) : (
-            <div className="">
-              <UserIcon/>
+            <div className="flex justify-center">
+              <UserIcon onClose={onClose}/>
             </div>
           )}
-      {/* <div className="flex justify-center">
-        <UserIcon onClose={onClose} />
-      </div> */}
       <div className="border-t border-t-white-30 pt-8 mt-1">
         <div className="relative">
           <input className={styles.input} placeholder="Пошук..." />

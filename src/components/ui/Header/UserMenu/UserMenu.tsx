@@ -59,7 +59,7 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
       </button>
 
       <div className="flex gap-[13px] items-center">
-        {user ? (
+        {user.avatar ? (
           <Image
             src={user.avatar}
             alt={user.name}
@@ -67,12 +67,11 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
             className="w-10 h-10 rounded-lg lg:w-12 lg:h-12 object-cover"
           />
         ) : (
-          // <span>{user.name.charAt(0)}</span>
           <span
             className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg border-1 border-black-10 bg-gray-10
     text-2xl font-medium text-white-30 flex items-center justify-center"
           >
-            US
+            <span>{user.name.charAt(0)}</span>
           </span>
         )}
         {user ? (

@@ -16,7 +16,7 @@ export default function UserCabinet() {
       </h2>
       <div className="w-full  md:w-[436px] mx-auto mb-10 lg:w-full lg:flex gap-[134px] items-center lg:mb-[156px] relative">
         <div className="relative w-45 h-45 lg:w-[306px] lg:h-[306px] mb-12 mx-auto md:mb-[50px] lg:mx-0 lg:mb-0">
-          {user ? (
+          {user.avatar ? (
             <Image
               src={user.avatar}
               alt={user.name}
@@ -24,12 +24,11 @@ export default function UserCabinet() {
               className="w-45 h-45 rounded-lg lg:w-[306px] lg:h-[306px] object-cover mx-auto"
             />
           ) : (
-            // <span>{user.name.charAt(0)}</span>
             <span
               className="w-45 h-45 lg:w-[306px] lg:h-[306px] rounded-lg border-1 border-black-10 bg-gray-10
           text-7xl font-medium text-white-30 flex items-center justify-center mx-auto lg:mx-0"
             >
-              US
+              {user.name.charAt(0)}
             </span>
           )}
           <button type="button" className={styles.btnEdit}>

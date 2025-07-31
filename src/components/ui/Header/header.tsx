@@ -33,7 +33,6 @@ export default function Header() {
         <div className="hidden lg:block">
           <Navigation />
         </div>
-        {/* <UserMenu /> */}
         <div className={styles.wrapperNav}>
           {isLoggedIn ? (
             <div className="hidden lg:block">
@@ -45,11 +44,6 @@ export default function Header() {
               <UserIcon className="hidden lg:flex" />
             </div>
           )}
-          {/* <div className="hidden md:flex gap-6">
-            <LangSwitcher />
-            <UserIcon className="hidden lg:flex" />
-          </div> */}
-          <LangSwitcher className="hidden md:block lg:hidden" />
           <button
             type="button"
             onClick={() => {}}
