@@ -4,10 +4,10 @@ import { signoutUser } from "@/store/auth/operations";
 import { persistor } from "@/store/store";
 // import { useRouter } from "next/router";
 import Link from "next/link";
-import Icon from "@/components/elements/icon";
 
 import styles from "./AccountMenu.module.scss";
 import clsx from "clsx";
+import Icon from "@/components/shared/Icon";
 
 type AccountMenuProps = {
   onClose?: () => void;
