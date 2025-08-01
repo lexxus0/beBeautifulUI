@@ -1,7 +1,7 @@
 "use client";
 import { selectUser } from "@/store/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import Image from "next/image";
+// import Image from "next/image";
 import ProfileForm from "./ProfileForm/ProfileForm";
 import Icon from "@/components/shared/Icon";
 
@@ -18,7 +18,7 @@ export default function UserCabinet() {
       </h2>
       <div className="w-full  md:w-[436px] mx-auto mb-10 lg:w-full lg:flex gap-[134px] items-center lg:mb-[156px] relative">
         <div className="relative w-45 h-45 lg:w-[306px] lg:h-[306px] mb-12 mx-auto md:mb-[50px] lg:mx-0 lg:mb-0">
-          {user.avatar ? (
+          {/* {user.avatar ? (
             <Image
               src={user.avatar}
               alt={user.name}
@@ -32,7 +32,13 @@ export default function UserCabinet() {
             >
               {user.name.charAt(0)}
             </span>
-          )}
+          )} */}
+           <span
+              className="w-45 h-45 lg:w-[306px] lg:h-[306px] rounded-lg border-1 border-black-10 bg-gray-10
+          text-7xl font-medium text-white-30 flex items-center justify-center mx-auto lg:mx-0"
+            >
+              {user?.name.charAt(0)}
+            </span>
           <button type="button" className={styles.btnEdit}>
             <Icon name="icon-edit" className="w-[19px] h-[19px]" />
           </button>
