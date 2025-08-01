@@ -8,7 +8,7 @@ import Icon from "@/components/shared/Icon";
 import Navigation from "./Navigation/Navigation";
 import MobileMenu from "./MobileMenu/MobileMenu";
 import Logo from "@/components/shared/Logo";
-import BasketBlackIcon from "@/components/elements/BasketBlackIcon";
+import BasketIcon from "@/components/elements/BasketIcon";
 import LangSwitcher from "./LangSwitcher/LangSwitcher";
 import UserIcon from "./UserIcon/UserIcon";
 import UserMenu from "./UserMenu/UserMenu";
@@ -49,7 +49,7 @@ export default function Header() {
             onClick={() => {}}
             className="w-9 h-9 flex items-center justify-center lg:hidden"
           >
-            <BasketBlackIcon className="w-6 h-6" />
+            <BasketIcon className="w-6 h-6" />
           </button>
           <button
             type="button"

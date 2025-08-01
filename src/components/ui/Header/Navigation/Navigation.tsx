@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
 import Link from "next/link";
-import BasketBlackIcon from "@/components/elements/BasketBlackIcon";
+import BasketIcon from "@/components/elements/BasketIcon";
 
 import styles from "./Navigation.module.scss";
 import clsx from "clsx";
@@ -48,7 +48,7 @@ export default function Navigation({ onClose }: NavigationProps) {
       <li>
         {hasMounted && !isLoggenIn && (
           <button type="button" onClick={()=>{}} className="hidden lg:block lg:w-8 lg:h-8">
-            <BasketBlackIcon className="lg:w-8 lg:h-8" />
+            <BasketIcon className="lg:w-8 lg:h-8" />
           </button>
         )}
       </li>

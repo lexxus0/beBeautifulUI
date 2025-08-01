@@ -6,7 +6,7 @@ import { useAppSelector } from "@/store/hooks";
 import { selectUser } from "@/store/auth/selectors";
 import { useViewport } from "@/helpers/hooks/useViewport";
 import { useHasMounted } from "@/helpers/hooks/useHasMounted";
-import BasketBlackIcon from "@/components/elements/BasketBlackIcon";
+import BasketIcon from "@/components/elements/BasketIcon";
 import AccountMenu from "../AccountMenu/AccountMenu";
 import LangSwitcher from "../LangSwitcher/LangSwitcher";
 
@@ -55,7 +55,7 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
         onClick={() => {}}
         className="hidden lg:w-8 lg:h-8 lg:block lg:mr-8"
       >
-        <BasketBlackIcon className="lg:w-8 lg:h-8" />
+        <BasketIcon className="lg:w-8 lg:h-8" />
       </button>
 
       <div className="flex gap-[13px] items-center">

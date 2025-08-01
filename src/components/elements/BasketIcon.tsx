@@ -1,7 +1,8 @@
 "use client";
 import * as React from "react";
+import { BasketIconProps } from "@/types/types";
 
-export default function BasketBlackIcon(props: React.SVGProps<SVGSVGElement>) {
+export default function BasketIcon({ variant = "black", ...props }: BasketIconProps) {
   const uniqueId = React.useId();
 
   const patternId = `pattern_${uniqueId}`;
@@ -9,6 +10,8 @@ export default function BasketBlackIcon(props: React.SVGProps<SVGSVGElement>) {
   const clipPathId = `clip_${uniqueId}`;
   const paint0Id = `paint0_${uniqueId}`;
   const paint1Id = `paint1_${uniqueId}`;
+
+  const isWhite = variant === "white";
 
   return (
     <svg
@@ -22,7 +25,7 @@ export default function BasketBlackIcon(props: React.SVGProps<SVGSVGElement>) {
     >
       <g clipPath={`url(#${clipPathId})`}>
         <path
-          fill="#000"
+          fill={isWhite ? "#fff" : "#000"}
           stroke="currentColor"
           strokeWidth="0.4"
           d="m24.966 10.77.057.097H30.5a1.3 1.3 0 0 1 1.3 1.3v.937a40.25 40.25 0 0 1-3.991 17.475l-.26.526a1.25 1.25 0 0 1-1.125.695H5.578a1.27 1.27 0 0 1-1.128-.698A40.25 40.25 0 0 1 .2 13.101v-.934a1.3 1.3 0 0 1 1.3-1.3h5.477l.057-.098L13.018.793l1.489.89-5.328 8.88-.182.304h14.006l-.182-.304-5.33-8.88 1.49-.891z"
@@ -60,13 +63,13 @@ export default function BasketBlackIcon(props: React.SVGProps<SVGSVGElement>) {
           gradientUnits="userSpaceOnUse"
         >
           <stop />
-          <stop offset="0.024" stopColor="#fff" />
-          <stop offset="0.515" stopColor="#fff" />
-          <stop offset="0.971" stopColor="#fff" />
+          <stop offset="0.024" stopColor={isWhite ? "#000" : "#fff"} />
+          <stop offset="0.515" stopColor={isWhite ? "#000" : "#fff"} />
+          <stop offset="0.971" stopColor={isWhite ? "#000" : "#fff"} />
           <stop offset="1" />
         </linearGradient>
         <clipPath id={clipPathId}>
-          <path fill="#fff" d="M0 0h32v32H0z" />
+          <path fill="#" d="M0 0h32v32H0z" />
         </clipPath>
         <pattern
           id={patternId}
