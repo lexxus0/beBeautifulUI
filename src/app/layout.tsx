@@ -10,7 +10,7 @@ import Footer from "@/components/ui/Footer/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop/ScrollToTop";
 import { useAppDispatch } from "@/store/hooks";
 import { useEffect } from "react";
-import { getCurrentUser, refreshUser } from "@/store/auth/operations";
+import { refreshAndLoadUser } from "@/store/auth/operations";
 
 // export const metadata: Metadata = {
 //   title: "Science Be Beautiful",
@@ -81,8 +81,7 @@ function ReduxInitializer() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(refreshUser());
-    dispatch(getCurrentUser());
+    dispatch(refreshAndLoadUser());
   }, [dispatch]);
 
   return null;

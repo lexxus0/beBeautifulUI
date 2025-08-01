@@ -3,8 +3,8 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: "https://be-beautiful-backend.onrender.com/api",
-  // baseURL: "http://localhost:3001/api",
+  // baseURL: "https://be-beautiful-backend.onrender.com/api",
+  baseURL: "http://localhost:3001/api",
 });
 
 export const setAuthHeader = (token: string) => {
