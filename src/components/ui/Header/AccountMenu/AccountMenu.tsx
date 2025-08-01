@@ -1,13 +1,12 @@
 import React from "react";
 import { useAppDispatch } from "@/store/hooks";
 import { signoutUser } from "@/store/auth/operations";
-// import { persistor } from "@/store/store";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Icon from "@/components/shared/Icon";
 
 import styles from "./AccountMenu.module.scss";
 import clsx from "clsx";
-import Icon from "@/components/shared/Icon";
 
 type AccountMenuProps = {
   onClose?: () => void;
@@ -20,9 +19,7 @@ export default function AccountMenu({ onClose }: AccountMenuProps) {
   const handleLogout = async () => {
     try {
       await dispatch(signoutUser())
-      .unwrap();
       onClose?.();
-      // await persistor.purge();
       router.push('/');
 
     } catch (e) {
