@@ -127,3 +127,9 @@ export interface TopProduct {
   imageMobile: string;
   imageDesktop: string;
 }
+
+export type BasketIconVariant = "black" | "white";
+
+export interface BasketIconProps extends React.SVGProps<SVGSVGElement> {
+  variant?: BasketIconVariant;
+}
