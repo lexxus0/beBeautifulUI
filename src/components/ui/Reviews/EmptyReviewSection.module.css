@@ -1,0 +1,172 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f8f7f5;
+  padding: 40px 20px 60px;
+  gap: 32px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.headerBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  max-width: 335px;
+}
+
+.title {
+  font-family: "Lato", sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 120%;
+  text-align: center;
+  color: #000000;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 32px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 120%;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  height: 56px;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.grayButton {
+  background: #2d2d2d;
+}
+
+.btnGradient {
+  background: linear-gradient(
+    178.57deg,
+    rgba(45, 45, 45, 0.8) -8.32%,
+    rgba(148, 148, 148, 0.8) 76.8%,
+    rgba(45, 45, 45, 0.8) 122.5%
+  );
+}
+
+.emptyTextBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  max-width: 335px;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 140%;
+  color: #000000;
+}
+
+.emptyDescription {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  color: #2d2d2d;
+}
+
+/* Tablet */
+@media (min-width: 744px) {
+  .wrapper {
+    padding: 40px 40px 60px;
+    gap: 40px;
+  }
+
+  .headerBlock {
+    max-width: 664px;
+    gap: 40px;
+  }
+
+  .title {
+    font-size: 32px;
+    line-height: 150%;
+  }
+
+  .buttons {
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .button {
+    width: 322px;
+    height: 66px;
+  }
+
+  .emptyTextBlock {
+    max-width: 505px;
+    gap: 24px;
+  }
+
+  .emptyTitle {
+    font-size: 32px;
+  }
+
+  .emptyDescription {
+    font-size: 18px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1280px) {
+  .wrapper {
+    padding: 80px 72px;
+    gap: 40px;
+  }
+
+  .headerBlock {
+    max-width: 608px;
+  }
+
+  .title {
+    max-width: 608px;
+  }
+
+  .buttons {
+    max-width: 608px;
+    gap: 24px;
+  }
+
+  .button {
+    width: 290px;
+    height: 56px;
+  }
+
+  .emptyTextBlock {
+    max-width: 505px;
+    gap: 40px;
+  }
+
+  .emptyTitle {
+    font-size: 32px;
+  }
+
+  .emptyDescription {
+    font-size: 20px;
+  }
+}
