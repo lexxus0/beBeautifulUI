@@ -5,6 +5,251 @@
   width: 335px;
   margin: 0 auto;
   padding: 0;
+}
+
+.title {
+  font-family: var(--font-lato);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--color-black-10);
+  margin-top: 16px;
+}
+
+.inputsRow {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.input,
+.textarea {
+  font-family: var(--font-roboto);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--color-black-10);
+  background: var(--color-white);
+  border: 1px solid var(--color-black-10);
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input {
+  height: 56px;
+  padding: 8px 12px 8px 12px;
+  padding-top: 27px;
+}
+
+.textarea {
+  min-height: 120px;
+  padding: 16px;
+  height: 220px;
+}
+
+.starsRoWrapper {
+  padding-top: 24px;
+}
+
+.starsRow {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.starBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.starBtn svg {
+  width: 21px;
+  height: 20px;
+}
+
+.starsLabel {
+  font-family: var(--font-roboto);
+  font-size: 16px;
+  color: var(--color-black-10);
+  text-align: center;
+  margin-top: 8px;
+}
+
+.helperRow {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-black-10);
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin: 8px 0;
+}
+
+.helperIcon {
+  width: 32px;
+  height: 32px;
+}
+
+.textareaRow {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.sendBtn {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  background: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.addImageRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.addImageIcon {
+  width: 32px;
+  height: 32px;
+}
+
+.addImageLabel {
+  font-family: var(--font-roboto);
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--color-black-10);
+}
+
+.submit {
+  width: 335px;
+  height: 56px;
+  border-radius: 8px;
+  background-color: var(--color-black-10);
+  color: var(--color-white);
+  font-family: var(--font-lato);
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  margin-top: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.submit:hover,
+.submit:focus {
+  background: linear-gradient(180deg, #6c6c6c 0%, #b3b3b3 100%);
+}
+
+.success {
+  font-family: var(--font-lato);
+  font-size: 20px;
+  color: var(--color-black-10);
+  text-align: center;
+  padding: 32px 0;
+}
+
+/* Tablet */
+@media (min-width: 744px) {
+  .form {
+    width: 664px;
+    gap: 24px;
+  }
+
+  .title {
+    font-size: 28px;
+    font-weight: 400;
+  }
+
+  .inputsRow {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .textarea {
+    width: 664px;
+  }
+
+  .submit {
+    width: 436px;
+    margin-top: 32px;
+    font-size: 20px;
+    border-radius: 8px;
+    padding: 16px 32px;
+    align-self: center;
+  }
+
+  .starsLabel {
+    font-size: 20px;
+  }
+
+  .starBtn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .starBtn svg {
+    width: 31px;
+    height: 29px;
+  }
+
+  .helperRow {
+    font-size: 16px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1440px) {
+  .form {
+    max-width: 700px;
+    gap: 40px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .textarea {
+    min-height: 200px;
+    font-size: 20px;
+  }
+
+  .submit {
+    font-size: 22px;
+    max-width: 400px;
+    border-radius: 20px;
+    padding: 20px 0;
+  }
+}
+
+/* .form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 335px;
+  margin: 0 auto;
+  padding: 0;
   background: transparent;
 }
 
@@ -203,10 +448,10 @@ height: 220px;
   line-height: 1.5;
   letter-spacing: 0.02em;
   color: #2d2d2d;
-}
+} */
 
 /* Tablet styles */
-@media (min-width: 744px) {
+/* @media (min-width: 744px) {
   .form {
     gap: 24px;
     width: 664px;
@@ -246,7 +491,7 @@ height: 220px;
   /* .starsRoWrapper{
     padding-top: 16px;
   } */
-  .addImageRow{
+/* .addImageRow{
     margin: 0;
 }
   .textarea {
@@ -270,11 +515,10 @@ height: 220px;
     line-height: 1.2;
     align-self: center;
 
-  }
-}
+  } */
 
 /* Desktop styles */
-@media (min-width: 1440px) {
+/* @media (min-width: 1440px) {
   .form {
     gap: 40px;
     max-width: 700px;
@@ -292,4 +536,4 @@ height: 220px;
     padding: 20px 0;
     border-radius: 20px;
   }
-}
+} */

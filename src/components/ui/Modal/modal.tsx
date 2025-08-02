@@ -11,8 +11,19 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
   return (
     <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modal} onClick={e => e.stopPropagation()}>
-        <button className={styles.close} onClick={onClose}>×</button>
+      <div
+        className={styles.modal}
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+      >
+        <button
+          className={styles.close}
+          onClick={onClose}
+          aria-label="Закрити вікно"
+        >
+          ×
+        </button>
         {children}
       </div>
     </div>
