@@ -1,4 +1,5 @@
-import { IProduct } from "@/types/types";
+import StarRating from "@/helpers/StarRating";
+import { IProduct, IReview } from "@/types/types";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -17,6 +18,12 @@ export default function ProductItem({ item }: ProductItemProps) {
     }
   };
 
+  const getAverageRating = (reviews: IReview[]) => {
+    if (reviews.length === 0) return 0;
+    const total = reviews.reduce((sum, r) => sum + r.rating, 0);
+    return total / reviews.length;
+  };
+
   return (
     <div className="px-4 md:w-[322px] lg:w-[400px]">
       <Image
@@ -30,6 +37,10 @@ export default function ProductItem({ item }: ProductItemProps) {
       <div className="my-6 text-center">
         <p className="font-lato font-semibold mb-4 text-2xl">{item.name}</p>
         <p className="font-roboto text-xl capitalize">{item.category}</p>
+        <div className="flex items-center gap-3 justify-center">
+          <StarRating rating={getAverageRating(item.reviews)} />
+          <p>{item.reviews?.length ?? 0} відгуків</p>
+        </div>
 
         <div className="flex justify-between items-center mt-4">
           <p className="font-roboto text-xl">

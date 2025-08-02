@@ -37,10 +37,10 @@ const productSlice = createSlice({
         (state, action: PayloadAction<IProductResponse>) => {
           state.isLoading = false;
           state.products = action.payload.data;
-          state.totalItems = action.payload.pagination.total;
-          state.limit = action.payload.pagination.perPage;
-          state.totalPages = action.payload.pagination.totalPages;
-          state.currentPage = action.payload.pagination.page;
+          state.totalItems = action.payload?.pagination.total ?? 0;
+          state.limit = action.payload?.pagination.perPage;
+          state.totalPages = action.payload?.pagination.totalPages;
+          state.currentPage = action.payload?.pagination.page;
         }
       )
       .addCase(fetchProducts.rejected, (state, action) => {
