@@ -1,5 +1,4 @@
 .header {
-  max-width: 375px;
   padding-inline: 20px;
   margin-inline: auto;
   display: flex;
@@ -7,7 +6,6 @@
   align-items: center;
 
   @media (min-width: 744px) {
-    max-width: 744px;
     padding-inline: 40px;
   }
 

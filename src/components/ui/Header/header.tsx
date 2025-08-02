@@ -24,8 +24,6 @@ export default function Header() {
 
   const [menu, setMenu] = useState(false);
 
-  if (!hasMounted) return null;
-
   return (
     <header className="bg-gray lg:bg-white-20">
       <div className={styles.header}>
