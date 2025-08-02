@@ -22,7 +22,6 @@ export interface IProduct {
   name: string;
   sku: string;
   volumeOptions: string[];
-  priceByVolume: number[];
   priceByVolume: {
     volume: string;
     price: number;
@@ -40,6 +39,7 @@ export interface IProduct {
   inciList: string[];
   category: string;
   isVegan: boolean;
+  reviews: IReview[];
   isPromoted: boolean;
   imageUrl: string;
   inStock: boolean;
@@ -108,10 +108,29 @@ export interface InputGroupProps {
   id: string;
   name: string;
   label: string;
-  type?: string;
+  type?: "text" | "password";
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   error?: string;
   showToggle?: boolean;
   onToggle?: () => void;
+  variant?: "default" | "custom";
+  inputClassName?: string;
+  labelClassName?: string;
+  icon?: React.ReactNode;
+}
+
+export interface TopProduct {
+  id: number;
+  title: string;
+  underTitle: string;
+  price: string;
+  imageMobile: string;
+  imageDesktop: string;
+}
+
+export type BasketIconVariant = "black" | "white";
+
+export interface BasketIconProps extends React.SVGProps<SVGSVGElement> {
+  variant?: BasketIconVariant;
 }

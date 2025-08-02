@@ -1,14 +1,14 @@
 "use client";
-import { Product } from "@/types/types";
+import { IProduct } from "@/types/types";
 import Image from "next/image";
 import React from "react";
 
-import css from "@/components/ui/ProductGallery/ProductGallery.module.css";
+// import css from "@/components/ui/ProductGallery/ProductGallery.module.css";
 import ProductRating from "../ProductRating/ProductRating";
 import { useViewport } from "@/helpers/hooks/useViewport";
 
 export interface ProductGalleryProps {
-  product: Product;
+  product: IProduct;
 }
 
 const ProductGallery = ({ product }: ProductGalleryProps) => {

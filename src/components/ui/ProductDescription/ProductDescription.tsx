@@ -1,11 +1,11 @@
 "use client";
 
-import { Product } from "@/types/types";
 import React, { useState } from "react";
 import css from "@/components/ui/ProductDescription/ProductDescription.module.css";
+import { IProduct } from "@/types/types";
 import Icon from "@/components/elements/Icons";
 export interface ProductDescriptionProps {
-  product: Product;
+  product: IProduct;
 }
 
 const ProductDescription = ({ product }: ProductDescriptionProps) => {

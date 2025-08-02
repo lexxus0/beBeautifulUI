@@ -16,18 +16,28 @@ export const registerUser = createAsyncThunk<IUserResponse, IUser>(
   }
 );
 
-export const loginUser = createAsyncThunk<IUserResponse, Partial<IUser>>(
-  "users/signin",
-  async (credentials, { rejectWithValue }) => {
-    try {
-      const res = await instance.post("auth/login", credentials);
-      setAuthHeader(res.data.data.accessToken);
-      return res.data.data;
-    } catch (e) {
-      return rejectWithValue(handleError(e, "Failed to login."));
-    }
+export const loginUser = createAsyncThunk<
+  IUserResponse & { user: IUser },
+  Partial<IUser>
+>("users/signin", async (credentials, { rejectWithValue }) => {
+  try {
+    const res = await instance.post("auth/login", credentials);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { accessToken, refreshToken } = res.data.data;
+
+    setAuthHeader(accessToken);
+
+    // Fetch current user info immediately after login
+    const userRes = await instance.get("/auth/current");
+
+    return {
+      ...res.data.data,
+      user: userRes.data.data,
+    };
+  } catch (e) {
+    return rejectWithValue(handleError(e, "Failed to login."));
   }
-);
+});
 
 export const refreshUser = createAsyncThunk<
   { accessToken: string; refreshToken: string },
@@ -44,7 +54,7 @@ export const refreshUser = createAsyncThunk<
 
   try {
     setAuthHeader(accessToken);
-    const res = await instance.post("auth/current", {
+    const res = await instance.post("auth/refresh", {
       refreshToken: persistedToken,
     });
     return res.data.data;
@@ -59,10 +69,33 @@ export const getCurrentUser = createAsyncThunk<
   { state: RootState }
 >("users/current", async (_, thunkAPI) => {
   try {
+    const state = thunkAPI.getState();
+    const accessToken = state.auth.accessToken;
+    console.log(accessToken);
+    setAuthHeader(accessToken);
     const res = await instance.get("/auth/current");
     return res.data.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(handleError(e, "Failed to load user."));
+  }
+});
+
+export const refreshAndLoadUser = createAsyncThunk<
+  IUser,
+  void,
+  { state: RootState }
+>("users/refreshAndLoad", async (_, thunkAPI) => {
+  try {
+    const refreshResult = await thunkAPI.dispatch(refreshUser()).unwrap();
+
+    setAuthHeader(refreshResult.accessToken);
+
+    const res = await instance.get("/auth/current");
+    return res.data.data;
+  } catch (e) {
+    return thunkAPI.rejectWithValue(
+      handleError(e, "Session expired, please log in again.")
+    );
   }
 });
 
@@ -73,8 +106,7 @@ export const signoutUser = createAsyncThunk<void, void, { state: RootState }>(
     if (!token) return rejectWithValue("User is not authenticated.");
 
     try {
-      setAuthHeader(token);
-      await instance.post("auth/logout");
+      await instance.post("auth/logout", { accessToken: token });
       clearAuthHeader();
     } catch (e) {
       return rejectWithValue(handleError(e, "Failed to signout."));
