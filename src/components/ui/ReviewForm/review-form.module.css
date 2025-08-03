@@ -109,11 +109,11 @@
 }
 
 .sendBtn {
+  border-radius: 32px;
   position: absolute;
   right: 8px;
   bottom: 8px;
-  background: none;
-  border: none;
+  background: rgba(45, 45, 45, 0.3);
   width: 32px;
   height: 32px;
   display: flex;
@@ -122,7 +122,7 @@
   cursor: pointer;
 }
 
-.addImageRow {
+/* .addImageRow {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -133,24 +133,24 @@
 .addImageIcon {
   width: 32px;
   height: 32px;
-}
+} */
 
-.addImageLabel {
+/* .addImageLabel {
   font-family: var(--font-roboto);
   font-size: 18px;
   font-weight: 300;
   color: var(--color-black-10);
-}
+} */
 
 .submit {
-  width: 335px;
-  height: 56px;
   border-radius: 8px;
+  padding: 16px 32px;
+  line-height: 1.2;
   background-color: var(--color-black-10);
   color: var(--color-white);
   font-family: var(--font-lato);
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 400;
   border: none;
   margin-top: 16px;
   cursor: pointer;
@@ -194,9 +194,6 @@
   .submit {
     width: 436px;
     margin-top: 32px;
-    font-size: 20px;
-    border-radius: 8px;
-    padding: 16px 32px;
     align-self: center;
   }
 
@@ -236,10 +233,8 @@
   }
 
   .submit {
-    font-size: 22px;
-    max-width: 400px;
-    border-radius: 20px;
-    padding: 20px 0;
+    width: 416px;
+    height: 66px;
   }
 }
 

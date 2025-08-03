@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./review-form.module.css";
+import Icon from "@/components/shared/Icon";
 
 const ReviewForm: React.FC = () => {
   const [name, setName] = useState("");
@@ -118,13 +119,7 @@ const ReviewForm: React.FC = () => {
           aria-label="Надіслати"
           onClick={handleSend}
         >
-          {/* mingcute_send-line.svg icon as inline SVG */}
-          <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path
-              fill="currentColor"
-              d="M3.05 4.05a.75.75 0 0 1 .82-.17l16 7a.75.75 0 0 1 0 1.34l-16 7A.75.75 0 0 1 3 18.75v-5.5a.75.75 0 0 1 .75-.75h7.19a.25.25 0 0 0 .09-.48l-7.19-3.15A.75.75 0 0 1 3.05 4.05Z"
-            />
-          </svg>
+          <Icon name="icon-send" width={14} height={14} />
         </button>
       </div>
       {/* <label className={styles.addImageRow} style={{ cursor: "pointer" }}>
