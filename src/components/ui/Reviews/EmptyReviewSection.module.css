@@ -40,7 +40,7 @@
   align-items: center;
   padding: 16px 32px;
   font-family: "Open Sans", sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
   line-height: 120%;
   color: #ffffff;
@@ -58,10 +58,10 @@
 
 .btnGradient {
   background: linear-gradient(
-    178.57deg,
-    rgba(45, 45, 45, 0.8) -8.32%,
-    rgba(148, 148, 148, 0.8) 76.8%,
-    rgba(45, 45, 45, 0.8) 122.5%
+    180deg,
+    rgba(45, 45, 45, 0.8) 0%,
+    rgba(148, 148, 148, 0.8) 65.07%,
+    rgba(45, 45, 45, 0.8) 100%
   );
 }
 
@@ -110,12 +110,13 @@
   .buttons {
     flex-direction: row;
     justify-content: center;
-    gap: 20px;
+    gap: 24px;
   }
 
   .button {
     width: 322px;
     height: 66px;
+    font-size: 20px;
   }
 
   .emptyTextBlock {
@@ -125,6 +126,9 @@
 
   .emptyTitle {
     font-size: 32px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
   }
 
   .emptyDescription {
@@ -150,11 +154,21 @@
   .buttons {
     max-width: 608px;
     gap: 24px;
+    flex-direction: row-reverse;
   }
 
   .button {
+    border: 0.4px solid #111;
+    padding: 8px 16px;
     width: 290px;
     height: 56px;
+  }
+  .grayButton {
+    color: #2d2d2d;
+    background: #fff;
+  }
+  .btnGradient {
+    background: #111;
   }
 
   .emptyTextBlock {

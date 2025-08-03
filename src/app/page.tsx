@@ -8,8 +8,6 @@ import Category from "@/components/ui/HomePage/Category/Category";
 import Banner from "@/components/ui/HomePage/Banner/Banner";
 import TopProducts from "@/components/ui/HomePage/TopProducts/TopProducts";
 import EmptyReviewSection from "@/components/ui/Reviews/EmptyReviewSection";
-import LeaveReviewButton from "@/components/ui/LeaveReviewButton/LeaveReviewButton";
-
 export const metadata = homeMetadata;
 
 export default function page() {
@@ -24,9 +22,6 @@ export default function page() {
       <FAQ />
       <EmptyReviewSection />
       <Reviews />
-      <div className="text-center mt-10">
-        <LeaveReviewButton />
-      </div>
     </>
   );
 }
