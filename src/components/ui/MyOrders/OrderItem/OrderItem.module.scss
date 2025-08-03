@@ -1,33 +1,13 @@
-// .wrapper {
-// display: flex;
-// flex-direction: column;
-// gap: 40px;
-// padding-bottom: 44px;
-// border-bottom: 1px solid #898989;
-
-// @media (min-width: 744px) {
-//     width: 856px;
-//   gap: 74px;
-//   padding: 20px 0;
-//   margin-left: auto;
-//   margin-right: auto;
-//   }
-
-// }
-
 .listOrder {
   display: flex;
   flex-direction: column;
-  //   grid-template-columns: 1fr;
   row-gap: 10px;
   margin-bottom: 40px;
 
   @media (min-width: 744px) {
-    // flex-direction: row;
     flex-wrap: wrap;
     column-gap: 38px;
     height: 104px;
-    // grid-template-columns: 1fr 1fr;
   }
 
   @media (min-width: 1440px) {

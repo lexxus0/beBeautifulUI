@@ -3,12 +3,12 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
+import { useHasMounted } from "@/helpers/hooks/useHasMounted";
 import Link from "next/link";
 import BasketIcon from "@/components/elements/BasketIcon";
 
 import styles from "./Navigation.module.scss";
 import clsx from "clsx";
-import { useHasMounted } from "@/helpers/hooks/useHasMounted";
 
 type NavigationProps = {
   onClose?: () => void;

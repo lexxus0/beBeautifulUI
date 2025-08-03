@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { useAppSelector } from "@/store/hooks";
-import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
-import { useHasMounted } from "@/helpers/hooks/useHasMounted";
+import { selectIsLoggedIn } from "@/store/auth/selectors";
+// import { useHasMounted } from "@/helpers/hooks/useHasMounted";
 import Icon from "@/components/shared/Icon";
 import Navigation from "./Navigation/Navigation";
 import MobileMenu from "./MobileMenu/MobileMenu";
@@ -16,16 +16,16 @@ import UserMenu from "./UserMenu/UserMenu";
 import styles from "./Header.module.scss";
 
 export default function Header() {
-  const hasMounted = useHasMounted();
+  // const hasMounted = useHasMounted();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  const user = useAppSelector(selectUser);
-  console.log("user: ", user);
-  console.log("isLoggedIn", isLoggedIn);
+  // const user = useAppSelector(selectUser);
+  // console.log("user: ", user);
+  // console.log("isLoggedIn", isLoggedIn);
 
   const [menu, setMenu] = useState(false);
 
   return (
-    <header className="bg-gray lg:bg-white-20">
+    <header className="bg-gray lg:bg-white-20 lg:border-b lg:border-b-[#8d8d8d]">
       <div className={styles.header}>
         <Logo className="w-15 h-15 lg:w-20 lg:h-20" />
         <div className="hidden lg:block">

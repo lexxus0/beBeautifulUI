@@ -5,8 +5,8 @@ import {
   schemaProfile,
 } from "@/validation/profileValidation";
 import InputGroup from "../../Auth/InputGroup/InputGroup";
-import styles from "./ProfileForm.module.scss";
 import Icon from "@/components/shared/Icon";
+import styles from "./ProfileForm.module.scss";
 
 const fields: {
   name: keyof ProfileFormInputs;

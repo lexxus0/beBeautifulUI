@@ -5,9 +5,9 @@ import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
 import UserMenu from "../UserMenu/UserMenu";
 import LangSwitcher from "../LangSwitcher/LangSwitcher";
 import UserIcon from "../UserIcon/UserIcon";
+import Icon from "@/components/shared/Icon";
 
 import styles from "./MobileMenu.module.scss";
-import Icon from "@/components/shared/Icon";
 
 type MobileMenuProps = {
   onClose?: () => void;
@@ -25,14 +25,14 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
         <Icon name="icon-close" className={styles.iconClose} />
       </button>
       {isLoggedIn ? (
-            <div className="">
-              <UserMenu onCloseMobileModal={onClose}/>
-            </div>
-          ) : (
-            <div className="flex justify-center">
-              <UserIcon onClose={onClose}/>
-            </div>
-          )}
+        <div className="">
+          <UserMenu onCloseMobileModal={onClose} />
+        </div>
+      ) : (
+        <div className="flex justify-center">
+          <UserIcon onClose={onClose} />
+        </div>
+      )}
       <div className="border-t border-t-white-30 pt-8 mt-1">
         <div className="relative">
           <input className={styles.input} placeholder="Пошук..." />

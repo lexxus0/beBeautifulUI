@@ -2,12 +2,9 @@ import React from "react";
 
 import styles from "./OrderItem.module.scss";
 
-// type Props = {}
-
 export default function OrderItem() {
   return (
     <>
-      {/* <div className="w-screen border-t border-t-gray-300"></div> */}
       <div className="flex flex-col lg:gap-[74px] gap-10 lg:py-5 lg:mx-auto lg:w-[856px]">
         <ul className={styles.listOrder}>
           <li className={styles.itemOrder}>
@@ -63,7 +60,11 @@ export default function OrderItem() {
           <button type="button" onClick={() => {}} className={styles.btnOrder}>
             Повторити замовлення
           </button>
-          <button type="button" onClick={() => {}} className={styles.btnDetails}>
+          <button
+            type="button"
+            onClick={() => {}}
+            className={styles.btnDetails}
+          >
             Детальніше
           </button>
         </div>

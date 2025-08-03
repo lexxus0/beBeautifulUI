@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { useAppDispatch } from "@/store/hooks";
 import { signoutUser } from "@/store/auth/operations";
@@ -18,10 +20,9 @@ export default function AccountMenu({ onClose }: AccountMenuProps) {
 
   const handleLogout = async () => {
     try {
-      await dispatch(signoutUser())
+      await dispatch(signoutUser());
       onClose?.();
-      router.push('/');
-
+      router.push("/");
     } catch (e) {
       console.error("Logout error:", e);
     }
