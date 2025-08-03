@@ -39,6 +39,7 @@ export interface IProduct {
   inciList: string[];
   category: string;
   isVegan: boolean;
+  reviews: IReview[];
   isPromoted: boolean;
   imageUrl: string;
   inStock: boolean;

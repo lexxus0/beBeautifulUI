@@ -12,7 +12,7 @@ const StarRating: React.FC<StarRatingProps> = ({
   size = 20,
   color = "#FFD700",
 }) => {
-  const clampedRating = Math.max(1, Math.min(rating, 5));
+  const clampedRating = Math.max(0, Math.min(rating, 5));
   const fullStars = Math.floor(clampedRating);
   const hasHalfStar = clampedRating % 1 >= 0.5;
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);

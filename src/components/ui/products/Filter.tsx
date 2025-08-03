@@ -19,11 +19,12 @@ const catOptions = [
   { value: "Body", label: "Body" },
 ];
 
-const volumes = ["50ml", "100ml", "200ml", "400ml", "500ml"];
+const volumes = ["50ml", "100ml", "200ml", "400ml", "500ml", "1L"];
 const volumeOptions = [
   { value: "200ml", label: "200ml" },
   { value: "250ml", label: "250ml" },
   { value: "400ml", label: "400ml" },
+  { value: "500ml", label: "500ml" },
   { value: "1L", label: "1L" },
 ];
 
