@@ -26,7 +26,7 @@ const ScrollToTop: React.FC = () => {
 
   return (
      <div className={styles.wrapper}>
-      <div className="container">
+      <div className={styles.container}>
         <div className={styles.inner}>
           <button className={styles.scrollToTop} onClick={scrollToTop}>
             <span className={styles.icon}>↑</span>

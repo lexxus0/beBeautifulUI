@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { handleError, instance } from "../init";
 import { IProductResponse } from "@/types/types";
+import axios from "axios";
 
 export const fetchProducts = createAsyncThunk<
   IProductResponse,
@@ -33,7 +34,16 @@ export const fetchProducts = createAsyncThunk<
         data: res.data.data,
         pagination: res.data.pagination,
       };
-    } catch (e) {
+    } catch (e: unknown) {
+      if (axios.isAxiosError(e) && e.response?.status === 404) {
+        return {
+          data: [],
+          pagination: {
+            total: 0,
+            totalPages: 1,
+          },
+        };
+      }
       return ThunkAPI.rejectWithValue(
         handleError(e, "Failed to fetch products")
       );
