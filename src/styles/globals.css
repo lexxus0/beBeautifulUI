@@ -72,6 +72,16 @@ body {
   background-color: var(--color-white-10);
   font-family: var(--font-roboto, sans-serif);
   color: var(--color-black-10);
+  height: 100%;
+}
+
+.pageLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.pageContent {
+  flex: 1;
 }
 
 .container {

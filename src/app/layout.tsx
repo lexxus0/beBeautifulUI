@@ -65,14 +65,14 @@ export default function RootLayout({
         ${sourceSansPro.variable}
       `}
       >
-        <Providers>
-          <ReduxInitializer />
-          <Header />
-            <>
-              {children}
-            </>
-          <Footer />
-        </Providers>
+        <div className="pageLayout">
+          <Providers>
+            <ReduxInitializer />
+            <Header />
+            <main className="pageContent">{children}</main>
+            <Footer />
+          </Providers>
+        </div>
         <ScrollToTop />
       </body>
     </html>
