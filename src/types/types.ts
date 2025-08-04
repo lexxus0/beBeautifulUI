@@ -134,3 +134,13 @@ export type BasketIconVariant = "black" | "white";
 export interface BasketIconProps extends React.SVGProps<SVGSVGElement> {
   variant?: BasketIconVariant;
 }
+
+export interface BasketItemType {
+  id: number;
+  image: string;
+  titleEn: string;
+  titleUk: string;
+  volume: string;
+  quantity: number;
+  price: number;
+}

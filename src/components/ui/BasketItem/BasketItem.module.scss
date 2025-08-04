@@ -1,0 +1,47 @@
+.item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+}
+
+.info {
+  flex: 1;
+}
+
+.titleEn {
+  font-weight: 600;
+}
+
+.titleUk {
+  font-size: 14px;
+  color: #666;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  button {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #aaa;
+    background: #fff;
+    cursor: pointer;
+  }
+}
+
+.price {
+  width: 80px;
+  text-align: right;
+  font-weight: 500;
+}
+
+.remove {
+  background: transparent;
+  border: none;
+  color: red;
+  font-size: 20px;
+  cursor: pointer;
+}
