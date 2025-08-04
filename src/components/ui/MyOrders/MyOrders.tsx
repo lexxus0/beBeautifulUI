@@ -26,11 +26,11 @@ export default function MyOrders() {
 
   return (
     <div className="container pt-[10px] pb-15 md:pb-[42px] lg:pt-[34px] lg:b-15">
-      <div className="flex flex-col gap-4 mb-10 md:mb-[62px] md:flex-row items-center md:justify-between">
+      <div className="flex flex-col items-start gap-4 mb-10 md:mb-[62px] md:flex-row md:items-center md:justify-between">
         <h2 className="font-lato font-semibold text-2xl lg:text-[32px] text-[#49454f]">
           Мої замовлення
         </h2>
-        <div className="relative">
+        <div className="relative w-full md:w-[207px] lg:w-[306px]">
           <input
             type="text"
             name="search"

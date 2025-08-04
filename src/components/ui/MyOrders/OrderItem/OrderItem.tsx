@@ -33,7 +33,7 @@ export default function OrderItem() {
           </li>
         </ul>
         <div>
-          <p className="font-lato font-semibold text-xl mb-5 md:font-bold md:text-lg">
+          <p className="font-lato font-semibold text-xl pt-[2px] border-b border-b-[#e4e4e4] mb-5 md:font-bold md:text-lg">
             Товари:
           </p>
           <ul className="flex flex-col gap-5 md:w-[500px]">
