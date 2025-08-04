@@ -68,7 +68,9 @@ export default function RootLayout({
         <Providers>
           <ReduxInitializer />
           <Header />
-          {children}
+            <>
+              {children}
+            </>
           <Footer />
         </Providers>
         <ScrollToTop />

@@ -5,9 +5,19 @@
   width: 100%;
   z-index: 100;
   pointer-events: none;
+}
 
-  .container {
-    pointer-events: none;
+.container {
+  pointer-events: none;
+  max-width: 1440px;
+  margin: 0 20px 0 auto;
+
+  @media (min-width: 744px) {
+    margin-right: 40px;
+  }
+
+  @media (min-width: 1440px) {
+    margin-right: auto;
   }
 }
 
