@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Navigation from "../Navigation/Navigation";
 import { useAppSelector } from "@/store/hooks";
@@ -25,21 +26,19 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
         <Icon name="icon-close" className={styles.iconClose} />
       </button>
       {isLoggedIn ? (
-        <div className="">
+        <div className={styles.wrapUserMenu}>
           <UserMenu onCloseMobileModal={onClose} />
         </div>
       ) : (
-        <div className="flex justify-center">
+        <div className={styles.wrapIconUser}>
           <UserIcon onClose={onClose} />
         </div>
       )}
-      <div className="border-t border-t-white-30 pt-8 mt-1">
-        <div className="relative">
-          <input className={styles.input} placeholder="Пошук..." />
-          <Icon name="icon-search" className={styles.iconSearch} />
-        </div>
-        <Navigation onClose={onClose} />
+      <div className="relative">
+        <input className={styles.input} placeholder="Пошук..." />
+        <Icon name="icon-search" className={styles.iconSearch} />
       </div>
+      <Navigation onClose={onClose} />
     </div>
   );
 }

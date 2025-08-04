@@ -18,27 +18,10 @@
   font-size: 18px;
   line-height: 1.5;
   letter-spacing: 0.01em;
-  color: var(--color-white-30);
   padding: 8px 16px;
 
   @media (max-width: 1339px) {
-    &:hover {
-      font-weight: 700;
-      border-left: 1px solid var(--color-black-10);
-      border-radius: 8px;
-      width: 300px;
-      background-color: #e4e4e4;
-      color: var(--color-black-10);
-    }
-
-    &:active {
-      font-weight: 700;
-      border-left: 1px solid var(--color-black-10);
-      border-radius: 8px;
-      width: 300px;
-      background-color: #e4e4e4;
-      color: var(--color-black-10);
-    }
+    width: 300px;
   }
 
   @media (min-width: 1440px) {
@@ -49,13 +32,16 @@
 }
 
 .activeLink {
-  // font-weight: 700;
-  // border-left: 1px solid var(--color-black-10);
-  // border-radius: 8px;
-  // width: 300px;
-  // height: 48px;
-  // background-color: #e4e4e4;
-  // color: var(--color-black-10);
+  font-weight: 700;
+
+  @media (max-width: 1339px) {
+    border-left: 1px solid var(--color-black-10);
+    border-radius: 8px;
+    width: 300px;
+    height: 48px;
+    background-color: #e4e4e4;
+    color: var(--color-black-10);
+  }
 
   @media (min-width: 1440px) {
     border-bottom: 1px solid #1e0e00;

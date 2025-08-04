@@ -43,10 +43,8 @@ export default function AccountMenu({ onClose }: AccountMenuProps) {
               <Icon
                 name={icon}
                 className={clsx(
-                  "w-5 h-5 stroke-white-20 lg:stroke-black-10",
-                  icon === "icon-orders"
-                    ? "fill-white-20  lg:fill-black-10"
-                    : "fill-transparent "
+                  "w-5 h-5 stroke-black-10",
+                  icon === "icon-orders" ? "fill-black-10" : "fill-transparent "
                 )}
               />
               <span className="hidden lg:block">{label}</span>
@@ -55,10 +53,7 @@ export default function AccountMenu({ onClose }: AccountMenuProps) {
         ))}
         <li className={styles.list}>
           <button type="button" onClick={handleLogout} className={styles.btn}>
-            <Icon
-              name="icon-logout"
-              className="w-5 h-5 fill-white-20 lg:fill-current"
-            />
+            <Icon name="icon-logout" className="w-5 h-5  lg:fill-current" />
             <span className="hidden lg:block">Вихід</span>
           </button>
         </li>

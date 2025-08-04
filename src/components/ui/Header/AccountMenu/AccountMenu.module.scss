@@ -2,7 +2,7 @@
   @media (min-width: 1440px) {
     position: absolute;
     top: 60px;
-    right: 72px;
+    right: 20px;
     z-index: 99;
     background-color: #f9f8f4;
     border-radius: 8px;
@@ -22,7 +22,7 @@
 
 .list {
   border-radius: 2px;
-  border: 0.4px solid #fff;
+  border: 0.4px solid var(--color-black-10);
   width: 24px;
   height: 24px;
   display: flex;
@@ -41,7 +41,7 @@
     font-size: 16px;
     line-height: 1.5;
     letter-spacing: 0.01em;
-    color: var(--color-black-10);
+    border: none;
     padding: 8px 16px;
     border-left: 1px solid transparent;
     transition: border-radius 0.3s ease, background-color 0.3s ease;

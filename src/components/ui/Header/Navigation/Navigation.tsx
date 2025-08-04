@@ -30,24 +30,27 @@ export default function Navigation({ onClose }: NavigationProps) {
     { href: "/book", label: "Книга рецепців" },
   ];
 
-  const isAuthPage = pathname === "/login" || pathname === "/register";
   return (
     <ul className={styles.nav}>
       {links.map((link) => (
         <li
           key={link.href}
           className={buildCssClasses({
-            isActive: !isAuthPage && pathname === link.href,
+            isActive: pathname === link.href,
           })}
         >
-          <Link href={link.href} onClick={onClose}>
+          <Link href={link.href} onClick={onClose} className="flex">
             {link.label}
           </Link>
         </li>
       ))}
       <li>
         {hasMounted && !isLoggenIn && (
-          <button type="button" onClick={()=>{}} className="hidden lg:block lg:w-8 lg:h-8">
+          <button
+            type="button"
+            onClick={() => {}}
+            className="hidden lg:block lg:w-8 lg:h-8"
+          >
             <BasketIcon className="lg:w-8 lg:h-8" />
           </button>
         )}
