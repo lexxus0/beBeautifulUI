@@ -34,7 +34,7 @@ const BasketItem = ({
           </div>
         </div>
       </div>
-      <div className={styles.wrapper}>
+      <div className={styles.wrapperPrice}>
         <div className={styles.quantity}>
           <button onClick={onDecrement}>-</button>
           <span>{item.quantity}</span>
