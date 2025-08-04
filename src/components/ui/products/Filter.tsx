@@ -7,8 +7,8 @@ import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 import { FaFilterCircleXmark } from "react-icons/fa6";
 import { RxDropdownMenu } from "react-icons/rx";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
 import Select from "react-select";
+import { selectProducts } from "@/store/products/selectors";
 
 const categories = ["hair", "body", "face", "makeup", "home"];
 const catOptions = [
@@ -30,7 +30,7 @@ const volumeOptions = [
 
 export default function Filter() {
   const dispatch = useAppDispatch();
-  const products = useSelector((state: RootState) => state.products.items);
+  const products = useSelector(selectProducts);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -147,11 +147,12 @@ export default function Filter() {
               options={catOptions}
               placeholder="Category"
               styles={{
-                control: base => ({
+                control: (base) => ({
                   ...base,
                   height: 44,
-                  minHeight: 35
-                })}}
+                  minHeight: 35,
+                }),
+              }}
               isClearable
               value={
                 catOptions.find((opt) => opt.value === selectedCategory) || null
@@ -185,11 +186,12 @@ export default function Filter() {
                 null
               }
               styles={{
-                control: base => ({
+                control: (base) => ({
                   ...base,
                   height: 44,
-                  minHeight: 35
-                })}}
+                  minHeight: 35,
+                }),
+              }}
               onChange={(option) => {
                 if (option) {
                   handleFilterSelect("volume", option.value);

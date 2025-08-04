@@ -69,11 +69,16 @@ export type CategoryCardProps = {
 };
 
 export interface IReview {
+  _id: string;
   name: string;
   location: string;
   rating: number;
   comment: string;
   createdAt: string;
+  likes: number;
+  dislikes: number;
+  hasLiked?: boolean;
+  hasDisliked?: boolean;
 }
 
 export interface IReviewResponse {
