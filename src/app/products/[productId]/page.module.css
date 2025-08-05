@@ -1,0 +1,8 @@
+@media (min-width: 744px) {
+  .productContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+  }
+}

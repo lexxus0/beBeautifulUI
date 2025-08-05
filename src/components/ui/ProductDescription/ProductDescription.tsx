@@ -33,7 +33,7 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           </div>
         </button>
         {activeIndex === 0 && (
-          <div className={css.accordionContent}>{product.description}</div>
+          <p className={css.accordionContent}>{product.description}</p>
         )}
       </div>
 
@@ -54,9 +54,9 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           </div>
         </button>
         {activeIndex === 1 && (
-          <div className={css.accordionContent}>
+          <p className={css.accordionContent}>
             Це просто додатковий текст або пояснення.
-          </div>
+          </p>
         )}
       </div>
 
@@ -77,13 +77,13 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           </div>
         </button>
         {activeIndex === 2 && (
-          <div className={css.accordionContent}>
+          <p className={css.accordionContent}>
             {product.activeIngredients.length > 0
               ? product.activeIngredients.map((item) => (
-                  <div key={item._id}>ID: {item._id}</div>
+                  <p key={item._id}>ID: {item._id}</p>
                 ))
               : "Немає активних компонентів"}
-          </div>
+          </p>
         )}
       </div>
 
@@ -104,9 +104,7 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           </div>
         </button>
         {activeIndex === 3 && (
-          <div className={css.accordionContent}>
-            {product.inciList?.join(", ")}
-          </div>
+          <p className={css.accordionContent}>{product.inciList?.join(", ")}</p>
         )}
       </div>
 
@@ -127,7 +125,7 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           </div>
         </button>
         {activeIndex === 4 && (
-          <div className={css.accordionContent}>{product.instructions}</div>
+          <p className={css.accordionContent}>{product.instructions}</p>
         )}
       </div>
 
@@ -148,9 +146,9 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           </div>
         </button>
         {activeIndex === 5 && (
-          <div className={css.accordionContent}>
+          <p className={css.accordionContent}>
             Тестове застереження. Уникати потрапляння в очі.
-          </div>
+          </p>
         )}
       </div>
 
@@ -171,9 +169,9 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           </div>
         </button>
         {activeIndex === 6 && (
-          <div className={css.accordionContent}>
+          <p className={css.accordionContent}>
             {new Date(product.createdAt).toLocaleDateString()} – 24 міс.
-          </div>
+          </p>
         )}
       </div>
     </div>

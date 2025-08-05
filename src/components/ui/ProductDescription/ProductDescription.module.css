@@ -46,3 +46,13 @@
 .arrowRotated {
     transform: rotate(-180deg);
 }
+
+@media (min-width: 744px) {
+    .accordionWrapper {
+        padding-top: 0;
+        max-width: 322px;
+
+    }
+
+
+}

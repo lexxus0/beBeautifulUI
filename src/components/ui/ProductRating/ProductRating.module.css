@@ -1,9 +1,10 @@
 .starAssessment {
     display: flex;
-    justify-content: end;
+    justify-content: center;
     align-items: center;
     margin-top: 15px;
     margin-bottom: 24px;
+    height: 24px;
 }
 
 
@@ -15,4 +16,10 @@
     font-family: Roboto;
     line-height: 18px;
     letter-spacing: 0.24px;
+}
+
+@media (min-width: 744px) {
+    .starAssessment {
+        margin: 0;
+    }
 }

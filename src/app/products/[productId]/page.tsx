@@ -3,6 +3,7 @@ import ProductDescription from "@/components/ui/ProductDescription/ProductDescri
 import ProductGallery from "@/components/ui/ProductGallery/ProductGallery";
 import ProductHeader from "@/components/ui/ProductHeader/ProductHeader";
 import { IProduct } from "@/types/types";
+import css from './page.module.css';
 
 const getProductById = async (id: string): Promise<IProduct> => {
   const res = await fetch(
@@ -20,8 +21,10 @@ export default async function ProductDetails({
   return (
     <section className="container">
       <ProductHeader product={product} />
-      <ProductGallery product={product} />
-      <ProductDescription product={product} />
+      <div className={css.productContainer}>
+        <ProductGallery product={product} />
+        <ProductDescription product={product} />
+      </div>
       <ProductActions product={product} />
     </section>
   );

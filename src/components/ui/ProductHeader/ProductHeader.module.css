@@ -37,6 +37,13 @@
     word-wrap: break-word;
 }
 
+.inStockContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
 .volumeOption {
     color: #2D2D2D;
     font-size: 16px;
@@ -46,4 +53,30 @@
     letter-spacing: 0.32px;
     word-wrap: break-word;
     margin-bottom: 16px;
+}
+
+@media (min-width: 744px) {
+    .headercontainer {
+        position: relative;
+        margin-top: 40px;
+    }
+
+    .rate {
+        position: absolute;
+        right: 0;
+        top: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: end;
+        gap: 18.5px;
+    }
+
+    .category {
+        max-width: 100%;
+    }
+
+    .features {
+        display: inline;
+    }
 }
