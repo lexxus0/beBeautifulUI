@@ -2,7 +2,7 @@
 
 import StarRating from "@/helpers/StarRating";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchReviews } from "@/store/reviews/operations";
+import { fetchReviews, reactToReview } from "@/store/reviews/operations";
 import { selectReviews } from "@/store/reviews/selectors";
 import { IReview } from "@/types/types";
 import { useEffect, useState } from "react";
@@ -10,9 +10,11 @@ import defaultImage from "../../../../public/images/def.jpg";
 import Image from "next/image";
 import { convertDayToString } from "@/helpers/covertDateToString";
 import { BiLike, BiDislike } from "react-icons/bi";
+import { selectIsLoggedIn } from "@/store/auth/selectors";
 
 export default function Reviews() {
   const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const [expandedReviews, setExpandedReviews] = useState<{
     [key: string]: boolean;
   }>({});
@@ -39,6 +41,16 @@ export default function Reviews() {
       </h2>
       <div className="flex flex-nowrap gap-16 flex-col lg:flex-row lg:flex-wrap">
         {reviews.map((review: IReview) => {
+          const handleReaction = (type: "like" | "dislike") => {
+            const isAlreadyReacted =
+              (type === "like" && review.hasLiked) ||
+              (type === "dislike" && review.hasDisliked);
+
+            if (isAlreadyReacted) return;
+
+            dispatch(reactToReview({ id: review._id, type }));
+          };
+
           const isExpanded = expandedReviews[review.createdAt];
           const isLong = review.comment.length > CHARACTER_LIMIT;
           const visibleComment =
@@ -95,14 +107,27 @@ export default function Reviews() {
                 <p className="ml-auto mt-2">Вам допоміг цей відгук?</p>
 
                 <div className="flex gap-1.5 ml-auto">
-                  <button>
+                  <button
+                    disabled={!isLoggedIn || review.hasLiked}
+                    className={`transition ${
+                      review.hasLiked ? "text-green-600 font-bold" : ""
+                    }`}
+                    onClick={() => handleReaction("like")}
+                  >
                     <BiLike />
                   </button>
-                  <p>1</p>
-                  <button>
-                    <BiDislike className="text-red-600" />
+                  <p>{review.likes}</p>
+
+                  <button
+                    disabled={!isLoggedIn || review.hasDisliked}
+                    className={`transition ${
+                      review.hasDisliked ? "text-red-600 font-bold" : ""
+                    }`}
+                    onClick={() => handleReaction("dislike")}
+                  >
+                    <BiDislike />
                   </button>
-                  <p>0</p>
+                  <p>{review.dislikes}</p>
                 </div>
               </div>
             </div>
