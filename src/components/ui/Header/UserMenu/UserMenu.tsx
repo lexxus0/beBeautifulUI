@@ -12,6 +12,7 @@ import Icon from "@/components/shared/Icon";
 import LangSwitcher from "../LangSwitcher/LangSwitcher";
 
 import styles from "./UserMenu.module.scss";
+import Link from "next/link";
 
 type UserMenuProps = {
   onCloseMobileModal?: () => void;
@@ -50,13 +51,9 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
   return (
     <div className={styles.wrapper} ref={wrapperRef}>
       <LangSwitcher className="hidden lg:block mr-6" />
-      <button
-        type="button"
-        onClick={() => {}}
-        className="hidden lg:w-8 lg:h-8 lg:block lg:mr-8"
-      >
+      <Link href="/basket" className="hidden lg:w-8 lg:h-8 lg:block lg:mr-8">
         <BasketIcon className="lg:w-8 lg:h-8" />
-      </button>
+      </Link>
 
       <div className="flex gap-[13px] items-center">
         {/* {user.avatar ? (
