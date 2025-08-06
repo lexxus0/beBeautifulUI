@@ -28,19 +28,20 @@ const BasketItem = ({
           height={112}
         />
         <div className={styles.info}>
-          <div className={styles.titleEn}>{item.titleEn}</div>
-          <div className={styles.titleUk}>
-            {item.titleUk}, {item.volume}
-          </div>
+          <p className={styles.titleEn}>{item.titleEn}</p>
+          <p className={styles.titleUk}>
+            {item.titleUk},<span className={styles.volume}> {item.volume}</span>
+          </p>
+          <p className={styles.priceMob}>{item.price * item.quantity} грн</p>
         </div>
       </div>
       <div className={styles.wrapperPrice}>
         <div className={styles.quantity}>
           <button onClick={onDecrement}>-</button>
-          <span>{item.quantity}</span>
+          <p>{item.quantity}</p>
           <button onClick={onIncrement}>+</button>
         </div>
-        <div className={styles.price}>{item.price * item.quantity} грн</div>
+        <p className={styles.priceDesk}>{item.price * item.quantity} грн</p>
         <button className={styles.remove} onClick={onRemove}>
           <svg
             className={styles.iconTrash}

@@ -38,8 +38,14 @@
   .items {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 48px;
     margin-bottom: 24px;
+
+    @media (min-width: 744px) {
+    }
+
+    @media (min-width: 1440px) {
+    }
   }
 
   .divider {
@@ -59,9 +65,18 @@
     color: var(--color-black-10);
     margin-bottom: 32px;
 
+    > :nth-child(2) {
+      width: 94px;
+      text-align: right;
+    }
+
     @media (min-width: 744px) {
       font-size: 24px;
       gap: 56px;
+
+      > :nth-child(2) {
+        width: 112px;
+      }
     }
 
     @media (min-width: 1440px) {
@@ -69,11 +84,11 @@
       font-size: 28px;
       line-height: 140%;
       gap: 23px;
+
+      > :nth-child(2) {
+        width: 132px;
+      }
     }
-    > :nth-child(2) {
-    width: 80px;
-    text-align: right;
-  }
   }
 
   .checkoutBtn {

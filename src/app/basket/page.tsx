@@ -57,7 +57,7 @@ const BasketPage = () => {
         <hr className={styles.divider} />
         <div className={styles.total}>
           <span>Загальна сума:</span>
-          <span>{total} ₴</span>
+          <span>{total} грн</span>
         </div>
         <Link href="/checkout" className={styles.checkoutBtn}>
           Оформити замовлення <BasketIcon variant="white" className={styles.iconBasket} />
