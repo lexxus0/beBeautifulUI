@@ -1,0 +1,41 @@
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+   z-index: 9999;
+}
+
+.logoWrapper {
+  position: relative;
+  width: 145px;
+  height: 145px;
+  border-radius: 50%;
+   border: 2px solid rgba(5, 5, 5, 0.552);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(202, 200, 200, 0.826);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  animation: flip 2.5s linear infinite;
+}
+
+.logo {
+  /* animation: flip 2.5s linear infinite; */
+  transform-style: preserve-3d;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}

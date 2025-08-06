@@ -6,6 +6,9 @@ import Link from "next/link";
 import products from "./topProducts.json";
 import { TopProduct } from "@/types/types";
 import BasketIcon from "@/components/elements/BasketIcon";
+// import Loader from "@/components/elements/Loader/Loader";
+import LoaderSnake from "@/components/elements/LoaderSnake/LoaderSnake";
+// import LoaderCoin from "@/components/elements/LoaderCoin/LoaderCoin";
 
 const TopProducts: React.FC = () => {
   return (
@@ -20,6 +23,9 @@ const TopProducts: React.FC = () => {
             чесні.
           </p>
         </div>
+        {/* <Loader /> */}
+        <LoaderSnake />
+        {/* <LoaderCoin /> */}
 
         <div className={styles.grid}>
           {(products as TopProduct[]).map(

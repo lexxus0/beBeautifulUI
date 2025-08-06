@@ -1,0 +1,69 @@
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.logoWrapper {
+  position: relative;
+  width: 145px;
+  height: 145px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(166, 164, 164, 0.696);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.logoInner {
+  position: relative;
+  width: 60%;
+  height: 60%;
+  z-index: 999;
+}
+.logo {
+  position: relative;
+  object-fit: contain;
+  z-index: 999;
+}
+
+.track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 145px;
+  height: 145px;
+  border-radius: 50%;
+  border: 2px solid rgba(5, 5, 5, 0.552);
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
+  z-index: 998;
+}
+
+.snake {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 145px;
+  height: 145px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #eae6e6cd;
+  z-index: 999;
+  animation: spin 1s linear infinite;
+  transform-origin: center center;
+  box-shadow: 0 -2px 8px 2px rgba(153, 152, 152, 0.6);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
