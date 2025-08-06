@@ -1,18 +1,27 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
 import { useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/navigation";
 import Icon from "@/components/shared/Icon";
-import OrderItem from "./OrderItem/OrderItem";
+import OrdersList from "./OrdersList/OrdersList";
+import { IOrder } from "@/types/types";
+import ordersData from "./orders.json";
 
 import styles from "./MyOrders.module.scss";
+import Link from "next/link";
 
 export default function MyOrders() {
   const router = useRouter();
   const user = useAppSelector(selectUser);
   const isLoading = useAppSelector(selectIsLoggedIn);
+
+  const [orders, setOrders] = useState<IOrder[] | null>(null);
+
+  const handleOrderDetails = (id: string) => {
+    router.push(`/orders/${id}`);
+  };
 
   useEffect(() => {
     if (!user && !isLoading) {
@@ -20,9 +29,14 @@ export default function MyOrders() {
     }
   }, [user, isLoading, router]);
 
+  useEffect(() => {
+    setOrders(ordersData);
+  }, []);
+
   if (!user) {
     return null; // або  <Loader />
   }
+  console.log("orders: ", orders);
 
   return (
     <div className="container pt-[10px] pb-15 md:pb-[42px] lg:pt-[34px] lg:b-15">
@@ -40,10 +54,25 @@ export default function MyOrders() {
           <Icon name="icon-search" className={styles.iconSearch} />
         </div>
       </div>
-      <p className={styles.text}>
-        Слідкуйте за статусом ваших замовлень у зручному форматі
-      </p>
-      <OrderItem />
+      {orders === null ? (
+        <>
+          <p className="font-lato font-bold text-base leading-relaxed text-black mb-6 md:text-lg lg:font-semibold lg:text-2xl lg:mb-[50px] text-center">
+            Слідкуйте за статусом ваших замовлень у зручному форматі
+          </p>
+          <p className="font-lato font-semibold text-2xl leading-relaxed text-black mb-4 md:text-[32px] lg:font-normal lg:text-[42px] lg:mb-10 text-center">
+            Ви ще не зробили жодного замовлення
+          </p>
+          <p className="font-roboto font-light text-xs leading-relaxed text-black mb-14 md:text-base md:mb-10 lg:font-normal lg:text-xl lg:mb-15 text-center">
+            Перейдіть у каталог та відкрийте для себе beauty-засоби, які дійсно
+            працюють
+          </p>
+          <Link href="/products" className={styles.linkCatalog}>
+            Каталог
+          </Link>
+        </>
+      ) : (
+        <OrdersList orders={orders} onOrderDetails={handleOrderDetails} />
+      )}
     </div>
   );
 }
