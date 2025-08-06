@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
+import Link from "next/link";
 import Icon from "@/components/shared/Icon";
 import Navigation from "./Navigation/Navigation";
 import MobileMenu from "./MobileMenu/MobileMenu";
@@ -40,13 +41,12 @@ export default function Header() {
               <UserIcon className="hidden lg:flex" />
             </div>
           )}
-          <button
-            type="button"
-            onClick={() => {}}
+          <Link
+            href="/basket"
             className="w-9 h-9 flex items-center justify-center lg:hidden"
           >
             <BasketIcon className="w-6 h-6" />
-          </button>
+          </Link>
           <button
             type="button"
             className="w-10 h-10 flex items-center justify-center lg:hidden"

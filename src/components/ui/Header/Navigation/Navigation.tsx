@@ -46,13 +46,9 @@ export default function Navigation({ onClose }: NavigationProps) {
       ))}
       <li>
         {hasMounted && !isLoggenIn && (
-          <button
-            type="button"
-            onClick={() => {}}
-            className="hidden lg:block lg:w-8 lg:h-8"
-          >
+          <Link href="/basket" className="hidden lg:block lg:w-8 lg:h-8">
             <BasketIcon className="lg:w-8 lg:h-8" />
-          </button>
+          </Link>
         )}
       </li>
     </ul>
