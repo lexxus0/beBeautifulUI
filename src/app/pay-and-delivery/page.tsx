@@ -85,7 +85,7 @@ export default function PayAndDeliveryPage() {
             </p>
             <p className="font-light text-black text-sm md:text-base lg:text-lg">
               Можна забрати замовлення особисто за адресою:
-              <br className="lg:hidden" /> м. Чернівці, вул. Прутська, 29.
+              <br className="lg:hidden" /> <span className="underline">м. Чернівці, вул. Прутська, 29.</span>
               <br /> Безкоштовно, без очікування, з можливістю консультації на
               місці.
             </p>
