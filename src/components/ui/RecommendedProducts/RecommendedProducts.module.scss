@@ -1,0 +1,25 @@
+.recommended {
+  margin-top: 48px;
+
+  .title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .grid {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1fr;
+
+    @media (min-width: 744px) {
+      grid-template-columns: repeat(2, 1fr);
+      justify-content: center;
+    }
+
+    @media (min-width: 1440px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}

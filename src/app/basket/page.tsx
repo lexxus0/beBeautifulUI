@@ -7,6 +7,7 @@ import Link from "next/link";
 import rawData from "./basket.json";
 import { useState, useMemo } from "react";
 import BasketIcon from "@/components/elements/BasketIcon";
+import RecommendedProducts from "@/components/ui/RecommendedProducts/RecommendedProducts";
 
 const BasketPage = () => {
   const [basketItems, setBasketItems] = useState<BasketItemType[]>(rawData);
@@ -63,6 +64,7 @@ const BasketPage = () => {
           Оформити замовлення <BasketIcon variant="white" className={styles.iconBasket} />
         </Link>
       </div>
+      <RecommendedProducts />
     </div>
   );
 };
