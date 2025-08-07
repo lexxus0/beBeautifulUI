@@ -91,7 +91,7 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
                       <p className="font-lato font-bold text-black text-lg">
                         {item.product.name}
                       </p>
-                      <div className="flex gap-1">
+                      <div className="flex gap-2">
                         <p className="font-light text-sm md:text-lg">
                           {item.product.name}
                         </p>
