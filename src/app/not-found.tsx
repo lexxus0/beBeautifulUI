@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export default function notFound() {
+export default function NotFound() {
   return (
     <div className="container py-8 md:pt-10 md:pb-20 lg:pt-16 lg:pb-40">
       <Image
