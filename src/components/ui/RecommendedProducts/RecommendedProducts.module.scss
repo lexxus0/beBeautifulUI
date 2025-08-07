@@ -1,19 +1,26 @@
 .recommended {
-  margin-top: 48px;
-
   .title {
-    font-size: 28px;
     font-weight: 600;
-    margin-bottom: 24px;
-    text-align: center;
+    font-size: 24px;
+    line-height: 120%;
+    margin-bottom: 48px;
+
+    @media (min-width: 744px) {
+      font-weight: 400;
+      font-size: 42px;
+      line-height: 140%;
+      letter-spacing: 0.01em;
+      margin-bottom: 56px;
+    }
   }
 
   .grid {
     display: grid;
-    gap: 24px;
+    gap: 72px;
     grid-template-columns: 1fr;
 
     @media (min-width: 744px) {
+      gap: 36px;
       grid-template-columns: repeat(2, 1fr);
       justify-content: center;
     }

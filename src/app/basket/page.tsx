@@ -42,29 +42,32 @@ const BasketPage = () => {
 
   return (
     <div className="container">
-      <div className={styles.basket}>
-        <h1 className={styles.title}>Кошик</h1>
-        <div className={styles.items}>
-          {basketItems.map((item) => (
-            <BasketItem
-              key={item.id}
-              item={item}
-              onIncrement={() => handleIncrement(item.id)}
-              onDecrement={() => handleDecrement(item.id)}
-              onRemove={() => handleRemove(item.id)}
-            />
-          ))}
+      <div className={styles.basketPage}>
+        <div className={styles.basket}>
+          <h1 className={styles.title}>Кошик</h1>
+          <div className={styles.items}>
+            {basketItems.map((item) => (
+              <BasketItem
+                key={item.id}
+                item={item}
+                onIncrement={() => handleIncrement(item.id)}
+                onDecrement={() => handleDecrement(item.id)}
+                onRemove={() => handleRemove(item.id)}
+              />
+            ))}
+          </div>
+          <hr className={styles.divider} />
+          <div className={styles.total}>
+            <span>Загальна сума:</span>
+            <span>{total} грн</span>
+          </div>
+          <Link href="/checkout" className={styles.checkoutBtn}>
+            Оформити замовлення{" "}
+            <BasketIcon variant="white" className={styles.iconBasket} />
+          </Link>
         </div>
-        <hr className={styles.divider} />
-        <div className={styles.total}>
-          <span>Загальна сума:</span>
-          <span>{total} грн</span>
-        </div>
-        <Link href="/checkout" className={styles.checkoutBtn}>
-          Оформити замовлення <BasketIcon variant="white" className={styles.iconBasket} />
-        </Link>
+        <RecommendedProducts />
       </div>
-      <RecommendedProducts />
     </div>
   );
 };
