@@ -1,0 +1,11 @@
+.productImage {
+    width: 335px;
+    height: 320px;
+}
+
+@media screen and (min-width: 744px) {
+    .productImage {
+        width: 322px;
+        height: 461px;
+    }
+}

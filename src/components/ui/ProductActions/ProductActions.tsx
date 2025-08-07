@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { IProduct } from '@/types/types';
-import React, { useState } from 'react';
+import { IProduct } from "@/types/types";
+import React, { useState } from "react";
 
-import css from '@/components/ui/ProductActions/ProductActions.module.css';
-import Icon from '@/components/elements/Icons';
+import css from "@/components/ui/ProductActions/ProductActions.module.css";
+import Icon from "@/components/elements/Icons";
 
 export interface ProductActionsProps {
   product: IProduct;
@@ -22,12 +22,12 @@ const ProductActions = ({ product }: ProductActionsProps) => {
           <p className={css.volume}>Об&apos;єм</p>
           <div className={css.actionValueButton}>
             {product.volumeOptions && product.volumeOptions.length !== 0 ? (
-              product.volumeOptions.map(vol => (
+              product.volumeOptions.map((vol) => (
                 <button
                   key={vol}
                   onClick={() => setSelectedVolume(vol)}
                   className={`${css.volumeButton} ${
-                    selectedVolume === vol ? css.active : ''
+                    selectedVolume === vol ? css.active : ""
                   }`}
                 >
                   {vol}
@@ -44,14 +44,14 @@ const ProductActions = ({ product }: ProductActionsProps) => {
           </div>
         </div>
 
-        <div className={css.quantitycontainer}>
+        <div className={css.quantityContainer}>
           <p className={css.quantity}>Кількість</p>
           <select
             value={quantity}
-            onChange={e => setQuantity(Number(e.target.value))}
+            onChange={(e) => setQuantity(Number(e.target.value))}
             className={css.selectQuantity}
           >
-            {Array.from({ length: 10 }, (_, i) => i + 1).map(val => (
+            {Array.from({ length: 10 }, (_, i) => i + 1).map((val) => (
               <option key={val} value={val}>
                 {val}
               </option>

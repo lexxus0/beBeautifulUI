@@ -13,7 +13,7 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
   return (
     <div className={css.headercontainer}>
       <div className={css.categoryContainer}>
-        <h3 className={css.category}>{product.name}</h3>
+        <h3 className={css.name}>{product.name}</h3>
         <div className={css.rate}>
           <div className={css.inStockContainer}>
             <div
@@ -25,14 +25,16 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
               {product.inStock ? "У наявності" : "Немає в наявності"}
             </p>
           </div>
-          {width !== null && width > 743 ? <ProductRating /> : null}
         </div>
+        {width !== null && width > 743 && width < 1440 ? (
+          <ProductRating />
+        ) : null}
+        <p className={css.features}>
+          {product.features && product.features.length > 0
+            ? product.features.join(" | ")
+            : ""}
+        </p>
       </div>
-      <p className={css.features}>
-        {product.features && product.features.length > 0
-          ? product.features.join(" | ")
-          : ""}
-      </p>
       <p className={css.volumeOption}>
         {product.volumeOptions && product.volumeOptions.length > 0
           ? product.volumeOptions.join(" / ")

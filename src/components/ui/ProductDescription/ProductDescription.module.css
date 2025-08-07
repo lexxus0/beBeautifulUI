@@ -1,14 +1,14 @@
 .accordionWrapper {
-    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     font-size: 0.9rem;
     color: #2D2D2D;
 
 }
 
 .accordionItem {
-    margin-bottom: 1rem;
     color: #2D2D2D;
-    padding-bottom: 0.5rem;
 }
 
 
@@ -45,14 +45,4 @@
 
 .arrowRotated {
     transform: rotate(-180deg);
-}
-
-@media (min-width: 744px) {
-    .accordionWrapper {
-        padding-top: 0;
-        max-width: 322px;
-
-    }
-
-
 }

@@ -20,12 +20,21 @@ export default async function ProductDetails({
   const product = await getProductById(params.productId);
   return (
     <section className="container">
-      <ProductHeader product={product} />
       <div className={css.productContainer}>
-        <ProductGallery product={product} />
-        <ProductDescription product={product} />
+        <div className={css.header}>
+          <ProductHeader product={product} />
+        </div>
+        <div className={css.gallery}>
+          <ProductGallery product={product} />
+        </div>
+        <div className={css.description}>
+          <ProductDescription product={product} />
+        </div>
+        <div className={css.actions}>
+          <ProductActions product={product} />
+        </div>
       </div>
-      <ProductActions product={product} />
     </section>
   );
 }
+
