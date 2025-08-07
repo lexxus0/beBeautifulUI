@@ -39,8 +39,8 @@ const ScrollToTop: React.FC = () => {
             <path
               d="M39.5 8.97167L0.957167 8.99984M17 1L0.5 8.99984L17 17"
               stroke="#111111"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </button>
