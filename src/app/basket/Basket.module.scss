@@ -1,17 +1,29 @@
-.basket {
+.basketPage {
   padding-top: 9px;
   padding-bottom: 48px;
   width: 100%;
   max-width: 1076px;
   margin-inline: auto;
 
+  .basket {
+    margin-bottom: 50px;
+  }
+
   @media (min-width: 744px) {
     padding-top: 30px;
     padding-bottom: 84px;
+
+    .basket {
+      margin-bottom: 120px;
+    }
   }
 
   @media (min-width: 1440px) {
     padding-top: 70px;
+
+    .basket {
+      margin-bottom: 87px;
+    }
   }
 
   .title {
