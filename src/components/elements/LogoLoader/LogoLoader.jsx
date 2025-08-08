@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import "./LogoLoader.scss";
+import "./LogoLoader.module.scss";
 
 const LogoLoader = () => {
   const fillRef = useRef(null);
