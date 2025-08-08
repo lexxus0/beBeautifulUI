@@ -6,8 +6,9 @@ import products from "./topProducts.json";
 import { TopProduct } from "@/types/types";
 import BasketIcon from "@/components/elements/BasketIcon";
 // import Loader from "@/components/elements/Loader/Loader";
-import LoaderSnake from "@/components/elements/LoaderSnake/LoaderSnake";
+// import LoaderSnake from "@/components/elements/LoaderSnake/LoaderSnake";
 // import LoaderCoin from "@/components/elements/LoaderCoin/LoaderCoin";
+import LogoLoader from "@/components/elements/LogoLoader/LogoLoader";
 
 const TopProducts: React.FC = () => {
   return (
@@ -23,8 +24,9 @@ const TopProducts: React.FC = () => {
           </p>
         </div>
         {/* <Loader /> */}
-        <LoaderSnake />
+        {/* <LoaderSnake /> */}
         {/* <LoaderCoin /> */}
+        <LogoLoader />
 
         <div className={styles.grid}>
           {(products as TopProduct[]).map(
