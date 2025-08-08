@@ -30,7 +30,7 @@ export default function AccountMenu({ onClose }: AccountMenuProps) {
 
   const links = [
     { href: "/cabinet", label: "Особистий кабінет", icon: "icon-user-edit" },
-    { href: "/pay", label: "Способи оплати", icon: "icon-pay" },
+    { href: "/pay-and-delivery", label: "Оплата і доставка", icon: "icon-pay" },
     { href: "/orders", label: "Замовлення", icon: "icon-orders" },
   ];
 

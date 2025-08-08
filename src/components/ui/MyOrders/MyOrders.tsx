@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
-import { useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/navigation";
 import Icon from "@/components/shared/Icon";
 import OrdersList from "./OrdersList/OrdersList";
@@ -14,8 +12,6 @@ import Link from "next/link";
 
 export default function MyOrders() {
   const router = useRouter();
-  const user = useAppSelector(selectUser);
-  const isLoading = useAppSelector(selectIsLoggedIn);
 
   const [orders, setOrders] = useState<IOrder[] | null>(null);
 
@@ -24,19 +20,8 @@ export default function MyOrders() {
   };
 
   useEffect(() => {
-    if (!user && !isLoading) {
-      router.push("/auth");
-    }
-  }, [user, isLoading, router]);
-
-  useEffect(() => {
     setOrders(ordersData);
   }, []);
-
-  if (!user) {
-    return null; // або  <Loader />
-  }
-  console.log("orders: ", orders);
 
   return (
     <div className="container pt-[10px] pb-15 md:pb-[42px] lg:pt-[34px] lg:b-15">
