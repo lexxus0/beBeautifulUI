@@ -5,7 +5,7 @@ import { Roboto, Lato, Poppins, Open_Sans, Inter } from "next/font/google";
 import "../styles/globals.css";
 import { Providers } from "@/store/provider";
 import { sourceSansPro } from "@/fonts/fonts";
-import Header from "@/components/ui/Header/header"; // header
+import Header from "@/components/ui/Header/Header"; // header
 import Footer from "@/components/ui/Footer/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop/ScrollToTop";
 import { useAppDispatch } from "@/store/hooks";
