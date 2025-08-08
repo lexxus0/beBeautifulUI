@@ -8,13 +8,13 @@ const LogoLoader = () => {
   useEffect(() => {
     const fill = fillRef.current;
     let progress = 0;
-    let direction = 1;
-
+    
     const animate = () => {
-      progress += 0.01 * direction;
+      progress += 0.01;
 
-      if (progress >= 1) direction = -1;
-      if (progress <= 0) direction = 1;
+      if (progress >= 1) {
+      progress = 0;
+    }
 
       fill.setAttribute("y", 32 - progress * 32);
       fill.setAttribute("height", progress * 32);
