@@ -1,10 +1,8 @@
 "use client";
-import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
+import { selectUser } from "@/store/auth/selectors";
 // import Image from "next/image";
 import { signoutUser } from "@/store/auth/operations";
-import { useRouter } from "next/navigation";
 import ProfileForm from "./ProfileForm/ProfileForm";
 import Icon from "@/components/shared/Icon";
 
@@ -12,19 +10,8 @@ import styles from "./UserCabinet.module.scss";
 
 export default function UserCabinet() {
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const user = useAppSelector(selectUser);
-  const isLoading = useAppSelector(selectIsLoggedIn);
 
-  useEffect(() => {
-    if (!user && !isLoading) {
-      router.push("/auth");
-    }
-  }, [user, isLoading, router]);
-
-  if (!user) {
-    return null; // або  <Loader />
-  }
   
   return (
     <div className="container py-6 md:pt-4 md:pb-10 lg:pt-10 lg:pb-15 ">

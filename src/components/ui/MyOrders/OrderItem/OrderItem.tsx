@@ -63,7 +63,7 @@ export default function OrderItem({ order, onDetailsClick }: IOrderItemProps) {
                     <p className="w-[100px] font-lato text-black text-lg">
                       {item.product.name}
                     </p>
-                    <div className="flex gap-1">
+                    <div className="flex gap-2">
                       <p className="font-light text-lg">{item.product.name}</p>
                       <p className="font-light text-lg">
                         {item.selectedVolume}
