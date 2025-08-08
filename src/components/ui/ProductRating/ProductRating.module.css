@@ -25,3 +25,16 @@
         margin: 0;
     }
 }
+
+@media screen and (min-width: 1440px) {
+    .starAssessment {
+        justify-content: start;
+        margin: 16px 0;
+    }
+
+    .fidbackQuantity {
+        font-size: 14px;
+        line-height: 21px;
+        letter-spacing: 0.28px;
+    }
+}

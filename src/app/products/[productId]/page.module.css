@@ -37,9 +37,8 @@
   .productContainer {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
-      "header gallery"
-      "description gallery"
-      "actions gallery";
-    gap: 40px;
+      "gallery header"
+      "gallery description"
+      "gallery actions";
   }
 }

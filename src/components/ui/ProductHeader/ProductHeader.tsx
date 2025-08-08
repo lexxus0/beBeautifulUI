@@ -35,10 +35,12 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
             : ""}
         </p>
       </div>
+      {width !== null && width >= 1440 ? <ProductRating /> : null}
+
       <p className={css.volumeOption}>
         {product.volumeOptions && product.volumeOptions.length > 0
           ? product.volumeOptions.join(" / ")
-          : product.stockQuantity + " ml"}
+          : product.stockQuantity + " мл"}
       </p>
     </div>
   );

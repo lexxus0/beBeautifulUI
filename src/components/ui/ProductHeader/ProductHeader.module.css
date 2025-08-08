@@ -106,3 +106,23 @@
         display: inline;
     }
 }
+
+@media screen and (min-width: 1440px) {
+    .inStock {
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.32px;
+    }
+
+    .features {
+        font-size: 18px;
+        line-height: 27px;
+        letter-spacing: 0.36px;
+    }
+
+    .volumeOption {
+        font-size: 24px;
+        line-height: 36px;
+        letter-spacing: 0.48px;
+    }
+}

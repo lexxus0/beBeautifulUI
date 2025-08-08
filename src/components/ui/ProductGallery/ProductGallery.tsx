@@ -20,7 +20,7 @@ const ProductGallery = ({ product }: ProductGalleryProps) => {
   const imageHeight = isDesktop ? 461 : 320;
 
   return (
-    <div>
+    <>
       <Image
         src={imageUrl}
         alt={product.name}
@@ -29,7 +29,7 @@ const ProductGallery = ({ product }: ProductGalleryProps) => {
         className={css.productImage}
       />
       {width !== null && width < 744 ? <ProductRating /> : null}
-    </div>
+    </>
   );
 };
 

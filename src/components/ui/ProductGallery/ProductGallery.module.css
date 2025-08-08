@@ -9,3 +9,10 @@
         height: 461px;
     }
 }
+
+@media screen and (min-width: 1440px) {
+    .productImage {
+        width: 526px;
+        height: 679px;
+    }
+}

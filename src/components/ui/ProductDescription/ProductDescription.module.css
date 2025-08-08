@@ -46,3 +46,42 @@
 .arrowRotated {
     transform: rotate(-180deg);
 }
+
+.active .descriptionTitle {
+    text-decoration: underline;
+}
+
+.descriptionTitle {
+    font-size: 16px;
+    font-family: Roboto;
+    font-weight: 300;
+
+    line-height: 24px;
+    letter-spacing: 0.32px;
+    word-wrap: break-word;
+}
+
+.accordionContent {
+    color: #2D2D2D;
+    font-size: 14px;
+    font-family: Roboto;
+    font-weight: 300;
+    line-height: 21px;
+    letter-spacing: 0.28px;
+
+}
+
+@media screen and (min-width: 1440px) {
+    .descriptionTitle {
+        font-size: 18px;
+        line-height: 27px;
+        letter-spacing: 0.36px;
+    }
+
+    .accordionContent {
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.32px;
+
+    }
+}
