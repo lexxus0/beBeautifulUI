@@ -1,16 +1,18 @@
 "use client";
-import { selectUser } from "@/store/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { selectUser } from "@/store/auth/selectors";
 // import Image from "next/image";
+import { signoutUser } from "@/store/auth/operations";
 import ProfileForm from "./ProfileForm/ProfileForm";
 import Icon from "@/components/shared/Icon";
 
 import styles from "./UserCabinet.module.scss";
-import { signoutUser } from "@/store/auth/operations";
 
 export default function UserCabinet() {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
+
+  
   return (
     <div className="container py-6 md:pt-4 md:pb-10 lg:pt-10 lg:pb-15 ">
       <h2 className="font-lato font-semibold text-2xl lg:text-[42px] text-[#49454f] mb-8">

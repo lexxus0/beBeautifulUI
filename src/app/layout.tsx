@@ -5,7 +5,7 @@ import { Roboto, Lato, Poppins, Open_Sans, Inter } from "next/font/google";
 import "../styles/globals.css";
 import { Providers } from "@/store/provider";
 import { sourceSansPro } from "@/fonts/fonts";
-import Header from "@/components/ui/Header/header";
+import Header from "@/components/ui/Header/header"; // header
 import Footer from "@/components/ui/Footer/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop/ScrollToTop";
 import { useAppDispatch } from "@/store/hooks";
@@ -65,14 +65,14 @@ export default function RootLayout({
         ${sourceSansPro.variable}
       `}
       >
-        <Providers>
-          <ReduxInitializer />
-          <Header />
-            <>
-              {children}
-            </>
-          <Footer />
-        </Providers>
+        <div className="pageLayout">
+          <Providers>
+            <ReduxInitializer />
+            <Header />
+            <main className="pageContent">{children}</main>
+            <Footer />
+          </Providers>
+        </div>
         <ScrollToTop />
       </body>
     </html>

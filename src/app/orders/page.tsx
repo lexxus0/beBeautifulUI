@@ -1,10 +1,10 @@
 import ProtectedPage from "@/components/elements/ProtectedPage";
-import UserCabinet from "@/components/ui/UserCabinet/UserCabinet";
+import MyOrders from "@/components/ui/MyOrders/MyOrders";
 
 export default function CabinetPage() {
   return (
     <ProtectedPage>
-      <UserCabinet />
+      <MyOrders />
     </ProtectedPage>
   );
 }

@@ -8,10 +8,11 @@ import { useViewport } from "@/helpers/hooks/useViewport";
 import { useHasMounted } from "@/helpers/hooks/useHasMounted";
 import BasketIcon from "@/components/elements/BasketIcon";
 import AccountMenu from "../AccountMenu/AccountMenu";
+import Icon from "@/components/shared/Icon";
 import LangSwitcher from "../LangSwitcher/LangSwitcher";
 
 import styles from "./UserMenu.module.scss";
-import Icon from "@/components/shared/Icon";
+import Link from "next/link";
 
 type UserMenuProps = {
   onCloseMobileModal?: () => void;
@@ -50,13 +51,9 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
   return (
     <div className={styles.wrapper} ref={wrapperRef}>
       <LangSwitcher className="hidden lg:block mr-6" />
-      <button
-        type="button"
-        onClick={() => {}}
-        className="hidden lg:w-8 lg:h-8 lg:block lg:mr-8"
-      >
+      <Link href="/basket" className="hidden lg:w-8 lg:h-8 lg:block lg:mr-8">
         <BasketIcon className="lg:w-8 lg:h-8" />
-      </button>
+      </Link>
 
       <div className="flex gap-[13px] items-center">
         {/* {user.avatar ? (
@@ -75,11 +72,11 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
           </span>
         )} */}
         <span
-            className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg border-1 border-black-10 bg-gray-10
+          className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg border-1 border-gray bg-gray-10
     text-2xl font-medium text-white-30 flex items-center justify-center"
-          >
-            <span>{user?.name.toUpperCase().charAt(0)}</span>
-          </span>
+        >
+          <span>{user?.name.toUpperCase().charAt(0)}</span>
+        </span>
         {user ? (
           <p className={styles.text}>{user.name}</p>
         ) : (

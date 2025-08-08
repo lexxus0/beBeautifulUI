@@ -149,7 +149,17 @@
   }
 
   .socialLink:hover .iconSocials {
-    padding: 0px;
+    animation: shaking 0.75s ease-in-out;
+  }
+  @keyframes shaking {
+    33% {
+      transform: translateX(5px);
+      rotate: 5deg;
+    }
+    66% {
+      transform: translateX(-5px);
+      rotate: -5deg;
+    }
   }
 
   .footerBottom {
