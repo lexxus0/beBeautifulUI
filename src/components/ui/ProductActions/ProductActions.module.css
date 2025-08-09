@@ -1,5 +1,6 @@
 .actionsWrapper {
     display: flex;
+    gap: 32px;
     flex-direction: column;
     margin-bottom: 16px;
 }
@@ -145,7 +146,7 @@
     .actionsWrapper {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 16px;
+        gap: 20px;
     }
 
     .actionsContainer {
@@ -161,6 +162,7 @@
 
 @media (min-width: 1440px) {
     .actionsWrapper {
+        gap: 32px;
         grid-template-rows: 1fr 1fr;
     }
 

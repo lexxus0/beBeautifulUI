@@ -17,6 +17,7 @@
 
 .description {
   grid-area: description;
+  margin-bottom: 24px;
 }
 
 .actions {
@@ -31,6 +32,10 @@
       "gallery description"
       "actions actions";
   }
+
+  .gallery {
+    max-width: 320px;
+  }
 }
 
 @media (min-width: 1440px) {
@@ -40,5 +45,14 @@
       "gallery header"
       "gallery description"
       "gallery actions";
+  }
+
+  .description {
+    margin-bottom: 16px;
+  }
+
+  .gallery {
+    max-width: 526px;
+
   }
 }

@@ -1,14 +1,11 @@
 .starAssessment {
     display: flex;
-    justify-content: end;
+    justify-content: center;
     align-items: center;
     margin-top: 15px;
     margin-bottom: 24px;
     height: 24px;
 }
-
-
-
 
 .fidbackQuantity {
     margin-left: 4px;
@@ -28,7 +25,6 @@
 
 @media screen and (min-width: 1440px) {
     .starAssessment {
-        justify-content: start;
         margin: 16px 0;
     }
 
