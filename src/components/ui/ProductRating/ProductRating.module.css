@@ -5,6 +5,7 @@
     margin-top: 15px;
     margin-bottom: 24px;
     height: 24px;
+
 }
 
 .fidbackQuantity {
@@ -26,6 +27,8 @@
 @media screen and (min-width: 1440px) {
     .starAssessment {
         margin: 16px 0;
+        justify-content: start;
+        gap: 16px;
     }
 
     .fidbackQuantity {

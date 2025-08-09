@@ -5,6 +5,7 @@ import React, { useState } from "react";
 
 import css from "@/components/ui/ProductActions/ProductActions.module.css";
 import Icon from "@/components/elements/Icons";
+import BasketIcon from "@/components/elements/Icon";
 
 export interface ProductActionsProps {
   product: IProduct;
@@ -30,7 +31,7 @@ const ProductActions = ({ product }: ProductActionsProps) => {
                     selectedVolume === vol ? css.active : ""
                   }`}
                 >
-                  {vol}
+                  {vol} мл
                 </button>
               ))
             ) : (
@@ -38,7 +39,7 @@ const ProductActions = ({ product }: ProductActionsProps) => {
                 className={`${css.volumeButton} ${css.active}`}
                 onClick={() => setSelectedVolume(product.stockQuantity)}
               >
-                {product.stockQuantity}
+                {product.stockQuantity} мл
               </button>
             )}
           </div>
@@ -63,6 +64,7 @@ const ProductActions = ({ product }: ProductActionsProps) => {
       <div className={css.addButtonContainer}>
         <button className={css.addShoppingCartButton} type="button">
           Додати до кошика
+          <BasketIcon name="icon-basket" width={20} height={20} />
         </button>
         <button className={css.addToFavoriteButton} type="button">
           <p>Додати до обраного</p>

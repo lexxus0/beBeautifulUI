@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // this is the key change
+    css: true,
+  },
   images: {
     remotePatterns: [
       {

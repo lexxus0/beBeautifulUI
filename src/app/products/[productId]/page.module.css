@@ -24,9 +24,14 @@
   grid-area: actions;
 }
 
+.fullWidthWrapper {
+  width: 100%;
+}
+
 @media (min-width: 744px) {
   .productContainer {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto 1fr;
+    column-gap: 20px;
     grid-template-areas:
       "header header"
       "gallery description"
@@ -40,7 +45,8 @@
 
 @media (min-width: 1440px) {
   .productContainer {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto 1fr;
+    column-gap: 50px;
     grid-template-areas:
       "gallery header"
       "gallery description"
