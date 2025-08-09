@@ -2,7 +2,7 @@
   border: transparent;
   border-bottom: 1px solid #2d2d2d;
   border-radius: 8px;
-  padding: 13px 12px;
+  padding: 10px 14px;
   width: 100%;
   font-family: var(--font-roboto);
   font-weight: 300;
@@ -21,16 +21,20 @@
   pointer-events: none;
   transition: all 0.2s ease;
   padding: 0 4px;
+  opacity: 1;
+  visibility: visible;
 }
 
 .input:focus + .label {
-  top: -8px;
-  font-weight: 300;
-  font-size: 12px;
-  line-height: 150%;
-  letter-spacing: 0.02em;
-  color: #afb0b2;
-  background: var(--color-white-10);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-2px);
+}
+
+.hasValue + .label {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-2px);
 }
 
 .btnSubmit {

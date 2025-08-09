@@ -1,4 +1,4 @@
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, type Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   ProfileFormInputs,
@@ -6,6 +6,7 @@ import {
 } from "@/validation/profileValidation";
 import InputGroup from "../../Auth/InputGroup/InputGroup";
 import Icon from "@/components/shared/Icon";
+import DatePickerField from "../DatePickerField/DatePickerField";
 import styles from "./ProfileForm.module.scss";
 
 const fields: {
@@ -22,17 +23,19 @@ const fields: {
 ];
 
 export default function ProfileForm() {
+  const resolver = yupResolver(schemaProfile) as Resolver<ProfileFormInputs>;
+
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<ProfileFormInputs>({
-    resolver: yupResolver(schemaProfile),
+    resolver,
     defaultValues: {
       name: "",
       firstname: "",
-      date: "",
+      date: null,
       phone: "",
       email: "",
       password: "",
@@ -53,14 +56,38 @@ export default function ProfileForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="lg:w-[856px] lg:grid lg:grid-cols-2 lg:gap-y-8 lg:gap-x-6"
+      className="lg:w-[856px] flex flex-col gap-3 lg:grid lg:grid-cols-2 lg:gap-y-8 lg:gap-x-6"
     >
-      {fields.map(({ name, label, type }) => (
+      {fields.map(({ name, label, type }) => {
+        if (name === "date") {
+          return (
+            <Controller
+              key="date"
+              name="date"
+              control={control}
+              render={({ field }) => (
+                <DatePickerField
+                  id="date"
+                  label={label}
+                  value={field.value}
+                  onChange={field.onChange}
+                  inputClassName={styles.input}
+                />
+              )}
+            />
+          );
+        }
+      return (
         <Controller
           key={name}
           name={name}
           control={control}
-          render={({ field }) => (
+          render={({ field }) => {
+            const hasValue =
+              field.value !== undefined &&
+              field.value !== null &&
+              String(field.value).length > 0;
+              return (
             <InputGroup
               id={name}
               label={label}
@@ -68,13 +95,15 @@ export default function ProfileForm() {
               variant="custom"
               error={errors[name]?.message}
               icon={renderIcon}
-              inputClassName={styles.input}
+              inputClassName={`${styles.input} ${hasValue ? styles.hasValue : ""}`}
               labelClassName={styles.label}
               {...field}
-            />
-          )}
+              />
+            );
+          }}
         />
-      ))}
+      );
+    })}
       <div className="flex flex-col gap-6 mt-10 lg:absolute -bottom-[130px] left-[220px] lg:flex-row lg:mt-0 ">
         <button type="submit" className={styles.btnSubmit}>
           Зберегти зміни
