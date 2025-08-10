@@ -1,0 +1,149 @@
+.inputWrapper {
+  width: 100%;
+  display: block;
+
+  :global(.react-datepicker__input-container) {
+    width: 100%;
+    display: block;
+  }
+
+  input {
+    width: 100%;
+  }
+}
+
+.inputField {
+  position: relative;
+}
+
+.input {
+  border: transparent;
+  border-bottom: 1px solid var(--color-black-10);
+  border-radius: 8px;
+  padding: 10px 14px;
+  width: 100%;
+  font-family: var(--font-roboto);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--color-black-10);
+}
+
+.label {
+  position: absolute;
+  left: 12px;
+  top: 14px;
+  color: var(--color-gray-10);
+  font-size: 14px;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  padding: 0 4px;
+  display: inline;
+}
+
+.inputField:focus-within .label {
+  display: none;
+}
+
+.filled .label {
+  display: none;
+}
+
+.calendar {
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 2px 16px 19px 0 rgba(0, 0, 0, 0.09);
+  background: #f3f2f2;
+  font-family: var(--font-roboto);
+  color: var(--color-black-10);
+  z-index: 99;
+  width: 306px;
+
+  :global(.react-datepicker__header) {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--color-gray-10);
+  }
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+}
+
+.title {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Дні тижня */
+.weekday {
+  font-weight: 300;
+  font-size: 10px;
+  width: 33px;
+  line-height: 33px;
+  text-transform: uppercase;
+  color: var(--color-black-10);
+  margin: 0;
+}
+
+/* Дні */
+.day {
+  width: 33px;
+  line-height: 33px;
+  text-align: center;
+  border-radius: 50%;
+  font-weight: 300;
+  font-size: 12px;
+  color: var(--color-black-10);
+  cursor: pointer;
+  margin: 0;
+}
+.day:hover {
+  background: #f2f2f2;
+}
+
+/* Вибраний день */
+.calendar :global(.react-datepicker__day--selected),
+.calendar :global(.react-datepicker__day--keyboard-selected) {
+  background-color: #b51212;
+  color: var(--color-white);
+}
+
+/* Дні з іншого місяця */
+.calendar :global(.react-datepicker__day--outside-month) {
+  color: var(--color-gray-10);
+}
+
+/* Сьогодні */
+.calendar :global(.react-datepicker__day--today) {
+  width: 31px;
+  line-height: 31px;
+  border: 1px solid #b51212;
+}
