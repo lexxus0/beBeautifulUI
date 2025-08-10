@@ -30,6 +30,7 @@ const productSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
+        state.isLoading = true;
         handlePending(state);
       })
       .addCase(
@@ -44,6 +45,7 @@ const productSlice = createSlice({
         }
       )
       .addCase(fetchProducts.rejected, (state, action) => {
+        state.isLoading = false;
         handleRejected(state, action);
       });
   },

@@ -29,6 +29,11 @@ export const fetchProducts = createAsyncThunk<
           keyword,
         },
       });
+      function sleep(ms: number) {
+          return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        await sleep(2000)
 
       return {
         data: res.data.data,

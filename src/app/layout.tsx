@@ -80,7 +80,8 @@ export default function RootLayout({
         ${sourceSansPro.variable}
       `}
       >
-        <div className="pageLayout">
+        {/* {loading && <Loader />} */}
+        <div className={`pageLayout`}>
           <Providers>
             <ReduxInitializer />
             <Header />
@@ -89,7 +90,6 @@ export default function RootLayout({
           </Providers>
         </div>
         <ScrollToTop />
-        {loading && <Loader />}
       </body>
     </html>
   );
