@@ -63,7 +63,7 @@ export default function RootLayout({
 
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 700);
+    }, 800);
 
     return () => clearTimeout(timeout);
   }, [pathname]);
