@@ -9,8 +9,10 @@ import Header from "@/components/ui/Header/header"; // header
 import Footer from "@/components/ui/Footer/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop/ScrollToTop";
 import { useAppDispatch } from "@/store/hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { refreshAndLoadUser } from "@/store/auth/operations";
+import Loader from "@/components/ui/Loader/Loader";
+import { usePathname } from "next/navigation";
 
 // export const metadata: Metadata = {
 //   title: "Science Be Beautiful",
@@ -53,6 +55,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 700);
+
+    return () => clearTimeout(timeout);
+  }, [pathname]);
+
   return (
     <html lang="en">
       <body
@@ -74,6 +89,7 @@ export default function RootLayout({
           </Providers>
         </div>
         <ScrollToTop />
+        {loading && <Loader />}
       </body>
     </html>
   );
