@@ -102,14 +102,14 @@ export default function DatePickerField({
               className={styles.header}
               onMouseDown={(e) => e.preventDefault()}
             >
-              <div className="flex gap-2 items-center">
+              <div className="flex gap-4 items-center">
                 <button
                   type="button"
                   onClick={decreaseYear}
                   className={styles.navBtn}
                   aria-label="Попередній рік"
                 >
-                  <Icon name="icon-double-arrow" className="w-[18px] h-[18px]" />
+                  <Icon name="icon-double-arrow" className="w-4 h-4 rotate-180" />
                 </button>
                 <button
                   type="button"
@@ -117,7 +117,7 @@ export default function DatePickerField({
                   className={styles.navBtn}
                   aria-label="Попередній місяць"
                 >
-                  <Icon name="icon-arrow-down" className="w-[10px] h-[10px] rotate-90" />
+                  <Icon name="icon-arrow-down" className="w-3 h-3 rotate-90" />
                 </button>
               </div>
               <div className={styles.title}>
@@ -126,7 +126,7 @@ export default function DatePickerField({
                 <span className={styles.year}>{y}</span>
               </div>
 
-              <div className="flex gap-3 items-center">
+              <div className="flex gap-4 items-center">
                 <button
                   type="button"
                   onClick={() => !disableNextMonth && increaseMonth()}
@@ -134,7 +134,7 @@ export default function DatePickerField({
                   className={styles.navBtn}
                   aria-label="Наступний місяць"
                 >
-                  <Icon name="icon-arrow-down" className="w-[10px] h-[10px] -rotate-90" />
+                  <Icon name="icon-arrow-down" className="w-3 h-3 -rotate-90" />
                 </button>
                 <button
                   type="button"
@@ -145,7 +145,7 @@ export default function DatePickerField({
                 >
                   <Icon
                     name="icon-double-arrow"
-                    className="w-[18px] h-[18px] rotate-180"
+                    className="w-4 h-4"
                   />
                 </button>
               </div>
