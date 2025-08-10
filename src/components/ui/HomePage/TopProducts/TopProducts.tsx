@@ -49,7 +49,7 @@ const TopProducts: React.FC = () => {
                     className={styles.cartBtn}
                     aria-label="Додати в кошик"
                   >
-                    <BasketIcon className={styles.icon} />
+                    <BasketIcon variant="white" className={styles.icon} />
                   </button>
                 </div>
               </article>

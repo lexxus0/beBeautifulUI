@@ -8,7 +8,7 @@ const navData = [
   ["Каталог", "/products"],
   ["Блог", "/blog"],
   ["Книга", "/book"],
-  ["Оплата і доставка", "/delivery"],
+  ["Оплата і доставка", "/pay-and-delivery"],
   ["Подарункові сертифікати", "/certificates"],
   ["FAQ", "/faq"],
   ["Контакти", "/contacts"],

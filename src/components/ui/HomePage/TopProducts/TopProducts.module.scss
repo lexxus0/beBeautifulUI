@@ -112,6 +112,7 @@
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+  padding-top: 20px;
 
   .bg {
     position: absolute;
@@ -141,12 +142,8 @@
   .titleWrap {
     position: relative;
     z-index: 1;
-    text-align: center;
     margin-bottom: auto;
-    border-radius: 8px;
-    padding: 4px 0px;
-    height: 72px;
-    background: #000;
+    padding-left: 16px;
 
     h3 {
       font-family: var(--font-lato);
@@ -181,15 +178,15 @@
       height: 744px;
     }
 
-    .titleWrap {
-      @media (min-width: 744px) and (max-width: 1439px) {
-        margin-top: 240px;
-      }
+    // .titleWrap {
+    //   @media (min-width: 744px) and (max-width: 1439px) {
+    //     margin-top: 240px;
+    //   }
 
-      @media (min-width: 1440px) {
-        margin-top: 320px;
-      }
-    }
+    //   @media (min-width: 1440px) {
+    //     margin-top: 320px;
+    //   }
+    // }
   }
 
   &:not(.box):not(.cta) {
@@ -218,15 +215,16 @@
   justify-content: space-between;
   margin-top: auto;
   padding-left: 50px;
+  padding-right: 4px;
   height: 56px;
-  border: 1px solid rgba(255, 252, 244, 0.6);
-  border-radius: 8px;
+  border: 1px solid black;
+  border-radius: 0 0 8px 8px;
   backdrop-filter: blur(40px);
-  background: var(--color-gray-100);
+  background: white;
   font-weight: 600;
   font-size: 22px;
   line-height: 134%;
-  color: rgba(255, 252, 244, 0.9);
+  color: #1a1a1a;
 
   .cartBtn {
     display: flex;
@@ -236,11 +234,11 @@
     border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 8px;
     width: 80px;
-    height: 52px;
+    height: 48px;
     backdrop-filter: blur(40px);
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.1),
       0 4px 4px 0 rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.05);
-    background: var(--color-black-10);
+    background: #000;
     opacity: 0.8;
 
     .icon {
