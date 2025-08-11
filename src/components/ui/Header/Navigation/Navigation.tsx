@@ -27,7 +27,7 @@ export default function Navigation({ onClose }: NavigationProps) {
     { href: "/products", label: "Каталог" },
     { href: "/aboutus", label: "Про нас" },
     { href: "/blog", label: "Блог" },
-    { href: "/book", label: "Книга рецепців" },
+    // { href: "/book", label: "Книга рецепців" },
   ];
 
   return (
