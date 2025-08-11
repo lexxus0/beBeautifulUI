@@ -24,10 +24,12 @@ export default function Header() {
   const [menu, setMenu] = useState(false);
 
   return (
-    <header className="bg-gray lg:bg-white-20 lg:border-b lg:border-b-[#8d8d8d]">
+    <header className="bg-gray shadow-[0_2px_8px_0_rgba(45,45,45,0.24)] lg:bg-white-20">
       <div className={styles.header}>
-        <Logo className="w-15 h-15 lg:w-20 lg:h-20" />
-        <div className="hidden lg:block">
+        <Link href="/">
+          <Logo className="w-15 h-15 lg:w-20 lg:h-20 lg:mr-[142px]" />
+        </Link>
+        <div className="hidden lg:block lg:mr-auto">
           <Navigation />
         </div>
         <div className={styles.wrapperNav}>
