@@ -39,10 +39,10 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
             <p className={styles.textOrder}>Номер ТТН:</p>
             <span className={styles.spanOrder}>{order?.ttn}</span>
           </li> */}
-          <li>
+          {/* <li>
             <p className={styles.textOrder}>Спосіб оплати:</p>
             <span className={styles.spanOrder}>{order?.paymentType}</span>
-          </li>
+          </li> */}
           <li>
             <p className={styles.textOrder}>Загальна сума:</p>
             <span className={styles.spanOrder}>{order?.total}</span>
