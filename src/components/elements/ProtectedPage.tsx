@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
+import Loader from "../ui/Loader";
 
 export default function ProtectedPage({ children }: { children: React.ReactNode }) {
     const router = useRouter();
@@ -17,7 +18,7 @@ export default function ProtectedPage({ children }: { children: React.ReactNode 
   }, [user, isLoading, router]);
 
   if (!user) {
-    return null; // або <Loader/>
+    return <Loader/>;
   }
 
   return <>{children}</>;
