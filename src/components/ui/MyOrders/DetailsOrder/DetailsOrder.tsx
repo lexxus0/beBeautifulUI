@@ -24,25 +24,25 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
             <span className={styles.spanOrder}>{order?.number}</span>
           </li>
           <li>
-            <p className={styles.textOrder}>Дата:</p>
+            <p className={styles.textOrder}>Дата оформлення:</p>
             <span className={styles.spanOrder}>{order?.date}</span>
           </li>
-          <li>
+          {/* <li>
             <p className={styles.textOrder}>Статус:</p>
             <span className={styles.spanOrder}>{order?.status}</span>
-          </li>
+          </li> */}
           <li>
             <p className={styles.textOrder}>Спосіб доставки:</p>
             <span className={styles.spanOrder}>{order?.deliveryType}</span>
           </li>
-          <li>
+          {/* <li>
             <p className={styles.textOrder}>Номер ТТН:</p>
             <span className={styles.spanOrder}>{order?.ttn}</span>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <p className={styles.textOrder}>Спосіб оплати:</p>
             <span className={styles.spanOrder}>{order?.paymentType}</span>
-          </li>
+          </li> */}
           <li>
             <p className={styles.textOrder}>Загальна сума:</p>
             <span className={styles.spanOrder}>{order?.total}</span>

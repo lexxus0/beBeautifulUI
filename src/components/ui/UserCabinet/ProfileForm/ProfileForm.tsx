@@ -4,6 +4,7 @@ import {
   ProfileFormInputs,
   schemaProfile,
 } from "@/validation/profileValidation";
+import { useRouter } from "next/navigation";
 import InputGroup from "../../Auth/InputGroup/InputGroup";
 import Icon from "@/components/shared/Icon";
 import DatePickerField from "../DatePickerField/DatePickerField";
@@ -24,6 +25,7 @@ const fields: {
 
 export default function ProfileForm() {
   const resolver = yupResolver(schemaProfile) as Resolver<ProfileFormInputs>;
+  const router = useRouter();
 
   const {
     control,
@@ -77,38 +79,47 @@ export default function ProfileForm() {
             />
           );
         }
-      return (
-        <Controller
-          key={name}
-          name={name}
-          control={control}
-          render={({ field }) => {
-            const hasValue =
-              field.value !== undefined &&
-              field.value !== null &&
-              String(field.value).length > 0;
+        return (
+          <Controller
+            key={name}
+            name={name}
+            control={control}
+            render={({ field: { name: fieldName, value, onChange } }) => {
+              const stringValue = (value ?? "") as string;
+              const hasValue = stringValue.length > 0;
               return (
-            <InputGroup
-              id={name}
-              label={label}
-              type={type}
-              variant="custom"
-              error={errors[name]?.message}
-              icon={renderIcon}
-              inputClassName={`${styles.input} ${hasValue ? styles.hasValue : ""}`}
-              labelClassName={styles.label}
-              {...field}
-              />
-            );
-          }}
-        />
-      );
-    })}
+                <InputGroup
+                  id={name}
+                  name={fieldName}
+                  label={label}
+                  type={type}
+                  variant="custom"
+                  error={errors[name]?.message}
+                  value={stringValue}
+                  onChange={onChange}
+                  icon={renderIcon}
+                  inputClassName={`${styles.input} ${
+                    hasValue ? styles.hasValue : ""
+                  }`}
+                  labelClassName={styles.label}
+                />
+              );
+            }}
+          />
+        );
+      })}
       <div className="flex flex-col gap-6 mt-10 lg:absolute -bottom-[130px] left-[220px] lg:flex-row lg:mt-0 ">
         <button type="submit" className={styles.btnSubmit}>
           Зберегти зміни
         </button>
-        <button type="button" onClick={() => reset()} className={styles.btn}>
+        <button
+          type="button"
+          onClick={() => {
+            reset();
+            router.push("/");
+          }}
+          className={styles.btn}
+        >
           Скасувати зміни
         </button>
       </div>

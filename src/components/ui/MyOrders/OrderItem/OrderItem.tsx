@@ -17,14 +17,14 @@ export default function OrderItem({ order, onDetailsClick }: IOrderItemProps) {
             <p className={styles.textOrder}>№ Замовлення:</p>
             <span className={styles.spanOrder}>{order.number}</span>
           </li>
-          <li>
+          {/* <li>
             <p className={styles.textOrder}>Статус:</p>
             <span className={styles.spanOrder}>{order.status}</span>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <p className={styles.textOrder}>Оплата:</p>
-            <span className={styles.spanOrder}>{order.paymentType}</span>
-          </li>
+            <span className={styles.spanOrder}>{order.paymentType}</span> */}
+          {/* </li> */}
           <li>
             <p className={styles.textOrder}>Дата:</p>
             <span className={styles.spanOrder}>{order.date}</span>

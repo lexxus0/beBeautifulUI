@@ -31,7 +31,7 @@ export default function PayAndDeliveryPage() {
             <p className="font-light text-black text-sm md:text-base lg:text-lg">
               Доставка по всій Україні — швидко та надійно. Ви отримуєте
               сповіщення, як тільки посилка прибуває (Забрай у зручний час, не
-              чекаючи кур’єра).
+              чекаючи курʼєра).
             </p>
           </li>
           <li className="relative flex flex-col gap-2 md:gap-3">
@@ -57,12 +57,12 @@ export default function PayAndDeliveryPage() {
             <p className="pl-7 font-lato text-black-10 md:text-lg lg:text-xl">
               Адресна доставка курʼєром
             </p>
-            <p className="font-light text-black text-sm md:text-base lg:text-lg">
+            {/* <p className="font-light text-black text-sm md:text-base lg:text-lg">
               Замовлення доставляється просто до ваших дверей. Максимум комфорту
               — вам не потрібно виходити з дому.
-            </p>
+            </p> */}
           </li>
-          <li className="relative flex flex-col gap-2 md:gap-3">
+          {/* <li className="relative flex flex-col gap-2 md:gap-3">
             <Icon
               name="icon-dot"
               className="w-[6px] h-[6px] absolute top-3 left-3"
@@ -89,7 +89,7 @@ export default function PayAndDeliveryPage() {
               <br /> Безкоштовно, без очікування, з можливістю консультації на
               місці.
             </p>
-          </li>
+          </li> */}
         </ul>
         <div className="relative py-5 mb-6 lg:mb-[50px]">
           <div className="w-screen h-[2px] bg-[#e4e4e4] shadow-[0_2px_8px_rgba(0,0,0,0.05)] absolute left-1/2 -translate-x-1/2 top-0"></div>
@@ -106,7 +106,7 @@ export default function PayAndDeliveryPage() {
         <p className="font-light text-center text-black mb-6 lg:text-lg">
           Для вашої зручності ми пропонуємо кілька варіантів оплати
         </p>
-        <ul className="flex flex-col gap-6 mb-9 md:w-[424px] md:mb-4 md:mx-auto lg:w-[856px] lg:mb-10">
+        <ul className="flex flex-col gap-6 md:w-[424px] md:mx-auto lg:w-[856px]">
           <li className="relative flex flex-col gap-2 md:gap-3">
             <Icon
               name="icon-dot"
@@ -216,7 +216,7 @@ export default function PayAndDeliveryPage() {
               />
             </div>
           </li>
-          <li className="relative flex flex-col gap-2 md:gap-3">
+          {/* <li className="relative flex flex-col gap-2 md:gap-3">
             <Icon
               name="icon-dot"
               className="w-[6px] h-[6px] absolute top-3 left-3"
@@ -235,7 +235,7 @@ export default function PayAndDeliveryPage() {
                 className="w-14 h-14 md:w-16 md:h-16 lg:w-23 lg:h-23"
               />
             </div>
-          </li>
+          </li> */}
         </ul>
       </div>
     </ProtectedPage>
