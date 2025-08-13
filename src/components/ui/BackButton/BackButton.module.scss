@@ -22,8 +22,8 @@
     font-size: 14px;
     line-height: 150%;
     letter-spacing: 0.02em;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s ease;
+    color: #8d8d8d;
+    transition: color 0.3s ease;
 
     .icon {
       width: 16px;
@@ -32,7 +32,7 @@
     }
 
     &:hover {
-      border-bottom-color: currentColor;
+      color:  #111;
     }
 
     @media (min-width: 744px) {
