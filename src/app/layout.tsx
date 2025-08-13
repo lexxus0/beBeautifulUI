@@ -1,18 +1,24 @@
-import type { Metadata } from "next";
+"use client";
+// import type { Metadata } from "next";
 import { Roboto, Lato, Poppins, Open_Sans, Inter } from "next/font/google";
 // import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
 import { Providers } from "@/store/provider";
 import { sourceSansPro } from "@/fonts/fonts";
-import Header from "@/components/ui/Header/header";
+import Header from "@/components/ui/Header/header"; // header
 import Footer from "@/components/ui/Footer/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop/ScrollToTop";
+import { useAppDispatch } from "@/store/hooks";
+import { useEffect, useState } from "react";
+import { refreshAndLoadUser } from "@/store/auth/operations";
+import Loader from "@/components/ui/Loader/Loader";
+import { usePathname } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Science Be Beautiful",
-  description:
-    "Чесна українська косметика, створена жінкою-хіміком. Активи з Європи. Натуральні формули, що дбають про шкіру та простір навколо.",
-};
+// export const metadata: Metadata = {
+//   title: "Science Be Beautiful",
+//   description:
+//     "Чесна українська косметика, створена жінкою-хіміком. Активи з Європи. Натуральні формули, що дбають про шкіру та простір навколо.",
+// };
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -49,6 +55,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 800);
+
+    return () => clearTimeout(timeout);
+  }, [pathname]);
+
   return (
     <html lang="en">
       <body
@@ -61,11 +80,27 @@ export default function RootLayout({
         ${sourceSansPro.variable}
       `}
       >
-        <Header />
-        <Providers>{children}</Providers>
-        <Footer />
+        <div className="pageLayout">
+          <Providers>
+            <ReduxInitializer />
+            <Header />
+            <main className="pageContent">{children}</main>
+            <Footer />
+          </Providers>
+        </div>
         <ScrollToTop />
+        {loading && <Loader />}
       </body>
     </html>
   );
+}
+
+function ReduxInitializer() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(refreshAndLoadUser());
+  }, [dispatch]);
+
+  return null;
 }

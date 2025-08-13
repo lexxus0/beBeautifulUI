@@ -1,0 +1,157 @@
+[
+    {
+      "_id": "order_001",
+      "number": "#SB00001",
+      "date": "21.07.2025",
+      "status": "Доставлено",
+      "deliveryType": "Нова пошта",
+      "ttn": "20450398514632",
+      "paymentType": "Оплачено карткою",
+      "total": "778 грн",
+      "city": "м. Київ, вул. Велика Васильківська, 22",
+      "branch": "Нова пошта №45",
+      "products": [
+        {
+          "product": {
+            "_id": "product_001",
+            "name": "Shampoo",
+            "sku": "shampoo-300",
+            "volumeOptions": ["300 мл"],
+            "priceByVolume": [
+              {
+                "volume": "300 мл",
+                "price": 389,
+                "_id": "price_001"
+              }
+            ],
+            "stockQuantity": 10,
+            "features": ["М’яке очищення", "Зволоження", "Природний блиск"],
+            "description": "Шампунь для щоденного використання.",
+            "instructions": "Нанести на вологе волосся, змити водою.",
+            "activeIngredients": [],
+            "inciList": [],
+            "category": "hair",
+            "isVegan": true,
+            "reviews": [],
+            "isPromoted": false,
+            "imageUrl": "/images/topProducts/oil.png",
+            "inStock": true,
+            "createdAt": "",
+            "updatedAt": ""
+          },
+          "quantity": 1,
+          "selectedVolume": "300 мл"
+        },
+        {
+          "product": {
+            "_id": "product_002",
+            "name": "Hair mask",
+            "sku": "mask-300",
+            "volumeOptions": ["300 мл"],
+            "priceByVolume": [
+              {
+                "volume": "300 мл",
+                "price": 389,
+                "_id": "price_002"
+              }
+            ],
+            "stockQuantity": 8,
+            "features": ["Інтенсивне живлення", "М’якість"],
+            "description": "Маска для глибокого зволоження.",
+            "instructions": "Нанести на чисте волосся, залишити на 5 хвилин.",
+            "activeIngredients": [],
+            "inciList": [],
+            "category": "hair",
+            "isVegan": false,
+            "reviews": [],
+            "isPromoted": false,
+            "imageUrl": "/images/topProducts/oil.png",
+            "inStock": true,
+            "createdAt": "",
+            "updatedAt": ""
+          },
+          "quantity": 1,
+          "selectedVolume": "300 мл"
+        }
+      ]
+    },
+    {
+      "_id": "order_002",
+      "number": "#SB00002",
+      "date": "10.08.2025",
+      "status": "Очікується доставка",
+      "deliveryType": "Укрпошта",
+      "ttn": "30958472314678",
+      "paymentType": "Накладений платіж",
+      "total": "512 грн",
+      "city": "м. Львів, вул. Коперника, 12",
+      "branch": "Укрпошта №17",
+      "products": [
+        {
+          "product": {
+            "_id": "product_003",
+            "name": "Conditioner",
+            "sku": "conditioner-250",
+            "volumeOptions": ["250 мл"],
+            "priceByVolume": [
+              {
+                "volume": "250 мл",
+                "price": 256,
+                "_id": "price_003"
+              }
+            ],
+            "stockQuantity": 12,
+            "features": ["Відновлення", "Зволоження"],
+            "description": "Кондиціонер для сухого волосся.",
+            "instructions": "Нанести на вологе волосся, змити через 2 хвилини.",
+            "activeIngredients": [],
+            "inciList": [],
+            "category": "hair",
+            "isVegan": true,
+            "reviews": [],
+            "isPromoted": false,
+            "imageUrl": "/images/topProducts/oil.png",
+            "imageMobUrl": "/images/topProducts/oil-mob.png",
+            "inStock": true,
+            "createdAt": "",
+            "updatedAt": ""
+          },
+          "quantity": 2,
+          "selectedVolume": "250 мл"
+        },
+        {
+          "product": {
+            "_id": "product_004",
+            "name": "Serum",
+            "sku": "serum-50",
+            "volumeOptions": ["50 мл"],
+            "priceByVolume": [
+              {
+                "volume": "50 мл",
+                "price": 256,
+                "_id": "price_004"
+              }
+            ],
+            "stockQuantity": 5,
+            "features": ["Сяйво", "Живлення"],
+            "description": "Сироватка для сяйва шкіри.",
+            "instructions": "Наносити на очищену шкіру обличчя.",
+            "activeIngredients": [],
+            "inciList": [],
+            "category": "face",
+            "isVegan": true,
+            "reviews": [],
+            "isPromoted": false,
+            "imageUrl": "/images/topProducts/oil.png",
+            "imageMobUrl": "/images/topProducts/oil-mob.png",
+            "inStock": true,
+            "createdAt": "",
+            "updatedAt": ""
+          },
+          "quantity": 1,
+          "selectedVolume": "50 мл"
+        }
+      ]
+    }
+  ]
+  

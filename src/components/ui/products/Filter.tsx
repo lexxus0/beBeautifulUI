@@ -7,8 +7,8 @@ import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 import { FaFilterCircleXmark } from "react-icons/fa6";
 import { RxDropdownMenu } from "react-icons/rx";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
 import Select from "react-select";
+import { selectProducts } from "@/store/products/selectors";
 
 const categories = ["hair", "body", "face", "makeup", "home"];
 const catOptions = [
@@ -19,17 +19,18 @@ const catOptions = [
   { value: "Body", label: "Body" },
 ];
 
-const volumes = ["50ml", "100ml", "200ml", "400ml", "500ml"];
+const volumes = ["50ml", "100ml", "200ml", "400ml", "500ml", "1L"];
 const volumeOptions = [
   { value: "200ml", label: "200ml" },
   { value: "250ml", label: "250ml" },
   { value: "400ml", label: "400ml" },
+  { value: "500ml", label: "500ml" },
   { value: "1L", label: "1L" },
 ];
 
 export default function Filter() {
   const dispatch = useAppDispatch();
-  const products = useSelector((state: RootState) => state.products.items);
+  const products = useSelector(selectProducts);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -78,14 +79,14 @@ export default function Filter() {
 
   return (
     <div className="relative flex flex-col gap-4 mb-8">
-      <div className="flex flex-wrap items-center gap-4 md:flex-row-reverse">
+      <div className="flex flex-wrap items-center justify-between gap-4 md:flex-row-reverse">
         <div className="relative">
           <input
             type="text"
             placeholder="Пошук"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="rounded-lg pl-10 h-12 w-[198px] border-[#2d2d2d] border-[0.4px]"
+            className="rounded-lg pl-10 h-[44px] w-[198px] border-[#2d2d2d] border-[0.4px]"
           />
           <HiMiniMagnifyingGlass
             className="absolute left-2 top-3 size-6 cursor-pointer"
@@ -97,7 +98,7 @@ export default function Filter() {
         <div className="relative md:hidden">
           <button
             onClick={() => setIsDropdownOpen((prev) => !prev)}
-            className="p-2.5 bg-[rgba(45,45,45,0.8)] size-12 rounded-lg flex items-center"
+            className="p-2.5 bg-[rgba(45,45,45,0.8)] size-14 rounded-lg flex items-center"
             title="Filter"
           >
             <RxDropdownMenu size={30} color="white" />
@@ -141,10 +142,17 @@ export default function Filter() {
         </button>
 
         <div className="hidden md:flex gap-4">
-          <div className="w-[208px] h-12">
+          <div className="w-[208px]">
             <Select
               options={catOptions}
               placeholder="Category"
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  height: 44,
+                  minHeight: 35,
+                }),
+              }}
               isClearable
               value={
                 catOptions.find((opt) => opt.value === selectedCategory) || null
@@ -168,7 +176,7 @@ export default function Filter() {
             />
           </div>
 
-          <div className="w-[208px] h-12">
+          <div className="w-[208px]">
             <Select
               options={volumeOptions}
               placeholder="Volume"
@@ -177,6 +185,13 @@ export default function Filter() {
                 volumeOptions.find((opt) => opt.value === selectedVolume) ||
                 null
               }
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  height: 44,
+                  minHeight: 35,
+                }),
+              }}
               onChange={(option) => {
                 if (option) {
                   handleFilterSelect("volume", option.value);

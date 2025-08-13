@@ -4,6 +4,8 @@ import {
   loginUser,
   refreshUser,
   signoutUser,
+  getCurrentUser,
+  refreshAndLoadUser,
 } from "./operations";
 import { IUser } from "@/types/types";
 interface AuthState {
@@ -37,7 +39,6 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken ?? null;
         state.error = null;
-        state.isLoggedIn = true;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.error = action.payload as string;
@@ -47,9 +48,10 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.accessToken = action.payload.accessToken;
+        state.user = action.payload.user;
+        state.isLoggedIn = true;
         state.error = null;
         state.refreshToken = action.payload.refreshToken ?? null;
-        state.isLoggedIn = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.error = action.payload as string;
@@ -68,6 +70,28 @@ const authSlice = createSlice({
       .addCase(refreshUser.rejected, (state, action) => {
         state.isRefreshing = false;
         state.isLoggedIn = false;
+        state.error = action.payload as string;
+      })
+      .addCase(getCurrentUser.rejected, (state, action) => {
+        state.isRefreshing = false;
+        // state.isLoggedIn = false;
+        state.error = action.payload as string;
+      })
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(refreshAndLoadUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+        state.error = null;
+      })
+      .addCase(refreshAndLoadUser.rejected, (state, action) => {
+        state.user = null;
+        state.accessToken = null;
+        state.refreshToken = null;
+        state.isLoggedIn = false;
+        state.isRefreshing = false;
         state.error = action.payload as string;
       })
       .addCase(signoutUser.fulfilled, () => {

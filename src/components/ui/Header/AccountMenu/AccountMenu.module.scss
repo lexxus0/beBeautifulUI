@@ -1,39 +1,74 @@
 .modal {
-  position: absolute;
-  top: 54px;
-  right: 72px;
-  z-index: 99;
+  @media (min-width: 1440px) {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    z-index: 99;
+    background-color: #f9f8f4;
+    border-radius: 8px;
+    padding: 10px;
+  }
 }
 
 .nav {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  gap: 16px;
+
+  @media (min-width: 1440px) {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.list {
+  border-radius: 2px;
+  border: 0.4px solid var(--color-black-10);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: 1440px) {
+    width: auto;
+    height: auto;
+    gap: 10px;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    font-family: var(--font-lato);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    border: none;
+    padding: 8px 16px;
+    border-left: 1px solid transparent;
+    transition: border-radius 0.3s ease, background-color 0.3s ease;
+
+    &:hover {
+      border-left: 1px solid var(--color-black-10);
+      border-radius: 8px;
+      background-color: #e4e4e4;
+    }
+    &:active {
+      border-left: 1px solid var(--color-black-10);
+      border-radius: 8px;
+      background-color: #e4e4e4;
+    }
+  }
 }
 
 .link {
-  font-family: var(--font-lato);
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 1.5;
-  letter-spacing: 0.01em;
-  color: var(--color-white-30);
-  padding: 8px 16px;
-  transition: font-weight 0.3s ease, border-radius 0.3s ease, color 0.3s ease,
-    background-color 0.3s ease;
-
-  &:hover {
-    font-weight: 700;
-    border-left: 1px solid var(--color-black-10);
-    border-radius: 8px;
-    background-color: #e4e4e4;
-    color: var(--color-black-10);
+  @media (min-width: 1440px) {
+    display: flex;
+    gap: 10px;
   }
-  &:active {
-    font-weight: 700;
-    border-left: 1px solid var(--color-black-10);
-    border-radius: 8px;
-    background-color: #e4e4e4;
-    color: var(--color-black-10);
+}
+
+.btn {
+  @media (min-width: 1440px) {
+    display: flex;
+    gap: 10px;
   }
 }

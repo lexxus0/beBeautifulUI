@@ -1,8 +1,12 @@
+"use client";
 import React from "react";
 import Navigation from "../Navigation/Navigation";
-import Icon from "@/components/elements/Icon";
-import AuthMenu from "../AuthMenu/AuthMenu";
+import { useAppSelector } from "@/store/hooks";
+import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
 import UserMenu from "../UserMenu/UserMenu";
+import LangSwitcher from "../LangSwitcher/LangSwitcher";
+import UserIcon from "../UserIcon/UserIcon";
+import Icon from "@/components/shared/Icon";
 
 import styles from "./MobileMenu.module.scss";
 
@@ -11,20 +15,30 @@ type MobileMenuProps = {
 };
 
 export default function MobileMenu({ onClose }: MobileMenuProps) {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const user = useAppSelector(selectUser);
+  console.log("user: ", user);
+
   return (
     <div className={styles.modal}>
-      <button className={styles.closeBtn} onClick={onClose}>
+      <LangSwitcher className="absolute top-5 left-4" />
+      <button type="button" className={styles.closeBtn} onClick={onClose}>
         <Icon name="icon-close" className={styles.iconClose} />
       </button>
-      <UserMenu />
+      {isLoggedIn ? (
+        <div className={styles.wrapUserMenu}>
+          <UserMenu onCloseMobileModal={onClose} />
+        </div>
+      ) : (
+        <div className={styles.wrapIconUser}>
+          <UserIcon onClose={onClose} />
+        </div>
+      )}
       <div className="relative">
         <input className={styles.input} placeholder="Пошук..." />
         <Icon name="icon-search" className={styles.iconSearch} />
       </div>
       <Navigation onClose={onClose} />
-      <div>
-        <AuthMenu />
-      </div>
     </div>
   );
 }

@@ -8,7 +8,6 @@ interface IProductsListProps {
 }
 
 export default function ProductsList({ products }: IProductsListProps) {
-  console.log(products);
   return (
     <div>
       <Filter />
