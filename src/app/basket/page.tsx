@@ -8,9 +8,13 @@ import rawData from "./basket.json";
 import { useState, useMemo } from "react";
 import BasketIcon from "@/components/elements/BasketIcon";
 import RecommendedProducts from "@/components/ui/RecommendedProducts/RecommendedProducts";
+import BackButton from "@/components/ui/BackButton/BackButton";
+import { useAppSelector } from "@/store/hooks";
+import { selectIsLoggedIn } from "@/store/auth/selectors";
 
 const BasketPage = () => {
   const [basketItems, setBasketItems] = useState<BasketItemType[]>(rawData);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   const handleIncrement = (id: number) => {
     setBasketItems((prev) =>
@@ -41,34 +45,40 @@ const BasketPage = () => {
   );
 
   return (
-    <div className="container">
-      <div className={styles.basketPage}>
-        <div className={styles.basket}>
-          <h1 className={styles.title}>Кошик</h1>
-          <div className={styles.items}>
-            {basketItems.map((item) => (
-              <BasketItem
-                key={item.id}
-                item={item}
-                onIncrement={() => handleIncrement(item.id)}
-                onDecrement={() => handleDecrement(item.id)}
-                onRemove={() => handleRemove(item.id)}
-              />
-            ))}
+    <>
+      <BackButton />
+      <div className="container">
+        <div className={styles.basketPage}>
+          <div className={styles.basket}>
+            <h1 className={styles.title}>Кошик</h1>
+            <div className={styles.items}>
+              {basketItems.map((item) => (
+                <BasketItem
+                  key={item.id}
+                  item={item}
+                  onIncrement={() => handleIncrement(item.id)}
+                  onDecrement={() => handleDecrement(item.id)}
+                  onRemove={() => handleRemove(item.id)}
+                />
+              ))}
+            </div>
+            <hr className={styles.divider} />
+            <div className={styles.total}>
+              <span>Загальна сума:</span>
+              <span>{total} грн</span>
+            </div>
+            <Link
+              href={isLoggedIn ? "/delivery" : "/checkout"}
+              className={styles.checkoutBtn}
+            >
+              Оформити замовлення
+              <BasketIcon variant="white" className={styles.iconBasket} />
+            </Link>
           </div>
-          <hr className={styles.divider} />
-          <div className={styles.total}>
-            <span>Загальна сума:</span>
-            <span>{total} грн</span>
-          </div>
-          <Link href="/checkout" className={styles.checkoutBtn}>
-            Оформити замовлення{" "}
-            <BasketIcon variant="white" className={styles.iconBasket} />
-          </Link>
+          <RecommendedProducts />
         </div>
-        <RecommendedProducts />
       </div>
-    </div>
+    </>
   );
 };
 
