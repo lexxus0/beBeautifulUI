@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
                     rel="noopener noreferrer"
                     className={styles.socialLink}
                   >
-                    <Icon name="icon-facebook" className={styles.iconSocials} />
+                    <Icon name="icon-telegram" className={styles.iconSocials} />
                   </a>
                 </li>
                 <li>
