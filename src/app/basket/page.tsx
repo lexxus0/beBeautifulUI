@@ -9,9 +9,12 @@ import { useState, useMemo } from "react";
 import BasketIcon from "@/components/elements/BasketIcon";
 import RecommendedProducts from "@/components/ui/RecommendedProducts/RecommendedProducts";
 import BackButton from "@/components/ui/BackButton/BackButton";
+import { useAppSelector } from "@/store/hooks";
+import { selectIsLoggedIn } from "@/store/auth/selectors";
 
 const BasketPage = () => {
   const [basketItems, setBasketItems] = useState<BasketItemType[]>(rawData);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   const handleIncrement = (id: number) => {
     setBasketItems((prev) =>
@@ -64,8 +67,11 @@ const BasketPage = () => {
               <span>Загальна сума:</span>
               <span>{total} грн</span>
             </div>
-            <Link href="/checkout" className={styles.checkoutBtn}>
-              Оформити замовлення{" "}
+            <Link
+              href={isLoggedIn ? "/delivery" : "/checkout"}
+              className={styles.checkoutBtn}
+            >
+              Оформити замовлення
               <BasketIcon variant="white" className={styles.iconBasket} />
             </Link>
           </div>

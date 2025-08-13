@@ -4,37 +4,6 @@
   padding: 20px;
 }
 
-.tabs {
-  display: flex;
-  justify-content: flex-start;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.tab {
-  background: none;
-  border: none;
-  font-size: 16px;
-  color: #aaa;
-  cursor: pointer;
-  padding: 5px 0;
-  transition: color 0.3s ease, border-bottom 0.3s ease;
-
-  &:hover {
-    color: #555;
-  }
-
-  &.active {
-    color: #000;
-    border-bottom: 2px solid #000;
-  }
-
-  &:disabled {
-    color: #ccc;
-    cursor: not-allowed;
-  }
-}
-
 .formWrapper {
   margin-top: 20px;
 }

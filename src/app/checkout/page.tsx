@@ -6,10 +6,13 @@ import ContactInfoForm from "@/components/ui/ContactInfoForm/ContactInfoForm";
 import LoginForm from "@/components/ui/Auth/LoginForm/LoginForm";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
+import CheckoutTabs from "@/components/ui/CheckoutTabs/CheckoutTabs";
 
 const CheckoutPage = () => {
-    const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  const [activeTab, setActiveTab] = useState<"new" | "existing">("new");
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+ const [activeTab, setActiveTab] = useState<"new" | "existing">(
+    isLoggedIn ? "existing" : "new"
+  );
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -19,28 +22,10 @@ const CheckoutPage = () => {
 
   return (
     <div className={styles.checkout}>
-      <div className={styles.tabs}>
-        <button
-          className={`${styles.tab} ${
-            activeTab === "new" ? styles.active : ""
-          }`}
-          onClick={() => setActiveTab("new")}
-          disabled={isLoggedIn}
-        >
-          Новий покупець
-        </button>
-        <button
-          className={`${styles.tab} ${
-            activeTab === "existing" ? styles.active : ""
-          }`}
-          onClick={() => setActiveTab("existing")}
-        >
-          Я постійний клієнт
-        </button>
-      </div>
+      <CheckoutTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
       <div className={styles.formWrapper}>
-        {activeTab === "new" ? <ContactInfoForm /> : <LoginForm />}
+       {isLoggedIn ? <ContactInfoForm/> : activeTab === "new" ? <ContactInfoForm /> : <LoginForm />}
       </div>
     </div>
   );
