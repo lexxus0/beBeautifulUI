@@ -22,11 +22,17 @@
     font-size: 14px;
     line-height: 150%;
     letter-spacing: 0.02em;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
 
     .icon {
       width: 16px;
       height: 16px;
       transform: rotate(180deg);
+    }
+
+    &:hover {
+      border-bottom-color: currentColor;
     }
 
     @media (min-width: 744px) {

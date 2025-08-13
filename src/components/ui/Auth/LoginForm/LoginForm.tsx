@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import InputGroup from "../InputGroup/InputGroup";
+import InputGroup from "../../InputGroup/InputGroup";
 import { schemaLogin } from "@/validation/authValidation";
 import styles from "./LoginForm.module.scss";
 import { LoginFormInputs } from "@/types/types";
