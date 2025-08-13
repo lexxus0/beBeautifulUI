@@ -17,8 +17,12 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
   return (
     <div className={css.accordionWrapper}>
       <div className={css.accordionItem}>
-        <button onClick={() => handleClick(0)} className={css.accordionHeader}>
-          <span>Опис продукту:</span>
+        <button
+          onClick={() => handleClick(0)}
+          className={`${css.accordionHeader} ${
+            activeIndex === 0 ? css.active : ""
+          }`}>
+          <span className={css.descriptionTitle}>Опис продукту:</span>
           <div
             className={`${css.arrow} ${
               activeIndex === 0 ? css.arrowRotated : ""
@@ -33,13 +37,19 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           </div>
         </button>
         {activeIndex === 0 && (
-          <div className={css.accordionContent}>{product.description}</div>
+          <p className={css.accordionContent}>{product.description}</p>
         )}
       </div>
 
       <div className={css.accordionItem}>
-        <button onClick={() => handleClick(1)} className={css.accordionHeader}>
-          <span>Чому цей шампунь — більше, ніж очищення</span>
+        <button
+          onClick={() => handleClick(1)}
+          className={`${css.accordionHeader} ${
+            activeIndex === 1 ? css.active : ""
+          }`}>
+          <span className={css.descriptionTitle}>
+            Чому цей шампунь — більше, ніж очищення
+          </span>
           <div
             className={`${css.arrow} ${
               activeIndex === 1 ? css.arrowRotated : ""
@@ -54,15 +64,21 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           </div>
         </button>
         {activeIndex === 1 && (
-          <div className={css.accordionContent}>
+          <p className={css.accordionContent}>
             Це просто додатковий текст або пояснення.
-          </div>
+          </p>
         )}
       </div>
 
       <div className={css.accordionItem}>
-        <button onClick={() => handleClick(2)} className={css.accordionHeader}>
-          <span>Основні активні компоненти:</span>
+        <button
+          onClick={() => handleClick(2)}
+          className={`${css.accordionHeader} ${
+            activeIndex === 2 ? css.active : ""
+          }`}>
+          <span className={css.descriptionTitle}>
+            Основні активні компоненти:
+          </span>
           <div
             className={`${css.arrow} ${
               activeIndex === 2 ? css.arrowRotated : ""
@@ -80,7 +96,7 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           <div className={css.accordionContent}>
             {product.activeIngredients.length > 0
               ? product.activeIngredients.map((item) => (
-                  <div key={item._id}>ID: {item._id}</div>
+                  <p key={item._id}>ID: {item._id}</p>
                 ))
               : "Немає активних компонентів"}
           </div>
@@ -88,8 +104,12 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
       </div>
 
       <div className={css.accordionItem}>
-        <button onClick={() => handleClick(3)} className={css.accordionHeader}>
-          <span>Повний склад (INCI):</span>
+        <button
+          onClick={() => handleClick(3)}
+          className={`${css.accordionHeader} ${
+            activeIndex === 3 ? css.active : ""
+          }`}>
+          <span className={css.descriptionTitle}>Повний склад (INCI):</span>
           <div
             className={`${css.arrow} ${
               activeIndex === 3 ? css.arrowRotated : ""
@@ -104,15 +124,17 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           </div>
         </button>
         {activeIndex === 3 && (
-          <div className={css.accordionContent}>
-            {product.inciList?.join(", ")}
-          </div>
+          <p className={css.accordionContent}>{product.inciList?.join(", ")}</p>
         )}
       </div>
 
       <div className={css.accordionItem}>
-        <button onClick={() => handleClick(4)} className={css.accordionHeader}>
-          <span>Спосіб застосування:</span>
+        <button
+          onClick={() => handleClick(4)}
+          className={`${css.accordionHeader} ${
+            activeIndex === 4 ? css.active : ""
+          }`}>
+          <span className={css.descriptionTitle}>Спосіб застосування:</span>
           <div
             className={`${css.arrow} ${
               activeIndex === 4 ? css.arrowRotated : ""
@@ -127,13 +149,17 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           </div>
         </button>
         {activeIndex === 4 && (
-          <div className={css.accordionContent}>{product.instructions}</div>
+          <p className={css.accordionContent}>{product.instructions}</p>
         )}
       </div>
 
       <div className={css.accordionItem}>
-        <button onClick={() => handleClick(5)} className={css.accordionHeader}>
-          <span>Застереження:</span>
+        <button
+          onClick={() => handleClick(5)}
+          className={`${css.accordionHeader} ${
+            activeIndex === 5 ? css.active : ""
+          }`}>
+          <span className={css.descriptionTitle}>Застереження:</span>
           <div
             className={`${css.arrow} ${
               activeIndex === 5 ? css.arrowRotated : ""
@@ -148,15 +174,19 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           </div>
         </button>
         {activeIndex === 5 && (
-          <div className={css.accordionContent}>
+          <p className={css.accordionContent}>
             Тестове застереження. Уникати потрапляння в очі.
-          </div>
+          </p>
         )}
       </div>
 
       <div className={css.accordionItem}>
-        <button onClick={() => handleClick(6)} className={css.accordionHeader}>
-          <span>Термін придатності:</span>
+        <button
+          onClick={() => handleClick(6)}
+          className={`${css.accordionHeader} ${
+            activeIndex === 6 ? css.active : ""
+          }`}>
+          <span className={css.descriptionTitle}>Термін придатності:</span>
           <div
             className={`${css.arrow} ${
               activeIndex === 6 ? css.arrowRotated : ""
@@ -171,9 +201,9 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           </div>
         </button>
         {activeIndex === 6 && (
-          <div className={css.accordionContent}>
+          <p className={css.accordionContent}>
             {new Date(product.createdAt).toLocaleDateString()} – 24 міс.
-          </div>
+          </p>
         )}
       </div>
     </div>
