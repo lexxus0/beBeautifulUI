@@ -1,33 +1,28 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from "./Checkout.module.scss";
 import ContactInfoForm from "@/components/ui/ContactInfoForm/ContactInfoForm";
 import LoginForm from "@/components/ui/Auth/LoginForm/LoginForm";
-import { useAppSelector } from "@/store/hooks";
-import { selectIsLoggedIn } from "@/store/auth/selectors";
 import CheckoutTabs from "@/components/ui/CheckoutTabs/CheckoutTabs";
+import BackButton from "@/components/ui/BackButton/BackButton";
 
 const CheckoutPage = () => {
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
- const [activeTab, setActiveTab] = useState<"new" | "existing">(
-    isLoggedIn ? "existing" : "new"
-  );
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      setActiveTab("existing");
-    }
-  }, [isLoggedIn]);
+  const [activeTab, setActiveTab] = useState<"new" | "existing">("new");
 
   return (
-    <div className={styles.checkout}>
-      <CheckoutTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+    <>
+      <BackButton />
+      <div className="container">
+        <div className={styles.checkout}>
+          <CheckoutTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      <div className={styles.formWrapper}>
-       {isLoggedIn ? <ContactInfoForm/> : activeTab === "new" ? <ContactInfoForm /> : <LoginForm />}
+          <div className={styles.formWrapper}>
+            {activeTab === "new" ? <ContactInfoForm /> : <LoginForm />}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
