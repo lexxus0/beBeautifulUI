@@ -1,0 +1,37 @@
+.backButtonContainer {
+  border-bottom: 0.2px solid rgba(45, 45, 45, 0.8);
+  margin-inline: auto;
+  padding: 18px 20px;
+
+  @media (min-width: 744px) {
+    padding: 16px 40px;
+  }
+
+  @media (min-width: 1440px) {
+    max-width: 1440px;
+    padding: 40px 72px;
+  }
+  .backButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background: none;
+    font-family: var(--font-roboto);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0.02em;
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      transform: rotate(180deg);
+    }
+
+    @media (min-width: 744px) {
+      font-size: 16px;
+      line-height: 132%;
+    }
+  }
+}
