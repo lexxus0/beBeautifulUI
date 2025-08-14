@@ -3,7 +3,7 @@
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import InputGroup from "../InputGroup/InputGroup";
+import InputGroup from "../../InputGroup/InputGroup";
 import { schemaRegister } from "@/validation/authValidation";
 import Link from "next/link";
 import styles from "./RegisterForm.module.scss";

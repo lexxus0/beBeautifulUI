@@ -167,3 +167,10 @@ export interface BasketItemType {
   quantity: number;
   price: number;
 }
+
+export interface ContactInfoInputs {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+}

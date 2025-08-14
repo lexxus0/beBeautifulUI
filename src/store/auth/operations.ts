@@ -7,7 +7,6 @@ export const registerUser = createAsyncThunk<IUserResponse, IUser>(
   "users/signup",
   async (credentials, { rejectWithValue }) => {
     try {
-      console.log("Payload for register:", credentials);
       const res = await instance.post("auth/register", credentials);
       setAuthHeader(res.data.data.token);
       return res.data.data;

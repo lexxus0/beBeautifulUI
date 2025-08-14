@@ -5,7 +5,7 @@ import {
   schemaProfile,
 } from "@/validation/profileValidation";
 import { useRouter } from "next/navigation";
-import InputGroup from "../../Auth/InputGroup/InputGroup";
+import InputGroup from "../../InputGroup/InputGroup";
 import Icon from "@/components/shared/Icon";
 import DatePickerField from "../DatePickerField/DatePickerField";
 import styles from "./ProfileForm.module.scss";
