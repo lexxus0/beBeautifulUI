@@ -5,6 +5,7 @@ import Icon from "@/components/shared/Icon";
 import PaymentSelect from "../PaymentSelect/PaymentSelect";
 import BasketIcon from "@/components/elements/BasketIcon";
 import styles from "./DeliveryFormMarkup.module.scss";
+import Link from "next/link";
 
 export default function DeliveryFormMarkup() {
   const [deliveryType, setDeliveryType] = useState<"warehouse" | "address">(
@@ -16,7 +17,7 @@ export default function DeliveryFormMarkup() {
   const [certificate, setCertificate] = useState("");
 
   return (
-    <div className="pt-12 pb-18 md:w-[436px] md:pt-20 md:pb-20 lg:w-full lg:pt-15 lg:pb-[100px] mx-auto lg:mr-0">
+    <div className="pt-[10px] pb-18 md:w-[436px] md:pt-[6px] md:pb-20 lg:w-full lg:pt-9 lg:pb-[100px] mx-auto lg:mr-0">
       <form
         className="lg:flex lg:gap-[134px] justify-end"
         onSubmit={(e) => e.preventDefault()}
@@ -239,10 +240,10 @@ export default function DeliveryFormMarkup() {
             </label>
           </div>
 
-          <button type="submit" className={styles.submit}>
+          <Link href='/payment' className={styles.submit}>
             Оформити замовлення
             <BasketIcon variant="white" className="w-[18px] h-[18px] ml-4" />
-          </button>
+          </Link>
         </div>
       </form>
     </div>
