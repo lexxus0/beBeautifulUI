@@ -1,0 +1,27 @@
+.input {
+  border-bottom: 1px solid #2d2d2d;
+  border-radius: 8px;
+  padding: 12px 12px 12px 8px;
+  width: 100%;
+  margin-bottom: 24px;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--color-black-10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 744px) {
+    margin-bottom: 48px;
+  }
+
+  @media (min-width: 1440px) {
+    margin-bottom: 60px;
+  }
+
+  &::placeholder {
+    color: var(--color-black-10);
+  }
+}

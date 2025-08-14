@@ -1,0 +1,204 @@
+/* БАЗА — спільна для всіх інпутів */
+.input {
+  --py: 14px; /* вертикальні падінги */
+  --pl: 42px; /* лівий паддінг (під іконку) */
+  --mb: 24px; /* відступ знизу */
+  --ff: var(--font-poppins); /* шрифт */
+  --fw: 300; /* font-weight */
+  --fs: 14px; /* розмір шрифту */
+  --lh: 1.5; /* line-height */
+  --ls: 0.02em; /* letter-spacing */
+  --ph: var(--color-black-10); /* колір плейсхолдера */
+
+  width: 100%;
+  border-bottom: 1px solid #2d2d2d;
+  border-radius: 8px;
+  padding: var(--py) 16px var(--py) var(--pl);
+  margin-bottom: var(--mb);
+  font-family: var(--ff);
+  font-weight: var(--fw);
+  font-size: var(--fs);
+  line-height: var(--lh);
+  letter-spacing: var(--ls);
+  color: var(--color-black-10);
+
+  &::placeholder {
+    color: var(--ph);
+  }
+
+  @media (min-width: 744px) {
+    --mb: 40px;
+  }
+
+  @media (min-width: 1440px) {
+    --mb: 60px;
+  }
+}
+
+/*Відділення*/
+.depart {
+  --py: 12px;
+  --pl: 46px;
+  --mb: 32px;
+  --fw: 400;
+  --fs: 16px;
+  --lh: 1.4;
+  --ls: 0;
+
+  @media (min-width: 744px) {
+    --mb: 48px;
+  }
+
+  @media (min-width: 1440px) {
+    --mb: 0;
+  }
+}
+
+/*Вулиця*/
+.street {
+  --py: 12px;
+  --pl: 46px;
+  --mb: 32px;
+  --fw: 400;
+  --fs: 16px;
+  --lh: 1.4;
+  --ls: 0;
+}
+
+/*Будинок, квартира*/
+.house {
+  --py: 12px;
+  --pl: 8px;
+  --mb: 32px;
+  --fw: 400;
+  --fs: 16px;
+  --lh: 1.4;
+  --ls: 0;
+
+  @media (min-width: 744px) {
+    --mb: 48px;
+  }
+
+  @media (min-width: 1440px) {
+    --mb: 0;
+  }
+}
+
+.subTabs {
+  display: flex;
+  margin-bottom: 40px;
+  gap: 20px;
+
+  @media (min-width: 744px) {
+    gap: 24px;
+  }
+
+  @media (min-width: 1440px) {
+    margin-bottom: 51px;
+  }
+}
+
+.subTabLabel {
+  font-family: var(--font-lato);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-gray-10);
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  min-width: 156px;
+
+  @media (min-width: 744px) {
+    font-size: 18px;
+  }
+
+  @media (min-width: 1440px) {
+  }
+
+  & input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    border: 0;
+    width: 100%;
+  }
+
+  & span {
+    display: inline-flex;
+    align-items: center;
+    min-width: 156px;
+    padding: 8px 10px;
+    border-bottom: 1px solid transparent;
+  }
+
+  & input:checked + span {
+    color: var(--color-black-10);
+    border-bottom-color: var(--color-black-10);
+  }
+}
+
+.btnPlus {
+  font-family: var(--font-roboto);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.32;
+  display: flex;
+  align-items: center;
+
+  @media (min-width: 744px) {
+  }
+
+  @media (min-width: 1440px) {
+    font-size: 18px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+}
+
+.checkText {
+  font-family: var(--font-roboto);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--color-black-10);
+}
+
+.submit {
+  width: 100%;
+  padding: 20px 0;
+  border-radius: 8px;
+  font-family: var(--font-open-sans);
+  font-size: 18px;
+  line-height: 1.2;
+  background: linear-gradient(180deg, #2d2d2d 4.33%);
+  color: var(--color-white);
+  transition: box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover,
+  &:focus {
+    border-bottom: 0.4px solid #1a1a1a;
+    background: #1a1a1a;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  &:active {
+    border-bottom: 0.4px solid #111;
+    background: #111;
+  }
+
+  @media (min-width: 744px) {
+    font-size: 20px;
+  }
+}
