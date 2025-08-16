@@ -96,7 +96,7 @@ export default function PaymentSelect({
 
   return (
     <div ref={rootRef} className="w-full max-w-xl relative">
-      <label className="mb-[2px] font-poppins font-normal text-base text-gray-10">
+      <label className="mb-[2px] font-roboto font-light text-sm md:text-base text-gray-10">
         {label}
       </label>
 
@@ -113,7 +113,7 @@ export default function PaymentSelect({
         className={styles.input}
       >
         <span className="min-w-0 flex-1 pr-5">
-          <span className="block text-base font-poppins font-normal text-start truncate" title={selected?.label ?? placeholder}>
+          <span className="block text-start truncate" title={selected?.label ?? placeholder}>
           {selected?.label ?? placeholder}
           </span>
         </span>
@@ -142,7 +142,7 @@ export default function PaymentSelect({
                   setOpen(false);
                 }}
                 className={[
-                  "font-roboto font-light cursor-pointer rounded-lg",
+                  "font-roboto font-light text-sm md:text-base cursor-pointer rounded-lg",
                 ].join(" ")}
               >
                 <div

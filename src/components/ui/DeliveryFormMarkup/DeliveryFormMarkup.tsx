@@ -17,7 +17,7 @@ export default function DeliveryFormMarkup() {
   const [certificate, setCertificate] = useState("");
 
   return (
-    <div className="pt-[10px] pb-18 md:w-[436px] md:pt-[6px] md:pb-20 lg:w-full lg:pt-9 lg:pb-[100px] mx-auto lg:mr-0">
+    <div className="pb-12 md:w-[436px] md:pt-[6px] md:pb-20 lg:w-full lg:pt-9 lg:pb-[100px] mx-auto lg:mr-0">
       <form
         className="lg:flex lg:gap-[134px] justify-end"
         onSubmit={(e) => e.preventDefault()}
@@ -25,7 +25,10 @@ export default function DeliveryFormMarkup() {
         <div className="lg:w-[526px]">
           {/* МІСТО */}
           <div>
-            <label htmlFor="city" className="font-roboto font-light text-base">
+            <label
+              htmlFor="city"
+              className="font-roboto font-light text-sm md:text-base"
+            >
               Місто
             </label>
             <div className="relative">
@@ -39,13 +42,17 @@ export default function DeliveryFormMarkup() {
               />
               <Icon
                 name="icon-search"
-                className="w-[18px] h-[18px] absolute top-[14px] left-2 fill-transparent stroke-black-10"
+                className="w-[18px] h-[18px] absolute top-[14px] left-3 fill-transparent stroke-black-10"
+              />
+              <Icon
+                name="icon-close"
+                className="w-3 h-3 absolute top-[18px] right-9 fill-transparent stroke-gray-10 rotate-45"
               />
             </div>
           </div>
 
           <div className="border border-black-10 rounded-md p-1 mb-6 md:p-2 md:mb-10 lg:mb-15">
-            <div className="bg-black-10 rounded-lg p-2 font-lato font-bold text-white text-center md:p-4 md:font-normal md:text-lg">
+            <div className="bg-black-10 rounded-lg p-2 font-lato font- text-base text-white text-center md:p-4 md:font-normal md:text-lg">
               Нова пошта
             </div>
           </div>
@@ -85,7 +92,7 @@ export default function DeliveryFormMarkup() {
             <div>
               <label
                 htmlFor="warehouse"
-                className="font-poppins font-normal text-base text-gray-10"
+                className="font-roboto font-light text-sm text-gray-10 md:text-base"
               >
                 Відділення
               </label>
@@ -100,7 +107,7 @@ export default function DeliveryFormMarkup() {
                 />
                 <Icon
                   name="icon-search"
-                  className="w-[18px] h-[18px] absolute top-[12px] left-2 fill-transparent stroke-black-10"
+                  className="w-[18px] h-[18px] absolute top-[14px] left-3 fill-transparent stroke-black-10"
                 />
               </div>
             </div>
@@ -111,7 +118,7 @@ export default function DeliveryFormMarkup() {
             <div className={"styles.blockGroup"}>
               <label
                 htmlFor="street"
-                className="font-poppins font-normal text-base text-gray-10"
+                className="font-roboto font-light text-sm text-gray-10 md:text-base"
               >
                 Вулиця
               </label>
@@ -126,14 +133,14 @@ export default function DeliveryFormMarkup() {
                 />
                 <Icon
                   name="icon-search"
-                  className="w-[18px] h-[18px] absolute top-[12px] left-2 fill-transparent stroke-black-10"
+                  className="w-[18px] h-[18px] absolute top-[14px] left-3 fill-transparent stroke-black-10"
                 />
               </div>
               <div className="flex gap-3">
                 <div className={"styles.col"}>
                   <label
                     htmlFor="house"
-                    className="font-roboto font-light text-base text-gray-10"
+                    className="font-roboto font-light text-sm md:text-base text-gray-10"
                   >
                     Будинок <span aria-hidden="true">*</span>
                   </label>
@@ -149,7 +156,7 @@ export default function DeliveryFormMarkup() {
                 <div className={"styles.col"}>
                   <label
                     htmlFor="apartment"
-                    className="font-roboto font-light text-base text-gray-10"
+                    className="font-roboto font-light text-sm md:text-base text-gray-10"
                   >
                     Квартира <span aria-hidden="true">*</span>
                   </label>
@@ -171,7 +178,7 @@ export default function DeliveryFormMarkup() {
           <PaymentSelect placeholder="Варіант оплати" />
 
           {/* ДОДАТКОВІ ПОЛЯ */}
-          <div className="mb-6 flex flex-col gap-[18px] lg:gap-[26px] lg:mb-8">
+          <div className="mb-6 flex flex-col gap-[18px] lg:gap-[26px] lg:mb-11">
             <button
               type="button"
               className={styles.btnPlus}
@@ -225,22 +232,31 @@ export default function DeliveryFormMarkup() {
             )}
           </div>
 
-          <div className="flex flex-col gap-4 mb-10 lg:mb-[70px]">
-            <label className="flex gap-3 items-center">
-              <input type="checkbox" name="noCall" />
-              <p className={styles.checkText}>
+          <div className="flex flex-col gap-4 mb-10 lg:mb-[70px] pl-1 lg:pl-[6px]">
+            <label className={styles.cb}>
+              <input
+                type="checkbox"
+                name="noCall"
+                id="noCall"
+                className={styles.cbNative}
+              />
+              <span className={styles.cbBox} />
+              <span>
                 Мені можна не телефонувати для підтвердження замовлення.
-              </p>
+              </span>
             </label>
-            <label className="flex gap-3 items-center">
-              <input type="checkbox" name="saveCard" />
-              <p className={styles.checkText}>
-                Зберегти картку для майбутніх покупок.
-              </p>
+            <label className={styles.cb}>
+              <input
+                type="checkbox"
+                name="saveCard"
+                id="saveCard"
+                className={styles.cbNative}
+              />
+              <span className={styles.cbBox} />
+              <span>Зберегти картку для майбутніх покупок.</span>
             </label>
           </div>
-
-          <Link href='/payment' className={styles.submit}>
+          <Link href="/payment" className={styles.submit}>
             Оформити замовлення
             <BasketIcon variant="white" className="w-[18px] h-[18px] ml-4" />
           </Link>

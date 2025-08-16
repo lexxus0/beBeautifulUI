@@ -1,17 +1,17 @@
 /* БАЗА — спільна для всіх інпутів */
 .input {
-  --py: 14px; /* вертикальні падінги */
-  --pl: 42px; /* лівий паддінг (під іконку) */
+  --py: 13.5px; /* вертикальні падінги */
+  --pl: 48px; /* лівий паддінг (під іконку) */
   --mb: 24px; /* відступ знизу */
-  --ff: var(--font-poppins); /* шрифт */
+  --ff: var(--font-roboto); /* шрифт */
   --fw: 300; /* font-weight */
-  --fs: 14px; /* розмір шрифту */
+  --fs: 16px; /* розмір шрифту */
   --lh: 1.5; /* line-height */
   --ls: 0.02em; /* letter-spacing */
   --ph: var(--color-black-10); /* колір плейсхолдера */
 
   width: 100%;
-  border-bottom: 1px solid #2d2d2d;
+  border-bottom: 1px solid var(--color-black-10);
   border-radius: 8px;
   padding: var(--py) 16px var(--py) var(--pl);
   margin-bottom: var(--mb);
@@ -37,13 +37,7 @@
 
 /*Відділення*/
 .depart {
-  --py: 12px;
-  --pl: 46px;
   --mb: 32px;
-  --fw: 400;
-  --fs: 16px;
-  --lh: 1.4;
-  --ls: 0;
 
   @media (min-width: 744px) {
     --mb: 48px;
@@ -56,24 +50,13 @@
 
 /*Вулиця*/
 .street {
-  --py: 12px;
-  --pl: 46px;
   --mb: 32px;
-  --fw: 400;
-  --fs: 16px;
-  --lh: 1.4;
-  --ls: 0;
 }
 
 /*Будинок, квартира*/
 .house {
-  --py: 12px;
   --pl: 8px;
   --mb: 32px;
-  --fw: 400;
-  --fs: 16px;
-  --lh: 1.4;
-  --ls: 0;
 
   @media (min-width: 744px) {
     --mb: 48px;
@@ -114,9 +97,6 @@
     font-size: 18px;
   }
 
-  @media (min-width: 1440px) {
-  }
-
   & input {
     position: absolute;
     opacity: 0;
@@ -153,23 +133,11 @@
   display: flex;
   align-items: center;
 
-  @media (min-width: 744px) {
-  }
-
   @media (min-width: 1440px) {
     font-size: 18px;
     line-height: 1.5;
     letter-spacing: 0.02em;
   }
-}
-
-.checkText {
-  font-family: var(--font-roboto);
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 1.5;
-  letter-spacing: 0.02em;
-  color: var(--color-black-10);
 }
 
 .submit {
@@ -201,4 +169,68 @@
   @media (min-width: 744px) {
     font-size: 20px;
   }
+}
+
+/* Контейнер */
+.cb {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--font-roboto);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--color-black-10);
+}
+
+/* Нативний інпут — візуально прихований, але доступний */
+.cbNative {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  border: 0;
+}
+
+/* Кастомний checkbox */
+.cbBox {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--color-gray-10);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Галочка (псевдоелемент) */
+.cbBox::after {
+  content: "";
+  width: 10px;
+  height: 6px;
+  border: 2px solid transparent;
+  border-top: 0;
+  border-right: 0;
+  transform: rotate(-45deg) scale(0.8);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+/* Стан: checked */
+.cbNative:checked + .cbBox {
+  background: var(--color-gray-10);
+  color: var(--color-white);
+}
+.cbNative:checked + .cbBox::after {
+  border-color: var(--color-white);
+  opacity: 1;
 }
