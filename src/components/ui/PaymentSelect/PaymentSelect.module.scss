@@ -1,0 +1,27 @@
+.input {
+  border-bottom: 1px solid #2d2d2d;
+  border-radius: 8px;
+  padding: 11.5px 12px 11.5px 8px;
+  width: 100%;
+  margin-bottom: 34px;
+  font-family: var(--font-roboto);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.32;
+  color: var(--color-black-10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 744px) {
+    margin-bottom: 42px;
+  }
+
+  @media (min-width: 1440px) {
+    margin-bottom: 60px;
+  }
+
+  &::placeholder {
+    color: var(--color-black-10);
+  }
+}
