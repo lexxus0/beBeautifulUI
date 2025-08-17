@@ -6,6 +6,7 @@ import { useState } from "react";
 
 interface ProductItemProps {
   item: IProduct;
+  productId?: string;
 }
 
 export default function ProductItem({ item }: ProductItemProps) {

@@ -5,6 +5,7 @@ import ProductHeader from "@/components/ui/ProductHeader/ProductHeader";
 import { IProduct } from "@/types/types";
 import css from "./page.module.css";
 import BrandPhilosophy from "@/components/ui/BrandPhilosophy/BrandPhilosophy";
+import VisitedProduct from "./VisitedProduct";
 
 const getProductById = async (id: string): Promise<IProduct> => {
   const res = await fetch(
@@ -23,6 +24,7 @@ export default async function ProductDetails({
 
   return (
     <section className="container">
+      <VisitedProduct productId={productId} />
       <div className={css.productContainer}>
         <div className={css.header}>
           <ProductHeader product={product} />
