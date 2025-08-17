@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 import css from "@/components/ui/ProductActions/ProductActions.module.css";
 import Icon from "@/components/elements/Icons";
-import BasketIcon from "@/components/elements/Icon";
+import BasketIcon from "@/components/elements/BasketIcon";
 
 export interface ProductActionsProps {
   product: IProduct;
