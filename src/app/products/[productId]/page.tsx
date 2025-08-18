@@ -6,6 +6,7 @@ import { IProduct } from "@/types/types";
 import css from "./page.module.css";
 import BrandPhilosophy from "@/components/ui/BrandPhilosophy/BrandPhilosophy";
 import VisitedProduct from "./VisitedProduct";
+import WantToKnowMore from "@/components/ui/WantToKnowMore/WantToKnowMore";
 
 const getProductById = async (id: string): Promise<IProduct> => {
   const res = await fetch(
@@ -24,24 +25,29 @@ export default async function ProductDetails({
 
   return (
     <section className="container">
-      <VisitedProduct productId={productId} />
-      <div className={css.productContainer}>
-        <div className={css.header}>
-          <ProductHeader product={product} />
+      <section>
+        <VisitedProduct productId={productId} />
+        <div className={css.productContainer}>
+          <div className={css.header}>
+            <ProductHeader product={product} />
+          </div>
+          <div className={css.gallery}>
+            <ProductGallery product={product} />
+          </div>
+          <div className={css.description}>
+            <ProductDescription product={product} />
+          </div>
+          <div className={css.actions}>
+            <ProductActions product={product} />
+          </div>
         </div>
-        <div className={css.gallery}>
-          <ProductGallery product={product} />
+        <div className={css.fullWidthWrapper}>
+          <BrandPhilosophy dynamicText="Цей шампунь — як свіже «доброго ранку» собі. І як щоденне нагадування: ти — варта найкращого." />
         </div>
-        <div className={css.description}>
-          <ProductDescription product={product} />
-        </div>
-        <div className={css.actions}>
-          <ProductActions product={product} />
-        </div>
-      </div>
-      <div className={css.fullWidthWrapper}>
-        <BrandPhilosophy dynamicText="Цей шампунь — як свіже «доброго ранку» собі. І як щоденне нагадування: ти — варта найкращого." />
-      </div>
+      </section>
+      <section>
+        <WantToKnowMore />
+      </section>
     </section>
   );
 }

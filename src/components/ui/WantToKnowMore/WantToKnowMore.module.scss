@@ -1,0 +1,143 @@
+.header {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 16px;
+  color: #000000;
+
+  font-size: 24px;
+  font-family: Lato;
+  font-weight: 600;
+  line-height: 28.8px;
+  text-align: center;
+}
+
+.subtitle {
+  text-align: center;
+  color: #000000;
+  font-size: 16px;
+  font-family: Roboto;
+  font-weight: 300;
+  line-height: 21.12px;
+}
+
+.list {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  /* make snapping easier when scrolling via buttons */
+  scroll-snap-type: x mandatory;
+}
+
+.cardInner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.cardInner > .front,
+.cardInner > .back {
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  box-sizing: border-box;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  text-align: center;
+}
+
+.front {
+  position: relative;
+  background: #fff;
+  border: 1px solid #e6e9ef;
+  transform: rotateY(0deg);
+}
+
+.back {
+  background: #f8fafc;
+  border: 1px solid #e6e9ef;
+  transform: rotateY(180deg);
+}
+
+.isFlipped .cardInner > .front {
+  transform: rotateY(-180deg);
+}
+
+.isFlipped .cardInner > .back {
+  transform: rotateY(0deg);
+}
+
+.itemTitle {
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.itemBody {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.controls {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.item {
+  flex: 0 0 calc((100% - 20px) / 2);
+
+  height: 158px;
+  position: relative;
+  background: #e4e4e4;
+  scroll-snap-align: start;
+}
+
+.arrow {
+  padding: 20px 32px;
+  cursor: pointer;
+  color: #111827;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leftIcon {
+  display: block;
+
+  transform: rotate(180deg);
+  transform-origin: center;
+  color: inherit;
+  stroke: #111827;
+}
+
+.rightIcon {
+  display: block;
+
+  color: inherit;
+  stroke: #111827;
+}
+
+@media (min-width: 640px) {
+}
