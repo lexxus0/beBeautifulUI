@@ -1,3 +1,7 @@
+.wantToKnowMorecontainer {
+  padding: 40px 0;
+}
+
 .header {
   margin-bottom: 16px;
   text-align: center;
@@ -30,7 +34,6 @@
   width: 100%;
   overflow-x: auto;
   scroll-behavior: smooth;
-  /* make snapping easier when scrolling via buttons */
   scroll-snap-type: x mandatory;
 }
 
@@ -138,6 +141,89 @@
   color: inherit;
   stroke: #111827;
 }
+.blogRow {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 32px;
+  gap: 24px;
+}
+.blogLink {
+  display: flex;
+  background: linear-gradient(180deg, #2d2d2d 4%);
+  border-radius: 8px;
+  border-bottom: 0.4px #2d2d2d solid;
+  padding: 8px 16px;
+  color: white;
+  font-size: 18px;
+  font-family: Open Sans;
+  font-weight: 400;
+  line-height: 21.6px;
+  width: 100%;
+  height: 56px;
+  justify-content: center;
+  align-items: center;
+}
+.blogText {
+  text-align: center;
+  color: black;
+  font-size: 16px;
+  font-family: Roboto;
+  font-weight: 300;
+  line-height: 21.12px;
+  word-wrap: break-word;
+}
 
-@media (min-width: 640px) {
+@media (min-width: 744px) {
+  .title {
+    font-size: 28px;
+    line-height: 39.2px;
+    letter-spacing: 0.28px;
+  }
+  .subtitle {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: 0.18px;
+  }
+  .itemTitle {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28.8px;
+  }
+  .item {
+    height: 280px;
+  }
+  .blogRow {
+    flex-direction: column-reverse;
+  }
+  .blogLink {
+    width: 436px;
+  }
+}
+@media (min-width: 1440px) {
+  .wantToKnowMorecontainer {
+    padding: 60px 0;
+  }
+  .title {
+    font-size: 32px;
+    line-height: 48px;
+    letter-spacing: 0.32px;
+  }
+  .subtitle {
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0.4px;
+  }
+  .item {
+    height: 400px;
+  }
+  .blogRow {
+    margin-top: 40px;
+    gap: 37px;
+  }
+  .blogLink {
+    width: 416px;
+  }
 }

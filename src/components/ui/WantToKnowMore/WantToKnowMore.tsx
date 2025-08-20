@@ -2,6 +2,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import styles from "./WantToKnowMore.module.scss";
 import Icon from "@/components/shared/Icon";
+import Link from "next/link";
 
 type Tip = {
   id: number;
@@ -79,7 +80,7 @@ export default function WantToKnowMore(): React.ReactElement {
 
   return (
     <section
-      className={styles.container}
+      className={styles.wantToKnowMorecontainer}
       aria-labelledby="want-to-know-more-title"
     >
       <div className={styles.header}>
@@ -143,6 +144,15 @@ export default function WantToKnowMore(): React.ReactElement {
           </li>
         ))}
       </ul>
+
+      <div className={styles.blogRow}>
+        <Link href="/blog" className={styles.blogLink}>
+          Наш Блог
+        </Link>
+        <p className={styles.blogText}>
+          Ми пишемо про те, що важливо: склад, ритм життя, ритуали.
+        </p>
+      </div>
     </section>
   );
 }
