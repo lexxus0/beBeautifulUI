@@ -2,7 +2,6 @@
 .input {
   --py: 13.5px; /* вертикальні падінги */
   --pl: 48px; /* лівий паддінг (під іконку) */
-  --mb: 24px; /* відступ знизу */
   --ff: var(--font-roboto); /* шрифт */
   --fw: 300; /* font-weight */
   --fs: 16px; /* розмір шрифту */
@@ -14,7 +13,6 @@
   border-bottom: 1px solid var(--color-black-10);
   border-radius: 8px;
   padding: var(--py) 16px var(--py) var(--pl);
-  margin-bottom: var(--mb);
   font-family: var(--ff);
   font-weight: var(--fw);
   font-size: var(--fs);
@@ -25,46 +23,11 @@
   &::placeholder {
     color: var(--ph);
   }
-
-  @media (min-width: 744px) {
-    --mb: 40px;
-  }
-
-  @media (min-width: 1440px) {
-    --mb: 60px;
-  }
-}
-
-/*Відділення*/
-.depart {
-  --mb: 32px;
-
-  @media (min-width: 744px) {
-    --mb: 48px;
-  }
-
-  @media (min-width: 1440px) {
-    --mb: 0;
-  }
-}
-
-/*Вулиця*/
-.street {
-  --mb: 32px;
 }
 
 /*Будинок, квартира*/
 .house {
   --pl: 8px;
-  --mb: 32px;
-
-  @media (min-width: 744px) {
-    --mb: 48px;
-  }
-
-  @media (min-width: 1440px) {
-    --mb: 0;
-  }
 }
 
 .subTabs {

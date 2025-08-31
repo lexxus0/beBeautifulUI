@@ -1,26 +1,60 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Controller, Resolver, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  DeliveryFormValues,
+  schemaDelivery,
+} from "@/validation/deliveryValidation";
 import Icon from "@/components/shared/Icon";
-import PaymentSelect from "../PaymentSelect/PaymentSelect";
+import PaymentSelect, { PaymentChoice } from "../PaymentSelect/PaymentSelect";
 import BasketIcon from "@/components/elements/BasketIcon";
 import styles from "./DeliveryFormMarkup.module.scss";
-import Link from "next/link";
+
 
 export default function DeliveryFormMarkup() {
-  const [deliveryType, setDeliveryType] = useState<"warehouse" | "address">(
-    "warehouse"
-  );
+  const router = useRouter();
   const [showComment, setShowComment] = useState(false);
   const [showCert, setShowCert] = useState(false);
-  const [comment, setComment] = useState("");
-  const [certificate, setCertificate] = useState("");
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<DeliveryFormValues>({
+    resolver: yupResolver(schemaDelivery) as Resolver<DeliveryFormValues>,
+    defaultValues: {
+      city: "",
+      deliveryType: "warehouse",
+      warehouse: "",
+      street: "",
+      house: "",
+      apartment: "",
+      orderComment: "",
+      giftCertificate: "",
+      noCall: false,
+      saveCard: false,
+    },
+    mode: "onTouched",
+  });
+
+  const deliveryType = watch("deliveryType");
+
+  const onSubmit = (data: DeliveryFormValues) => {
+    console.log("data", data);
+    router.push("/payment");
+  };
 
   return (
     <div className="pb-12 md:w-[436px] md:pt-[6px] md:pb-20 lg:w-full lg:pt-9 lg:pb-[100px] mx-auto lg:mr-0">
       <form
         className="lg:flex lg:gap-[134px] justify-end"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="lg:w-[526px]">
           {/* МІСТО */}
@@ -31,23 +65,36 @@ export default function DeliveryFormMarkup() {
             >
               Місто
             </label>
-            <div className="relative">
+            <div className="relative mb-6 md:mb-10 lg:mb-15">
               <input
                 id="city"
-                name="city"
                 type="text"
                 placeholder="Пошук міста"
-                className={styles.input}
                 autoComplete="address-level2"
+                {...register("city")}
+                className={styles.input}
+                aria-invalid={!!errors.city}
               />
               <Icon
                 name="icon-search"
                 className="w-[18px] h-[18px] absolute top-[14px] left-3 fill-transparent stroke-black-10"
               />
+               <button
+                type="button"
+                onClick={() => setValue("city", "")}
+                aria-label="Очистити місто"
+                className="absolute top-[18px] right-9"
+              >
               <Icon
                 name="icon-close"
-                className="w-3 h-3 absolute top-[18px] right-9 fill-transparent stroke-gray-10 rotate-45"
+                className="w-3 h-3 fill-transparent stroke-gray-10 rotate-45"
               />
+              </button>
+            {errors.city && (
+              <p className="mt-1 text-sm text-rose-600">
+                {errors.city.message}
+              </p>
+            )}
             </div>
           </div>
 
@@ -66,10 +113,8 @@ export default function DeliveryFormMarkup() {
               <label className={styles.subTabLabel}>
                 <input
                   type="radio"
-                  name="deliveryType"
                   value="warehouse"
-                  checked={deliveryType === "warehouse"}
-                  onChange={() => setDeliveryType("warehouse")}
+                  {...register("deliveryType")}
                 />
                 <span>Відділення</span>
               </label>
@@ -77,15 +122,16 @@ export default function DeliveryFormMarkup() {
               <label className={styles.subTabLabel}>
                 <input
                   type="radio"
-                  name="deliveryType"
                   value="address"
-                  checked={deliveryType === "address"}
-                  onChange={() => setDeliveryType("address")}
+                  {...register("deliveryType")}
                 />
                 <span>Адресна доставка</span>
               </label>
-            </div>
+            {errors.deliveryType && (
+              <p className="mt-1 text-sm text-rose-600">Оберіть тип доставки</p>
+            )}
           </div>
+            </div>
 
           {/* ВІДДІЛЕННЯ */}
           {deliveryType === "warehouse" && (
@@ -96,48 +142,61 @@ export default function DeliveryFormMarkup() {
               >
                 Відділення
               </label>
-              <div className="relative">
+              <div className="relative mb-8 md:mb-12 lg:mb-0">
                 <input
                   id="warehouse"
-                  name="warehouse"
                   type="text"
                   placeholder="Відділення"
-                  className={`${styles.input} ${styles.depart}`}
                   autoComplete="off"
+                  {...register("warehouse")}
+                  className={styles.input}
+                  aria-invalid={!!errors.warehouse}
                 />
                 <Icon
                   name="icon-search"
                   className="w-[18px] h-[18px] absolute top-[14px] left-3 fill-transparent stroke-black-10"
                 />
+              {errors.warehouse && (
+                <p className="mt-1 text-sm text-rose-600">
+                  {errors.warehouse.message}
+                </p>
+              )}
               </div>
             </div>
           )}
 
           {/* АДРЕСНА ДОСТАВКА */}
           {deliveryType === "address" && (
-            <div className={"styles.blockGroup"}>
+            <div>
               <label
                 htmlFor="street"
                 className="font-roboto font-light text-sm text-gray-10 md:text-base"
               >
                 Вулиця
               </label>
-              <div className="relative">
+              <div className="relative mb-8">
                 <input
                   id="street"
-                  name="street"
                   type="text"
                   placeholder="Вулиця"
-                  className={`${styles.input} ${styles.street}`}
                   autoComplete="address-line1"
+                  {...register("street")}
+                  className={styles.input}
+                  aria-invalid={!!errors.street}
                 />
                 <Icon
                   name="icon-search"
                   className="w-[18px] h-[18px] absolute top-[14px] left-3 fill-transparent stroke-black-10"
                 />
+              {errors.street && (
+                <p className="mt-1 text-sm text-rose-600">
+                  {errors.street.message}
+                </p>
+              )}
               </div>
+
               <div className="flex gap-3">
-                <div className={"styles.col"}>
+                <div className='mb-8 md:mb-12 lg:mb-0'>
                   <label
                     htmlFor="house"
                     className="font-roboto font-light text-sm md:text-base text-gray-10"
@@ -146,14 +205,20 @@ export default function DeliveryFormMarkup() {
                   </label>
                   <input
                     id="house"
-                    name="house"
                     type="text"
                     placeholder="Будинок"
-                    className={`${styles.input} ${styles.house}`}
                     autoComplete="address-line2"
+                    {...register("house")}
+                    className={`${styles.input} ${styles.house}`}
+                    aria-invalid={!!errors.house}
                   />
+                {errors.house && (
+                  <p className="mt-1 text-sm text-rose-600">
+                    {errors.house.message}
+                  </p>
+                )}
                 </div>
-                <div className={"styles.col"}>
+                <div className='mb-8 md:mb-12 lg:mb-0'>
                   <label
                     htmlFor="apartment"
                     className="font-roboto font-light text-sm md:text-base text-gray-10"
@@ -162,20 +227,38 @@ export default function DeliveryFormMarkup() {
                   </label>
                   <input
                     id="apartment"
-                    name="apartment"
                     type="text"
                     placeholder="Квартира"
-                    className={`${styles.input} ${styles.house}`}
                     autoComplete="address-line3"
+                    {...register("apartment")}
+                    className={`${styles.input} ${styles.house}`}
+                    aria-invalid={!!errors.apartment}
                   />
+                  {errors.apartment && (
+                    <p className="mt-1 text-sm text-rose-600">
+                      {errors.apartment.message}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
           )}
         </div>
         <div className="lg:w-[526px]">
+
           {/* ВАРІАНТ ОПЛАТИ */}
-          <PaymentSelect placeholder="Варіант оплати" />
+          <Controller
+            name="payment"
+            control={control}
+            render={({ field, fieldState }) => (
+              <PaymentSelect
+                value={(field.value as PaymentChoice | undefined)}
+                onChange={field.onChange}
+                placeholder="Варіант оплати"
+                error={fieldState.error?.message}
+              />
+            )}
+          />
 
           {/* ДОДАТКОВІ ПОЛЯ */}
           <div className="mb-6 flex flex-col gap-[18px] lg:gap-[26px] lg:mb-11">
@@ -195,11 +278,9 @@ export default function DeliveryFormMarkup() {
             {showComment && (
               <div id="order-comment">
                 <textarea
-                  name="orderComment"
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
                   rows={3}
                   placeholder="Ваш коментар…"
+                  {...register("orderComment")}
                   className="w-full rounded-xl border px-4 py-3 outline-none"
                 />
               </div>
@@ -221,12 +302,9 @@ export default function DeliveryFormMarkup() {
             {showCert && (
               <div id="gift-certificate">
                 <input
-                  name="giftCertificate"
-                  value={certificate}
-                  onChange={(e) => setCertificate(e.target.value)}
+                  {...register("giftCertificate")}
                   placeholder="Номер/код сертифіката"
                   className="w-full rounded-xl border px-4 py-3 outline-none"
-                  required
                 />
               </div>
             )}
@@ -236,8 +314,8 @@ export default function DeliveryFormMarkup() {
             <label className={styles.cb}>
               <input
                 type="checkbox"
-                name="noCall"
                 id="noCall"
+                {...register("noCall")}
                 className={styles.cbNative}
               />
               <span className={styles.cbBox} />
@@ -248,18 +326,18 @@ export default function DeliveryFormMarkup() {
             <label className={styles.cb}>
               <input
                 type="checkbox"
-                name="saveCard"
                 id="saveCard"
+                {...register("saveCard")}
                 className={styles.cbNative}
               />
               <span className={styles.cbBox} />
               <span>Зберегти картку для майбутніх покупок.</span>
             </label>
           </div>
-          <Link href="/payment" className={styles.submit}>
+          <button disabled={isSubmitting} className={styles.submit}>
             Оформити замовлення
             <BasketIcon variant="white" className="w-[18px] h-[18px] ml-4" />
-          </Link>
+          </button>
         </div>
       </form>
     </div>
