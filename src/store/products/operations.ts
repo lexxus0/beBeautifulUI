@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { handleError, instance } from "../init";
-import { IProductResponse } from "@/types/types";
+import { IProduct, IProductResponse } from "@/types/types";
 import axios from "axios";
 
 export const fetchProducts = createAsyncThunk<
@@ -50,3 +50,25 @@ export const fetchProducts = createAsyncThunk<
     }
   }
 );
+
+export const fetchProductsByIds = createAsyncThunk<
+  IProduct[],
+  string[],
+  { rejectValue: string }
+>("products/fetchByIds", async (ids, ThunkAPI) => {
+  try {
+    const responses = await Promise.all(
+      ids.map((id) => instance.get(`/products/${id}`))
+    );
+    const data = responses.map((res) => res.data.data as IProduct);
+
+    return data;
+  } catch (e: unknown) {
+    if (axios.isAxiosError(e) && e.response?.status === 404) {
+      return [];
+    }
+    return ThunkAPI.rejectWithValue(
+      handleError(e, "Failed to fetch recently viewed products")
+    );
+  }
+});
