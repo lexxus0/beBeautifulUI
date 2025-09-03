@@ -3,9 +3,23 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Icon from "@/components/shared/Icon";
 import styles from "./PaymentSelect.module.scss";
 
-type Option = { value: string; label: string; note?: string };
+export type PaymentChoice = "card" | "invoice" | "cod";
+export type PaymentOption = {
+  value: PaymentChoice;
+  label: string;
+  note?: string;
+};
 
-const DEFAULT_OPTIONS: Option[] = [
+type PaymentSelectProps = {
+  value: PaymentChoice | undefined;
+  onChange: (v: PaymentChoice) => void;
+  options?: PaymentOption[];
+  label?: string;
+  placeholder?: string;
+  error?: string;
+};
+
+const DEFAULT_OPTIONS: PaymentOption[] = [
   {
     value: "card",
     label:
@@ -23,29 +37,27 @@ const DEFAULT_OPTIONS: Option[] = [
 ];
 
 export default function PaymentSelect({
-  name = "payment",
+  value,
+  onChange,
   options = DEFAULT_OPTIONS,
-  defaultValue,
   label = "Варіант оплати",
   placeholder = "Варіант оплати",
-}: {
-  name?: string;
-  options?: Option[];
-  defaultValue?: string;
-  label?: string;
-  placeholder: string,
-}) {
+  error,
+}: PaymentSelectProps) {
   const [open, setOpen] = useState<boolean>(false);
-  const [value, setValue] = useState<string>(defaultValue ?? "");
-  const selectedIndex = options.findIndex((o) => o.value === value);
-  const [activeIndex, setActiveIndex] = useState<number>(selectedIndex);
 
   const rootRef = useRef<HTMLDivElement | null>(null);
   const listRef = useRef<HTMLUListElement | null>(null);
 
+  const selectedIndex = options.findIndex((o) => o.value === value);
+
   const selected = useMemo(
-    () => options[selectedIndex],
+    () => (selectedIndex >= 0 ? options[selectedIndex] : undefined),
     [options, selectedIndex]
+  );
+
+  const [activeIndex, setActiveIndex] = useState<number>(
+    Math.max(0, selectedIndex)
   );
 
   // клік поза селектом — закрити
@@ -57,10 +69,9 @@ export default function PaymentSelect({
     return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
-  const openAndFocus = () => {
+const openAndFocus = () => {
     setOpen(true);
-    setActiveIndex(selectedIndex);
-    // трохи часу, щоб UL зʼявився
+    setActiveIndex(selectedIndex >= 0 ? selectedIndex : 0);
     setTimeout(() => listRef.current?.focus(), 0);
   };
 
@@ -72,53 +83,43 @@ export default function PaymentSelect({
   };
 
   const onListKeyDown = (e: React.KeyboardEvent<HTMLUListElement>) => {
-    if (e.key === "Escape") {
-      setOpen(false);
-      return;
-    }
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setActiveIndex((i) => Math.min(options.length - 1, i + 1));
-    }
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setActiveIndex((i) => Math.max(0, i - 1));
-    }
+    if (e.key === "Escape") return setOpen(false);
+    if (e.key === "ArrowDown") { e.preventDefault(); setActiveIndex(i => Math.min(options.length - 1, i + 1)); }
+    if (e.key === "ArrowUp")   { e.preventDefault(); setActiveIndex(i => Math.max(0, i - 1)); }
     if (e.key === "Enter") {
       e.preventDefault();
       const opt = options[activeIndex];
-      if (opt) {
-        setValue(opt.value);
-        setOpen(false);
-      }
+      if (opt) { onChange(opt.value); setOpen(false); }
     }
   };
 
   return (
-    <div ref={rootRef} className="w-full max-w-xl relative">
+    <div ref={rootRef} className="w-full max-w-xl relative mb-[34px] md:mb-[42px] lg:mb-15">
       <label className="mb-[2px] font-roboto font-light text-sm md:text-base text-gray-10">
         {label}
       </label>
-
-      {/* прихований інпут для сабміту форми */}
-      <input type="hidden" name={name} value={value} />
-
-      {/* кнопка-відкривач */}
       <button
         type="button"
         aria-haspopup="listbox"
         aria-expanded={open}
+        {...(error ? { "aria-invalid": true, "aria-describedby": "payment-error" } : {})}
         onClick={() => (open ? setOpen(false) : openAndFocus())}
         onKeyDown={onButtonKeyDown}
         className={styles.input}
       >
         <span className="min-w-0 flex-1 pr-5">
-          <span className="block text-start truncate" title={selected?.label ?? placeholder}>
-          {selected?.label ?? placeholder}
+          <span
+            className="block text-start truncate"
+            title={selected?.label ?? placeholder}
+          >
+            {selected?.label ?? placeholder}
           </span>
         </span>
         <Icon name="icon-arrow-down" className="w-[14px] h-[9px]" />
       </button>
+
+
+      {error && <p id="payment-error" className="mt-1 text-sm text-rose-600">{error}</p>}
 
       {/* випадаючий список */}
       {open && (
@@ -138,7 +139,7 @@ export default function PaymentSelect({
                 aria-selected={isSelected}
                 onMouseEnter={() => setActiveIndex(i)}
                 onClick={() => {
-                  setValue(opt.value);
+                  onChange(opt.value);
                   setOpen(false);
                 }}
                 className={[
