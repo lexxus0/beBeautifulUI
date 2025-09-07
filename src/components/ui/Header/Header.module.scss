@@ -1,13 +1,14 @@
 .header {
-  max-width: 375px;
   padding-inline: 20px;
   margin-inline: auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 
+  @media (max-width: 1439px) {
+    justify-content: space-between;
+  }
+
   @media (min-width: 744px) {
-    max-width: 744px;
     padding-inline: 40px;
   }
 

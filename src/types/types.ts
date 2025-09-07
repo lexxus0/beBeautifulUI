@@ -69,11 +69,16 @@ export type CategoryCardProps = {
 };
 
 export interface IReview {
+  _id: string;
   name: string;
   location: string;
   rating: number;
   comment: string;
   createdAt: string;
+  likes: number;
+  dislikes: number;
+  hasLiked?: boolean;
+  hasDisliked?: boolean;
 }
 
 export interface IReviewResponse {
@@ -129,8 +134,43 @@ export interface TopProduct {
   imageDesktop: string;
 }
 
+export interface IOrder {
+  _id: string;
+  number: string;
+  date: string;
+  status: string;
+  deliveryType: string;
+  paymentType: string;
+  ttn: string;
+  total: string;
+  city: string;
+  branch: string;
+  products: Array<{
+    product: IProduct;
+    quantity: number;
+    selectedVolume: string;
+  }>;
+}
+
 export type BasketIconVariant = "black" | "white";
 
 export interface BasketIconProps extends React.SVGProps<SVGSVGElement> {
   variant?: BasketIconVariant;
+}
+
+export interface BasketItemType {
+  id: number;
+  image: string;
+  titleEn: string;
+  titleUk: string;
+  volume: string;
+  quantity: number;
+  price: number;
+}
+
+export interface ContactInfoInputs {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
 }

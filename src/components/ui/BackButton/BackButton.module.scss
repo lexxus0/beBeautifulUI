@@ -1,0 +1,46 @@
+.backButtonWrapper {
+  border-bottom: 0.2px solid rgba(45, 45, 45, 0.8);
+
+  .backButtonContainer {
+    margin-inline: auto;
+    padding: 16px 20px;
+
+    @media (min-width: 744px) {
+      padding: 16px 40px;
+    }
+
+    @media (min-width: 1440px) {
+      max-width: 1440px;
+      padding: 24px 72px;
+    }
+    .backButton {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+      background: none;
+      font-family: var(--font-roboto);
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 150%;
+      letter-spacing: 0.02em;
+      color: #8d8d8d;
+      transition: color 0.3s ease;
+
+      .icon {
+        width: 16px;
+        height: 16px;
+        transform: rotate(180deg);
+      }
+
+      &:hover {
+        color: #111;
+      }
+
+      @media (min-width: 744px) {
+        font-size: 16px;
+        line-height: 132%;
+      }
+    }
+  }
+}

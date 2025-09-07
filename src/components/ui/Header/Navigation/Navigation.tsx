@@ -3,12 +3,12 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
+import { useHasMounted } from "@/helpers/hooks/useHasMounted";
 import Link from "next/link";
 import BasketIcon from "@/components/elements/BasketIcon";
 
 import styles from "./Navigation.module.scss";
 import clsx from "clsx";
-import { useHasMounted } from "@/helpers/hooks/useHasMounted";
 
 type NavigationProps = {
   onClose?: () => void;
@@ -27,29 +27,28 @@ export default function Navigation({ onClose }: NavigationProps) {
     { href: "/products", label: "Каталог" },
     { href: "/aboutus", label: "Про нас" },
     { href: "/blog", label: "Блог" },
-    { href: "/book", label: "Книга рецепців" },
+    // { href: "/book", label: "Книга рецепців" },
   ];
 
-  const isAuthPage = pathname === "/login" || pathname === "/register";
   return (
     <ul className={styles.nav}>
       {links.map((link) => (
         <li
           key={link.href}
           className={buildCssClasses({
-            isActive: !isAuthPage && pathname === link.href,
+            isActive: pathname === link.href,
           })}
         >
-          <Link href={link.href} onClick={onClose}>
+          <Link href={link.href} onClick={onClose} className="flex">
             {link.label}
           </Link>
         </li>
       ))}
       <li>
         {hasMounted && !isLoggenIn && (
-          <button type="button" onClick={()=>{}} className="hidden lg:block lg:w-8 lg:h-8">
+          <Link href="/basket" className="hidden lg:block lg:w-8 lg:h-8">
             <BasketIcon className="lg:w-8 lg:h-8" />
-          </button>
+          </Link>
         )}
       </li>
     </ul>

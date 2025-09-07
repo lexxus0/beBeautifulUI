@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { useAppSelector } from "@/store/hooks";
-import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
-import { useHasMounted } from "@/helpers/hooks/useHasMounted";
+import { selectIsLoggedIn } from "@/store/auth/selectors";
+import Link from "next/link";
 import Icon from "@/components/shared/Icon";
 import Navigation from "./Navigation/Navigation";
 import MobileMenu from "./MobileMenu/MobileMenu";
@@ -16,21 +16,20 @@ import UserMenu from "./UserMenu/UserMenu";
 import styles from "./Header.module.scss";
 
 export default function Header() {
-  const hasMounted = useHasMounted();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  const user = useAppSelector(selectUser);
-  console.log("user: ", user);
-  console.log("isLoggedIn", isLoggedIn);
+  // const user = useAppSelector(selectUser);
+  // console.log("user: ", user);
+  // console.log("isLoggedIn", isLoggedIn);
 
   const [menu, setMenu] = useState(false);
 
-  if (!hasMounted) return null;
-
   return (
-    <header className="bg-gray lg:bg-white-20">
+    <header className="bg-gray shadow-[0_2px_8px_0_rgba(45,45,45,0.24)] lg:bg-white-20">
       <div className={styles.header}>
-        <Logo className="w-15 h-15 lg:w-20 lg:h-20" />
-        <div className="hidden lg:block">
+        <Link href="/">
+          <Logo className="w-15 h-15 lg:w-20 lg:h-20 lg:mr-[142px]" />
+        </Link>
+        <div className="hidden lg:block lg:mr-auto">
           <Navigation />
         </div>
         <div className={styles.wrapperNav}>
@@ -44,13 +43,12 @@ export default function Header() {
               <UserIcon className="hidden lg:flex" />
             </div>
           )}
-          <button
-            type="button"
-            onClick={() => {}}
+          <Link
+            href="/basket"
             className="w-9 h-9 flex items-center justify-center lg:hidden"
           >
             <BasketIcon className="w-6 h-6" />
-          </button>
+          </Link>
           <button
             type="button"
             className="w-10 h-10 flex items-center justify-center lg:hidden"

@@ -11,6 +11,11 @@ export const registerUser = createAsyncThunk<IUserResponse, IUser>(
       setAuthHeader(res.data.data.token);
       return res.data.data;
     } catch (e) {
+      if (typeof e === "object" && e !== null && "response" in e) {
+        const err = e as { response: { status: number; data: unknown } };
+        console.error("Status:", err.response.status);
+        console.error("Response data:", err.response.data);
+      }
       return rejectWithValue(handleError(e, "Failed to register."));
     }
   }

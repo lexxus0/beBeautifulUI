@@ -1,6 +1,5 @@
 "use client";
 
-// import Icon from "@/components/elements/Icon";
 import styles from "./TopProducts.module.scss";
 import Link from "next/link";
 import products from "./topProducts.json";
@@ -50,7 +49,7 @@ const TopProducts: React.FC = () => {
                     className={styles.cartBtn}
                     aria-label="Додати в кошик"
                   >
-                    <BasketIcon className={styles.icon} />
+                    <BasketIcon variant="white" className={styles.icon} />
                   </button>
                 </div>
               </article>

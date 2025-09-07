@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchReviews } from "./operations";
+import { fetchReviews, reactToReview } from "./operations";
 import { IReview, IReviewResponse } from "@/types/types";
 import { handlePending, handleRejected } from "../init";
 
@@ -45,6 +45,29 @@ const productSlice = createSlice({
       )
       .addCase(fetchReviews.rejected, (state, action) => {
         handleRejected(state, action);
+      })
+      .addCase(reactToReview.fulfilled, (state, action) => {
+        const { id, type } = action.payload;
+        const review = state.reviews.find((r) => r._id === id);
+        if (review) {
+          if (type === "like") {
+            if (review.hasDisliked) {
+              review.dislikes -= 1;
+              review.hasDisliked = false;
+            }
+
+            review.likes += 1;
+            review.hasLiked = true;
+          } else if (type === "dislike") {
+            if (review.hasLiked) {
+              review.likes -= 1;
+              review.hasLiked = false;
+            }
+
+            review.dislikes += 1;
+            review.hasDisliked = true;
+          }
+        }
       });
   },
 });

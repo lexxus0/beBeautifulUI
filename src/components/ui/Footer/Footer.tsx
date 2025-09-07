@@ -8,7 +8,7 @@ const navData = [
   ["Каталог", "/products"],
   ["Блог", "/blog"],
   ["Книга", "/book"],
-  ["Доставка", "/delivery"],
+  ["Оплата і доставка", "/pay-and-delivery"],
   ["Подарункові сертифікати", "/certificates"],
   ["FAQ", "/faq"],
   ["Контакти", "/contacts"],
@@ -44,12 +44,12 @@ const Footer: React.FC = () => {
               <ul className={styles.socials}>
                 <li>
                   <a
-                    href="https://www.facebook.com"
+                    href="https://telegram.org"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.socialLink}
                   >
-                    <Icon name="icon-facebook" className={styles.iconSocials} />
+                    <Icon name="icon-telegram" className={styles.iconSocials} />
                   </a>
                 </li>
                 <li>
@@ -63,16 +63,6 @@ const Footer: React.FC = () => {
                       name="icon-instagram"
                       className={styles.iconSocials}
                     />
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://www.linkedin.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.socialLink}
-                  >
-                    <Icon name="icon-linkedin" className={styles.iconSocials} />
                   </a>
                 </li>
               </ul>
