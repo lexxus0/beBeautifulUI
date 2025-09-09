@@ -1,0 +1,12 @@
+.items {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    margin-bottom: 24px;
+
+    @media (min-width: 744px) {
+    }
+
+    @media (min-width: 1440px) {
+    }
+  }

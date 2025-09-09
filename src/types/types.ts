@@ -174,3 +174,10 @@ export interface ContactInfoInputs {
   phone: string;
   email: string;
 }
+
+export interface BasketItemsListProps {
+  basketItems: BasketItemType[];
+  onIncrement: (id: number) => void;
+  onDecrement: (id: number) => void;
+  onRemove: (id: number) => void;
+}
