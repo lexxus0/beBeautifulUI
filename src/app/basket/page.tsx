@@ -1,16 +1,16 @@
 "use client";
 
+import React, { useState, useMemo } from "react";
 import styles from "./Basket.module.scss";
-import BasketItem from "@/components/ui/BasketItem/BasketItem";
 import { BasketItemType } from "@/types/types";
 import Link from "next/link";
 import rawData from "./basket.json";
-import { useState, useMemo } from "react";
 import BasketIcon from "@/components/elements/BasketIcon";
 import RecommendedProducts from "@/components/ui/RecommendedProducts/RecommendedProducts";
 import BackButton from "@/components/ui/BackButton/BackButton";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
+import BasketItemsList from "@/components/ui/BasketItemsList/BasketItemsList"; // Імпортуємо компонент
 
 const BasketPage = () => {
   const [basketItems, setBasketItems] = useState<BasketItemType[]>(rawData);
@@ -51,17 +51,14 @@ const BasketPage = () => {
         <div className={styles.basketPage}>
           <div className={styles.basket}>
             <h1 className={styles.title}>Кошик</h1>
-            <div className={styles.items}>
-              {basketItems.map((item) => (
-                <BasketItem
-                  key={item.id}
-                  item={item}
-                  onIncrement={() => handleIncrement(item.id)}
-                  onDecrement={() => handleDecrement(item.id)}
-                  onRemove={() => handleRemove(item.id)}
-                />
-              ))}
-            </div>
+
+            <BasketItemsList
+              basketItems={basketItems}
+              onIncrement={handleIncrement}
+              onDecrement={handleDecrement}
+              onRemove={handleRemove}
+            />
+
             <hr className={styles.divider} />
             <div className={styles.total}>
               <span>Загальна сума:</span>
