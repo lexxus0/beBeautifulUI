@@ -78,7 +78,7 @@ export default function Filter() {
   };
 
   return (
-    <div className="relative flex flex-col gap-4 mb-8">
+    <div className="relative flex flex-col gap-4 mb-8 mt-5 lg:mt-10">
       <div className="flex flex-wrap items-center justify-between gap-4 md:flex-row-reverse">
         <div className="relative">
           <input
@@ -151,6 +151,7 @@ export default function Filter() {
                   ...base,
                   height: 44,
                   minHeight: 35,
+                  border: '0.4px solid #2d2d2d'
                 }),
               }}
               isClearable
@@ -190,6 +191,7 @@ export default function Filter() {
                   ...base,
                   height: 44,
                   minHeight: 35,
+                  border: '0.4px solid #2d2d2d'
                 }),
               }}
               onChange={(option) => {
