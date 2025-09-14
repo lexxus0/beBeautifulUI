@@ -1,0 +1,10 @@
+[33m0867d90[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32morigin/reviews_modal[m[33m, [m[1;31morigin/origin/reviews_modal[m[33m)[m Merge branch 'main' into origin/reviews_modal
+[33me3d800b[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Merge pull request #48
+[33m48188b0[m[33m ([m[1;31morigin/header[m[33m)[m upadate not-found.tsx
+[33m90adf0e[m fix DeliveryForm
+[33mf9e6a80[m Create deliveryValidation.ts
+[33maeac19f[m Merge pull request #46 from lexxus0/deploy
+[33mf789deb[m[33m ([m[1;31morigin/deploy[m[33m)[m create vercel.json
+[33m2d403c5[m Merge pull request #45 from lexxus0/header
+[33md96b592[m Merge pull request #43 from lexxus0/homePage
+[33m052f24b[m Merge pull request #44 from lexxus0/product-details-fix
