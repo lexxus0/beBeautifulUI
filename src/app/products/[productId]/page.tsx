@@ -7,6 +7,7 @@ import css from "./page.module.css";
 import BrandPhilosophy from "@/components/ui/BrandPhilosophy/BrandPhilosophy";
 import VisitedProduct from "./VisitedProduct";
 import WantToKnowMore from "@/components/ui/WantToKnowMore/WantToKnowMore";
+import RecentlyViewed from "@/components/ui/RecentlyViewed/RecentlyViewed";
 
 const getProductById = async (id: string): Promise<IProduct> => {
   const res = await fetch(
@@ -48,6 +49,20 @@ export default async function ProductDetails({
       <section>
         <WantToKnowMore />
       </section>
+        <div className={css.description}>
+          <ProductDescription product={product} />
+        </div>
+        <div className={css.actions}>
+          <ProductActions product={product} />
+        </div>
+      </div>
+      <div className={css.fullWidthWrapper}>
+        <BrandPhilosophy dynamicText="Цей шампунь — як свіже «доброго ранку» собі. І як щоденне нагадування: ти — варта найкращого." />
+      </div>
+
+
+{/* нещодавно переглянуті */}
+      <RecentlyViewed />
     </section>
   );
 }
