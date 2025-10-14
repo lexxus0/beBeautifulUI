@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
-import Loader from "../ui/Loader";
+import Loader from "@/components/ui/Loader/Loader";
 
 export default function ProtectedPage({ children }: { children: React.ReactNode }) {
     const router = useRouter();
