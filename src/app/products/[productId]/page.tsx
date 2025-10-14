@@ -43,9 +43,6 @@ export default async function ProductDetails({
       <div className={css.fullWidthWrapper}>
         <BrandPhilosophy dynamicText="Цей шампунь — як свіже «доброго ранку» собі. І як щоденне нагадування: ти — варта найкращого." />
       </div>
-
-
-{/* нещодавно переглянуті */}
       <RecentlyViewed />
     </section>
   );
