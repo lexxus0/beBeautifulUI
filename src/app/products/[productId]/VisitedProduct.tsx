@@ -7,16 +7,22 @@ export default function VisitedProduct({ productId }: { productId: string }) {
     if (!productId) return;
 
     const stored = localStorage.getItem("visitedProducts");
-    const visited: string[] = stored ? JSON.parse(stored) : [];
+    let visited: string[] = stored ? JSON.parse(stored) : [];
 
-    // новий масив: спочатку новий id, потім решта без дубліката
-    const updated = [productId, ...visited.filter((id) => id !== productId)];
+    visited = visited.filter((id) => id !== productId);
+    localStorage.setItem("visitedProducts", JSON.stringify(visited));
 
-    // максимум 10
-    localStorage.setItem(
-      "visitedProducts",
-      JSON.stringify(updated.slice(0, 10))
-    );
+    return () => {
+      const storedAgain = localStorage.getItem('visitedProducts');
+      const current: string[] = storedAgain ? JSON.parse(storedAgain) : [];
+      
+      const updated = [productId, ...current.filter((id) => id !== productId)];
+    
+      localStorage.setItem(
+        "visitedProducts",
+        JSON.stringify(updated.slice(0, 10))
+      );
+    }
   }, [productId]);
 
   return null;
