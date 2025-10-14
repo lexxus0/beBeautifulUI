@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Controller, Resolver, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,19 +12,61 @@ import Icon from "@/components/shared/Icon";
 import PaymentSelect, { PaymentChoice } from "../PaymentSelect/PaymentSelect";
 import BasketIcon from "@/components/elements/BasketIcon";
 import styles from "./DeliveryFormMarkup.module.scss";
+import BaseSelect from "@/components/elements/BaseSelect";
 
+type City = {
+  CityID: string;
+  Description: string;
+};
+
+type Warehouse = {
+  SiteKey: string;
+  Description: string;
+};
 
 export default function DeliveryFormMarkup() {
   const router = useRouter();
+  const [cities, setCities] = useState<City[]>([]);
+  const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
+  const [selectedCity, setSelectedCity] = useState<string>("");
+  console.log('selectedCity: ', selectedCity);
+  const [selectedWarehouse, setSelectedWarehouse] = useState<string>("");
   const [showComment, setShowComment] = useState(false);
   const [showCert, setShowCert] = useState(false);
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      const res = await fetch(
+        "https://be-beautiful-backend.onrender.com/api/np/cities"
+      );
+      const json = await res.json();
+      console.log('city: ', json);
+      setCities(json.data);
+    };
+    fetchCities();
+  }, []);
+
+  useEffect(() => {
+    console.log("🌀 useEffect triggered with:", selectedCity);
+    if (!selectedCity) return;
+    const fetchWarehouses = async () => {
+          console.log("🚀 Fetching warehouses for city:", selectedCity);
+      const res = await fetch(
+        `https://be-beautiful-backend.onrender.com/api/np/warehouses/${selectedCity}`
+      );
+      const json = await res.json();
+      console.log('deliv: ', json.data);
+      setWarehouses(json.data);
+    };
+    fetchWarehouses();
+  }, [selectedCity]);
 
   const {
     register,
     control,
     handleSubmit,
     watch,
-    setValue,
+    // setValue,
     formState: { errors, isSubmitting },
   } = useForm<DeliveryFormValues>({
     resolver: yupResolver(schemaDelivery) as Resolver<DeliveryFormValues>,
@@ -58,51 +100,20 @@ export default function DeliveryFormMarkup() {
       >
         <div className="lg:w-[526px]">
           {/* МІСТО */}
-          <div>
-            <label
-              htmlFor="city"
-              className="font-roboto font-light text-sm md:text-base"
-            >
-              Місто
-            </label>
-            <div className="relative mb-6 md:mb-10 lg:mb-15">
-              <input
-                id="city"
-                type="text"
-                placeholder="Пошук міста"
-                autoComplete="address-level2"
-                {...register("city")}
-                className={styles.input}
-                aria-invalid={!!errors.city}
-              />
-              <Icon
-                name="icon-search"
-                className="w-[18px] h-[18px] absolute top-[14px] left-3 fill-transparent stroke-black-10"
-              />
-               <button
-                type="button"
-                onClick={() => setValue("city", "")}
-                aria-label="Очистити місто"
-                className="absolute top-[18px] right-9"
-              >
-              <Icon
-                name="icon-close"
-                className="w-3 h-3 fill-transparent stroke-gray-10 rotate-45"
-              />
-              </button>
-            {errors.city && (
-              <p className="mt-1 text-sm text-rose-600">
-                {errors.city.message}
-              </p>
-            )}
-            </div>
-          </div>
-
-          <div className="border border-black-10 rounded-md p-1 mb-6 md:p-2 md:mb-10 lg:mb-15">
-            <div className="bg-black-10 rounded-lg p-2 font-lato font- text-base text-white text-center md:p-4 md:font-normal md:text-lg">
-              Нова пошта
-            </div>
-          </div>
+          <BaseSelect
+            label="Місто"
+            placeholder="Пошук міста"
+            options={cities.map((c) => ({
+              value: c.CityID,
+              label: c.Description,
+            }))}
+            value={selectedCity}
+            onSelect={setSelectedCity}
+            iconLeft="icon-search"
+            iconRight="icon-arrow-down"
+            searchable
+            className="font-roboto font-light text-base "
+          />
 
           {/* ТАБИ: ВІДДІЛЕННЯ / АДРЕСНА ДОСТАВКА */}
           <div className="pt-10 relative md:pt-0">
@@ -127,42 +138,30 @@ export default function DeliveryFormMarkup() {
                 />
                 <span>Адресна доставка</span>
               </label>
-            {errors.deliveryType && (
-              <p className="mt-1 text-sm text-rose-600">Оберіть тип доставки</p>
-            )}
-          </div>
+              {errors.deliveryType && (
+                <p className="mt-1 text-sm text-rose-600">
+                  Оберіть тип доставки
+                </p>
+              )}
             </div>
+          </div>
 
           {/* ВІДДІЛЕННЯ */}
           {deliveryType === "warehouse" && (
-            <div>
-              <label
-                htmlFor="warehouse"
-                className="font-roboto font-light text-sm text-gray-10 md:text-base"
-              >
-                Відділення
-              </label>
-              <div className="relative mb-8 md:mb-12 lg:mb-0">
-                <input
-                  id="warehouse"
-                  type="text"
-                  placeholder="Відділення"
-                  autoComplete="off"
-                  {...register("warehouse")}
-                  className={styles.input}
-                  aria-invalid={!!errors.warehouse}
-                />
-                <Icon
-                  name="icon-search"
-                  className="w-[18px] h-[18px] absolute top-[14px] left-3 fill-transparent stroke-black-10"
-                />
-              {errors.warehouse && (
-                <p className="mt-1 text-sm text-rose-600">
-                  {errors.warehouse.message}
-                </p>
-              )}
-              </div>
-            </div>
+            <BaseSelect
+              label="Відділення"
+              placeholder="Відділення"
+              options={warehouses.map((w) => ({
+                value: w.SiteKey,
+                label: w.Description,
+              }))}
+              value={selectedWarehouse}
+              onSelect={setSelectedWarehouse}
+              iconLeft="icon-search"
+              iconRight="icon-arrow-down"
+              searchable
+              className="font-roboto font-light text-base"
+            />
           )}
 
           {/* АДРЕСНА ДОСТАВКА */}
@@ -188,15 +187,15 @@ export default function DeliveryFormMarkup() {
                   name="icon-search"
                   className="w-[18px] h-[18px] absolute top-[14px] left-3 fill-transparent stroke-black-10"
                 />
-              {errors.street && (
-                <p className="mt-1 text-sm text-rose-600">
-                  {errors.street.message}
-                </p>
-              )}
+                {errors.street && (
+                  <p className="mt-1 text-sm text-rose-600">
+                    {errors.street.message}
+                  </p>
+                )}
               </div>
 
               <div className="flex gap-3">
-                <div className='mb-8 md:mb-12 lg:mb-0'>
+                <div className="mb-8 md:mb-12 lg:mb-0">
                   <label
                     htmlFor="house"
                     className="font-roboto font-light text-sm md:text-base text-gray-10"
@@ -212,13 +211,13 @@ export default function DeliveryFormMarkup() {
                     className={`${styles.input} ${styles.house}`}
                     aria-invalid={!!errors.house}
                   />
-                {errors.house && (
-                  <p className="mt-1 text-sm text-rose-600">
-                    {errors.house.message}
-                  </p>
-                )}
+                  {errors.house && (
+                    <p className="mt-1 text-sm text-rose-600">
+                      {errors.house.message}
+                    </p>
+                  )}
                 </div>
-                <div className='mb-8 md:mb-12 lg:mb-0'>
+                <div className="mb-8 md:mb-12 lg:mb-0">
                   <label
                     htmlFor="apartment"
                     className="font-roboto font-light text-sm md:text-base text-gray-10"
@@ -245,14 +244,13 @@ export default function DeliveryFormMarkup() {
           )}
         </div>
         <div className="lg:w-[526px]">
-
           {/* ВАРІАНТ ОПЛАТИ */}
           <Controller
             name="payment"
             control={control}
             render={({ field, fieldState }) => (
               <PaymentSelect
-                value={(field.value as PaymentChoice | undefined)}
+                value={field.value as PaymentChoice | undefined}
                 onChange={field.onChange}
                 placeholder="Варіант оплати"
                 error={fieldState.error?.message}
