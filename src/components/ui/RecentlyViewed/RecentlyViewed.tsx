@@ -5,13 +5,14 @@ import { selectRecentlyViewed } from "@/store/products/selectors";
 import { fetchProductsByIds } from "@/store/products/operations";
 import { IProduct } from "@/types/types";
 import Icon from "@/components/shared/Icon";
+import ProductImage from "@/components/elements/ProductImage";
+import ProductRating from "../ProductRating/ProductRating";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import styles from "./RecentlyViewed.module.scss";
-import ProductImage from "@/components/elements/ProductImage";
 
 export default function RecentlyViewed() {
   const dispatch = useAppDispatch();
@@ -76,13 +77,16 @@ export default function RecentlyViewed() {
             <div className="flex flex-col items-center">
               <ProductImage product={product} className="relative w-[130px] h-[130px] sm:w-[158px] sm:h-[158px] md:w-[208px] md:h-[272px] lg:w-[268px] lg:h-[306px] mb-2 object-cover"/>
               <div className="flex flex-col items-center">
-                <p className="font-lato font-bold text-lg lg:font-semibold lg:text-2xl text-center mb-[2px] text-black">
+                <div className="h-18 mb-2 md:mb-7 flex flex-col gap-[2px] items-center">
+                <p className="font-lato font-bold text-lg lg:font-semibold lg:text-2xl text-center text-black">
                   {product.name}
                 </p>
-                <p className="font-roboto font-light text-sm lg:text-lg mb-2 capitalize text-black">
+                <p className="font-roboto font-light text-sm lg:text-lgcapitalize text-black">
                   {product.category}
                 </p>
-                <p className="font-lat text-lg lg:font-semibold lg:text-xl text-black">
+                </div>
+                <ProductRating value={3.3} />
+                <p className="font-lat text-lg lg:font-semibold lg:text-xl text-black mt-4">
                   {product.priceByVolume[0].price} грн
                 </p>
               </div>

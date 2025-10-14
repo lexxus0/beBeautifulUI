@@ -47,19 +47,11 @@ export default async function ProductDetails({
         </div>
       </section>
       <section>
+      <RecentlyViewed />
+      </section>
+      <section>
         <WantToKnowMore />
       </section>
-        <div className={css.description}>
-          <ProductDescription product={product} />
-        </div>
-        <div className={css.actions}>
-          <ProductActions product={product} />
-        </div>
-      </div>
-      <div className={css.fullWidthWrapper}>
-        <BrandPhilosophy dynamicText="Цей шампунь — як свіже «доброго ранку» собі. І як щоденне нагадування: ти — варта найкращого." />
-      </div>
-      <RecentlyViewed />
     </section>
   );
 }
