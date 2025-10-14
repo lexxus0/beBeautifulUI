@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Icon from "@/components/shared/Icon";
-import styles from "./Rate.module.css";
+import styles from "./RatingInput.module.css";
 
-const Rate = () => {
+const RatingInput = () => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
 
@@ -27,4 +27,4 @@ const Rate = () => {
   );
 };
 
-export default Rate;
+export default RatingInput;
