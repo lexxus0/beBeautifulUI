@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { refreshAndLoadUser } from "@/store/auth/operations";
 import Loader from "@/components/ui/Loader/Loader";
 import { usePathname } from "next/navigation";
+import { Toaster } from "react-hot-toast";
 
 // export const metadata: Metadata = {
 //   title: "Science Be Beautiful",
@@ -89,6 +90,7 @@ export default function RootLayout({
           </Providers>
         </div>
         <ScrollToTop />
+         <Toaster position="top-right" reverseOrder={false} />
         {loading && <Loader />}
       </body>
     </html>
