@@ -16,7 +16,22 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "i.ibb.co",
-        pathname: "/**", // додай, якщо хочеш дозволити всі шляхи
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "example.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "be-beautiful-backend.onrender.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "example.com",
+        pathname: "/**",
       },
     ],
   },
