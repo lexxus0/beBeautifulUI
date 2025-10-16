@@ -29,44 +29,17 @@ export default function DeliveryFormMarkup() {
   const [cities, setCities] = useState<City[]>([]);
   const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
   const [selectedCity, setSelectedCity] = useState<string>("");
-  console.log('selectedCity: ', selectedCity);
+  console.log("selectedCity: ", selectedCity);
   const [selectedWarehouse, setSelectedWarehouse] = useState<string>("");
   const [showComment, setShowComment] = useState(false);
   const [showCert, setShowCert] = useState(false);
-
-  useEffect(() => {
-    const fetchCities = async () => {
-      const res = await fetch(
-        "https://be-beautiful-backend.onrender.com/api/np/cities"
-      );
-      const json = await res.json();
-      console.log('city: ', json);
-      setCities(json.data);
-    };
-    fetchCities();
-  }, []);
-
-  useEffect(() => {
-    console.log("🌀 useEffect triggered with:", selectedCity);
-    if (!selectedCity) return;
-    const fetchWarehouses = async () => {
-          console.log("🚀 Fetching warehouses for city:", selectedCity);
-      const res = await fetch(
-        `https://be-beautiful-backend.onrender.com/api/np/warehouses/${selectedCity}`
-      );
-      const json = await res.json();
-      console.log('deliv: ', json.data);
-      setWarehouses(json.data);
-    };
-    fetchWarehouses();
-  }, [selectedCity]);
 
   const {
     register,
     control,
     handleSubmit,
     watch,
-    // setValue,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<DeliveryFormValues>({
     resolver: yupResolver(schemaDelivery) as Resolver<DeliveryFormValues>,
@@ -79,13 +52,66 @@ export default function DeliveryFormMarkup() {
       apartment: "",
       orderComment: "",
       giftCertificate: "",
-      noCall: false,
+      // noCall: false,
       saveCard: false,
     },
     mode: "onTouched",
   });
 
   const deliveryType = watch("deliveryType");
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const res = await fetch(
+          "https://be-beautiful-backend.onrender.com/api/np/cities"
+        );
+        const json = await res.json();
+        console.log("city: ", json);
+        setCities(json.data);
+      } catch (err) {
+        console.error("❌ error fetching cities:", err);
+      }
+    };
+    fetchCities();
+  }, []);
+
+  useEffect(() => {
+    // console.log("🌀 useEffect triggered with:", selectedCity);
+    if (!selectedCity) {
+      setWarehouses([]);
+      return;
+    }
+
+    const fetchWarehouses = async () => {
+      try {
+        console.log("🚀 Fetching warehouses for city:", selectedCity);
+        const res = await fetch(
+          `https://be-beautiful-backend.onrender.com/api/np/warehouses/${selectedCity}`
+        );
+        const json = await res.json();
+        console.log("warehouses: ", json.data);
+        setWarehouses(json.data);
+      } catch (err) {
+        console.error("❌ error fetching warehouses:", err);
+      }
+    };
+    fetchWarehouses();
+  }, [selectedCity]);
+
+    // --- SYNC city & warehouse with react-hook-form ---
+    useEffect(() => {
+      if (selectedCity) {
+        const found = cities.find((c) => c.CityID === selectedCity);
+        setValue("city", found ? found.Description : "");
+      } else {
+        setValue("city", "");
+      }
+    }, [selectedCity, cities, setValue]);
+  
+    useEffect(() => {
+      setValue("warehouse", selectedWarehouse || "");
+    }, [selectedWarehouse, setValue]);
 
   const onSubmit = (data: DeliveryFormValues) => {
     console.log("data", data);
@@ -112,7 +138,7 @@ export default function DeliveryFormMarkup() {
             iconLeft="icon-search"
             iconRight="icon-arrow-down"
             searchable
-            className="font-roboto font-light text-base "
+            className="font-roboto font-light text-base"
           />
 
           {/* ТАБИ: ВІДДІЛЕННЯ / АДРЕСНА ДОСТАВКА */}
@@ -309,7 +335,7 @@ export default function DeliveryFormMarkup() {
           </div>
 
           <div className="flex flex-col gap-4 mb-10 lg:mb-[70px] pl-1 lg:pl-[6px]">
-            <label className={styles.cb}>
+            {/* <label className={styles.cb}>
               <input
                 type="checkbox"
                 id="noCall"
@@ -320,7 +346,7 @@ export default function DeliveryFormMarkup() {
               <span>
                 Мені можна не телефонувати для підтвердження замовлення.
               </span>
-            </label>
+            </label> */}
             <label className={styles.cb}>
               <input
                 type="checkbox"
