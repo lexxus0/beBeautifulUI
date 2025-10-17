@@ -45,9 +45,12 @@ export default function Header() {
           )}
           <Link
             href="/basket"
-            className="w-9 h-9 flex items-center justify-center lg:hidden"
+            className="w-9 h-9 flex items-center justify-center lg:hidden relative"
           >
             <BasketIcon className="w-6 h-6" />
+            <div className="absolute top-[3px] -right-[2px] flex items-center justify-center bg-white-20 w-[14px] h-[14px] rounded-3xl border-1 border-black-10">
+              <p className="font-lato text-[10px]">2</p>
+            </div>
           </Link>
           <button
             type="button"
