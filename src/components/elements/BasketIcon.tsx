@@ -42,18 +42,6 @@ export default function BasketIcon({ variant = "black", ...props }: BasketIconPr
       </g>
       <defs>
         <linearGradient
-          id={paint0Id}
-          x1="11.374"
-          x2="21.626"
-          y1="17"
-          y2="28"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop />
-          <stop offset="0.515" stopColor="#fff" />
-          <stop offset="1" />
-        </linearGradient>
-        <linearGradient
           id={paint1Id}
           x1="0"
           x2="32"
