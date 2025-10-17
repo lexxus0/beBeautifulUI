@@ -7,8 +7,6 @@ import ProductHeader from "@/components/ui/ProductHeader/ProductHeader";
 import { IProduct } from "@/types/types";
 import css from "./page.module.css";
 import BrandPhilosophy from "@/components/ui/BrandPhilosophy/BrandPhilosophy";
-import WantToKnowMore from "@/components/ui/WantToKnowMore/WantToKnowMore";
-import RecentlyViewed from "@/components/ui/RecentlyViewed/RecentlyViewed";
 import VisitedProduct from '@/app/products/[productId]/VisitedProduct';
 
 const getProductById = async (id: string): Promise<IProduct> => {
@@ -60,12 +58,6 @@ const Product = ({productId}: {productId: string}) => {
       :
       <span>some problems...</span>
     }
-      <section>
-      <RecentlyViewed />
-      </section>
-      <section>
-        <WantToKnowMore />
-      </section>
     </section>
   );
 }
