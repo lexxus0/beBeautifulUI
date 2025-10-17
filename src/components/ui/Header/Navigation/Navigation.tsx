@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
-import { usePathname } from "next/navigation";
+import React, { useCallback } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
 import { useHasMounted } from "@/helpers/hooks/useHasMounted";
@@ -20,15 +20,30 @@ const buildCssClasses = ({ isActive }: { isActive: boolean }) =>
 export default function Navigation({ onClose }: NavigationProps) {
   const hasMounted = useHasMounted();
   const pathname = usePathname();
+  const router = useRouter();
   const isLoggenIn = useAppSelector(selectIsLoggedIn);
 
   const links = [
     { href: "/", label: "Головна" },
     { href: "/products", label: "Каталог" },
-    { href: "/aboutus", label: "Про нас" },
+    { href: "/#history", label: "Про нас" },
     { href: "/blog", label: "Блог" },
-    // { href: "/book", label: "Книга рецепців" },
   ];
+
+  const handleLinkClick = useCallback(
+    (href: string) => {
+      onClose?.();
+
+      if (href.startsWith("/#")) {
+        const id = href.split("#")[1];
+        sessionStorage.setItem("scrollTo", id);
+        router.push("/");
+      } else {
+        router.push(href);
+      }
+    },
+    [router, onClose]
+  );
 
   return (
     <ul className={styles.nav}>
@@ -39,7 +54,7 @@ export default function Navigation({ onClose }: NavigationProps) {
             isActive: pathname === link.href,
           })}
         >
-          <Link href={link.href} onClick={onClose} className="flex">
+          <Link href={link.href} onClick={() => handleLinkClick(link.href)} className="flex">
             {link.label}
           </Link>
         </li>
