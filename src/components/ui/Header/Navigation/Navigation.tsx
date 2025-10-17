@@ -54,15 +54,25 @@ export default function Navigation({ onClose }: NavigationProps) {
             isActive: pathname === link.href,
           })}
         >
-          <Link href={link.href} onClick={() => handleLinkClick(link.href)} className="flex">
+          <Link
+            href={link.href}
+            onClick={() => handleLinkClick(link.href)}
+            className="flex"
+          >
             {link.label}
           </Link>
         </li>
       ))}
       <li>
         {hasMounted && !isLoggenIn && (
-          <Link href="/basket" className="hidden lg:block lg:w-8 lg:h-8">
+          <Link
+            href="/basket"
+            className="hidden lg:block lg:w-8 lg:h-8 relative"
+          >
             <BasketIcon className="lg:w-8 lg:h-8" />
+            <div className="absolute -top-[2px] -right-2 flex items-center justify-center bg-white-20 w-4 h-4 rounded-3xl border-1 border-black-10">
+              <p className="font-lato text-[10px]">2</p>
+            </div>
           </Link>
         )}
       </li>
