@@ -50,11 +50,11 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
 
   return (
     <div className={styles.wrapper} ref={wrapperRef}>
-      <LangSwitcher className="hidden lg:block mr-6" />
-      <Link
-        href="/basket"
-        className="hidden lg:w-8 lg:h-8 lg:block lg:mr-8 relative"
-      >
+      <LangSwitcher className="hidden lg:block" />
+      <Link href="favorites" className="sm:hidden lg:block">
+        <Icon name="icon-hard" className="w-8 h-7" />
+      </Link>
+      <Link href="/basket" className="hidden lg:w-8 lg:h-8 lg:block relative">
         <BasketIcon className="lg:w-8 lg:h-8" />
         <div className="absolute -top-[2px] -right-2 flex items-center justify-center bg-white-20 w-4 h-4 rounded-3xl border-1 border-black-10">
           <p className="font-lato text-[10px]">2</p>
@@ -83,7 +83,7 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
         >
           <span>{user?.name ? user.name.toUpperCase().charAt(0) : "?"}</span>
         </span>
-        {user ? (
+        {user.name ? (
           <p className={styles.text}>{user.name}</p>
         ) : (
           <p className={styles.text}>User</p>
