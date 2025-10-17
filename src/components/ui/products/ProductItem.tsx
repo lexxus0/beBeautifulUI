@@ -3,6 +3,8 @@ import { IProduct, IReview } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useAppDispatch } from "@/store/hooks";
+import { updateCart } from "@/store/products/operations";
 
 interface ProductItemProps {
   item: IProduct;
@@ -11,6 +13,7 @@ interface ProductItemProps {
 
 export default function ProductItem({ item }: ProductItemProps) {
   const [selectedVolume, setSelectedVolume] = useState(item.priceByVolume[0]);
+  const dispatch = useAppDispatch();
 
   const handleVolumeClick = (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -27,6 +30,17 @@ export default function ProductItem({ item }: ProductItemProps) {
     if (!Array.isArray(reviews) || reviews.length === 0) return 0;
     const total = reviews.reduce((sum, r) => sum + r.rating, 0);
     return total / reviews.length;
+  };
+
+   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    try {
+      await dispatch(
+        updateCart({ productId: item._id, quantity: 1 })
+      ).unwrap();
+    } catch (error) {
+      console.error("Failed to add to cart:", error);
+    }
   };
 
   return (
@@ -72,7 +86,7 @@ export default function ProductItem({ item }: ProductItemProps) {
         </div>
 
         <button
-          onClick={(e) => e.preventDefault()}
+          onClick={handleAddToCart}
           className="add-to-cart-btn-bg rounded-lg w-full h-14 text-center font-open-sans text-xl text-white"
         >
           Додати до кошика
