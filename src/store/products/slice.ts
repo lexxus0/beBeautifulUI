@@ -1,17 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchProducts, fetchProductsByIds } from "./operations";
+import { fetchProducts, fetchProductsByIds, updateCart } from "./operations";
 import { IProduct, IProductResponse } from "@/types/types";
 import { handlePending, handleRejected } from "../init";
 
 interface ProductState {
   products: IProduct[];
-  recentlyViewed: IProduct[]; 
+  recentlyViewed: IProduct[];
   totalItems: number | null;
   limit: number | null;
   totalPages: number | null;
   currentPage: number | null;
   isLoading: boolean;
   error: string | null;
+  cartLoading: boolean;
+  cartError: string | null;
 }
 
 const initialState: ProductState = {
@@ -23,6 +25,8 @@ const initialState: ProductState = {
   currentPage: null,
   isLoading: false,
   error: null,
+  cartLoading: false,
+  cartError: null,
 };
 
 const productSlice = createSlice({
@@ -48,7 +52,7 @@ const productSlice = createSlice({
       .addCase(fetchProducts.rejected, (state, action) => {
         handleRejected(state, action);
       })
-      .addCase(fetchProductsByIds.pending, state => {
+      .addCase(fetchProductsByIds.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
@@ -59,6 +63,17 @@ const productSlice = createSlice({
       .addCase(fetchProductsByIds.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload ?? "Unknown error";
+      })
+      .addCase(updateCart.pending, (state) => {
+        state.cartLoading = true;
+        state.cartError = null;
+      })
+      .addCase(updateCart.fulfilled, (state) => {
+        state.cartLoading = false;
+      })
+      .addCase(updateCart.rejected, (state, action) => {
+        state.cartLoading = false;
+        state.cartError = typeof action.payload === "string" ? action.payload : "Не вдалося додати товар до кошика";
       });
   },
 });

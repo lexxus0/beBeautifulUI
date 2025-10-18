@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 
 import css from "@/components/ui/ProductGallery/ProductGallery.module.css";
-import ProductRating from "../ProductRating/ProductRating";
+import ProductRatingInput from "../ProductRatingInput/ProductRatingInput";
 import { useViewport } from "@/helpers/hooks/useViewport";
 
 export interface ProductGalleryProps {
@@ -84,7 +84,7 @@ const ProductGallery = ({ product }: ProductGalleryProps) => {
         </div>
       )}
 
-      {width !== null && width < 744 ? <ProductRating /> : null}
+      {width !== null && width < 744 ? <ProductRatingInput /> : null}
 
       {isLightboxOpen && (
         <div className={css.lightboxBackdrop} onClick={closeLightbox}>

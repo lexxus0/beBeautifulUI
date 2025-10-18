@@ -1,0 +1,72 @@
+.applePay {
+  width: 100%;
+  padding: 8px 0;
+  border-radius: 8px;
+  font-family: var(--font-open-sans);
+  font-size: 18px;
+  line-height: 1.2;
+  background: linear-gradient(180deg, #2d2d2d 4.33%);
+  color: var(--color-white);
+  transition: box-shadow 0.3s ease;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+
+  &:hover,
+  &:focus {
+    border-bottom: 0.4px solid #1a1a1a;
+    background: #1a1a1a;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  &:active {
+    border-bottom: 0.4px solid #111;
+    background: #111;
+  }
+
+  @media (min-width: 744px) {
+    width: 436px;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 20px;
+  }
+
+  @media (min-width: 1440px) {
+    width: 416px;
+    padding: 11px 0;
+  }
+}
+
+.cardPay {
+  width: 100%;
+  padding: 8px 0;
+  border-radius: 8px;
+  font-family: var(--font-open-sans);
+  font-size: 18px;
+  line-height: 1.2;
+  background: transparent;
+  border: 1px solid var(--color-gray-10);
+  color: var(--color-black-10);
+  transition: box-shadow 0.3s ease;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    background: #f4f4f4;
+  }
+
+  &:active {
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    background: #f4f4f4;
+  }
+
+  @media (min-width: 744px) {
+    padding: 10px 0;
+  }
+}

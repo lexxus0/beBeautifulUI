@@ -16,7 +16,14 @@
   pointer-events: none;
 
   > :first-child {
-  width: 100px;
-  height: auto;
+    width: 100px;
+    height: auto;
+  }
 }
+.overlay {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(4px);
+  background-color: rgba(81, 80, 80, 0.39);
+  z-index: 9998;
 }

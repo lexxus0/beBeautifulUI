@@ -185,3 +185,21 @@ export interface BasketItemsListProps {
   onDecrement: (id: number) => void;
   onRemove: (id: number) => void;
 }
+
+export interface ICartResponse {
+  items: Array<{
+    productId: string;
+    quantity: number;
+  }>;
+}
+
+export interface CartState {
+  isLoading: boolean;
+  error: string | null;
+  data: ICartResponse | null;
+}
+
+export interface UpdateCartPayload {
+  productId: string;
+  quantity: number;
+}
