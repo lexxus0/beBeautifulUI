@@ -109,9 +109,9 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
       {!showReviewForm && (
         <div className={styles.reviewsContainer}>
           {isLoading ? (
-            <div className={styles.loadingContainer}>
+            <div className={styles.loading}>
               <Loader />
-              <p className={styles.loadingText}>Завантаження відгуків...</p>
+              Завантаження відгуків...
             </div>
           ) : apiError ? (
             <div className={styles.error}>
