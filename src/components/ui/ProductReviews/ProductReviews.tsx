@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchProductReviews, fetchReviewSummary } from "@/store/reviews/operations";
-import { selectProductReviews, selectReviewsLoading, selectReviewSummary } from "@/store/reviews/selectors";
+import { fetchProductReviews } from "@/store/reviews/operations";
+import { selectProductReviews } from "@/store/reviews/selectors";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
 import Reviews from "../Reviews/Reviews";
 import ReviewForm from "../ReviewForm/ReviewForm";
@@ -19,12 +19,9 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const reviews = useAppSelector(selectProductReviews(productId));
-  const isLoading = useAppSelector(selectReviewsLoading);
-  const reviewSummary = useAppSelector(selectReviewSummary(productId));
   const hasMounted = useHasMounted();
   
   const [showReviewForm, setShowReviewForm] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
   const [apiError, setApiError] = useState<string | null>(null);
 
   useEffect(() => {

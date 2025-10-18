@@ -24,9 +24,9 @@ export function useReviews(productId?: string) {
   const pagination = useAppSelector(selectReviewsPagination);
   const summary = useAppSelector(selectReviewSummary(productId || ''));
 
-  const loadReviews = useCallback((page = 1, limit = 10, sort = '-createdAt') => {
+  const loadReviews = useCallback((page = 1, limit = 10, _sort = '-createdAt') => { // eslint-disable-line @typescript-eslint/no-unused-vars
     if (productId) {
-      dispatch(fetchReviews({ productId, limit, currentPage: page, sort }));
+      dispatch(fetchReviews({ productId, limit, currentPage: page }));
     }
   }, [dispatch, productId]);
 

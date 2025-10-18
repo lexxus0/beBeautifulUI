@@ -74,11 +74,11 @@ export default function Reviews({ productId, showTitle = false, reviews: propRev
           };
 
           const isExpanded = expandedReviews[review._id];
-          const isLong = review.comment.length > CHARACTER_LIMIT;
+          const isLong = (review.comment?.length || 0) > CHARACTER_LIMIT;
           const visibleComment =
             isExpanded || !isLong
-              ? review.comment
-              : review.comment.slice(0, CHARACTER_LIMIT) + "...";
+              ? review.comment || ""
+              : (review.comment || "").slice(0, CHARACTER_LIMIT) + "...";
 
           return (
             <div

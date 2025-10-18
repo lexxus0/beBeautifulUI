@@ -44,7 +44,7 @@ export default function ProfileForm() {
     },
   });
 
-  const onSubmit = (data: ProfileFormInputs) => {
+  const onSubmit = () => {
     // Remove sensitive profile data logging for security
     console.log("Profile form submitted successfully");
   };

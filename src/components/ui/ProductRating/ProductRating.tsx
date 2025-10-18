@@ -1,33 +1,28 @@
 import React from "react";
-import css from "@/components/ui/ProductRating/ProductRating.module.css";
+// import css from "@/components/ui/ProductRating/ProductRating.module.css";
 import ReviewSummary from "../ReviewSummary/ReviewSummary";
+import { StarGradient } from "@/components/elements/StarGradient";
 
 export interface ProductRatingProps {
   productId: string;
-}
-
-const ProductRating: React.FC<ProductRatingProps> = ({ productId }) => {
-import { StarGradient } from "@/components/elements/StarGradient";
-
-type ProductRatingProps = {
   value: number;
   max?: number;
   reviews?: number;
-};
+}
 
-const ProductRating = ({ value, max = 5, reviews = 0 }: ProductRatingProps) => {
+const ProductRating: React.FC<ProductRatingProps> = ({ productId, value, max = 5, reviews = 0 }) => {
   const fullStars = Math.floor(value);
   const remainder = value % 1;
   const hasHalfStar = remainder >= 0.25 && remainder < 0.75;
   const emptyStars = max - fullStars - (hasHalfStar ? 1 : 0);
   return (
-    <div className={css.starAssessment}>
+    <div className="star-assessment">
       <ReviewSummary 
         productId={productId} 
         showCount={true}
         size={16}
       />
-    <div className="px-1 md:px-4 w-full flex items-center justify-between">
+      <div className="px-1 md:px-4 w-full flex items-center justify-between">
       <div className="flex items-center gap-1">
         {/* Повні зірки */}
         {[...Array(fullStars)].map((_, i) => (
@@ -77,6 +72,7 @@ const ProductRating = ({ value, max = 5, reviews = 0 }: ProductRatingProps) => {
       </div>
 
       <p className="font-roboto  font-light text-xs lg:text-sm text-black-10 ">({reviews} відгуків)</p>
+      </div>
     </div>
   );
 };

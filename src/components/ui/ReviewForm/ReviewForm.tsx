@@ -49,7 +49,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
     }
 
     try {
-      const result = await dispatch(createReview({
+      await dispatch(createReview({
         productId,
         rating,
         comment: message.trim()
@@ -64,26 +64,27 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
       if (onSuccess) {
         onSuccess();
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Review creation error:", err);
       
       // Provide more specific error messages
       let errorMessage = "Помилка при створенні відгуку";
       
-      if (err.message?.includes("User must be logged in") || err.message?.includes("must be logged in")) {
+      const error = err as Error;
+      if (error.message?.includes("User must be logged in") || error.message?.includes("must be logged in")) {
         errorMessage = "Будь ласка, увійдіть в систему, щоб залишити відгук";
-      } else if (err.message?.includes("Session expired") || err.message?.includes("401") || err.message?.includes("Unauthorized")) {
+      } else if (error.message?.includes("Session expired") || error.message?.includes("401") || error.message?.includes("Unauthorized")) {
         errorMessage = "Сесія закінчилася. Будь ласка, увійдіть в систему знову";
         // Optionally redirect to login page or show login modal
         setTimeout(() => {
           window.location.href = '/auth';
         }, 2000);
-      } else if (err.message?.includes("400") || err.message?.includes("Bad Request")) {
+      } else if (error.message?.includes("400") || error.message?.includes("Bad Request")) {
         errorMessage = "Невірні дані. Перевірте правильність заповнення";
-      } else if (err.message?.includes("500") || err.message?.includes("Internal Server Error")) {
+      } else if (error.message?.includes("500") || error.message?.includes("Internal Server Error")) {
         errorMessage = "Помилка сервера. Спробуйте пізніше";
-      } else if (err.message) {
-        errorMessage = err.message;
+      } else if (error.message) {
+        errorMessage = error.message;
       }
       
       setError(errorMessage);

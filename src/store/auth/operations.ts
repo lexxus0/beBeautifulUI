@@ -64,9 +64,9 @@ export const refreshUser = createAsyncThunk<
       refreshToken: persistedToken,
     });
     return res.data.data;
-  } catch (e: any) {
+  } catch (e: unknown) {
     // If refresh fails with 401, clear the auth state
-    if (e?.response?.status === 401) {
+    if (e && typeof e === 'object' && 'response' in e && (e as { response?: { status?: number } }).response?.status === 401) {
       clearAuthHeader();
       thunkAPI.dispatch(clearAuth());
     }
@@ -124,9 +124,10 @@ export const refreshAndLoadUser = createAsyncThunk<
 
     const res = await instance.get("/auth/current");
     return res.data.data;
-  } catch (e: any) {
+  } catch (e: unknown) {
     // If refresh fails, clear auth state and localStorage
-    if (e?.response?.status === 401 || e?.message?.includes("No tokens found")) {
+    if ((e && typeof e === 'object' && 'response' in e && (e as { response?: { status?: number } }).response?.status === 401) || 
+        (e && typeof e === 'object' && 'message' in e && (e as { message?: string }).message?.includes("No tokens found"))) {
       clearAuthHeader();
       thunkAPI.dispatch(clearAuth());
       

@@ -27,7 +27,7 @@ const ContactInfoForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<ContactInfoInputs> = async (data) => {
+  const onSubmit: SubmitHandler<ContactInfoInputs> = async () => {
     // Remove sensitive contact data logging for security
     console.log("Contact info form submitted successfully");
 

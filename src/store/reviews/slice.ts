@@ -125,14 +125,14 @@ const productSlice = createSlice({
       .addCase(deleteReview.rejected, (state, action) => {
         handleRejected(state, action);
       })
-      .addCase(fetchReviewSummary.pending, (state) => {
+      .addCase(fetchReviewSummary.pending, () => {
         // Don't set loading for summary as it's not critical
       })
       .addCase(fetchReviewSummary.fulfilled, (state, action) => {
         const { productId, summary } = action.payload;
         state.summaries[productId] = summary;
       })
-      .addCase(fetchReviewSummary.rejected, (state, action) => {
+      .addCase(fetchReviewSummary.rejected, () => {
         // Don't set error for summary as it's not critical
       });
   },

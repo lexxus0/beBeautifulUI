@@ -12,10 +12,10 @@ export const fetchReviews = createAsyncThunk<
   IReviewResponse,
   { productId?: string; limit: number; currentPage: number },
   { rejectValue: string }
->("reviews/fetchAll", async ({ productId, limit, currentPage }, ThunkAPI) => {
+>("reviews/fetchAll", async ({ productId, limit, currentPage }) => {
   try {
     let endpoint: string;
-    let params: any;
+    let params: Record<string, string | number>;
 
     if (productId) {
       // Use product-specific endpoint
@@ -31,7 +31,7 @@ export const fetchReviews = createAsyncThunk<
 
     // Transform backend reviews to frontend format
     const reviews = res.data.data || [];
-    const transformedReviews: IReview[] = reviews.map((review: any) => ({
+    const transformedReviews: IReview[] = reviews.map((review: Record<string, unknown>) => ({
       _id: review._id,
       productId: review.productId,
       userId: review.userId,
@@ -40,7 +40,7 @@ export const fetchReviews = createAsyncThunk<
       createdAt: review.createdAt,
       updatedAt: review.updatedAt,
       // Frontend-specific fields
-      name: review.author?.name || "Користувач",
+      name: (review.author as { name?: string })?.name || "Користувач",
       location: "Київ", // This should come from user profile
       likes: 0, // These will be implemented later
       dislikes: 0,
@@ -115,7 +115,7 @@ export const createReview = createAsyncThunk<
             return ThunkAPI.rejectWithValue("Session expired. Please log in again.");
           }
         }
-      } catch (refreshError) {
+      } catch {
         ThunkAPI.dispatch(clearAuth());
         return ThunkAPI.rejectWithValue("Session expired. Please log in again.");
       }
@@ -151,14 +151,17 @@ export const createReview = createAsyncThunk<
     };
     
     return createdReview;
-  } catch (e: any) {
-    if (e.response?.status === 409) {
+  } catch (e: unknown) {
+    if (e && typeof e === 'object' && 'response' in e && (e as { response?: { status?: number } }).response?.status === 409) {
       return ThunkAPI.rejectWithValue("You have already reviewed this product");
-    } else if (e.response?.status === 401) {
+    } else if (e && typeof e === 'object' && 'response' in e && (e as { response?: { status?: number } }).response?.status === 401) {
       ThunkAPI.dispatch(clearAuth());
       return ThunkAPI.rejectWithValue("Session expired. Please log in again.");
     }
-    return ThunkAPI.rejectWithValue(e.response?.data?.message || "Failed to create review");
+    const errorMessage = e && typeof e === 'object' && 'response' in e 
+      ? (e as { response?: { data?: { message?: string } } }).response?.data?.message || "Failed to create review"
+      : "Failed to create review";
+    return ThunkAPI.rejectWithValue(errorMessage);
   }
 });
 
@@ -170,8 +173,11 @@ export const updateReview = createAsyncThunk<
   try {
     const res = await instance.patch(`/reviews/${id}`, data);
     return res.data.data;
-  } catch (e: any) {
-    return ThunkAPI.rejectWithValue(e.response?.data?.message || "Failed to update review");
+  } catch (e: unknown) {
+    const errorMessage = e && typeof e === 'object' && 'response' in e 
+      ? (e as { response?: { data?: { message?: string } } }).response?.data?.message || "Failed to update review"
+      : "Failed to update review";
+    return ThunkAPI.rejectWithValue(errorMessage);
   }
 });
 
@@ -183,8 +189,11 @@ export const deleteReview = createAsyncThunk<
   try {
     await instance.delete(`/reviews/${id}`);
     return { id };
-  } catch (e: any) {
-    return ThunkAPI.rejectWithValue(e.response?.data?.message || "Failed to delete review");
+  } catch (e: unknown) {
+    const errorMessage = e && typeof e === 'object' && 'response' in e 
+      ? (e as { response?: { data?: { message?: string } } }).response?.data?.message || "Failed to delete review"
+      : "Failed to delete review";
+    return ThunkAPI.rejectWithValue(errorMessage);
   }
 });
 
@@ -213,7 +222,7 @@ export const fetchProductReviews = createAsyncThunk<
     const reviews = res.data.data || [];
     
     // Transform backend reviews to frontend format
-    const transformedReviews: IReview[] = reviews.map((review: any) => ({
+    const transformedReviews: IReview[] = reviews.map((review: Record<string, unknown>) => ({
       _id: review._id,
       productId: review.productId,
       userId: review.userId,
@@ -222,7 +231,7 @@ export const fetchProductReviews = createAsyncThunk<
       createdAt: review.createdAt,
       updatedAt: review.updatedAt,
       // Frontend-specific fields
-      name: review.author?.name || "Користувач",
+      name: (review.author as { name?: string })?.name || "Користувач",
       location: "Київ", // This should come from user profile
       likes: 0, // These will be implemented later
       dislikes: 0,
@@ -249,7 +258,10 @@ export const fetchReviewSummary = createAsyncThunk<
   try {
     const res = await instance.get(`/products/${productId}/reviews/summary`);
     return { productId, summary: res.data.data };
-  } catch (e: any) {
-    return ThunkAPI.rejectWithValue(e.message || "Failed to fetch review summary");
+  } catch (e: unknown) {
+    const errorMessage = e && typeof e === 'object' && 'message' in e 
+      ? (e as { message?: string }).message || "Failed to fetch review summary"
+      : "Failed to fetch review summary";
+    return ThunkAPI.rejectWithValue(errorMessage);
   }
 });

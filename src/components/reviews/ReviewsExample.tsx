@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { ReviewForm, ReviewSummary } from './index';
-import Modal from '../ui/Modal/Modal';
+// import Modal from '../ui/Modal/Modal';
 
 interface ReviewsExampleProps {
   productId: string;
@@ -37,14 +37,23 @@ export default function ReviewsExample({ productId }: ReviewsExampleProps) {
         </button>
       </div>
 
-      {/* Modal with Review Form */}
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <ReviewForm 
-          productId={productId}
-          onSuccess={() => setIsModalOpen(false)}
-          onCancel={() => setIsModalOpen(false)}
-        />
-      </Modal>
+      {/* Review Form - Direct display instead of modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg max-w-md w-full mx-4">
+            <button 
+              onClick={() => setIsModalOpen(false)}
+              className="float-right text-gray-500 hover:text-gray-700 mb-4"
+            >
+              ✕
+            </button>
+            <ReviewForm 
+              productId={productId}
+              onSuccess={() => setIsModalOpen(false)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

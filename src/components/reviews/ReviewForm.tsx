@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useReviews } from '@/hooks/useReviews';
 import { useAppSelector } from '@/store/hooks';
 import { selectIsLoggedIn } from '@/store/auth/selectors';
-import StarRating from '@/helpers/StarRating';
+// import StarRating from '@/helpers/StarRating';
 import styles from '../ui/ReviewForm/review-form.module.css';
 
 interface ReviewFormProps {
@@ -22,7 +23,7 @@ export default function ReviewForm({
   onSuccess,
   onCancel 
 }: ReviewFormProps) {
-  const { addReview, editReview, isLoading } = useReviews(productId);
+  const { addReview } = useReviews(productId);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   
   const [rating, setRating] = useState(initialValue?.rating || 0);
@@ -64,9 +65,9 @@ export default function ReviewForm({
       }
       
       onSuccess?.();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to submit review:', error);
-      setError(error.message || "Помилка при відправці відгуку");
+      setError((error as Error)?.message || "Помилка при відправці відгуку");
     } finally {
       setIsSubmitting(false);
     }
@@ -113,9 +114,11 @@ export default function ReviewForm({
 
       <div className={styles.helperRow}>
         <span>Ви можете залишити відгук або поставити питання</span>
-        <img
+        <Image
           src="/question.svg"
           alt="Пояснення"
+          width={16}
+          height={16}
           className={styles.helperIcon}
         />
       </div>

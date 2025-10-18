@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchReviewSummary } from "@/store/reviews/operations";
+// import { fetchReviewSummary } from "@/store/reviews/operations";
 import { selectReviewSummary } from "@/store/reviews/selectors";
 import StarRating from "@/helpers/StarRating";
 import styles from "./ReviewSummary.module.scss";
