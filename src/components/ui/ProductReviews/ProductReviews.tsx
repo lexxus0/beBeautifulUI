@@ -3,10 +3,12 @@
 import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchProductReviews } from "@/store/reviews/operations";
-import { selectProductReviews } from "@/store/reviews/selectors";
+import { selectProductReviews, selectReviewsLoading } from "@/store/reviews/selectors";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
 import Reviews from "../Reviews/Reviews";
 import ReviewForm from "../ReviewForm/ReviewForm";
+import Loader from "../Loader/Loader";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 import styles from "./ProductReviews.module.scss";
 import { useHasMounted } from "@/helpers/hooks/useHasMounted";
 
@@ -19,6 +21,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const reviews = useAppSelector(selectProductReviews(productId));
+  const isLoading = useAppSelector(selectReviewsLoading);
   const hasMounted = useHasMounted();
   
   const [showReviewForm, setShowReviewForm] = useState(false);
@@ -70,7 +73,8 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
   };
 
   return (
-    <div className={styles.container}>
+    <ErrorBoundary>
+      <div className={styles.container}>
       <div className={styles.header}>
         <h2 className={styles.title}>
           Відгуки про {productName}
@@ -104,7 +108,12 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
 
       {!showReviewForm && (
         <div className={styles.reviewsContainer}>
-          {apiError ? (
+          {isLoading ? (
+            <div className={styles.loadingContainer}>
+              <Loader />
+              <p className={styles.loadingText}>Завантаження відгуків...</p>
+            </div>
+          ) : apiError ? (
             <div className={styles.error}>
               {apiError}
             </div>
@@ -123,7 +132,8 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId, productName 
           )}
         </div>
       )}
-    </div>
+      </div>
+    </ErrorBoundary>
   );
 };
 

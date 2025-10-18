@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./ReviewForm.module.scss";
 import Icon from "@/components/shared/Icon";
+import Loader from "../Loader/Loader";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { createReview } from "@/store/reviews/operations";
 import { selectReviewsLoading } from "@/store/reviews/selectors";
@@ -206,7 +207,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
       >
         {isLoading ? (
           <span className={styles.loading}>
-            <Icon name="icon-loader" width={16} height={16} />
+            <Loader />
             Відправка...
           </span>
         ) : (
