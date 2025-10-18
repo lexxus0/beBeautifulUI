@@ -1,19 +1,19 @@
 import React from "react";
-// import Icon from "../../elements/Icons";
-// import { Product } from "@/types/types";
-
 import css from "@/components/ui/ProductRating/ProductRating.module.css";
-import Rate from "@/components/ui/Rate";
+import ReviewSummary from "../ReviewSummary/ReviewSummary";
 
-// export interface ProductRatingProps {
-//   product: Product;
-// }
+export interface ProductRatingProps {
+  productId: string;
+}
 
-const ProductRating = () => {
+const ProductRating: React.FC<ProductRatingProps> = ({ productId }) => {
   return (
     <div className={css.starAssessment}>
-      <Rate />
-      <p className={css.fidbackQuantity}>(0 відгуків)</p>
+      <ReviewSummary 
+        productId={productId} 
+        showCount={true}
+        size={16}
+      />
     </div>
   );
 };

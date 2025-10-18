@@ -28,7 +28,8 @@ const ContactInfoForm = () => {
   });
 
   const onSubmit: SubmitHandler<ContactInfoInputs> = async (data) => {
-    console.log("Контактна інформація:", data);
+    // Remove sensitive contact data logging for security
+    console.log("Contact info form submitted successfully");
 
     setShowSuccessMsg(true);
     setTimeout(() => {

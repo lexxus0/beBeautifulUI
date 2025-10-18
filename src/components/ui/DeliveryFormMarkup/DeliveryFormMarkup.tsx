@@ -46,7 +46,8 @@ export default function DeliveryFormMarkup() {
   const deliveryType = watch("deliveryType");
 
   const onSubmit = (data: DeliveryFormValues) => {
-    console.log("data", data);
+    // Remove sensitive delivery data logging for security
+    console.log("Delivery form submitted successfully");
     router.push("/payment");
   };
 

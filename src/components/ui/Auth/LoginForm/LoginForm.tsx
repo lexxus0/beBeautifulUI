@@ -34,7 +34,7 @@ const LoginForm = () => {
   });
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
-    console.log("Данні для входу:", data);
+    // Remove sensitive credential logging for security
     const resultAction = await dispatch(loginUser(data));
 
     if (loginUser.fulfilled.match(resultAction)) {

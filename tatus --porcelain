@@ -1,0 +1,33 @@
+[1mdiff --git a/src/types/types.ts b/src/types/types.ts[m
+[1mindex c12feaf..3849e0d 100644[m
+[1m--- a/src/types/types.ts[m
+[1m+++ b/src/types/types.ts[m
+[36m@@ -70,15 +70,19 @@[m [mexport type CategoryCardProps = {[m
+ [m
+ export interface IReview {[m
+   _id: string;[m
+[31m-  name: string;[m
+[31m-  location: string;[m
+[31m-  rating: number;[m
+[31m-  comment: string;[m
+[31m-  createdAt: string;[m
+[31m-  likes: number;[m
+[31m-  dislikes: number;[m
+[31m-  hasLiked?: boolean;[m
+[31m-  hasDisliked?: boolean;[m
+[32m+[m[32m  productId: string; // Required - matches backend schema[m
+[32m+[m[32m  userId: string; // Required - matches backend schema (for unique constraint)[m
+[32m+[m[32m  rating: number; // 1-5, required, matches backend schema[m
+[32m+[m[32m  comment?: string; // Optional, max 1000 chars, matches backend schema[m
+[32m+[m[32m  createdAt: string; // From timestamps[m
+[32m+[m[32m  updatedAt: string; // From timestamps[m
+[32m+[m[32m  // Frontend-specific fields (not in backend schema)[m
+[32m+[m[32m  name: string; // From user profile[m
+[32m+[m[32m  location: string; // From user profile[m
+[32m+[m[32m  likes: number; // For future like/dislike feature[m
+[32m+[m[32m  dislikes: number; // For future like/dislike feature[m
+[32m+[m[32m  hasLiked?: boolean; // For future like/dislike feature[m
+[32m+[m[32m  hasDisliked?: boolean; // For future like/dislike feature[m
+ }[m
+ [m
+ export interface IReviewResponse {[m
