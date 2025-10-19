@@ -17,7 +17,7 @@ export default function DeliveryPage() {
           Ми цінуємо Ваш час
           <br />
           Тому зробили все, щоб замовлення з{" "}
-          <span className="font-source-sans-pro font-semibold text-xl tracking-tighter">
+          <span className="font-source-sans-pro font-semibold text-xl md:text-[22px] lg:text-[28px] tracking-tighter">
             Science Be Beautiful{" "}
           </span> <br className="hidden md:block"/>
           було зручним, прозорим і без зайвого клопоту
