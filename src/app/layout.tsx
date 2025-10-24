@@ -8,9 +8,12 @@ import { sourceSansPro } from "@/fonts/fonts";
 import Header from "@/components/ui/Header/header"; // header
 import Footer from "@/components/ui/Footer/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop/ScrollToTop";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useEffect, useState } from "react";
 import { refreshAndLoadUser } from "@/store/auth/operations";
+import { hasAuthTokens } from "@/helpers/authUtils";
+import { setAuthHeader } from "@/store/init";
+import { clearAuth } from "@/store/auth/slice";
 import Loader from "@/components/ui/Loader/Loader";
 import { usePathname } from "next/navigation";
 import { Toaster } from "react-hot-toast";
@@ -99,9 +102,40 @@ export default function RootLayout({
 
 function ReduxInitializer() {
   const dispatch = useAppDispatch();
+  const accessToken = useAppSelector((state) => state.auth.accessToken);
+  const user = useAppSelector((state) => state.auth.user);
 
   useEffect(() => {
-    dispatch(refreshAndLoadUser());
+    // Set auth header from persisted state if available
+    if (accessToken) {
+      setAuthHeader(accessToken);
+    } else if (user && typeof window !== 'undefined') {
+      // If user exists but no accessToken in Redux, try to get it from localStorage
+      const tokenFromStorage = localStorage.getItem('accessToken');
+      if (tokenFromStorage) {
+        console.log("Found token in localStorage, setting auth header");
+        setAuthHeader(tokenFromStorage);
+      } else {
+        // If user exists but no token found anywhere, clear the invalid auth state
+        console.log("User exists but no token found, clearing invalid auth state");
+        dispatch(clearAuth());
+      }
+    }
+  }, [accessToken, user, dispatch]);
+
+  useEffect(() => {
+    // Only try to refresh if there are valid tokens in localStorage
+    if (hasAuthTokens()) {
+      dispatch(refreshAndLoadUser()).catch((error) => {
+        // Silently handle auth errors - user will need to log in again
+        console.warn("Auth initialization failed:", error);
+        // Clear invalid tokens from localStorage
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+        }
+      });
+    }
   }, [dispatch]);
 
   return null;

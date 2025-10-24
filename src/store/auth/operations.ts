@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { clearAuthHeader, handleError, instance, setAuthHeader } from "../init";
 import { IUser, IUserResponse } from "@/types/types";
 import { RootState } from "../store";
+import { clearAuth } from "./slice";
 
 export const registerUser = createAsyncThunk<IUserResponse, IUser>(
   "users/signup",
@@ -53,8 +54,8 @@ export const refreshUser = createAsyncThunk<
   const accessToken = state.auth.accessToken;
   const persistedToken = state.auth.refreshToken;
 
-  if (!accessToken) {
-    return thunkAPI.rejectWithValue("No token found.");
+  if (!accessToken || !persistedToken) {
+    return thunkAPI.rejectWithValue("No tokens found.");
   }
 
   try {
@@ -63,7 +64,12 @@ export const refreshUser = createAsyncThunk<
       refreshToken: persistedToken,
     });
     return res.data.data;
-  } catch (e) {
+  } catch (e: unknown) {
+    // If refresh fails with 401, clear the auth state
+    if (e && typeof e === 'object' && 'response' in e && (e as { response?: { status?: number } }).response?.status === 401) {
+      clearAuthHeader();
+      thunkAPI.dispatch(clearAuth());
+    }
     return thunkAPI.rejectWithValue(handleError(e, "Failed to refresh user."));
   }
 });
@@ -90,14 +96,50 @@ export const refreshAndLoadUser = createAsyncThunk<
   void,
   { state: RootState }
 >("users/refreshAndLoad", async (_, thunkAPI) => {
+  const state = thunkAPI.getState();
+  
+  // If no tokens exist in Redux state, try to get them from localStorage
+  let accessToken = state.auth.accessToken;
+  let refreshToken = state.auth.refreshToken;
+  
+  if (!accessToken || !refreshToken) {
+    if (typeof window !== 'undefined') {
+      accessToken = localStorage.getItem('accessToken');
+      refreshToken = localStorage.getItem('refreshToken');
+    }
+  }
+  
+  // If still no tokens exist, don't try to refresh
+  if (!accessToken || !refreshToken) {
+    return thunkAPI.rejectWithValue("No authentication tokens found.");
+  }
+
   try {
+    // Set the auth header with the current access token
+    setAuthHeader(accessToken);
+    
     const refreshResult = await thunkAPI.dispatch(refreshUser()).unwrap();
 
     setAuthHeader(refreshResult.accessToken);
 
     const res = await instance.get("/auth/current");
     return res.data.data;
-  } catch (e) {
+  } catch (e: unknown) {
+    // If refresh fails, clear auth state and localStorage
+    if ((e && typeof e === 'object' && 'response' in e && (e as { response?: { status?: number } }).response?.status === 401) || 
+        (e && typeof e === 'object' && 'message' in e && (e as { message?: string }).message?.includes("No tokens found"))) {
+      clearAuthHeader();
+      thunkAPI.dispatch(clearAuth());
+      
+      // Clear invalid tokens from localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+      }
+      
+      // Silently fail - user will need to log in again
+      return thunkAPI.rejectWithValue("Session expired");
+    }
     return thunkAPI.rejectWithValue(
       handleError(e, "Session expired, please log in again.")
     );

@@ -1,8 +1,9 @@
 "use client";
 import { IProduct } from "@/types/types";
 import css from "@/components/ui/ProductHeader/ProductHeader.module.css";
-import ProductRatingInput from "../ProductRatingInput/ProductRatingInput";
+import ProductRating from "../ProductRating/ProductRating";
 import { useViewport } from "@/helpers/hooks/useViewport";
+
 export interface ProductHeaderProps {
   product: IProduct;
 }
@@ -27,7 +28,11 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
           </div>
         </div>
         {width !== null && width > 743 && width < 1440 ? (
-          <ProductRatingInput />
+          <ProductRating 
+            productId={product._id} 
+            value={product.reviews?.length ? product.reviews.reduce((sum, r) => sum + r.rating, 0) / product.reviews.length : 0}
+            reviews={product.reviews?.length || 0} 
+          />
         ) : null}
         <p className={css.features}>
           {product.features && product.features.length > 0
@@ -35,7 +40,13 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
             : ""}
         </p>
       </div>
-      {width !== null && width >= 1440 ? <ProductRatingInput /> : null}
+      {width !== null && width >= 1440 ? (
+        <ProductRating 
+          productId={product._id} 
+          value={product.reviews?.length ? product.reviews.reduce((sum, r) => sum + r.rating, 0) / product.reviews.length : 0}
+          reviews={product.reviews?.length || 0} 
+        />
+      ) : null}
 
       <p className={css.volumeOption}>
         {product.volumeOptions && product.volumeOptions.length > 0

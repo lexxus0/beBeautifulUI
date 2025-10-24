@@ -53,6 +53,7 @@ const ProductGallery = ({ product }: ProductGalleryProps) => {
           width={imageWidth}
           height={imageHeight}
           className={css.productImage}
+          priority
         />
       </div>
 

@@ -1,0 +1,145 @@
+.container {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  margin: 32px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.title {
+  font-family: 'Lato', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #2d2d2d;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+    text-align: center;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.chatButton {
+  padding: 12px 24px;
+  background: #ffffff;
+  color: #2d2d2d;
+  border: 2px solid #2d2d2d;
+  border-radius: 8px;
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #2d2d2d;
+    color: #ffffff;
+  }
+
+  &:focus {
+    outline: 2px solid #C48E28;
+    outline-offset: 2px;
+  }
+}
+
+.reviewButton {
+  padding: 12px 24px;
+  background: #2d2d2d;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: #1a1a1a;
+  }
+
+  &:focus {
+    outline: 2px solid #C48E28;
+    outline-offset: 2px;
+  }
+}
+
+.reviewFormContainer {
+  margin-bottom: 32px;
+}
+
+.reviewsContainer {
+  min-height: 200px;
+}
+
+.noReviews {
+  text-align: center;
+  padding: 48px 24px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 2px dashed #e0e0e0;
+}
+
+.noReviewsText {
+  font-family: 'Lato', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.encouragementText {
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  color: #888;
+  line-height: 1.5;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  color: #666;
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+}
+
+.error {
+  background: #ffebee;
+  border: 1px solid #f44336;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  color: #c62828;
+  text-align: center;
+}
