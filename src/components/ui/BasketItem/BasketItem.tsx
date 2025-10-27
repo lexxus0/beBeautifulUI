@@ -2,21 +2,16 @@
 
 import styles from "./BasketItem.module.scss";
 import Image from "next/image";
-import { BasketItemType } from "@/types/types";
+import { ICartItem } from "@/types/types";
 
 interface BasketItemProps {
-  item: BasketItemType;
+  item: ICartItem;
   onIncrement: () => void;
   onDecrement: () => void;
   onRemove: () => void;
 }
 
-const BasketItem = ({
-  item,
-  onIncrement,
-  onDecrement,
-  onRemove,
-}: BasketItemProps) => {
+const BasketItem = ({ item, onIncrement, onDecrement, onRemove }: BasketItemProps) => {
   return (
     <div className={styles.item}>
       <div className={styles.wrapperInfo}>
@@ -30,7 +25,7 @@ const BasketItem = ({
         <div className={styles.info}>
           <p className={styles.titleEn}>{item.titleEn}</p>
           <p className={styles.titleUk}>
-            {item.titleUk},<span className={styles.volume}> {item.volume}</span>
+            {item.titleUk}, <span className={styles.volume}>{item.volume}</span>
           </p>
           <p className={styles.priceMob}>{item.price * item.quantity} грн</p>
         </div>

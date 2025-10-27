@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useAppDispatch } from "@/store/hooks";
-import { updateCart } from "@/store/products/operations";
+import { updateCart } from "@/store/cart/operations";
 
 interface ProductItemProps {
   item: IProduct;

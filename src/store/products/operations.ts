@@ -1,9 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { handleError, instance } from "../init";
-import { IProduct, IProductResponse, UpdateCartPayload } from "@/types/types";
+import { IProduct, IProductResponse } from "@/types/types";
 import axios from "axios";
-import { toast } from "react-hot-toast";
-
 
 export const fetchProducts = createAsyncThunk<
   IProductResponse,
@@ -75,20 +73,20 @@ export const fetchProductsByIds = createAsyncThunk<
   }
 });
 
-export const updateCart = createAsyncThunk<void, UpdateCartPayload>(
-  "products/updateCart",
-  async ({ productId, quantity }, thunkAPI) => {
-    try {
-      await instance.post("/cart", {
-        productId,
-        quantity,
-      });
+// export const updateCart = createAsyncThunk<void, UpdateCartPayload>(
+//   "products/updateCart",
+//   async ({ productId, quantity }, thunkAPI) => {
+//     try {
+//       await instance.post("/cart", {
+//         productId,
+//         quantity,
+//       });
 
-      toast.success("Товар додано до кошика", { position: "top-right" });
-    } catch {
-      const message = "Не вдалося додати товар до кошика";
-      toast.error(message, { position: "top-right" });
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
+//       toast.success("Товар додано до кошика", { position: "top-right" });
+//     } catch {
+//       const message = "Не вдалося додати товар до кошика";
+//       toast.error(message, { position: "top-right" });
+//       return thunkAPI.rejectWithValue(message);
+//     }
+//   }
+// );

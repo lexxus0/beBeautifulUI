@@ -75,7 +75,7 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
           className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg border-1 border-gray bg-gray-10
     text-2xl font-medium text-white-30 flex items-center justify-center"
         >
-          <span>{user?.name.toUpperCase().charAt(0)}</span>
+          {/* <span>{user?.name.toUpperCase().charAt(0)}</span> */}
         </span>
         {user ? (
           <p className={styles.text}>{user.name}</p>

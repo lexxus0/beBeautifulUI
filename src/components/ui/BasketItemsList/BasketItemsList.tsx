@@ -3,7 +3,14 @@
 import React from "react";
 import BasketItem from "@/components/ui/BasketItem/BasketItem";
 import styles from "./BasketItemsList.module.scss";
-import { BasketItemsListProps } from "@/types/types";
+import { ICartItem } from "@/types/types";
+
+interface BasketItemsListProps {
+  basketItems: ICartItem[];
+  onIncrement: (productId: string) => void;
+  onDecrement: (productId: string) => void;
+  onRemove: (productId: string) => void;
+}
 
 const BasketItemsList: React.FC<BasketItemsListProps> = ({
   basketItems,
@@ -15,11 +22,11 @@ const BasketItemsList: React.FC<BasketItemsListProps> = ({
     <div className={styles.items}>
       {basketItems.map((item) => (
         <BasketItem
-          key={item.id}
+          key={item.productId}
           item={item}
-          onIncrement={() => onIncrement(item.id)}
-          onDecrement={() => onDecrement(item.id)}
-          onRemove={() => onRemove(item.id)}
+          onIncrement={() => onIncrement(item.productId)}
+          onDecrement={() => onDecrement(item.productId)}
+          onRemove={() => onRemove(item.productId)}
         />
       ))}
     </div>
