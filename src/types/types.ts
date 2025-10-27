@@ -193,13 +193,41 @@ export interface ICartResponse {
   }>;
 }
 
+export interface ICartItem {
+  productId: string;
+  quantity: number;
+  price: number;
+  titleEn: string;
+  titleUk: string;
+  image: string;
+  volume: string;
+}
+
 export interface CartState {
+  items: ICartItem[];
   isLoading: boolean;
   error: string | null;
-  data: ICartResponse | null;
+  updateLoading: boolean;
+  updateError: string | null;
+  removeLoading: boolean;
+  removeError: string | null;
 }
 
 export interface UpdateCartPayload {
   productId: string;
+  quantity: number;
+}
+
+export interface ICartItemInCart {
+  _id: string;
+  productId: {
+    _id: string;
+    name: string;
+    price?: number;
+    priceByVolume?: { price: number; volume?: string }[];
+    volumeOptions?: string[];
+    imageUrl?: string;
+    features?: string[];
+  };
   quantity: number;
 }

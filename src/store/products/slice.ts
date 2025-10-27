@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchProducts, fetchProductsByIds, updateCart } from "./operations";
+import { fetchProducts, fetchProductsByIds } from "./operations";
 import { IProduct, IProductResponse } from "@/types/types";
 import { handlePending, handleRejected } from "../init";
 
@@ -12,8 +12,6 @@ interface ProductState {
   currentPage: number | null;
   isLoading: boolean;
   error: string | null;
-  cartLoading: boolean;
-  cartError: string | null;
 }
 
 const initialState: ProductState = {
@@ -25,8 +23,6 @@ const initialState: ProductState = {
   currentPage: null,
   isLoading: false,
   error: null,
-  cartLoading: false,
-  cartError: null,
 };
 
 const productSlice = createSlice({
@@ -63,17 +59,6 @@ const productSlice = createSlice({
       .addCase(fetchProductsByIds.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload ?? "Unknown error";
-      })
-      .addCase(updateCart.pending, (state) => {
-        state.cartLoading = true;
-        state.cartError = null;
-      })
-      .addCase(updateCart.fulfilled, (state) => {
-        state.cartLoading = false;
-      })
-      .addCase(updateCart.rejected, (state, action) => {
-        state.cartLoading = false;
-        state.cartError = typeof action.payload === "string" ? action.payload : "Не вдалося додати товар до кошика";
       });
   },
 });

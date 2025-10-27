@@ -11,12 +11,7 @@ interface BasketItemProps {
   onRemove: () => void;
 }
 
-const BasketItem = ({
-  item,
-  onIncrement,
-  onDecrement,
-  onRemove,
-}: BasketItemProps) => {
+const BasketItem = ({ item, onIncrement, onDecrement, onRemove }: BasketItemProps) => {
   return (
     <div className={styles.item}>
       <div className={styles.wrapperInfo}>
@@ -30,7 +25,7 @@ const BasketItem = ({
         <div className={styles.info}>
           <p className={styles.titleEn}>{item.titleEn}</p>
           <p className={styles.titleUk}>
-            {item.titleUk},<span className={styles.volume}> {item.volume}</span>
+            {item.titleUk}, <span className={styles.volume}>{item.volume}</span>
           </p>
           <p className={styles.priceMob}>{item.price * item.quantity} грн</p>
         </div>

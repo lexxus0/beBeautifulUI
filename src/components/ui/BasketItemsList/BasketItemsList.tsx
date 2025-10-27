@@ -1,9 +1,14 @@
-"use client";
-
 import React from "react";
 import BasketItem from "@/components/ui/BasketItem/BasketItem";
 import styles from "./BasketItemsList.module.scss";
-import { BasketItemsListProps } from "@/types/types";
+import { BasketItemType } from "@/types/types";
+
+interface BasketItemsListProps {
+  basketItems: BasketItemType[];
+  onIncrement: (id: number) => void;
+  onDecrement: (id: number) => void;
+  onRemove: (id: number) => void;
+}
 
 const BasketItemsList: React.FC<BasketItemsListProps> = ({
   basketItems,

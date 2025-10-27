@@ -1,41 +1,60 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import styles from "./Basket.module.scss";
-import { BasketItemType } from "@/types/types";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchCart, updateCart, removeFromCart } from "@/store/cart/operations";
+import BasketItemsList from "@/components/ui/BasketItemsList/BasketItemsList";
 import Link from "next/link";
-import rawData from "./basket.json";
 import BasketIcon from "@/components/elements/BasketIcon";
 import RecommendedProducts from "@/components/ui/RecommendedProducts/RecommendedProducts";
 import BackButton from "@/components/ui/BackButton/BackButton";
-import { useAppSelector } from "@/store/hooks";
+import { selectCartItems, selectCartLoading } from "@/store/cart/selector";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
-import BasketItemsList from "@/components/ui/BasketItemsList/BasketItemsList"; // Імпортуємо компонент
+import { BasketItemType, ICartItem } from "@/types/types";
 
 const BasketPage = () => {
-  const [basketItems, setBasketItems] = useState<BasketItemType[]>(rawData);
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector(selectCartItems) as ICartItem[]; // дані з бекенду
+  const isLoading = useAppSelector(selectCartLoading);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [dispatch]);
+
+  // Конвертуємо ICartItem[] в BasketItemType[]
+  const basketItems: BasketItemType[] = useMemo(() => {
+    return cartItems.map((item, index) => ({
+      id: index, // у фронтенді можемо просто index як унікальний ключ
+      image: item.image,
+      titleEn: item.titleEn,
+      titleUk: item.titleUk,
+      volume: item.volume,
+      quantity: item.quantity,
+      price: item.price,
+    }));
+  }, [cartItems]);
+
   const handleIncrement = (id: number) => {
-    setBasketItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
+    const item = basketItems[id];
+    if (item) {
+      dispatch(updateCart({ productId: item.id.toString(), quantity: item.quantity + 1 }));
+    }
   };
 
   const handleDecrement = (id: number) => {
-    setBasketItems((prev) =>
-      prev.map((item) =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
+    const item = basketItems[id];
+    if (item && item.quantity > 1) {
+      dispatch(updateCart({ productId: item.id.toString(), quantity: item.quantity - 1 }));
+    }
   };
 
   const handleRemove = (id: number) => {
-    setBasketItems((prev) => prev.filter((item) => item.id !== id));
+    const item = basketItems[id];
+    if (item) {
+      dispatch(removeFromCart(item.id.toString()));
+    }
   };
 
   const total = useMemo(
@@ -43,6 +62,8 @@ const BasketPage = () => {
       basketItems.reduce((sum, item) => sum + item.quantity * item.price, 0),
     [basketItems]
   );
+
+  if (isLoading) return <p>Завантаження кошика...</p>;
 
   return (
     <>
@@ -52,18 +73,23 @@ const BasketPage = () => {
           <div className={styles.basket}>
             <h1 className={styles.title}>Кошик</h1>
 
-            <BasketItemsList
-              basketItems={basketItems}
-              onIncrement={handleIncrement}
-              onDecrement={handleDecrement}
-              onRemove={handleRemove}
-            />
+            {basketItems.length === 0 ? (
+              <p>Ваш кошик порожній</p>
+            ) : (
+              <BasketItemsList
+                basketItems={basketItems}
+                onIncrement={handleIncrement}
+                onDecrement={handleDecrement}
+                onRemove={handleRemove}
+              />
+            )}
 
             <hr className={styles.divider} />
             <div className={styles.total}>
               <span>Загальна сума:</span>
               <span>{total} грн</span>
             </div>
+
             <Link
               href={isLoggedIn ? "/delivery" : "/checkout"}
               className={styles.checkoutBtn}
