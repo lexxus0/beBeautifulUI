@@ -43,6 +43,9 @@ export default function Header() {
               <UserIcon className="hidden lg:flex" />
             </div>
           )}
+          <Link href="favorites" className="lg:hidden">
+            <Icon name="icon-hard" className="w-7 h-6" />
+          </Link>
           <Link
             href="/basket"
             className="w-9 h-9 flex items-center justify-center lg:hidden relative"

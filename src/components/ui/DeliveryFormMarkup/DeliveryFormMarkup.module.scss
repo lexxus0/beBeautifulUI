@@ -108,7 +108,7 @@
   padding: 20px 0;
   border-radius: 8px;
   font-family: var(--font-open-sans);
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.2;
   background: linear-gradient(180deg, #2d2d2d 4.33%);
   color: var(--color-white);
@@ -130,6 +130,21 @@
   }
 
   @media (min-width: 744px) {
+    font-size: 18px;
+  }
+
+  @media (min-width: 1440px) {
+    font-size: 20px;
+  }
+}
+.certifictBtn {
+  font-size: 14px;
+
+  @media (min-width: 744px) {
+    font-size: 18px;
+  }
+
+  @media (min-width: 1440px) {
     font-size: 20px;
   }
 }

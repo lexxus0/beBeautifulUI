@@ -8,11 +8,11 @@ import {
   DeliveryFormValues,
   schemaDelivery,
 } from "@/validation/deliveryValidation";
+import Image from "next/image";
 import Icon from "@/components/shared/Icon";
 import PaymentSelect, { PaymentChoice } from "../PaymentSelect/PaymentSelect";
-import BasketIcon from "@/components/elements/BasketIcon";
-import styles from "./DeliveryFormMarkup.module.scss";
 import BaseSelect from "@/components/elements/BaseSelect";
+import styles from "./DeliveryFormMarkup.module.scss";
 
 type City = {
   CityID: string;
@@ -99,19 +99,19 @@ export default function DeliveryFormMarkup() {
     fetchWarehouses();
   }, [selectedCity]);
 
-    // --- SYNC city & warehouse with react-hook-form ---
-    useEffect(() => {
-      if (selectedCity) {
-        const found = cities.find((c) => c.CityID === selectedCity);
-        setValue("city", found ? found.Description : "");
-      } else {
-        setValue("city", "");
-      }
-    }, [selectedCity, cities, setValue]);
-  
-    useEffect(() => {
-      setValue("warehouse", selectedWarehouse || "");
-    }, [selectedWarehouse, setValue]);
+  // --- SYNC city & warehouse with react-hook-form ---
+  useEffect(() => {
+    if (selectedCity) {
+      const found = cities.find((c) => c.CityID === selectedCity);
+      setValue("city", found ? found.Description : "");
+    } else {
+      setValue("city", "");
+    }
+  }, [selectedCity, cities, setValue]);
+
+  useEffect(() => {
+    setValue("warehouse", selectedWarehouse || "");
+  }, [selectedWarehouse, setValue]);
 
   const onSubmit = () => {
     // Remove sensitive delivery data logging for security
@@ -120,9 +120,9 @@ export default function DeliveryFormMarkup() {
   };
 
   return (
-    <div className="pb-12 md:w-[436px] md:pt-[6px] md:pb-20 lg:w-full lg:pt-9 lg:pb-[100px] mx-auto lg:mr-0">
+    <div className="pb-16 md:w-[436px] md:pt-[6px] md:pb-20 lg:w-full lg:pt-9 lg:pb-10 mx-auto lg:mr-0">
       <form
-        className="lg:flex lg:gap-[134px] justify-end"
+        className="lg:flex lg:gap-[134px] justify-end lg:relative"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="lg:w-[526px]">
@@ -141,6 +141,12 @@ export default function DeliveryFormMarkup() {
             searchable
             className="font-roboto font-light text-base"
           />
+
+          <div className="border border-black-10 rounded-md p-1 mb-6 md:p-2 md:mb-10 lg:mb-15">
+            <div className="bg-black-10 rounded-lg p-2 font-lato text-base text-white text-center md:p-4 md:text-lg">
+              Нова пошта
+            </div>
+          </div>
 
           {/* ТАБИ: ВІДДІЛЕННЯ / АДРЕСНА ДОСТАВКА */}
           <div className="pt-10 relative md:pt-0">
@@ -303,10 +309,10 @@ export default function DeliveryFormMarkup() {
             {showComment && (
               <div id="order-comment">
                 <textarea
-                  rows={3}
+                  rows={1}
                   placeholder="Ваш коментар…"
                   {...register("orderComment")}
-                  className="w-full rounded-xl border px-4 py-3 outline-none"
+                  className={`${styles.input} ${styles.house}`}
                 />
               </div>
             )}
@@ -326,16 +332,33 @@ export default function DeliveryFormMarkup() {
             </button>
             {showCert && (
               <div id="gift-certificate">
-                <input
-                  {...register("giftCertificate")}
-                  placeholder="Номер/код сертифіката"
-                  className="w-full rounded-xl border px-4 py-3 outline-none"
-                />
+                <p className="font-roboto font-light text-sm mb-4">
+                  Маєте сертифікат? Введіть його тут і отримайте знижку чи
+                  подарунок! <br /> Щоб підтвердити — натисніть «Застосувати
+                  промокод».
+                </p>
+                <div className="mb-4">
+                  <label
+                    htmlFor="certificate"
+                    className="font-roboto font-light text-sm md:text-base text-gray-10"
+                  >
+                    Номер сертифіката
+                  </label>
+                  <input
+                    {...register("giftCertificate")}
+                    id="certificate"
+                    placeholder="Номер сертифіката"
+                    className={`${styles.input} ${styles.house}`}
+                  />
+                </div>
+                <button className={`${styles.submit} ${styles.certifictBtn}`}>
+                  Застосувати код
+                </button>
               </div>
             )}
           </div>
 
-          <div className="flex flex-col gap-4 mb-10 lg:mb-[70px] pl-1 lg:pl-[6px]">
+          <div className="flex flex-col gap-4 mb-10 mb:mb-12 lg:mb-[70px] pl-1 lg:pl-[6px]">
             {/* <label className={styles.cb}>
               <input
                 type="checkbox"
@@ -359,10 +382,53 @@ export default function DeliveryFormMarkup() {
               <span>Зберегти картку для майбутніх покупок.</span>
             </label>
           </div>
-          <button disabled={isSubmitting} className={styles.submit}>
-            Оформити замовлення
-            <BasketIcon variant="white" className="w-[18px] h-[18px] ml-4" />
-          </button>
+          {showCert ? (
+            <div className="lg:h-[186px] lg:mb-41">
+              <div className="lg:absolute lg:left-27">
+                <div className="py-3 md:py-4 flex items-center justify-between border-t border-t-[#8d8d8d] mb-10 md:mb-12 lg:w-[1186px]">
+                  <Image
+                    src="/images/logo-orders-mob.png"
+                    alt="logo"
+                    width={54}
+                    height={82}
+                    className="lg:hidden"
+                  />
+                  <Image
+                    src="/images/logo-orders-desktop.png"
+                    alt="logo"
+                    width={151}
+                    height={146}
+                    className="hidden lg:block"
+                  />
+                  <div className="flex flex-col gap-1">
+                    <p className="font-roboto font-light text-sm md:text-lg lg:text-[22px] text-gray-80 text-end">
+                      Сума замовлення:
+                      <span className="ml-[10px]">1008 грн</span>
+                    </p>
+                    <p className="font-roboto font-light text-sm md:text-lg lg:text-[22px] text-[#af1818] text-end">
+                      Сертифікат:<span className="ml-[10px]">-500 грн</span>
+                    </p>
+                    <p className="font-lato font-bold lg:font-semibold text-sm md:text-lg lg:text-2xl text-end">
+                      Загальна сума до сплати:
+                      <span className="ml-[10px]">508 грн</span>
+                    </p>
+                  </div>
+                </div>
+                <div className="lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:w-[526px]">
+                  <button
+                    disabled={isSubmitting}
+                    className={`${styles.submit} w-full`}
+                  >
+                    Оформити замовлення
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <button disabled={isSubmitting} className={styles.submit}>
+              Оформити замовлення
+            </button>
+          )}
         </div>
       </form>
     </div>

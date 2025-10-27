@@ -9,6 +9,7 @@ import BasketIcon from "@/components/elements/BasketIcon";
 
 import styles from "./Navigation.module.scss";
 import clsx from "clsx";
+import Icon from "@/components/shared/Icon";
 
 type NavigationProps = {
   onClose?: () => void;
@@ -65,15 +66,20 @@ export default function Navigation({ onClose }: NavigationProps) {
       ))}
       <li>
         {hasMounted && !isLoggenIn && (
-          <Link
-            href="/basket"
-            className="hidden lg:block lg:w-8 lg:h-8 relative"
-          >
-            <BasketIcon className="lg:w-8 lg:h-8" />
-            <div className="absolute -top-[2px] -right-2 flex items-center justify-center bg-white-20 w-4 h-4 rounded-3xl border-1 border-black-10">
-              <p className="font-lato text-[10px]">2</p>
-            </div>
-          </Link>
+          <div className="flex gap-8 items-center">
+            <Link
+              href="/basket"
+              className="hidden lg:block lg:w-8 lg:h-8 relative"
+            >
+              <BasketIcon className="lg:w-8 lg:h-8" />
+              <div className="absolute -top-[2px] -right-2 flex items-center justify-center bg-white-20 w-4 h-4 rounded-3xl border-1 border-black-10">
+                <p className="font-lato text-[10px]">2</p>
+              </div>
+            </Link>
+            <Link href="favorites" className="sm:hidden lg:block">
+              <Icon name="icon-hard" className="w-8 h-7" />
+            </Link>
+          </div>
         )}
       </li>
     </ul>
