@@ -113,8 +113,9 @@ export default function DeliveryFormMarkup() {
     setValue("warehouse", selectedWarehouse || "");
   }, [selectedWarehouse, setValue]);
 
-  const onSubmit = (data: DeliveryFormValues) => {
-    console.log("data", data);
+  const onSubmit = () => {
+    // Remove sensitive delivery data logging for security
+    console.log("Delivery form submitted successfully");
     router.push("/payment");
   };
 

@@ -21,6 +21,7 @@ const AuthPage = () => {
             width={526}
             height={646}
             className={styles.image}
+            style={{ width: "auto", height: "auto" }}
           />
         </div>
         <div className={styles.wrapperForm}>

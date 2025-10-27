@@ -11,7 +11,7 @@ export default async function ProductDetails({
 
   return (
     <section className="container">
-      <Product productId={productId}/>
+      <Product productId={productId} />
       <section>
         <RecentlyViewed />
       </section>

@@ -44,8 +44,9 @@ export default function ProfileForm() {
     },
   });
 
-  const onSubmit = (data: ProfileFormInputs) => {
-    console.log("Збережені дані профілю:", data);
+  const onSubmit = () => {
+    // Remove sensitive profile data logging for security
+    console.log("Profile form submitted successfully");
   };
 
   const renderIcon = (

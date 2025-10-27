@@ -12,18 +12,38 @@ import { convertDayToString } from "@/helpers/covertDateToString";
 import { BiLike, BiDislike } from "react-icons/bi";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
 
-export default function Reviews() {
+interface ReviewsProps {
+  productId?: string;
+  showTitle?: boolean;
+  reviews?: IReview[];
+}
+
+export default function Reviews({ productId, showTitle = false, reviews: propReviews }: ReviewsProps) {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const [expandedReviews, setExpandedReviews] = useState<{
     [key: string]: boolean;
   }>({});
 
-  useEffect(() => {
-    dispatch(fetchReviews({ limit: 10, currentPage: 1 }));
-  }, [dispatch]);
+  const storeReviews = useAppSelector(selectReviews);
+  
+  // Use prop reviews if provided, otherwise use store reviews
+  const reviews = propReviews || storeReviews;
 
-  const reviews = useAppSelector(selectReviews);
+  useEffect(() => {
+    // Only fetch from store if no reviews are provided as props
+    if (!propReviews) {
+      if (productId) {
+        dispatch(fetchReviews({ 
+          productId, 
+          limit: 10, 
+          currentPage: 1 
+        }));
+      } else {
+        dispatch(fetchReviews({ limit: 10, currentPage: 1 }));
+      }
+    }
+  }, [dispatch, productId, propReviews]);
 
   const CHARACTER_LIMIT = 50;
 
@@ -36,9 +56,11 @@ export default function Reviews() {
 
   return (
     <div className="container mb-20">
-      <h2 className="font-lato font-semibold text-3xl text-[#2d2d2d] mb-8 text-left md:text-center md:text-[40px] md:font-normal">
-        Краса, яку підтверджують наші клієнти
-      </h2>
+      {showTitle && (
+        <h2 className="font-lato font-semibold text-3xl text-[#2d2d2d] mb-8 text-left md:text-center md:text-[40px] md:font-normal">
+          Краса, яку підтверджують наші клієнти
+        </h2>
+      )}
       <div className="flex flex-nowrap gap-16 flex-col lg:flex-row lg:flex-wrap">
         {reviews.map((review: IReview) => {
           const handleReaction = (type: "like" | "dislike") => {
@@ -51,16 +73,16 @@ export default function Reviews() {
             dispatch(reactToReview({ id: review._id, type }));
           };
 
-          const isExpanded = expandedReviews[review.createdAt];
-          const isLong = review.comment.length > CHARACTER_LIMIT;
+          const isExpanded = expandedReviews[review._id];
+          const isLong = (review.comment?.length || 0) > CHARACTER_LIMIT;
           const visibleComment =
             isExpanded || !isLong
-              ? review.comment
-              : review.comment.slice(0, CHARACTER_LIMIT) + "...";
+              ? review.comment || ""
+              : (review.comment || "").slice(0, CHARACTER_LIMIT) + "...";
 
           return (
             <div
-              key={review.createdAt}
+              key={review._id}
               className="px-6 py-4 bg-gray-200 rounded-2xl w-full relative lg:w-[616px]"
             >
               <p className="absolute right-5">
@@ -97,7 +119,7 @@ export default function Reviews() {
 
                 {isLong && (
                   <button
-                    onClick={() => toggleExpand(review.createdAt)}
+                    onClick={() => toggleExpand(review._id)}
                     className="text-sm ml-auto mt-3"
                   >
                     {isExpanded ? "Сховати" : "Дивитись більше"}
