@@ -8,16 +8,26 @@ interface IconProps {
   width?: number;
   height?: number;
   className?: string;
+  title?: string; // опційно: підпис для a11y
 }
 
-export default function Icon({ width, height, name, className }: IconProps) {
+export default function Icon({
+  width,
+  height,
+  name,
+  className,
+  title,
+}: IconProps) {
   return (
     <svg
       width={width}
       height={height}
-      className={clsx("fill-current", className)}
+      aria-hidden={title ? undefined : true}
+      role={title ? "img" : "presentation"}
+      // focusable="false"
+      className={clsx("fill-current stroke-current", className)}
     >
-      <use xlinkHref={`/icons/sprite.svg#${name}`} />
+      <use href={`/icons/sprite.svg#${name}`} />
     </svg>
   );
 }

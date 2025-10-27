@@ -57,12 +57,13 @@ export default function Header() {
           </Link>
           <button
             type="button"
+            aria-label="Відкрити меню"
             className="w-10 h-10 flex items-center justify-center lg:hidden"
             onClick={() => {
               setMenu(true);
             }}
           >
-            <Icon name="icon-burger-menu" className="w-8 h-8" />
+            <Icon name="icon-burger-menu" aria-hidden="true" className="w-8 h-8" />
           </button>
         </div>
       </div>
