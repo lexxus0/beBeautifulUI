@@ -32,29 +32,21 @@ export default function Header() {
         <div className="hidden lg:block lg:mr-auto">
           <Navigation />
         </div>
-        <div className={styles.wrapperNav}>
-          {isLoggedIn ? (
-            <div className="hidden lg:block">
-              <UserMenu />
-            </div>
-          ) : (
-            <div className="hidden md:flex gap-6">
-              <LangSwitcher />
-              <UserIcon className="hidden lg:flex" />
-            </div>
-          )}
-          <Link href="favorites" className="lg:hidden">
-            <Icon name="icon-hard" className="w-7 h-6" />
+        <div className={styles.wrapper}>
+          <div className="flex items-center gap-4 md:gap-5 lg:gap-6">
+          <Link href="favorites" className="">
+            <Icon name="icon-hard" className="w-7 h-6 lg:w-[30px] lg:h-[26px]" />
           </Link>
           <Link
             href="/basket"
-            className="w-9 h-9 flex items-center justify-center lg:hidden relative"
+            className="w-9 h-9 flex items-center justify-center relative"
           >
-            <BasketIcon className="w-6 h-6" />
+            <BasketIcon className="w-6 h-6 md:w-7 md:h-7 lg:w-[30px] lg:h-[30px]" />
             <div className="absolute top-[3px] -right-[2px] flex items-center justify-center bg-white-20 w-[14px] h-[14px] rounded-3xl border-1 border-black-10">
               <p className="font-lato text-[10px]">2</p>
             </div>
           </Link>
+          <LangSwitcher className="hidden md:block" />
           <button
             type="button"
             aria-label="Відкрити меню"
@@ -65,6 +57,16 @@ export default function Header() {
           >
             <Icon name="icon-burger-menu" aria-hidden="true" className="w-8 h-8" />
           </button>
+          {isLoggedIn ? (
+            <div className="hidden lg:block">
+              <UserMenu />
+            </div>
+          ) : (
+            <div className="">
+              <UserIcon className="hidden lg:flex" />
+            </div>
+          )}
+          </div>
         </div>
       </div>
       {menu && (

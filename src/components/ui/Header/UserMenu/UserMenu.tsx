@@ -1,18 +1,15 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-// import Image from "next/image";
+import Image from "next/image";
 import { useAppSelector } from "@/store/hooks";
 import { selectUser } from "@/store/auth/selectors";
 import { useViewport } from "@/helpers/hooks/useViewport";
 import { useHasMounted } from "@/helpers/hooks/useHasMounted";
-import BasketIcon from "@/components/elements/BasketIcon";
 import AccountMenu from "../AccountMenu/AccountMenu";
 import Icon from "@/components/shared/Icon";
-import LangSwitcher from "../LangSwitcher/LangSwitcher";
 
 import styles from "./UserMenu.module.scss";
-import Link from "next/link";
 
 type UserMenuProps = {
   onCloseMobileModal?: () => void;
@@ -50,39 +47,24 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
 
   return (
     <div className={styles.wrapper} ref={wrapperRef}>
-      <LangSwitcher className="hidden lg:block" />
-      <Link href="favorites" className="sm:hidden lg:block">
-        <Icon name="icon-hard" className="w-8 h-7" />
-      </Link>
-      <Link href="/basket" className="hidden lg:w-8 lg:h-8 lg:block relative">
-        <BasketIcon className="lg:w-8 lg:h-8" />
-        <div className="absolute -top-[2px] -right-2 flex items-center justify-center bg-white-20 w-4 h-4 rounded-3xl border-1 border-black-10">
-          <p className="font-lato text-[10px]">2</p>
-        </div>
-      </Link>
 
       <div className="flex gap-[13px] items-center">
-        {/* {user.avatar ? (
+        {user.avatarUrl ? (
           <Image
-            src={user.avatar}
+            src={user.avatarUrl}
             alt={user.name}
             fill
-            className="w-10 h-10 rounded-lg lg:w-12 lg:h-12 object-cover"
+            className="w-12 h-12 rounded-lg lg:w-10 lg:h-10 object-cover"
           />
         ) : (
           <span
-            className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg border-1 border-black-10 bg-gray-10
+            className="w-12 h-12 lg:w-10 lg:h-10 rounded-lg border-1 border-black-10 bg-gray-10
     text-2xl font-medium text-white-30 flex items-center justify-center"
           >
-            <span>{user.name.toUpperCase().charAt(0)}</span>
+            <span>{user?.name ? user?.name.toUpperCase().charAt(0) : 'U'}</span>
           </span>
-        )} */}
-        <span
-          className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg border-1 border-gray bg-gray-10
-    text-2xl font-medium text-white-30 flex items-center justify-center"
-        >
-          <span>{user?.name ? user.name.toUpperCase().charAt(0) : "?"}</span>
-        </span>
+        )}
+
         {user.name ? (
           <p className={styles.text}>{user.name}</p>
         ) : (

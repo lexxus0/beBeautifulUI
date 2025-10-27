@@ -3,6 +3,7 @@
   align-items: center;
   gap: 32px;
   position: relative;
+  justify-content: space-between;
 
   @media (min-width: 1440px) {
     padding-bottom: 0;
