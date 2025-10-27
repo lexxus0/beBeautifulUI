@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Controller, Resolver, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,14 +8,29 @@ import {
   DeliveryFormValues,
   schemaDelivery,
 } from "@/validation/deliveryValidation";
+import Image from "next/image";
 import Icon from "@/components/shared/Icon";
 import PaymentSelect, { PaymentChoice } from "../PaymentSelect/PaymentSelect";
-import BasketIcon from "@/components/elements/BasketIcon";
+import BaseSelect from "@/components/elements/BaseSelect";
 import styles from "./DeliveryFormMarkup.module.scss";
 
+type City = {
+  CityID: string;
+  Description: string;
+};
+
+type Warehouse = {
+  SiteKey: string;
+  Description: string;
+};
 
 export default function DeliveryFormMarkup() {
   const router = useRouter();
+  const [cities, setCities] = useState<City[]>([]);
+  const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
+  const [selectedCity, setSelectedCity] = useState<string>("");
+  console.log("selectedCity: ", selectedCity);
+  const [selectedWarehouse, setSelectedWarehouse] = useState<string>("");
   const [showComment, setShowComment] = useState(false);
   const [showCert, setShowCert] = useState(false);
 
@@ -37,7 +52,7 @@ export default function DeliveryFormMarkup() {
       apartment: "",
       orderComment: "",
       giftCertificate: "",
-      noCall: false,
+      // noCall: false,
       saveCard: false,
     },
     mode: "onTouched",
@@ -45,61 +60,90 @@ export default function DeliveryFormMarkup() {
 
   const deliveryType = watch("deliveryType");
 
-  const onSubmit = (data: DeliveryFormValues) => {
-    console.log("data", data);
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const res = await fetch(
+          "https://be-beautiful-backend.onrender.com/api/np/cities"
+        );
+        const json = await res.json();
+        console.log("city: ", json);
+        setCities(json.data);
+      } catch (err) {
+        console.error("❌ error fetching cities:", err);
+      }
+    };
+    fetchCities();
+  }, []);
+
+  useEffect(() => {
+    // console.log("🌀 useEffect triggered with:", selectedCity);
+    if (!selectedCity) {
+      setWarehouses([]);
+      return;
+    }
+
+    const fetchWarehouses = async () => {
+      try {
+        console.log("🚀 Fetching warehouses for city:", selectedCity);
+        const res = await fetch(
+          `https://be-beautiful-backend.onrender.com/api/np/warehouses/${selectedCity}`
+        );
+        const json = await res.json();
+        console.log("warehouses: ", json.data);
+        setWarehouses(json.data);
+      } catch (err) {
+        console.error("❌ error fetching warehouses:", err);
+      }
+    };
+    fetchWarehouses();
+  }, [selectedCity]);
+
+  // --- SYNC city & warehouse with react-hook-form ---
+  useEffect(() => {
+    if (selectedCity) {
+      const found = cities.find((c) => c.CityID === selectedCity);
+      setValue("city", found ? found.Description : "");
+    } else {
+      setValue("city", "");
+    }
+  }, [selectedCity, cities, setValue]);
+
+  useEffect(() => {
+    setValue("warehouse", selectedWarehouse || "");
+  }, [selectedWarehouse, setValue]);
+
+  const onSubmit = () => {
+    // Remove sensitive delivery data logging for security
+    console.log("Delivery form submitted successfully");
     router.push("/payment");
   };
 
   return (
-    <div className="pb-12 md:w-[436px] md:pt-[6px] md:pb-20 lg:w-full lg:pt-9 lg:pb-[100px] mx-auto lg:mr-0">
+    <div className="pb-16 md:w-[436px] md:pt-[6px] md:pb-20 lg:w-full lg:pt-9 lg:pb-10 mx-auto lg:mr-0">
       <form
-        className="lg:flex lg:gap-[134px] justify-end"
+        className="lg:flex lg:gap-[134px] justify-end lg:relative"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="lg:w-[526px]">
           {/* МІСТО */}
-          <div>
-            <label
-              htmlFor="city"
-              className="font-roboto font-light text-sm md:text-base"
-            >
-              Місто
-            </label>
-            <div className="relative mb-6 md:mb-10 lg:mb-15">
-              <input
-                id="city"
-                type="text"
-                placeholder="Пошук міста"
-                autoComplete="address-level2"
-                {...register("city")}
-                className={styles.input}
-                aria-invalid={!!errors.city}
-              />
-              <Icon
-                name="icon-search"
-                className="w-[18px] h-[18px] absolute top-[14px] left-3 fill-transparent stroke-black-10"
-              />
-               <button
-                type="button"
-                onClick={() => setValue("city", "")}
-                aria-label="Очистити місто"
-                className="absolute top-[18px] right-9"
-              >
-              <Icon
-                name="icon-close"
-                className="w-3 h-3 fill-transparent stroke-gray-10 rotate-45"
-              />
-              </button>
-            {errors.city && (
-              <p className="mt-1 text-sm text-rose-600">
-                {errors.city.message}
-              </p>
-            )}
-            </div>
-          </div>
+          <BaseSelect
+            label="Місто"
+            placeholder="Пошук міста"
+            options={cities.map((c) => ({
+              value: c.CityID,
+              label: c.Description,
+            }))}
+            value={selectedCity}
+            onSelect={setSelectedCity}
+            iconLeft="icon-search"
+            iconRight="icon-arrow-down"
+            searchable
+            className="font-roboto font-light text-base"
+          />
 
           <div className="border border-black-10 rounded-md p-1 mb-6 md:p-2 md:mb-10 lg:mb-15">
-            <div className="bg-black-10 rounded-lg p-2 font-lato font- text-base text-white text-center md:p-4 md:font-normal md:text-lg">
+            <div className="bg-black-10 rounded-lg p-2 font-lato text-base text-white text-center md:p-4 md:text-lg">
               Нова пошта
             </div>
           </div>
@@ -127,42 +171,30 @@ export default function DeliveryFormMarkup() {
                 />
                 <span>Адресна доставка</span>
               </label>
-            {errors.deliveryType && (
-              <p className="mt-1 text-sm text-rose-600">Оберіть тип доставки</p>
-            )}
-          </div>
+              {errors.deliveryType && (
+                <p className="mt-1 text-sm text-rose-600">
+                  Оберіть тип доставки
+                </p>
+              )}
             </div>
+          </div>
 
           {/* ВІДДІЛЕННЯ */}
           {deliveryType === "warehouse" && (
-            <div>
-              <label
-                htmlFor="warehouse"
-                className="font-roboto font-light text-sm text-gray-10 md:text-base"
-              >
-                Відділення
-              </label>
-              <div className="relative mb-8 md:mb-12 lg:mb-0">
-                <input
-                  id="warehouse"
-                  type="text"
-                  placeholder="Відділення"
-                  autoComplete="off"
-                  {...register("warehouse")}
-                  className={styles.input}
-                  aria-invalid={!!errors.warehouse}
-                />
-                <Icon
-                  name="icon-search"
-                  className="w-[18px] h-[18px] absolute top-[14px] left-3 fill-transparent stroke-black-10"
-                />
-              {errors.warehouse && (
-                <p className="mt-1 text-sm text-rose-600">
-                  {errors.warehouse.message}
-                </p>
-              )}
-              </div>
-            </div>
+            <BaseSelect
+              label="Відділення"
+              placeholder="Відділення"
+              options={warehouses.map((w) => ({
+                value: w.SiteKey,
+                label: w.Description,
+              }))}
+              value={selectedWarehouse}
+              onSelect={setSelectedWarehouse}
+              iconLeft="icon-search"
+              iconRight="icon-arrow-down"
+              searchable
+              className="font-roboto font-light text-base"
+            />
           )}
 
           {/* АДРЕСНА ДОСТАВКА */}
@@ -188,15 +220,15 @@ export default function DeliveryFormMarkup() {
                   name="icon-search"
                   className="w-[18px] h-[18px] absolute top-[14px] left-3 fill-transparent stroke-black-10"
                 />
-              {errors.street && (
-                <p className="mt-1 text-sm text-rose-600">
-                  {errors.street.message}
-                </p>
-              )}
+                {errors.street && (
+                  <p className="mt-1 text-sm text-rose-600">
+                    {errors.street.message}
+                  </p>
+                )}
               </div>
 
               <div className="flex gap-3">
-                <div className='mb-8 md:mb-12 lg:mb-0'>
+                <div className="mb-8 md:mb-12 lg:mb-0">
                   <label
                     htmlFor="house"
                     className="font-roboto font-light text-sm md:text-base text-gray-10"
@@ -212,13 +244,13 @@ export default function DeliveryFormMarkup() {
                     className={`${styles.input} ${styles.house}`}
                     aria-invalid={!!errors.house}
                   />
-                {errors.house && (
-                  <p className="mt-1 text-sm text-rose-600">
-                    {errors.house.message}
-                  </p>
-                )}
+                  {errors.house && (
+                    <p className="mt-1 text-sm text-rose-600">
+                      {errors.house.message}
+                    </p>
+                  )}
                 </div>
-                <div className='mb-8 md:mb-12 lg:mb-0'>
+                <div className="mb-8 md:mb-12 lg:mb-0">
                   <label
                     htmlFor="apartment"
                     className="font-roboto font-light text-sm md:text-base text-gray-10"
@@ -245,14 +277,13 @@ export default function DeliveryFormMarkup() {
           )}
         </div>
         <div className="lg:w-[526px]">
-
           {/* ВАРІАНТ ОПЛАТИ */}
           <Controller
             name="payment"
             control={control}
             render={({ field, fieldState }) => (
               <PaymentSelect
-                value={(field.value as PaymentChoice | undefined)}
+                value={field.value as PaymentChoice | undefined}
                 onChange={field.onChange}
                 placeholder="Варіант оплати"
                 error={fieldState.error?.message}
@@ -278,10 +309,10 @@ export default function DeliveryFormMarkup() {
             {showComment && (
               <div id="order-comment">
                 <textarea
-                  rows={3}
+                  rows={1}
                   placeholder="Ваш коментар…"
                   {...register("orderComment")}
-                  className="w-full rounded-xl border px-4 py-3 outline-none"
+                  className={`${styles.input} ${styles.house}`}
                 />
               </div>
             )}
@@ -301,17 +332,34 @@ export default function DeliveryFormMarkup() {
             </button>
             {showCert && (
               <div id="gift-certificate">
-                <input
-                  {...register("giftCertificate")}
-                  placeholder="Номер/код сертифіката"
-                  className="w-full rounded-xl border px-4 py-3 outline-none"
-                />
+                <p className="font-roboto font-light text-sm mb-4">
+                  Маєте сертифікат? Введіть його тут і отримайте знижку чи
+                  подарунок! <br /> Щоб підтвердити — натисніть «Застосувати
+                  промокод».
+                </p>
+                <div className="mb-4">
+                  <label
+                    htmlFor="certificate"
+                    className="font-roboto font-light text-sm md:text-base text-gray-10"
+                  >
+                    Номер сертифіката
+                  </label>
+                  <input
+                    {...register("giftCertificate")}
+                    id="certificate"
+                    placeholder="Номер сертифіката"
+                    className={`${styles.input} ${styles.house}`}
+                  />
+                </div>
+                <button className={`${styles.submit} ${styles.certifictBtn}`}>
+                  Застосувати код
+                </button>
               </div>
             )}
           </div>
 
-          <div className="flex flex-col gap-4 mb-10 lg:mb-[70px] pl-1 lg:pl-[6px]">
-            <label className={styles.cb}>
+          <div className="flex flex-col gap-4 mb-10 mb:mb-12 lg:mb-[70px] pl-1 lg:pl-[6px]">
+            {/* <label className={styles.cb}>
               <input
                 type="checkbox"
                 id="noCall"
@@ -322,7 +370,7 @@ export default function DeliveryFormMarkup() {
               <span>
                 Мені можна не телефонувати для підтвердження замовлення.
               </span>
-            </label>
+            </label> */}
             <label className={styles.cb}>
               <input
                 type="checkbox"
@@ -334,10 +382,53 @@ export default function DeliveryFormMarkup() {
               <span>Зберегти картку для майбутніх покупок.</span>
             </label>
           </div>
-          <button disabled={isSubmitting} className={styles.submit}>
-            Оформити замовлення
-            <BasketIcon variant="white" className="w-[18px] h-[18px] ml-4" />
-          </button>
+          {showCert ? (
+            <div className="lg:h-[186px] lg:mb-41">
+              <div className="lg:absolute lg:left-27">
+                <div className="py-3 md:py-4 flex items-center justify-between border-t border-t-[#8d8d8d] mb-10 md:mb-12 lg:w-[1186px]">
+                  <Image
+                    src="/images/logo-orders-mob.png"
+                    alt="logo"
+                    width={54}
+                    height={82}
+                    className="lg:hidden"
+                  />
+                  <Image
+                    src="/images/logo-orders-desktop.png"
+                    alt="logo"
+                    width={151}
+                    height={146}
+                    className="hidden lg:block"
+                  />
+                  <div className="flex flex-col gap-1">
+                    <p className="font-roboto font-light text-sm md:text-lg lg:text-[22px] text-gray-80 text-end">
+                      Сума замовлення:
+                      <span className="ml-[10px]">1008 грн</span>
+                    </p>
+                    <p className="font-roboto font-light text-sm md:text-lg lg:text-[22px] text-[#af1818] text-end">
+                      Сертифікат:<span className="ml-[10px]">-500 грн</span>
+                    </p>
+                    <p className="font-lato font-bold lg:font-semibold text-sm md:text-lg lg:text-2xl text-end">
+                      Загальна сума до сплати:
+                      <span className="ml-[10px]">508 грн</span>
+                    </p>
+                  </div>
+                </div>
+                <div className="lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:w-[526px]">
+                  <button
+                    disabled={isSubmitting}
+                    className={`${styles.submit} w-full`}
+                  >
+                    Оформити замовлення
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <button disabled={isSubmitting} className={styles.submit}>
+              Оформити замовлення
+            </button>
+          )}
         </div>
       </form>
     </div>

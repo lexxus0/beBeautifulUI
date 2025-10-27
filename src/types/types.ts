@@ -70,15 +70,19 @@ export type CategoryCardProps = {
 
 export interface IReview {
   _id: string;
-  name: string;
-  location: string;
-  rating: number;
-  comment: string;
-  createdAt: string;
-  likes: number;
-  dislikes: number;
-  hasLiked?: boolean;
-  hasDisliked?: boolean;
+  productId: string; // Required - matches backend schema
+  userId: string; // Required - matches backend schema (for unique constraint)
+  rating: number; // 1-5, required, matches backend schema
+  comment?: string; // Optional, max 1000 chars, matches backend schema
+  createdAt: string; // From timestamps
+  updatedAt: string; // From timestamps
+  // Frontend-specific fields (not in backend schema)
+  name: string; // From user profile
+  location: string; // From user profile
+  likes: number; // For future like/dislike feature
+  dislikes: number; // For future like/dislike feature
+  hasLiked?: boolean; // For future like/dislike feature
+  hasDisliked?: boolean; // For future like/dislike feature
 }
 
 export interface IReviewResponse {

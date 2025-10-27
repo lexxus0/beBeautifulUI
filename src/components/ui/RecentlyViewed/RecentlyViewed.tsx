@@ -85,7 +85,7 @@ export default function RecentlyViewed() {
                   {product.category}
                 </p>
                 </div>
-                <ProductRating value={3.3} />
+                <ProductRating productId={product._id} value={3.3} />
                 <p className="font-lat text-lg lg:font-semibold lg:text-xl text-black mt-4">
                   {product.priceByVolume[0].price} грн
                 </p>

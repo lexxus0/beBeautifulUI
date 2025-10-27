@@ -39,7 +39,8 @@ export default function UserCabinet() {
               className="w-45 h-45 lg:w-[306px] lg:h-[306px] rounded-lg border-1 border-black-10 bg-gray-10
           text-7xl font-medium text-white-30 flex items-center justify-center mx-auto lg:mx-0"
             >
-              {user?.name.toUpperCase().charAt(0)}
+              {/* {user?.name.toUpperCase().charAt(0)} */}
+              <span>{user?.name ? user.name.toUpperCase().charAt(0) : "?"}</span>
             </span>
           <button type="button" className={styles.btnEdit}>
             <Icon name="icon-edit" className="w-[19px] h-[19px]" />
