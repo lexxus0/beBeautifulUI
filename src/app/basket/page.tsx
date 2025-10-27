@@ -11,11 +11,11 @@ import RecommendedProducts from "@/components/ui/RecommendedProducts/Recommended
 import BackButton from "@/components/ui/BackButton/BackButton";
 import { selectCartItems, selectCartLoading } from "@/store/cart/selector";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
-import { ICartItem } from "@/types/types";
+import { BasketItemType, ICartItem } from "@/types/types";
 
 const BasketPage = () => {
   const dispatch = useAppDispatch();
-  const basketItems = useAppSelector(selectCartItems) as ICartItem[];
+  const cartItems = useAppSelector(selectCartItems) as ICartItem[]; // дані з бекенду
   const isLoading = useAppSelector(selectCartLoading);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
@@ -23,36 +23,47 @@ const BasketPage = () => {
     dispatch(fetchCart());
   }, [dispatch]);
 
-  const handleIncrement = (productId: string) => {
-    const item = basketItems.find((i) => i.productId === productId);
+  // Конвертуємо ICartItem[] в BasketItemType[]
+  const basketItems: BasketItemType[] = useMemo(() => {
+    return cartItems.map((item, index) => ({
+      id: index, // у фронтенді можемо просто index як унікальний ключ
+      image: item.image,
+      titleEn: item.titleEn,
+      titleUk: item.titleUk,
+      volume: item.volume,
+      quantity: item.quantity,
+      price: item.price,
+    }));
+  }, [cartItems]);
+
+  const handleIncrement = (id: number) => {
+    const item = basketItems[id];
     if (item) {
-      dispatch(updateCart({ productId, quantity: item.quantity + 1 }));
+      dispatch(updateCart({ productId: item.id.toString(), quantity: item.quantity + 1 }));
     }
   };
 
-  const handleDecrement = (productId: string) => {
-    const item = basketItems.find((i) => i.productId === productId);
+  const handleDecrement = (id: number) => {
+    const item = basketItems[id];
     if (item && item.quantity > 1) {
-      dispatch(updateCart({ productId, quantity: item.quantity - 1 }));
+      dispatch(updateCart({ productId: item.id.toString(), quantity: item.quantity - 1 }));
     }
   };
 
-  const handleRemove = (productId: string) => {
-    dispatch(removeFromCart(productId));
+  const handleRemove = (id: number) => {
+    const item = basketItems[id];
+    if (item) {
+      dispatch(removeFromCart(item.id.toString()));
+    }
   };
 
   const total = useMemo(
     () =>
-      basketItems.reduce(
-        (sum: number, item) => sum + item.quantity * item.price,
-        0
-      ),
+      basketItems.reduce((sum, item) => sum + item.quantity * item.price, 0),
     [basketItems]
   );
 
-  if (isLoading) {
-    return <p>Завантаження кошика...</p>;
-  }
+  if (isLoading) return <p>Завантаження кошика...</p>;
 
   return (
     <>

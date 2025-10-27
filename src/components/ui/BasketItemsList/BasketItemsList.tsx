@@ -1,15 +1,13 @@
-"use client";
-
 import React from "react";
 import BasketItem from "@/components/ui/BasketItem/BasketItem";
 import styles from "./BasketItemsList.module.scss";
-import { ICartItem } from "@/types/types";
+import { BasketItemType } from "@/types/types";
 
 interface BasketItemsListProps {
-  basketItems: ICartItem[];
-  onIncrement: (productId: string) => void;
-  onDecrement: (productId: string) => void;
-  onRemove: (productId: string) => void;
+  basketItems: BasketItemType[];
+  onIncrement: (id: number) => void;
+  onDecrement: (id: number) => void;
+  onRemove: (id: number) => void;
 }
 
 const BasketItemsList: React.FC<BasketItemsListProps> = ({
@@ -22,11 +20,11 @@ const BasketItemsList: React.FC<BasketItemsListProps> = ({
     <div className={styles.items}>
       {basketItems.map((item) => (
         <BasketItem
-          key={item.productId}
+          key={item.id}
           item={item}
-          onIncrement={() => onIncrement(item.productId)}
-          onDecrement={() => onDecrement(item.productId)}
-          onRemove={() => onRemove(item.productId)}
+          onIncrement={() => onIncrement(item.id)}
+          onDecrement={() => onDecrement(item.id)}
+          onRemove={() => onRemove(item.id)}
         />
       ))}
     </div>

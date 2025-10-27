@@ -2,10 +2,10 @@
 
 import styles from "./BasketItem.module.scss";
 import Image from "next/image";
-import { ICartItem } from "@/types/types";
+import { BasketItemType } from "@/types/types";
 
 interface BasketItemProps {
-  item: ICartItem;
+  item: BasketItemType;
   onIncrement: () => void;
   onDecrement: () => void;
   onRemove: () => void;
