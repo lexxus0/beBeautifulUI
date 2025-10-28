@@ -1,8 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { clearAuthHeader, handleError, instance, setAuthHeader } from "../init";
-import { IUser, IUserResponse } from "@/types/types";
+import { IUpdateUserResponse, IUser, IUserResponse } from "@/types/types";
 import { RootState } from "../store";
 import { clearAuth } from "./slice";
+import { AxiosError } from "axios";
+
+const appendIf = (form: FormData, key: string, v?: string) => {
+  if (v && v.trim() !== "") form.append(key, v);
+};
 
 export const registerUser = createAsyncThunk<IUserResponse, IUser>(
   "users/signup",
@@ -66,7 +71,12 @@ export const refreshUser = createAsyncThunk<
     return res.data.data;
   } catch (e: unknown) {
     // If refresh fails with 401, clear the auth state
-    if (e && typeof e === 'object' && 'response' in e && (e as { response?: { status?: number } }).response?.status === 401) {
+    if (
+      e &&
+      typeof e === "object" &&
+      "response" in e &&
+      (e as { response?: { status?: number } }).response?.status === 401
+    ) {
       clearAuthHeader();
       thunkAPI.dispatch(clearAuth());
     }
@@ -97,18 +107,18 @@ export const refreshAndLoadUser = createAsyncThunk<
   { state: RootState }
 >("users/refreshAndLoad", async (_, thunkAPI) => {
   const state = thunkAPI.getState();
-  
+
   // If no tokens exist in Redux state, try to get them from localStorage
   let accessToken = state.auth.accessToken;
   let refreshToken = state.auth.refreshToken;
-  
+
   if (!accessToken || !refreshToken) {
-    if (typeof window !== 'undefined') {
-      accessToken = localStorage.getItem('accessToken');
-      refreshToken = localStorage.getItem('refreshToken');
+    if (typeof window !== "undefined") {
+      accessToken = localStorage.getItem("accessToken");
+      refreshToken = localStorage.getItem("refreshToken");
     }
   }
-  
+
   // If still no tokens exist, don't try to refresh
   if (!accessToken || !refreshToken) {
     return thunkAPI.rejectWithValue("No authentication tokens found.");
@@ -117,26 +127,35 @@ export const refreshAndLoadUser = createAsyncThunk<
   try {
     // Set the auth header with the current access token
     setAuthHeader(accessToken);
-    
+
     const refreshResult = await thunkAPI.dispatch(refreshUser()).unwrap();
 
     setAuthHeader(refreshResult.accessToken);
 
     const res = await instance.get("/auth/current");
+    console.log("refreshAndLoadUser ", res.data.data);
     return res.data.data;
   } catch (e: unknown) {
     // If refresh fails, clear auth state and localStorage
-    if ((e && typeof e === 'object' && 'response' in e && (e as { response?: { status?: number } }).response?.status === 401) || 
-        (e && typeof e === 'object' && 'message' in e && (e as { message?: string }).message?.includes("No tokens found"))) {
+    if (
+      (e &&
+        typeof e === "object" &&
+        "response" in e &&
+        (e as { response?: { status?: number } }).response?.status === 401) ||
+      (e &&
+        typeof e === "object" &&
+        "message" in e &&
+        (e as { message?: string }).message?.includes("No tokens found"))
+    ) {
       clearAuthHeader();
       thunkAPI.dispatch(clearAuth());
-      
+
       // Clear invalid tokens from localStorage
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
       }
-      
+
       // Silently fail - user will need to log in again
       return thunkAPI.rejectWithValue("Session expired");
     }
@@ -145,6 +164,49 @@ export const refreshAndLoadUser = createAsyncThunk<
     );
   }
 });
+
+export const updateUser = createAsyncThunk<IUpdateUserResponse, IUser>(
+  "users/updateUser",
+  async (payload, { rejectWithValue }) => {
+    try {
+      console.log("🟢 payload перед відправкою:", payload);
+      const form = new FormData();
+
+      appendIf(form, "name", payload.name);
+      appendIf(form, "first_name", payload.name);
+      appendIf(form, "last_name", payload.surname);
+
+      appendIf(form, "email", payload.email);
+      // appendIf(form, "gender", payload.gender);
+      // appendIf(form, "language", payload.language);
+      // appendIf(form, "phone", payload.phone);
+      // appendIf(form, "birthday", payload.birthday);
+      appendIf(form, "password", payload.password);
+      if (payload.avatarUrl) {
+        form.append("avatarUrlLocal", payload.avatarUrl); // 👈 multer.single('avatarUrlLocal')
+      }
+
+      // Для діагностики:
+      for (const [k, v] of form.entries()) {
+        console.log("📦 FormData", k, v);
+      }
+
+      const res = await instance.patch<IUpdateUserResponse>(
+        "auth/update-current-user",
+        form,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      // if (res.data.token) setAuthHeader(res.data.token);
+    console.log("✅ server:", res.data);
+      return res.data;
+    } catch (error) {
+      const e = error as AxiosError<{ message?: string }>;
+      console.error("❌ updateUser", e.response?.data || e.message);
+      return rejectWithValue(e.response?.data?.message || e.message || "Failed to update.");
+    }
+  }
+);
 
 export const signoutUser = createAsyncThunk<void, void, { state: RootState }>(
   "users/signout",
