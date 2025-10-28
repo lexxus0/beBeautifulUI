@@ -47,7 +47,6 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
 
   return (
     <div className={styles.wrapper} ref={wrapperRef}>
-
       <div className="flex gap-[13px] items-center">
         {user.avatarUrl ? (
           <Image
@@ -61,12 +60,22 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
             className="w-12 h-12 lg:w-10 lg:h-10 rounded-lg border-1 border-black-10 bg-gray-10
     text-2xl font-medium text-white-30 flex items-center justify-center"
           >
-            <span>{user?.name ? user?.name.toUpperCase().charAt(0) : 'U'}</span>
+            <span>
+              {" "}
+              {(user?.name
+                ? user.name[0]
+                : user?.email
+                ? user.email[0]
+                : "U"
+              ).toUpperCase()}
+            </span>
           </span>
         )}
 
-        {user.name ? (
-          <p className={styles.text}>{user.name}</p>
+        {user ? (
+          <p className={styles.text}>
+            {user.name || user.email?.split("@")[0]}
+          </p>
         ) : (
           <p className={styles.text}>User</p>
         )}
