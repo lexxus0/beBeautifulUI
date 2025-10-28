@@ -21,7 +21,7 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
 
   return (
     <div className={styles.modal}>
-      <LangSwitcher className="absolute top-5 left-4" />
+      <LangSwitcher className="absolute top-5 left-4 md:hidden" />
       <button type="button" className={styles.closeBtn} onClick={onClose}>
         <Icon name="icon-close" className={styles.iconClose} />
       </button>

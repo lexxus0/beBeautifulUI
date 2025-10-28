@@ -6,6 +6,7 @@ import {
   signoutUser,
   getCurrentUser,
   refreshAndLoadUser,
+  updateUser,
 } from "./operations";
 import { IUser } from "@/types/types";
 interface AuthState {
@@ -109,6 +110,19 @@ const authSlice = createSlice({
         state.refreshToken = null;
         state.isLoggedIn = false;
         state.isRefreshing = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        console.log('action.payload updateUser: ', action.payload);
+        // if (action.payload.token) {
+        //   state.token = action.payload.token;
+        // }
+      })
+      .addCase(updateUser.rejected, (state, action) => {
         state.error = action.payload as string;
       })
       .addCase(signoutUser.fulfilled, () => {

@@ -91,14 +91,41 @@ export interface IReviewResponse {
 }
 
 export interface IUser {
+  _id?: string;
   name?: string;
-  email: string;
+  surname?: string; 
+  // birthday?: string | null;
+  email?: string;
+  // gender?: "woman" | "man";
+  // language?: "en" | "uk";
+  // phone?: string;
   password?: string;
+  avatarUrl?: string | null;
 }
 
 export interface IUserResponse {
   accessToken: string;
   refreshToken: string;
+}
+
+export interface IUpdateUserResponse {
+  // user: {
+    first_name?: string;
+    last_name?: string;
+    // birthday?: string;
+    // phone?: string;
+    avatarUrl?: string | null;
+    email?: string;
+    password?: string;
+    // gender: "woman" | "man";
+    // role: "user" | "admin";
+    // agree: "true" | "false";
+    // language: "en" | "uk";
+    // createdAt: string;
+    // updatedAt: string;
+    _id: string;
+  // };
+  // token?: string;
 }
 
 export interface RegisterFormInputs {
