@@ -15,7 +15,7 @@ import { BasketItemType, ICartItem } from "@/types/types";
 
 const BasketPage = () => {
   const dispatch = useAppDispatch();
-  const cartItems = useAppSelector(selectCartItems) as ICartItem[]; // дані з бекенду
+  const cartItems = useAppSelector(selectCartItems) as ICartItem[];
   const isLoading = useAppSelector(selectCartLoading);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
@@ -23,10 +23,9 @@ const BasketPage = () => {
     dispatch(fetchCart());
   }, [dispatch]);
 
-  // Конвертуємо ICartItem[] в BasketItemType[]
   const basketItems: BasketItemType[] = useMemo(() => {
     return cartItems.map((item, index) => ({
-      id: index, // у фронтенді можемо просто index як унікальний ключ
+      id: index,
       image: item.image,
       titleEn: item.titleEn,
       titleUk: item.titleUk,
