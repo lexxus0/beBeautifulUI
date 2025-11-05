@@ -1,0 +1,57 @@
+.navigationWrapper {
+  border-bottom: 0.2px solid rgba(45, 45, 45, 0.8);
+
+  .navigationContainer {
+    margin-inline: auto;
+    padding: 16px 20px;
+
+    @media (min-width: 744px) {
+      padding: 16px 40px;
+    }
+
+    @media (min-width: 1440px) {
+      max-width: 1440px;
+      padding: 24px 72px;
+    }
+
+    .navigationPath {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-roboto);
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 150%;
+      letter-spacing: 0.02em;
+      color: #8d8d8d;
+
+      @media (min-width: 744px) {
+        font-size: 16px;
+        line-height: 132%;
+      }
+
+      .link {
+        background: none;
+        border: none;
+        color: #8d8d8d;
+        cursor: pointer;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #111;
+        }
+      }
+
+      .icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      .current {
+        color: #111;
+        font-weight: 400;
+        cursor: default;
+      }
+    }
+  }
+}
