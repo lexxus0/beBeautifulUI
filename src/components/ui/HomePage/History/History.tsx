@@ -34,15 +34,13 @@ const History: React.FC = () => {
             </h3>
             <div className={styles.text}>
               {paragraphs.map((p: string, index: number) => {
-                const isSecondParagraph = index === 1;
-                let content = p.trim().replace(/\.*$/, "");
-
-                if (isSecondParagraph) {
-                  if (!showAll) content += "...";
-                  else content += ".";
-                }
-
                 if (!showAll && index > 1) return null;
+                let content = p;
+
+                if (index === 1) {
+                  if (!showAll) content = content.replace(/\.*$/, "...");
+                  else content = content.replace(/\.*$/, ".");
+                }
 
                 return <p key={index}>{content}</p>;
               })}
