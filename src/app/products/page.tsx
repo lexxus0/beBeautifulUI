@@ -1,4 +1,5 @@
 "use client";
+import BackButton from "@/components/ui/BackButton/BackButton";
 import ProductsList from "@/components/ui/products/ProductsList";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchProducts } from "@/store/products/operations";
@@ -12,8 +13,11 @@ export default function Products() {
   }, [dispatch]);
   const products = useAppSelector(selectProducts);
   return (
-    <div className="container">
-      <ProductsList products={products} />
-    </div>
+    <>
+      <BackButton href="/">Головна</BackButton>
+      <div className="container">
+        <ProductsList products={products} />
+      </div>
+    </>
   );
 }

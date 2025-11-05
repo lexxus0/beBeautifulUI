@@ -10,14 +10,16 @@ export default async function ProductDetails({
   const { productId } = await params;
 
   return (
-    <section className="container">
-      <Product productId={productId} />
-      <section>
-        <RecentlyViewed />
-      </section>
-      <section>
-        <WantToKnowMore />
-      </section>
-    </section>
+    <>
+      {/* <section className="container"> */}
+        <Product productId={productId} />
+        <section>
+          <RecentlyViewed />
+        </section>
+        <section>
+          <WantToKnowMore />
+        </section>
+      {/* </section> */}
+    </>
   );
 }
