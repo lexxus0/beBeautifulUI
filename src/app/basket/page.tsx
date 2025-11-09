@@ -9,7 +9,6 @@ import { setFromBasket } from "@/store/orders/slice";
 import Link from "next/link";
 import {
   deleteCartItem,
-  syncCartFromGuest,
   updateCartItem,
 } from "@/store/cart/operations";
 import { ICartItem, IOrderItem } from "@/types/types";
@@ -32,11 +31,7 @@ const BasketPage = () => {
   const { items, isLoading, isGuest } = useAppSelector((state) => state.cart);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      // при вході: намагаємось синхронізувати guest → server
-      dispatch(syncCartFromGuest());
-    } else {
-      // для гостей: підтягуємо з localStorage
+    if (!isLoggedIn) {
       dispatch(initGuestCart());
     }
   }, [isLoggedIn, dispatch]);

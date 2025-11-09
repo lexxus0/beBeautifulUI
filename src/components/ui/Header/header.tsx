@@ -8,12 +8,13 @@ import Icon from "@/components/shared/Icon";
 import Navigation from "./Navigation/Navigation";
 import MobileMenu from "./MobileMenu/MobileMenu";
 import Logo from "@/components/shared/Logo";
-import BasketIcon from "@/components/elements/BasketIcon";
+// import BasketIcon from "@/components/elements/BasketIcon";
 import LangSwitcher from "./LangSwitcher/LangSwitcher";
 import UserIcon from "./UserIcon/UserIcon";
 import UserMenu from "./UserMenu/UserMenu";
 
 import styles from "./Header.module.scss";
+import BasketHeader from "./BasketHeader/BasketHeader";
 
 export default function Header() {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
@@ -34,10 +35,14 @@ export default function Header() {
         </div>
         <div className={styles.wrapper}>
           <div className="flex items-center gap-4 md:gap-5 lg:gap-6">
-          <Link href="favorites" className="">
-            <Icon name="icon-hard" className="w-7 h-6 lg:w-[30px] lg:h-[26px]" />
-          </Link>
-          <Link
+            <Link href="favorites" className="">
+              <Icon
+                name="icon-hard"
+                className="w-7 h-6 lg:w-[30px] lg:h-[26px]"
+              />
+            </Link>
+            <BasketHeader />
+            {/* <Link
             href="/basket"
             className="w-9 h-9 flex items-center justify-center relative"
           >
@@ -45,27 +50,31 @@ export default function Header() {
             <div className="absolute top-[3px] -right-[2px] flex items-center justify-center bg-white-20 w-[14px] h-[14px] rounded-3xl border-1 border-black-10">
               <p className="font-lato text-[10px]">2</p>
             </div>
-          </Link>
-          <LangSwitcher className="hidden md:block" />
-          <button
-            type="button"
-            aria-label="Відкрити меню"
-            className="w-10 h-10 flex items-center justify-center lg:hidden"
-            onClick={() => {
-              setMenu(true);
-            }}
-          >
-            <Icon name="icon-burger-menu" aria-hidden="true" className="w-8 h-8" />
-          </button>
-          {isLoggedIn ? (
-            <div className="hidden lg:block">
-              <UserMenu />
-            </div>
-          ) : (
-            <div className="">
-              <UserIcon className="hidden lg:flex" />
-            </div>
-          )}
+          </Link> */}
+            <LangSwitcher className="hidden md:block" />
+            <button
+              type="button"
+              aria-label="Відкрити меню"
+              className="w-10 h-10 flex items-center justify-center lg:hidden"
+              onClick={() => {
+                setMenu(true);
+              }}
+            >
+              <Icon
+                name="icon-burger-menu"
+                aria-hidden="true"
+                className="w-8 h-8"
+              />
+            </button>
+            {isLoggedIn ? (
+              <div className="hidden lg:block">
+                <UserMenu />
+              </div>
+            ) : (
+              <div className="">
+                <UserIcon className="hidden lg:flex" />
+              </div>
+            )}
           </div>
         </div>
       </div>

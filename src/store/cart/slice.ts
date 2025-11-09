@@ -21,12 +21,12 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+
     clearCartState(state) {
       state.items = [];
       state.error = null;
       state.isLoading = false;
-      state.isGuest = true;
-      clearGuestCart();
+      state.isGuest = false;
     },
     // завантажити гостьовий кошик з localStorage при старті / коли не залогінені
     initGuestCart(state) {

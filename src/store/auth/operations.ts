@@ -4,6 +4,8 @@ import { IUpdateUserResponse, IUser, IUserResponse } from "@/types/types";
 import { RootState } from "../store";
 import { clearAuth } from "./slice";
 import { AxiosError } from "axios";
+import { clearCartState } from "../cart/slice";
+import { syncCartFromGuest } from "../cart/operations";
 
 const appendIf = (form: FormData, key: string, v?: string) => {
   if (v && v.trim() !== "") form.append(key, v);
@@ -30,13 +32,15 @@ export const registerUser = createAsyncThunk<IUserResponse, IUser>(
 export const loginUser = createAsyncThunk<
   IUserResponse & { user: IUser },
   Partial<IUser>
->("users/signin", async (credentials, { rejectWithValue }) => {
+>("users/signin", async (credentials, { rejectWithValue, dispatch }) => {
   try {
     const res = await instance.post("auth/login", credentials);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { accessToken, refreshToken } = res.data.data;
 
     setAuthHeader(accessToken);
+
+    await dispatch(syncCartFromGuest()).unwrap();
 
     // Fetch current user info immediately after login
     const userRes = await instance.get("/auth/current");
@@ -210,7 +214,7 @@ export const updateUser = createAsyncThunk<IUpdateUserResponse, IUser>(
 
 export const signoutUser = createAsyncThunk<void, void, { state: RootState }>(
   "users/signout",
-  async (_, { getState, rejectWithValue }) => {
+  async (_, { getState, dispatch, rejectWithValue }) => {
     const token = getState().auth.accessToken;
     if (!token) return rejectWithValue("User is not authenticated.");
 
@@ -219,6 +223,17 @@ export const signoutUser = createAsyncThunk<void, void, { state: RootState }>(
       clearAuthHeader();
     } catch (e) {
       return rejectWithValue(handleError(e, "Failed to signout."));
+    } finally {
+
+      clearAuthHeader();
+
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("guestCart");
+      }
+
+      dispatch(clearCartState());
     }
   }
 );
