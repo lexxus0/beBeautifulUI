@@ -1,11 +1,11 @@
 "use client";
 
-import styles from "./BasketItem.module.scss";
+import { ICartItem } from "@/types/types";
 import Image from "next/image";
-import { BasketItemType } from "@/types/types";
+import styles from "./BasketItem.module.scss";
 
 interface BasketItemProps {
-  item: BasketItemType;
+  item: ICartItem;
   onIncrement: () => void;
   onDecrement: () => void;
   onRemove: () => void;
@@ -17,31 +17,44 @@ const BasketItem = ({
   onDecrement,
   onRemove,
 }: BasketItemProps) => {
+  const { product, quantity, selectedVolume } = item;
+
+  const option =
+    product.priceByVolume.find((opt) => opt.volume === selectedVolume) ||
+    product.priceByVolume[0];
+
+  const unitPrice = option?.price ?? 0;
+  const volumeLabel = option?.volume ?? "";
+  const totalPrice = Math.round(unitPrice * quantity * 100) / 100;
+
   return (
     <div className={styles.item}>
       <div className={styles.wrapperInfo}>
         <Image
           className={styles.img}
-          src={item.image}
-          alt={item.titleEn}
+          src={item.product.imageUrl}
+          alt={item.product.name}
           width={124}
           height={112}
         />
         <div className={styles.info}>
-          <p className={styles.titleEn}>{item.titleEn}</p>
+          <p className={styles.titleEn}>{item.product.name}</p>
           <p className={styles.titleUk}>
-            {item.titleUk},<span className={styles.volume}> {item.volume}</span>
+            {item.product.name}
+            {volumeLabel && (
+              <span className={styles.volume}> {volumeLabel}</span>
+            )}
           </p>
-          <p className={styles.priceMob}>{item.price * item.quantity} грн</p>
+          <p className={styles.priceMob}>{totalPrice} грн</p>
         </div>
       </div>
       <div className={styles.wrapperPrice}>
         <div className={styles.quantity}>
           <button onClick={onDecrement}>-</button>
-          <p>{item.quantity}</p>
+          <p>{quantity}</p>
           <button onClick={onIncrement}>+</button>
         </div>
-        <p className={styles.priceDesk}>{item.price * item.quantity} грн</p>
+        <p className={styles.priceDesk}>{totalPrice} грн</p>
         <button className={styles.remove} onClick={onRemove}>
           <svg
             className={styles.iconTrash}

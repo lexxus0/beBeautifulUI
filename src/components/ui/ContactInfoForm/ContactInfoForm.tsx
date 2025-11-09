@@ -34,7 +34,7 @@ const ContactInfoForm = () => {
     setShowSuccessMsg(true);
     setTimeout(() => {
       setShowSuccessMsg(false);
-      router.push("/shipping-info");
+      router.push("/delivery");
     }, 1500);
   };
 

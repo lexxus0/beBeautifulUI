@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
+import { BasketItemsListProps } from "@/types/types";
 import BasketItem from "@/components/ui/BasketItem/BasketItem";
 import styles from "./BasketItemsList.module.scss";
-import { BasketItemsListProps } from "@/types/types";
 
 const BasketItemsList: React.FC<BasketItemsListProps> = ({
   basketItems,
@@ -15,11 +15,11 @@ const BasketItemsList: React.FC<BasketItemsListProps> = ({
     <div className={styles.items}>
       {basketItems.map((item) => (
         <BasketItem
-          key={item.id}
+          key={`${item.product._id}-${item.selectedVolume}`}
           item={item}
-          onIncrement={() => onIncrement(item.id)}
-          onDecrement={() => onDecrement(item.id)}
-          onRemove={() => onRemove(item.id)}
+          onIncrement={() => onIncrement(item)}
+          onDecrement={() => onDecrement(item)}
+          onRemove={() => onRemove(item)}
         />
       ))}
     </div>

@@ -184,5 +184,8 @@
 <symbol id="icon-hard" viewBox="0 0 37 32">
 <path d="M18.667 32l-2.707-2.302c-9.613-8.144-15.96-13.532-15.96-20.107 0-5.389 4.517-9.591 10.267-9.591 3.248 0 6.365 1.413 8.4 3.627 2.035-2.215 5.152-3.627 8.4-3.627 5.749 0 10.267 4.203 10.267 9.591 0 6.574-6.347 11.963-15.96 20.107l-2.707 2.302z"></path>
 </symbol>
+<symbol id="icon-close-modal" viewBox="0 0 32 32">
+<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="8" d="M4 4l24 24M4 28l24-24"></path>
+</symbol>
 </defs>
 </svg>
