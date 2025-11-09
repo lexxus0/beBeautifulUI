@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { handleError, instance } from "../init";
 import { IProduct, IProductResponse } from "@/types/types";
+import { IProduct, IProductResponse } from "@/types/types";
 import axios from "axios";
 
 export const fetchProducts = createAsyncThunk<

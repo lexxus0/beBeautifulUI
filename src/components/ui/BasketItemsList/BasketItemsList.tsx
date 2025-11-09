@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { BasketItemsListProps } from "@/types/types";
 import BasketItem from "@/components/ui/BasketItem/BasketItem";

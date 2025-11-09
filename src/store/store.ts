@@ -4,6 +4,7 @@ import reviewsReducer from "@/store/reviews/slice";
 import authReducer from "@/store/auth/slice";
 import ordersReducer from "@/store/orders/slice";
 import cartReducer from "@/store/cart/slice";
+import favoritesReducer from "@/store/favorites/slice";
 
 import {
   persistStore,
@@ -39,6 +40,11 @@ const ordersPersistConfig = {
   storage,
 };
 
+const favoritesPersistConfig = {
+  key: "favorites",
+  storage,
+};
+
 export const store = configureStore({
   reducer: {
     products: persistReducer(productsPersistConfig, productsReducer),
@@ -46,6 +52,7 @@ export const store = configureStore({
     auth: persistReducer(authPersistConfig, authReducer),
     orders: persistReducer(ordersPersistConfig, ordersReducer),
     cart: persistReducer(cartPersistConfig, cartReducer),
+    favorites: persistReducer(favoritesPersistConfig, favoritesReducer),
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

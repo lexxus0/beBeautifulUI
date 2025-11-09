@@ -41,9 +41,7 @@ const BasketItem = ({
           <p className={styles.titleEn}>{item.product.name}</p>
           <p className={styles.titleUk}>
             {item.product.name}
-            {volumeLabel && (
               <span className={styles.volume}> {volumeLabel}</span>
-            )}
           </p>
           <p className={styles.priceMob}>{totalPrice} грн</p>
         </div>
