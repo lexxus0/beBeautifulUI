@@ -1,27 +1,33 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Icon from "@/components/shared/Icon";
 import OrdersList from "./OrdersList/OrdersList";
-import { IOrder } from "@/types/types";
-import ordersData from "./orders.json";
+// import { IOrder } from "@/types/types";
+// import ordersData from "./orders.json";
 
 import styles from "./MyOrders.module.scss";
 import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { selectOrders } from "@/store/orders/selectors";
+import { fetchAllOrders } from "@/store/orders/operations";
 
 export default function MyOrders() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  const [orders, setOrders] = useState<IOrder[] | null>(null);
+  const orders = useAppSelector(selectOrders);
+
+  // const [orders, setOrders] = useState<IOrder[] | null>(null);
 
   const handleOrderDetails = (id: string) => {
     router.push(`/orders/${id}`);
   };
 
   useEffect(() => {
-    setOrders(ordersData);
-  }, []);
+    dispatch(fetchAllOrders());
+  }, [dispatch]);
 
   return (
     <div className="container pt-[10px] pb-15 md:pb-[42px] lg:pt-[34px] lg:b-15">

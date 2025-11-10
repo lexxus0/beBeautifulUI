@@ -72,21 +72,3 @@ export const fetchProductsByIds = createAsyncThunk<
     );
   }
 });
-
-// export const updateCart = createAsyncThunk<void, UpdateCartPayload>(
-//   "products/updateCart",
-//   async ({ productId, quantity }, thunkAPI) => {
-//     try {
-//       await instance.post("/cart", {
-//         productId,
-//         quantity,
-//       });
-
-//       toast.success("Товар додано до кошика", { position: "top-right" });
-//     } catch {
-//       const message = "Не вдалося додати товар до кошика";
-//       toast.error(message, { position: "top-right" });
-//       return thunkAPI.rejectWithValue(message);
-//     }
-//   }
-// );

@@ -1,12 +1,18 @@
+"use client";
+
 import StarRating from "@/helpers/StarRating";
 import { IProduct, IReview } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { updateCart } from "@/store/cart/operations";
+import { addCartItem } from "@/store/cart/operations";
+import { selectIsLoggedIn } from "@/store/auth/selectors";
+import { addToGuestCart } from "@/store/cart/slice";
+import { BaseModal } from "@/components/shared/Modal";
 import Icon from "@/components/shared/Icon";
 import { toggleFavorite } from "@/store/favorites/slice";
+
 
 interface ProductItemProps {
   item: IProduct;
@@ -15,7 +21,9 @@ interface ProductItemProps {
 
 const ProductItem = ({ item }: ProductItemProps) => {
   const [selectedVolume, setSelectedVolume] = useState(item.priceByVolume[0]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const favorites = useAppSelector((state) => state.favorites.items);
   const isFavorite = favorites.some((fav: IProduct) => fav._id === item._id);
 
@@ -43,17 +51,46 @@ const ProductItem = ({ item }: ProductItemProps) => {
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    if (!selectedVolume) return;
+
+    if (!isLoggedIn) {
+      // Гостьовий кошик: зберігаємо повний продукт
+      dispatch(
+        addToGuestCart({
+          product: item,
+          selectedVolume: selectedVolume.volume,
+          quantity: 1,
+        })
+      );
+
+      setIsModalOpen(true);
+      setTimeout(() => setIsModalOpen(false), 1500);
+
+      return;
+    }
+
     try {
-      await dispatch(updateCart({ productId: item._id, quantity: 1 })).unwrap();
+      await dispatch(
+        addCartItem({
+          productId: item._id,
+          selectedVolume: selectedVolume.volume,
+          quantity: 1,
+        })
+      ).unwrap();
+
+      setIsModalOpen(true);
+      setTimeout(() => setIsModalOpen(false), 1500);
     } catch (error) {
-      console.error("Failed to add to cart:", error);
+      console.error("Не вдалося додати в кошик:", error);
     }
   };
 
   return (
-    <Link href={`/products/${item._id}`}>
-      <div className="relative flex flex-col items-center p-4 md:w-[322px] lg:w-[400px]">
-        <button
+    <>
+      <Link href={`/products/${item._id}`}>
+        <div className="relative flex flex-col items-center p-4 md:w-[322px] lg:w-[400px]">
+          <button
           onClick={handleFavoriteClick}
           className="absolute top-6 right-4 z-10"
         >
@@ -65,12 +102,12 @@ const ProductItem = ({ item }: ProductItemProps) => {
         </button>
 
         <Image
-          src={"https://picsum.photos/id/237/290/306"}
-          alt={item.name}
-          width={230}
-          height={260}
-          className="lg:w-[384px] object-cover"
-        />
+            src={"https://picsum.photos/id/237/290/306"}
+            alt={item.name}
+            width={230}
+            height={260}
+            className="lg:w-[384px] object-cover"
+          />
 
         <div className="my-6 text-center flex flex-col items-center w-full">
           <p className="font-lato font-semibold text-2xl mb-2 h-16 line-clamp-2 overflow-hidden">{item.name}</p>
@@ -80,37 +117,50 @@ const ProductItem = ({ item }: ProductItemProps) => {
             <p>{item.reviews?.length ?? 0} відгуків</p>
           </div>
 
-          <div className="flex justify-between items-center mt-4">
-            <p className="font-roboto text-xl">
-              <span className="font-semibold">{selectedVolume?.price} ₴</span>
-            </p>
+            <div className="flex justify-between items-center mt-4">
+              <p className="font-roboto text-xl">
+                <span className="font-semibold">{selectedVolume?.price} ₴</span>
+              </p>
 
-            <div className="flex gap-2">
-              {item.priceByVolume.map((option) => (
-                <button
-                  key={option._id}
-                  onClick={(e) => handleVolumeClick(e, option.volume)}
-                  className={`border px-3 py-1 rounded text-sm ${
-                    selectedVolume.volume === option.volume
-                      ? "bg-black text-white border-black"
-                      : "bg-white text-black border-gray-300"
-                  }`}
-                >
-                  {option.volume}
-                </button>
-              ))}
+              <div className="flex gap-2">
+                {item.priceByVolume.map((option) => (
+                  <button
+                    key={option._id}
+                    onClick={(e) => handleVolumeClick(e, option.volume)}
+                    className={`border px-3 py-1 rounded text-sm ${
+                      selectedVolume.volume === option.volume
+                        ? "bg-black text-white border-black"
+                        : "bg-white text-black border-gray-300"
+                    }`}
+                  >
+                    {option.volume}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        <button
-          onClick={handleAddToCart}
-          className="add-to-cart-btn-bg rounded-lg w-full h-14 text-center font-open-sans text-xl text-white"
-        >
-          Додати до кошика
-        </button>
-      </div>
-    </Link>
+          <button
+            onClick={handleAddToCart}
+            className="add-to-cart-btn-bg rounded-lg w-full h-14 text-center font-open-sans text-xl text-white"
+          >
+            Додати до кошика
+          </button>
+        </div>
+      </Link>
+      {isModalOpen && (
+        <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <img
+            src="/gif/cart.gif"
+            alt="Товар додано до кошика"
+            className="w-[150px] h-[150px] object-contain mb-4 mx-auto"
+          />
+          <p className="font-roboto font-light text-xl italic uppercase text-center text-[#808080] mb-4">
+            Товар додано до кошика.
+          </p>
+        </BaseModal>
+      )}
+    </>
   );
 };
 

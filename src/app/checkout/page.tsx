@@ -1,46 +1,101 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import styles from "./Checkout.module.scss";
+import { useState, useMemo, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useRouter } from "next/navigation";
+import { selectIsLoggedIn } from "@/store/auth/selectors";
+import { deleteCartItem, updateCartItem } from "@/store/cart/operations";
+import { removeGuestItem, updateGuestItemQuantity } from "@/store/cart/slice";
+import { ICartItem } from "@/types/types";
 import ContactInfoForm from "@/components/ui/ContactInfoForm/ContactInfoForm";
 import LoginForm from "@/components/ui/Auth/LoginForm/LoginForm";
 import CheckoutTabs from "@/components/ui/CheckoutTabs/CheckoutTabs";
 import BackButton from "@/components/ui/BackButton/BackButton";
 import BasketItemsList from "@/components/ui/BasketItemsList/BasketItemsList";
-import { BasketItemType } from "@/types/types";
-import rawData from "@/app/basket/basket.json";
+import styles from "./Checkout.module.scss";
 
 const CheckoutPage = () => {
   const [activeTab, setActiveTab] = useState<"new" | "existing">("new");
-  const [basketItems, setBasketItems] = useState<BasketItemType[]>(rawData);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
-  const handleIncrement = (id: number) => {
-    setBasketItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const { items, isGuest } = useAppSelector((state) => state.cart);
+
+  useEffect(() => {
+    if (!items || items.length === 0) {
+      router.push("/basket");
+    }
+  }, [items, router]);
+
+  const handleIncrement = (item: ICartItem) => {
+    if (isLoggedIn && !isGuest) {
+      dispatch(
+        updateCartItem({
+          productId: item.product._id,
+          quantity: item.quantity + 1,
+        })
+      );
+    } else {
+      dispatch(
+        updateGuestItemQuantity({
+          productId: item.product._id,
+          selectedVolume: item.selectedVolume,
+          quantity: item.quantity + 1,
+        })
+      );
+    }
   };
 
-  const handleDecrement = (id: number) => {
-    setBasketItems((prev) =>
-      prev.map((item) =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
+  const handleDecrement = (item: ICartItem) => {
+    if (item.quantity > 1) {
+      if (isLoggedIn && !isGuest) {
+        dispatch(
+          updateCartItem({
+            productId: item.product._id,
+            quantity: item.quantity - 1,
+          })
+        );
+      } else {
+        dispatch(
+          updateGuestItemQuantity({
+            productId: item.product._id,
+            selectedVolume: item.selectedVolume,
+            quantity: item.quantity - 1,
+          })
+        );
+      }
+    }
   };
 
-  const handleRemove = (id: number) => {
-    setBasketItems((prev) => prev.filter((item) => item.id !== id));
+  const handleRemove = (item: ICartItem) => {
+    if (isLoggedIn && !isGuest) {
+      dispatch(deleteCartItem({ productId: item.product._id }));
+    } else {
+      dispatch(
+        removeGuestItem({
+          productId: item.product._id,
+          selectedVolume: item.selectedVolume,
+        })
+      );
+    }
   };
 
-  const total = useMemo(
-    () =>
-      basketItems.reduce((sum, item) => sum + item.quantity * item.price, 0),
-    [basketItems]
-  );
+  const total = useMemo(() => {
+    if (!items || items.length === 0) return 0;
+    const sum = items.reduce((sum: number, item: ICartItem) => {
+      const option =
+        item.product.priceByVolume.find(
+          (opt) => opt.volume === item.selectedVolume
+        ) || item.product.priceByVolume[0];
+      const price = option ? option.price : 0;
+      return sum + item.quantity * price;
+    }, 0);
+
+    return Math.round(sum * 100) / 100;
+  }, [items]);
+
+  const isEmpty = !items || items.length === 0;
 
   return (
     <>
@@ -54,22 +109,24 @@ const CheckoutPage = () => {
           </div>
         </div>
 
-        <div className={styles.basketWrapper}>
-          <h2 className={styles.basketTitle}>Ваше замовлення</h2>
-          <hr className={styles.divider} />
+        {!isEmpty && (
+          <div className={styles.basketWrapper}>
+            <h2 className={styles.basketTitle}>Ваше замовлення</h2>
+            <hr className={styles.divider} />
 
-          <BasketItemsList
-            basketItems={basketItems}
-            onIncrement={handleIncrement}
-            onDecrement={handleDecrement}
-            onRemove={handleRemove}
-          />
-          <hr className={styles.divider} />
-          <div className={styles.total}>
-            <span>Загальна сума:</span>
-            <span>{total} грн</span>
+            <BasketItemsList
+              basketItems={items}
+              onIncrement={handleIncrement}
+              onDecrement={handleDecrement}
+              onRemove={handleRemove}
+            />
+            <hr className={styles.divider} />
+            <div className={styles.total}>
+              <span>Загальна сума:</span>
+              <span>{total} грн</span>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );

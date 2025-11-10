@@ -1,10 +1,5 @@
 import { ChangeEventHandler } from "react";
 
-export interface IModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
 export interface IState {
   isLoading: boolean;
   error: string | null;
@@ -17,16 +12,18 @@ export interface IPagination {
   totalPages: number;
 }
 
+export interface IPriceByVolume {
+  _id: string;
+  volume: string;
+  price: number;
+}
+
 export interface IProduct {
   _id: string;
   name: string;
   sku: string;
   volumeOptions: string[];
-  priceByVolume: {
-    volume: string;
-    price: number;
-    _id: string;
-  }[];
+  priceByVolume: IPriceByVolume[];
   stockQuantity: number;
   features: string[];
   description: string;
@@ -60,13 +57,7 @@ export type CategoryData = {
   href: string;
 };
 
-export type CategoryCardProps = {
-  title: string;
-  description: string;
-  imageMobile: string;
-  imageDesktop: string;
-  href: string;
-};
+export type CategoryCardProps = CategoryData;
 
 export interface IReview {
   _id: string;
@@ -93,7 +84,7 @@ export interface IReviewResponse {
 export interface IUser {
   _id?: string;
   name?: string;
-  surname?: string; 
+  surname?: string;
   // birthday?: string | null;
   email?: string;
   // gender?: "woman" | "man";
@@ -110,20 +101,20 @@ export interface IUserResponse {
 
 export interface IUpdateUserResponse {
   // user: {
-    first_name?: string;
-    last_name?: string;
-    // birthday?: string;
-    // phone?: string;
-    avatarUrl?: string | null;
-    email?: string;
-    password?: string;
-    // gender: "woman" | "man";
-    // role: "user" | "admin";
-    // agree: "true" | "false";
-    // language: "en" | "uk";
-    // createdAt: string;
-    // updatedAt: string;
-    _id: string;
+  first_name?: string;
+  last_name?: string;
+  // birthday?: string;
+  // phone?: string;
+  avatarUrl?: string | null;
+  email?: string;
+  password?: string;
+  // gender: "woman" | "man";
+  // role: "user" | "admin";
+  // agree: "true" | "false";
+  // language: "en" | "uk";
+  // createdAt: string;
+  // updatedAt: string;
+  _id: string;
   // };
   // token?: string;
 }
@@ -165,22 +156,62 @@ export interface TopProduct {
   imageDesktop: string;
 }
 
-export interface IOrder {
+export interface IOrderItem {
+  product: IProduct;
+  selectedVolume: string;
+  quantity: number;
+}
+
+export interface IDelivery {
+  deliveryMethod: "nova_poshta";
+  city: string;
+  warehouse?: string;
+  street?: string;
+  house?: string;
+  apartment?: string;
+}
+
+export type PaymentChoice = "card" | "invoice" | "cod";
+
+export interface ICertificate {
   _id: string;
   number: string;
+  amount: number;
+  balance: number;
+  isActive: boolean;
+  activatedAt: string;
+  expiresAt: string;
+}
+
+export interface IOrderDraft {
+  items: IOrderItem[];
+  delivery: IDelivery | null;
+  paymentMethod: PaymentChoice | null;
+  comment?: string;
+  certificate?: ICertificate | null;
+  amount: number; // сума товарів
+  totalAmount: number; // з урахуванням знижок/сертифіката/доставки
+}
+
+export type OrderStatus = "draft" | "ordered" | "payed" | "done";
+
+export interface IOrder {
+  _id: string;
+  clientId: string;
+  customerName?: string;
+  phone?: string;
+  email?: string;
+  items: IOrderItem[];
+  orderNumber: string;
   date: string;
-  status: string;
-  deliveryType: string;
-  paymentType: string;
-  ttn: string;
-  total: string;
-  city: string;
-  branch: string;
-  products: Array<{
-    product: IProduct;
-    quantity: number;
-    selectedVolume: string;
-  }>;
+  status: OrderStatus;
+  delivery: IDelivery;
+  paymentMethod: PaymentChoice;
+  // ttn: string;
+  comment?: string;
+  certificate?: string;
+  amount: number;
+  totalAmount: number;
 }
 
 export type BasketIconVariant = "black" | "white";
@@ -189,14 +220,30 @@ export interface BasketIconProps extends React.SVGProps<SVGSVGElement> {
   variant?: BasketIconVariant;
 }
 
-export interface BasketItemType {
-  id: number;
-  image: string;
-  titleEn: string;
-  titleUk: string;
-  volume: string;
+export interface ICartItemRaw {
+  productId: string | IProduct;
   quantity: number;
-  price: number;
+}
+
+export interface ICartRaw {
+  _id: string;
+  userId: string;
+  items: ICartItemRaw[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ICartItem {
+  product: IProduct; 
+  selectedVolume: string;
+  quantity: number;
+}
+
+export interface CartState {
+  isLoading: boolean;
+  error: string | null;
+  items: ICartItem[];
+  isGuest: boolean;
 }
 
 export interface ContactInfoInputs {
@@ -207,54 +254,10 @@ export interface ContactInfoInputs {
 }
 
 export interface BasketItemsListProps {
-  basketItems: BasketItemType[];
-  onIncrement: (id: number) => void;
-  onDecrement: (id: number) => void;
-  onRemove: (id: number) => void;
+  basketItems: ICartItem[];
+  onIncrement: (item: ICartItem) => void;
+  onDecrement: (item: ICartItem) => void;
+  onRemove: (item: ICartItem) => void;
 }
 
-export interface ICartResponse {
-  items: Array<{
-    productId: string;
-    quantity: number;
-  }>;
-}
 
-export interface ICartItem {
-  productId: string;
-  quantity: number;
-  price: number;
-  titleEn: string;
-  titleUk: string;
-  image: string;
-  volume: string;
-}
-
-export interface CartState {
-  items: ICartItem[];
-  isLoading: boolean;
-  error: string | null;
-  updateLoading: boolean;
-  updateError: string | null;
-  removeLoading: boolean;
-  removeError: string | null;
-}
-
-export interface UpdateCartPayload {
-  productId: string;
-  quantity: number;
-}
-
-export interface ICartItemInCart {
-  _id: string;
-  productId: {
-    _id: string;
-    name: string;
-    price?: number;
-    priceByVolume?: { price: number; volume?: string }[];
-    volumeOptions?: string[];
-    imageUrl?: string;
-    features?: string[];
-  };
-  quantity: number;
-}

@@ -1,5 +1,5 @@
 import React from "react";
-import { IOrder, IProduct } from "@/types/types";
+import { IOrderItem, IOrder} from "@/types/types";
 
 import styles from "./OrderItem.module.scss";
 
@@ -15,7 +15,7 @@ export default function OrderItem({ order, onDetailsClick }: IOrderItemProps) {
         <ul className={styles.listOrder}>
           <li>
             <p className={styles.textOrder}>№ Замовлення:</p>
-            <span className={styles.spanOrder}>{order.number}</span>
+            <span className={styles.spanOrder}>{order.orderNumber}</span>
           </li>
           {/* <li>
             <p className={styles.textOrder}>Статус:</p>
@@ -31,11 +31,11 @@ export default function OrderItem({ order, onDetailsClick }: IOrderItemProps) {
           </li>
           <li>
             <p className={styles.textOrder}>Тип доставки:</p>
-            <span className={styles.spanOrder}>{order.deliveryType}</span>
+            <span className={styles.spanOrder}>{order.delivery.deliveryMethod}</span>
           </li>
           <li>
             <p className={styles.textOrder}>Сума:</p>
-            <span className={styles.spanOrder}>{order.total}</span>
+            <span className={styles.spanOrder}>{order.totalAmount}</span>
           </li>
         </ul>
         <div>
@@ -43,13 +43,9 @@ export default function OrderItem({ order, onDetailsClick }: IOrderItemProps) {
             Товари:
           </p>
           <ul className="flex flex-col gap-5 md:w-[500px]">
-            {order.products.map(
+            {order.items.map(
               (
-                item: {
-                  product: IProduct;
-                  quantity: number;
-                  selectedVolume: string;
-                },
+                item: IOrderItem,
                 idx: number
               ) => (
                 <li

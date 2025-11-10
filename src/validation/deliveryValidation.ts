@@ -56,8 +56,8 @@ export const schemaDelivery = yup.object({
     .oneOf(["card", "invoice", "cod"], "Оберіть спосіб оплати")
     .required("Оберіть спосіб оплати"),
 
-  orderComment: yup.string().trim().max(500, "До 500 символів").optional(),
-  giftCertificate: yup.string().trim().optional(),
+  comment: yup.string().trim().max(500, "До 500 символів").optional(),
+  certificate: yup.string().trim().optional(),
   noCall: yup.boolean().default(false),
   saveCard: yup.boolean().default(false),
 });

@@ -1,16 +1,14 @@
 [
     {
       "_id": "order_001",
-      "number": "#SB00001",
+      "oderNumber": "#SB00001",
       "date": "21.07.2025",
-      "status": "Доставлено",
-      "deliveryType": "Нова пошта",
-      "ttn": "20450398514632",
-      "paymentType": "Оплачено карткою",
-      "total": "778 грн",
+      "deliveryMethod": "Нова пошта",
+      "paymentMethod": "Оплачено карткою",
+      "totalAmount": 778,
       "city": "м. Київ, вул. Велика Васильківська, 22",
-      "branch": "Нова пошта №45",
-      "products": [
+      "warehouses": "Нова пошта №45",
+      "items": [
         {
           "product": {
             "_id": "product_001",

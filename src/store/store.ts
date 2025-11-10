@@ -2,6 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import productsReducer from "@/store/products/slice";
 import reviewsReducer from "@/store/reviews/slice";
 import authReducer from "@/store/auth/slice";
+import ordersReducer from "@/store/orders/slice";
+import cartReducer from "@/store/cart/slice";
 import favoritesReducer from "@/store/favorites/slice";
 
 import {
@@ -29,6 +31,14 @@ const authPersistConfig = {
   key: "auth",
   storage,
 };
+const cartPersistConfig = {
+  key: "cart",
+  storage,
+};
+const ordersPersistConfig = {
+  key: "orders",
+  storage,
+};
 
 const favoritesPersistConfig = {
   key: "favorites",
@@ -40,6 +50,8 @@ export const store = configureStore({
     products: persistReducer(productsPersistConfig, productsReducer),
     reviews: persistReducer(reviewsPersistConfig, reviewsReducer),
     auth: persistReducer(authPersistConfig, authReducer),
+    orders: persistReducer(ordersPersistConfig, ordersReducer),
+    cart: persistReducer(cartPersistConfig, cartReducer),
     favorites: persistReducer(favoritesPersistConfig, favoritesReducer),
   },
   middleware: (getDefaultMiddleware) =>

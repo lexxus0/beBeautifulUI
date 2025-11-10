@@ -1,89 +1,187 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchCart, updateCart, removeFromCart } from "./operations";
-import { ICartItem } from "@/types/types";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { CartState, IProduct } from "@/types/types";
+import {
+  fetchCart,
+  addCartItem,
+  updateCartItem,
+  deleteCartItem,
+  syncCartFromGuest,
+} from "./operations";
 import { handlePending, handleRejected } from "../init";
-
-interface CartState {
-  items: ICartItem[];
-  isLoading: boolean;
-  error: string | null;
-  updateLoading: boolean;
-  updateError: string | null;
-  removeLoading: boolean;
-  removeError: string | null;
-}
+import { clearGuestCart, loadGuestCart, saveGuestCart } from "./utils";
 
 const initialState: CartState = {
   items: [],
+  isGuest: true,
   isLoading: false,
   error: null,
-  updateLoading: false,
-  updateError: null,
-  removeLoading: false,
-  removeError: null,
 };
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    incrementItem: (state, action: PayloadAction<string>) => {
-      const item = state.items.find((i) => i.productId === action.payload);
-      if (item) item.quantity += 1;
+
+    clearCartState(state) {
+      state.items = [];
+      state.error = null;
+      state.isLoading = false;
+      state.isGuest = false;
     },
-    decrementItem: (state, action: PayloadAction<string>) => {
-      const item = state.items.find((i) => i.productId === action.payload);
-      if (item && item.quantity > 1) item.quantity -= 1;
+    // завантажити гостьовий кошик з localStorage при старті / коли не залогінені
+    initGuestCart(state) {
+      const items = loadGuestCart();
+      state.items = items;
+      state.isGuest = true;
     },
-    removeItem: (state, action: PayloadAction<string>) => {
-      state.items = state.items.filter((i) => i.productId !== action.payload);
+    // додати товар у гостьовий кошик
+    addToGuestCart(
+      state,
+      action: PayloadAction<{
+        product: IProduct;
+        selectedVolume: string;
+        quantity?: number;
+      }>
+    ) {
+      const { product, selectedVolume, quantity = 1 } = action.payload;
+      const existing = state.items.find(
+        (i) =>
+          i.product._id === product._id && i.selectedVolume === selectedVolume
+      );
+
+      if (existing) {
+        existing.quantity += quantity;
+      } else {
+        state.items.push({ product, selectedVolume, quantity });
+      }
+
+      state.isGuest = true;
+      saveGuestCart(state.items);
+    },
+    // змінити кількість в гостьовому кошику
+    updateGuestItemQuantity(
+      state,
+      action: PayloadAction<{
+        productId: string;
+        selectedVolume: string;
+        quantity: number;
+      }>
+    ) {
+      const { productId, selectedVolume, quantity } = action.payload;
+      const item = state.items.find(
+        (i) =>
+          i.product._id === productId && i.selectedVolume === selectedVolume
+      );
+      if (item) {
+        item.quantity = quantity;
+        if (item.quantity <= 0) {
+          state.items = state.items.filter(
+            (i) =>
+              i.product._id === productId && i.selectedVolume === selectedVolume
+          );
+        }
+        saveGuestCart(state.items);
+      }
+    },
+    // видалити позицію з гостьового
+    removeGuestItem(
+      state,
+      action: PayloadAction<{ productId: string; selectedVolume: string }>
+    ) {
+      const { productId, selectedVolume } = action.payload;
+
+      state.items = state.items.filter(
+        (i) =>
+          !(i.product._id === productId && i.selectedVolume === selectedVolume)
+      );
+      saveGuestCart(state.items);
     },
   },
   extraReducers: (builder) => {
-    // Fetch cart
     builder
-      .addCase(fetchCart.pending, (state) => {
-        handlePending(state);
+      .addCase(fetchCart.pending, handlePending)
+      .addCase(fetchCart.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = action.payload;
+        state.isGuest = false;
+      })
+      .addCase(fetchCart.rejected, handleRejected)
+      .addCase(addCartItem.pending, (state) => {
         state.error = null;
       })
-      .addCase(fetchCart.fulfilled, (state, action: PayloadAction<ICartItem[]>) => {
+      .addCase(addCartItem.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isGuest = false;
+
+        const { productId, selectedVolume } = action.meta.arg;
+        const serverItems = action.payload;
+
+        state.items = serverItems.map((item) => {
+          // 1) якщо цей продукт уже був в state — зберігаємо його selectedVolume
+          const existing = state.items.find(
+            (i) => i.product._id === item.product._id
+          );
+          if (existing) {
+            return {
+              ...item,
+              selectedVolume: existing.selectedVolume,
+            };
+          }
+          // 2) якщо це новий продукт і це якраз той, що ми тільки що додали з selectedVolume
+          if (selectedVolume && item.product._id === productId) {
+            return {
+              ...item,
+              selectedVolume,
+            };
+          }
+          // 3) інакше залишаємо те, що виставив mapCartResponseToItems (defaultVolume)
+          return item;
+        });
+      })
+      .addCase(addCartItem.rejected, handleRejected)
+      .addCase(updateCartItem.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(updateCartItem.fulfilled, (state, action) => {
         state.isLoading = false;
         state.items = action.payload;
+        state.isGuest = false;
       })
-      .addCase(fetchCart.rejected, (state, action) => {
-        handleRejected(state, action as PayloadAction<string | undefined>);
-      });
-
-    // Update cart
-    builder
-      .addCase(updateCart.pending, (state) => {
-        state.updateLoading = true;
-        state.updateError = null;
+      .addCase(updateCartItem.rejected, handleRejected)
+      .addCase(deleteCartItem.pending, (state) => {
+        state.error = null;
       })
-      .addCase(updateCart.fulfilled, (state) => {
-        state.updateLoading = false;
+      .addCase(deleteCartItem.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.items = action.payload;
+        state.isGuest = false;
       })
-      .addCase(updateCart.rejected, (state, action) => {
-        state.updateLoading = false;
-        state.updateError = action.payload ?? "Не вдалося оновити кошик";
-      });
-
-    // Remove item
-    builder
-      .addCase(removeFromCart.pending, (state) => {
-        state.removeLoading = true;
-        state.removeError = null;
+      .addCase(deleteCartItem.rejected, handleRejected)
+      // синк після логіну
+      .addCase(syncCartFromGuest.pending, (state) => {
+        state.isLoading = true;
       })
-      .addCase(removeFromCart.fulfilled, (state, action) => {
-        state.removeLoading = false;
-        state.items = state.items.filter((i) => i.productId !== action.meta.arg);
+      .addCase(syncCartFromGuest.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = action.payload;
+        state.isGuest = false;
+        clearGuestCart();
       })
-      .addCase(removeFromCart.rejected, (state, action) => {
-        state.removeLoading = false;
-        state.removeError = action.payload ?? "Не вдалося видалити товар з кошика";
+      .addCase(syncCartFromGuest.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || "Не вдалося синхронізувати кошик";
       });
   },
 });
 
-export const { incrementItem, decrementItem, removeItem } = cartSlice.actions;
+export const {
+  clearCartState,
+  initGuestCart,
+  addToGuestCart,
+  updateGuestItemQuantity,
+  removeGuestItem,
+} = cartSlice.actions;
+
 export default cartSlice.reducer;

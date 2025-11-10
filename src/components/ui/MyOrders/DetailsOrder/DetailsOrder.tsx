@@ -2,12 +2,12 @@
 import React from "react";
 
 import styles from "./DetailsOrder.module.scss";
-import { IOrder, IProduct } from "@/types/types";
+import { IOrder, IOrderItem } from "@/types/types";
 import Link from "next/link";
 import Image from "next/image";
 
 interface IDetailsOrderProps {
-  order?: IOrder;
+  order: IOrder;
 }
 
 export default function DetailsOrder({ order }: IDetailsOrderProps) {
@@ -21,7 +21,7 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
         <ul className={styles.listOrder}>
           <li>
             <p className={styles.textOrder}>№ Замовлення:</p>
-            <span className={styles.spanOrder}>{order?.number}</span>
+            <span className={styles.spanOrder}>{order?.orderNumber}</span>
           </li>
           <li>
             <p className={styles.textOrder}>Дата оформлення:</p>
@@ -33,7 +33,7 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
           </li> */}
           <li>
             <p className={styles.textOrder}>Спосіб доставки:</p>
-            <span className={styles.spanOrder}>{order?.deliveryType}</span>
+            <span className={styles.spanOrder}>{order?.delivery.deliveryMethod}</span>
           </li>
           {/* <li>
             <p className={styles.textOrder}>Номер ТТН:</p>
@@ -45,28 +45,24 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
           </li> */}
           <li>
             <p className={styles.textOrder}>Загальна сума:</p>
-            <span className={styles.spanOrder}>{order?.total}</span>
+            <span className={styles.spanOrder}>{order?.totalAmount}</span>
           </li>
         </ul>
         <p className={styles.text}>Адреса доставки:</p>
         <ul className={styles.address}>
           <li>
             <p className={styles.addressText}>Місто:</p>
-            <span className={styles.addressSpan}>{order?.city}</span>
+            <span className={styles.addressSpan}>{order?.delivery.city}</span>
           </li>
           <li>
             <p className={styles.addressText}>Відділення:</p>
-            <span className={styles.addressSpan}>{order?.branch}</span>
+            <span className={styles.addressSpan}>{order?.delivery.warehouse}</span>
           </li>
         </ul>
         <p className={styles.text}>Склад замовлення:</p>
         <ul className="flex flex-col gap-5 mb-9">
-          {order?.products.map(
-            (item: {
-              product: IProduct;
-              quantity: number;
-              selectedVolume: string;
-            }) => (
+          {order?.items.map(
+            (item: IOrderItem) => (
               <li
                 key={item.product._id}
                 className="flex gap-4 items-center md:gap-6"

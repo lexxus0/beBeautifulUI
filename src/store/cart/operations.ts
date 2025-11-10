@@ -1,72 +1,113 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { toast } from "react-hot-toast";
 import { instance, handleError } from "../init";
-import { ICartItem, ICartItemInCart } from "@/types/types";
+import { ICartItem } from "@/types/types";
+import { clearGuestCart, loadGuestCart, mapCartResponseToItems } from "./utils";
+import { RootState } from "../store";
 
-// Fetch cart
 export const fetchCart = createAsyncThunk<
   ICartItem[],
   void,
   { rejectValue: string }
->("cart/fetchCart", async (_, thunkAPI) => {
+>("cart/fetch", async (_, { rejectWithValue }) => {
   try {
     const res = await instance.get("/cart");
-    const itemsFromCart: ICartItemInCart[] = res.data.items ?? [];
-    if (itemsFromCart.length === 0) return [];
-
-    const items: ICartItem[] = itemsFromCart.map((item) => {
-      const product = item.productId;
-
-      return {
-        productId: product._id,
-        quantity: item.quantity,
-        price: product.priceByVolume?.[0]?.price || product.price || 0,
-        titleEn: product.name,
-        titleUk: product.name,
-        volume:
-          product.priceByVolume?.[0]?.volume ||
-          product.volumeOptions?.[0] ||
-          "",
-        image: product.imageUrl || "/images/placeholder/placeholder-tab.png",
-      };
-    });
-
+    // console.log('cart fetch: ', res.data);
+    const items = mapCartResponseToItems(res.data);
+    // console.log('items get: ', items);
     return items;
-  } catch (e: unknown) {
-    return thunkAPI.rejectWithValue(handleError(e, "Failed to fetch cart"));
+  } catch (e) {
+    return rejectWithValue(handleError(e, "Не вдалося завантажити кошик"));
   }
 });
 
-// Update cart
-export const updateCart = createAsyncThunk<
-  void,
-  { productId: string; quantity: number },
+export const addCartItem = createAsyncThunk<
+  ICartItem[],
+  { productId: string; quantity: number; selectedVolume?: string },
   { rejectValue: string }
->("cart/updateCart", async ({ productId, quantity }, thunkAPI) => {
+>("cart/addItem", async ({ productId, quantity }, { rejectWithValue }) => {
   try {
     await instance.post("/cart", { productId, quantity });
-    toast.success("Товар додано до кошика", { position: "top-right" });
-  } catch (e: unknown) {
-    toast.error("Не вдалося оновити кошик", { position: "top-right" });
-    return thunkAPI.rejectWithValue(handleError(e, "Failed to update cart"));
+    const res = await instance.get("/cart");
+    // console.log('cart add: ', res.data);
+    const items = mapCartResponseToItems(res.data);
+    // console.log('items add: ', items);
+    return items;
+  } catch (e) {
+    return rejectWithValue(handleError(e, "Не вдалося додати в кошик"));
   }
 });
 
-// Remove from cart
-export const removeFromCart = createAsyncThunk<
-  void,
-  string,
+export const updateCartItem = createAsyncThunk<
+  ICartItem[],
+  { productId: string; quantity: number },
   { rejectValue: string }
->("cart/removeFromCart", async (productId, thunkAPI) => {
+>("cart/updateItem", async ({ productId, quantity }, { rejectWithValue }) => {
+  try {
+    await instance.put(`/cart/${productId}`, { quantity });
+    const res = await instance.get("/cart");
+    // console.log('cart put: ', res.data);
+
+    const items = mapCartResponseToItems(res.data);
+    // console.log('items put: ', items);
+    return items;
+  } catch (e) {
+    return rejectWithValue(handleError(e, "Не вдалося оновити товар"));
+  }
+});
+
+export const deleteCartItem = createAsyncThunk<
+  ICartItem[],
+  { productId: string },
+  { rejectValue: string }
+>("cart/deleteItem", async ({ productId }, { rejectWithValue }) => {
   try {
     await instance.delete(`/cart/${productId}`);
-    toast.success("Товар видалено з кошика", { position: "top-right" });
-  } catch (e: unknown) {
-    toast.error("Не вдалося видалити товар з кошика", {
-      position: "top-right",
-    });
-    return thunkAPI.rejectWithValue(
-      handleError(e, "Failed to remove item from cart")
-    );
+    const res = await instance.get("/cart");
+    // console.log('cart delete: ', res.data);
+
+    const items = mapCartResponseToItems(res.data);
+    // console.log('items del: ', items);
+    return items;
+  } catch (e) {
+    return rejectWithValue(handleError(e, "Не вдалося видалити товар"));
+  }
+});
+
+// Синхронізувати гостьовий кошик з сервером після логіну
+export const syncCartFromGuest = createAsyncThunk<
+  ICartItem[],
+  void,
+  { rejectValue: string; state: RootState }
+>("cart/syncGuest", async (_, { rejectWithValue }) => {
+  try {
+    if (typeof window === "undefined") {
+      return [];
+    }
+
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      return loadGuestCart();
+    }
+
+    const guestItems = loadGuestCart();
+
+    if (!guestItems.length) {
+      const res = await instance.get("/cart");
+      return mapCartResponseToItems(res.data);
+    }
+
+    const itemsForBulk = guestItems.map((item) => ({
+      productId: item.product._id,
+      quantity: item.quantity,
+    }));
+
+    await instance.post("/cart/bulk", { items: itemsForBulk });
+
+    const res = await instance.get("/cart");
+    clearGuestCart();
+    return mapCartResponseToItems(res.data);
+  } catch (e) {
+    return rejectWithValue(handleError(e, "Не вдалося синхронізувати кошик"));
   }
 });
