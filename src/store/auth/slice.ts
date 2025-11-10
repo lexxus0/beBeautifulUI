@@ -9,6 +9,7 @@ import {
   updateUser,
 } from "./operations";
 import { IUser } from "@/types/types";
+import { clearAuthTokens } from "@/helpers/authUtils";
 interface AuthState {
   user: IUser | null;
   accessToken: string | null;
@@ -38,6 +39,7 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
       state.isRefreshing = false;
       state.error = null;
+      clearAuthTokens();
     },
   },
   extraReducers: (builder) => {
@@ -49,6 +51,13 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken ?? null;
         state.error = null;
+         // зберігаємо токени
+         if (typeof window !== "undefined" && state.accessToken) {
+          localStorage.setItem("accessToken", state.accessToken);
+          if (state.refreshToken) {
+            localStorage.setItem("refreshToken", state.refreshToken);
+          }
+        }
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.error = action.payload as string;
@@ -58,12 +67,17 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.accessToken = action.payload.accessToken;
-        // console.log('payload loggin ', action.payload);
+        state.refreshToken = action.payload.refreshToken ?? null;
         state.user = action.payload.user;
-        // console.log('state.user: ', state.user);
         state.isLoggedIn = true;
         state.error = null;
-        state.refreshToken = action.payload.refreshToken ?? null;
+          // зберігаємо токени
+          if (typeof window !== "undefined" && state.accessToken) {
+            localStorage.setItem("accessToken", state.accessToken);
+            if (state.refreshToken) {
+              localStorage.setItem("refreshToken", state.refreshToken);
+            }
+          }
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.error = action.payload as string;

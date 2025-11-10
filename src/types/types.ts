@@ -99,6 +99,11 @@ export interface IUserResponse {
   refreshToken: string;
 }
 
+export interface RefreshResponse {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export interface IUpdateUserResponse {
   // user: {
   first_name?: string;
