@@ -6,7 +6,7 @@ import productsData from "./topProducts.json";
 import { TopProduct } from "@/types/types";
 import BasketIcon from "@/components/elements/BasketIcon";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import { addToGuestCart } from "@/store/cart/slice";
 import { BaseModal } from "@/components/shared/Modal";
 import Image from "next/image";

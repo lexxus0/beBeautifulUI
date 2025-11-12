@@ -12,6 +12,7 @@ import { addToGuestCart } from "@/store/cart/slice";
 import { addCartItem } from "@/store/cart/operations";
 import { BaseModal } from "@/components/shared/Modal";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 export interface ProductActionsProps {
   product: IProduct;
@@ -134,11 +135,15 @@ const ProductActions = ({ product }: ProductActionsProps) => {
 
       {isModalOpen && (
         <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <img
-            src="/gif/cart.gif"
-            alt="Товар додано до кошика"
-            className="w-[150px] h-[150px] object-contain mb-4 mx-auto"
-          />
+          <div className="relative w-[150px] h-[150px] object-contain mb-4 mx-auto">
+            <Image
+              src="/gif/cart.gif"
+              alt="Товар додано до кошика"
+              fill
+              className="object-contain"
+              unoptimized
+            />
+          </div>
           <p className="font-roboto font-light text-xl italic uppercase text-center text-[#808080] mb-4">
             Товар додано до кошика.
           </p>
