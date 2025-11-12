@@ -105,7 +105,7 @@ const CheckoutPage = () => {
           <CheckoutTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
           <div className={styles.formWrapper}>
-            {activeTab === "new" ? <ContactInfoForm /> : <LoginForm />}
+            {activeTab === "new" ? <ContactInfoForm /> : <LoginForm redirectTo="/delivery"/>}
           </div>
         </div>
 
