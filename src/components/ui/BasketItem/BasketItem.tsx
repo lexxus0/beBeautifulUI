@@ -27,6 +27,14 @@ const BasketItem = ({
   const volumeLabel = option?.volume ?? "";
   const totalPrice = Math.round(unitPrice * quantity * 100) / 100;
 
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      onDecrement();
+    } else {
+      onRemove();
+    }
+  };
+
   return (
     <div className={styles.item}>
       <div className={styles.wrapperInfo}>
@@ -48,7 +56,7 @@ const BasketItem = ({
       </div>
       <div className={styles.wrapperPrice}>
         <div className={styles.quantity}>
-          <button onClick={onDecrement}>-</button>
+          <button onClick={handleDecrement}>-</button>
           <p>{quantity}</p>
           <button onClick={onIncrement}>+</button>
         </div>

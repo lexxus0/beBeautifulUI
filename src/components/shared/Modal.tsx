@@ -43,7 +43,7 @@ export function BaseModal({
       onClick={handleBackdropClick}
     >
       <div
-        className={`relative w-[90%] ${maxWidth} rounded-2xl backdrop-blur-[40px] bg-[linear-gradient(180deg,rgba(175,176,178,0.2)_0%,rgba(235,235,235,0.2)_50%,rgba(175,176,178,0.2)_100%)] 
+        className={`relative w-[90%] ${maxWidth} rounded-2xl backdrop-blur-[90px] bg-[linear-gradient(180deg,rgba(175,176,178,0.2)_0%,rgba(235,235,235,0.2)_50%,rgba(175,176,178,0.2)_100%)] 
         px-[34px] pt-[32px] pb-[10px] shadow-xl`}
         onClick={(e) => e.stopPropagation()} // не закривати при кліку всередині
       >
