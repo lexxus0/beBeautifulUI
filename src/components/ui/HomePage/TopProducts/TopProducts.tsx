@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addToGuestCart } from "@/store/cart/slice";
 import { BaseModal } from "@/components/shared/Modal";
+import Image from "next/image";
 
 const TopProducts: React.FC = () => {
   const products = productsData as TopProduct[];
@@ -102,11 +103,15 @@ const TopProducts: React.FC = () => {
 
       {isModalOpen && (
         <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <img
-            src="/gif/cart.gif"
-            alt="Товар додано до кошика"
-            className="w-[150px] h-[150px] object-contain mb-4 mx-auto"
-          />
+          <div className="relative w-[150px] h-[150px] mb-4 mx-auto">
+            <Image
+              src="/gif/cart.gif"
+              alt="Товар додано до кошика"
+              fill
+              className="object-contain"
+              unoptimized
+            />
+          </div>
           {addedProductName && (
             <p className="font-open-sans text-lg text-gray-600 text-center">
               <span className="block font-bold text-black">{addedProductName}</span>{" "}
