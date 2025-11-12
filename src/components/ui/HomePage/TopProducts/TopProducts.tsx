@@ -3,7 +3,7 @@
 import styles from "./TopProducts.module.scss";
 import Link from "next/link";
 import productsData from "./topProducts.json";
-import { TopProduct } from "@/types/types";
+import { IProduct, TopProduct } from "@/types/types";
 import BasketIcon from "@/components/elements/BasketIcon";
 import { useState } from "react";
 import { useAppDispatch } from "@/store/hooks";
@@ -34,7 +34,7 @@ const TopProducts: React.FC = () => {
 
     dispatch(
       addToGuestCart({
-        product: cartProduct,
+        product: cartProduct as unknown as IProduct,
         selectedVolume: "default",
         quantity: 1,
       })
