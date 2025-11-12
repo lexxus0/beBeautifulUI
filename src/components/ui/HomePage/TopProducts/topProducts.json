@@ -1,11 +1,11 @@
 [
   {
     "id": 1,
-    "title": "Shampoo",
-    "underTitle": "Шампунь",
-    "price": "280 ₴",
-    "imageMobile": "/images/topProducts/shampoo-mob.png",
-    "imageDesktop": "/images/topProducts/shampoo.png"
+    "title": "Box",
+    "underTitle": "Набір догляду за волоссям",
+    "price": "750 ₴",
+    "imageMobile": "/images/topProducts/product-box-mob.png",
+    "imageDesktop": "/images/topProducts/product-box.png"
   },
   {
     "id": 2,
@@ -25,10 +25,10 @@
   },
   {
     "id": 4,
-    "title": "Box",
-    "underTitle": "Набір догляду за волоссям",
-    "price": "750 ₴",
-    "imageMobile": "/images/topProducts/product-box-mob.png",
-    "imageDesktop": "/images/topProducts/product-box.png"
+    "title": "Shampoo",
+    "underTitle": "Шампунь",
+    "price": "280 ₴",
+    "imageMobile": "/images/topProducts/shampoo-mob.png",
+    "imageDesktop": "/images/topProducts/shampoo.png"
   }
 ]
