@@ -1,16 +1,13 @@
 "use client";
 
-import React, { useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
 import BasketItemsList from "@/components/ui/BasketItemsList/BasketItemsList";
 import { useRouter } from "next/navigation";
 import { setFromBasket } from "@/store/orders/slice";
 import Link from "next/link";
-import {
-  deleteCartItem,
-  updateCartItem,
-} from "@/store/cart/operations";
+import { deleteCartItem, updateCartItem } from "@/store/cart/operations";
 import { ICartItem, IOrderItem } from "@/types/types";
 import {
   initGuestCart,
@@ -22,6 +19,7 @@ import RecommendedProducts from "@/components/ui/RecommendedProducts/Recommended
 import BackButton from "@/components/ui/BackButton/BackButton";
 import Loader from "@/components/ui/Loader/Loader";
 import styles from "./Basket.module.scss";
+import { BaseModal } from "@/components/shared/Modal";
 
 const BasketPage = () => {
   const router = useRouter();
@@ -29,6 +27,11 @@ const BasketPage = () => {
 
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const { items, isLoading, isGuest } = useAppSelector((state) => state.cart);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [removedProductName, setRemovedProductName] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -77,6 +80,10 @@ const BasketPage = () => {
   };
 
   const handleRemove = (item: ICartItem) => {
+    setRemovedProductName(item.product.name);
+    setIsModalOpen(true);
+    setTimeout(() => setIsModalOpen(false), 1500);
+
     if (isLoggedIn && !isGuest) {
       dispatch(deleteCartItem({ productId: item.product._id }));
     } else {
@@ -186,6 +193,29 @@ const BasketPage = () => {
           )}
         </div>
       </div>
+      {isModalOpen && (
+        <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <img
+            src="/images/basketDel.webp"
+            alt="Товар видалено з кошика"
+            className="w-[150px] h-[150px] object-contain mb-4 mx-auto"
+          />
+          {removedProductName ? (
+            <p className="font-open-sans text-lg text-gray-600 text-center leading-snug">
+              <span className="block font-bold text-black">
+                {removedProductName}
+              </span>
+              <span className="block text-gray-600">
+                видалено з кошика.
+              </span>
+            </p>
+          ) : (
+            <p className="font-open-sans text-lg text-gray-600 text-center leading-snug">
+              Товар видалено з кошика.
+            </p>
+          )}
+        </BaseModal>
+      )}
     </>
   );
 };

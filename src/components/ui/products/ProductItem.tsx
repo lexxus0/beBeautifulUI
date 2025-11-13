@@ -13,7 +13,6 @@ import { BaseModal } from "@/components/shared/Modal";
 import Icon from "@/components/shared/Icon";
 import { toggleFavorite } from "@/store/favorites/slice";
 
-
 interface ProductItemProps {
   item: IProduct;
   productId?: string;
@@ -26,6 +25,7 @@ const ProductItem = ({ item }: ProductItemProps) => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const favorites = useAppSelector((state) => state.favorites.items);
   const isFavorite = favorites.some((fav: IProduct) => fav._id === item._id);
+  const [addedProductName, setAddedProductName] = useState<string | null>(null);
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -53,6 +53,8 @@ const ProductItem = ({ item }: ProductItemProps) => {
     e.preventDefault();
 
     if (!selectedVolume) return;
+
+    setAddedProductName(item.name);
 
     if (!isLoggedIn) {
       // Гостьовий кошик: зберігаємо повний продукт
@@ -91,17 +93,17 @@ const ProductItem = ({ item }: ProductItemProps) => {
       <Link href={`/products/${item._id}`}>
         <div className="relative flex flex-col items-center p-4 md:w-[322px] lg:w-[400px]">
           <button
-          onClick={handleFavoriteClick}
-          className="absolute top-6 right-4 z-10"
-        >
-          {isFavorite ? (
-            <Icon name="icon-hard" className="w-7 h-6" />
-          ) : (
-            <Icon name="icon-empty-heart" className="w-7 h-6" />
-          )}
-        </button>
+            onClick={handleFavoriteClick}
+            className="absolute top-6 right-4 z-10"
+          >
+            {isFavorite ? (
+              <Icon name="icon-hard" className="w-7 h-6" />
+            ) : (
+              <Icon name="icon-empty-heart" className="w-7 h-6" />
+            )}
+          </button>
 
-        <Image
+          <Image
             src={"https://picsum.photos/id/237/290/306"}
             alt={item.name}
             width={230}
@@ -109,13 +111,17 @@ const ProductItem = ({ item }: ProductItemProps) => {
             className="lg:w-[384px] object-cover"
           />
 
-        <div className="my-6 text-center flex flex-col items-center w-full">
-          <p className="font-lato font-semibold text-2xl mb-2 h-16 line-clamp-2 overflow-hidden">{item.name}</p>
-          <p className="font-roboto text-xl capitalize mb-2">{item.category}</p>
-          <div className="flex items-center gap-3 justify-center">
-            <StarRating rating={getAverageRating(item.reviews)} />
-            <p>{item.reviews?.length ?? 0} відгуків</p>
-          </div>
+          <div className="my-6 text-center flex flex-col items-center w-full">
+            <p className="font-lato font-semibold text-2xl mb-2 h-16 line-clamp-2 overflow-hidden">
+              {item.name}
+            </p>
+            <p className="font-roboto text-xl capitalize mb-2">
+              {item.category}
+            </p>
+            <div className="flex items-center gap-3 justify-center">
+              <StarRating rating={getAverageRating(item.reviews)} />
+              <p>{item.reviews?.length ?? 0} відгуків</p>
+            </div>
 
             <div className="flex justify-between items-center mt-4">
               <p className="font-roboto text-xl">
@@ -150,14 +156,24 @@ const ProductItem = ({ item }: ProductItemProps) => {
       </Link>
       {isModalOpen && (
         <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <img
-            src="/gif/cart.gif"
-            alt="Товар додано до кошика"
-            className="w-[150px] h-[150px] object-contain mb-4 mx-auto"
-          />
-          <p className="font-roboto font-light text-xl italic uppercase text-center text-[#808080] mb-4">
-            Товар додано до кошика.
-          </p>
+          <div className="relative w-[150px] h-[150px] object-contain mb-4 mx-auto">
+            <Image
+              src="/gif/cart.gif"
+              alt="Товар додано до кошика"
+              fill
+              className="object-contain"
+              unoptimized
+            />
+          </div>
+
+          {addedProductName && (
+            <p className="font-open-sans text-lg text-gray-600 text-center">
+              <span className="block font-bold text-black">
+                {addedProductName}
+              </span>{" "}
+              <span className="block">додано до кошику.</span>
+            </p>
+          )}
         </BaseModal>
       )}
     </>

@@ -12,7 +12,11 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { loginUser } from "@/store/auth/operations";
 import { selectError } from "@/store/auth/selectors";
 
-const LoginForm = () => {
+interface LoginFormProps {
+  redirectTo?: string;
+}
+
+const LoginForm = ({ redirectTo = "/" }: LoginFormProps) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectError);
@@ -34,14 +38,13 @@ const LoginForm = () => {
   });
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
-    // Remove sensitive credential logging for security
     const resultAction = await dispatch(loginUser(data));
 
     if (loginUser.fulfilled.match(resultAction)) {
       setShowSuccessMsg(true);
       setTimeout(() => {
         setShowSuccessMsg(false);
-        router.push("/");
+        router.push(redirectTo);
       }, 2000);
     } else {
       console.error("Помилка входу:", resultAction.payload);
