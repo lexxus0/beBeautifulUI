@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const schemaRegister = yup.object({
-  name: yup
+  first_name: yup
     .string()
     .min(3, "Ім'я повинно містити щонайменше 3 символи")
     .max(20, "Ім'я не може перевищувати 20 символів")

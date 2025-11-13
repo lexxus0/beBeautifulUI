@@ -18,7 +18,6 @@ type UserMenuProps = {
 export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
   const hasMounted = useHasMounted();
   const user = useAppSelector(selectUser);
-  // console.log("user: ", user);
 
   const [openModal, setOpenModal] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -74,7 +73,12 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
 
         {user ? (
           <p className={styles.text}>
-            {user.name || user.email?.split("@")[0]}
+            {user.name
+              ? user.name.charAt(0).toUpperCase() + user.name.slice(1)
+              : user.email
+              ? user.email.split("@")[0].charAt(0).toUpperCase() +
+                user.email.split("@")[0].slice(1)
+              : "User"}
           </p>
         ) : (
           <p className={styles.text}>User</p>

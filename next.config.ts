@@ -29,9 +29,26 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
       {
+        protocol: "https",
+        hostname: "be-beautiful-backend.onrender.com",
+        pathname: "/**",
+      },
+      {
         protocol: "http",
         hostname: "example.com",
         pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3001",
+        pathname: "/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: "localhost",
+        port: "3001",
+        pathname: "/uploads/**",
       },
     ],
   },

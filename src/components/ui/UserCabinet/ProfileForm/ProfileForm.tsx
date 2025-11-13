@@ -11,9 +11,13 @@ import DatePickerField from "../DatePickerField/DatePickerField";
 import { useAppDispatch } from "@/store/hooks";
 import { updateUser } from "@/store/auth/operations";
 import Image from "next/image";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IUser } from "@/types/types";
 import styles from "./ProfileForm.module.scss";
+import {
+  formatToSwaggerDate,
+  parseSwaggerDate,
+} from "@/helpers/covertDateToString";
 
 type ProfileFormProp = {
   user: IUser;
@@ -26,8 +30,8 @@ const fields: {
 }[] = [
   { name: "first_name", label: "Імʼя" },
   { name: "last_name", label: "Прізвище" },
-  // { name: "birthday", label: "День/Місяць/Рік" },
-  // { name: "phone", label: "Телефон" },
+  { name: "dateOfBirth", label: "День/Місяць/Рік" },
+  { name: "telephone", label: "Телефон" },
   { name: "email", label: "E-mail" },
   { name: "password", label: "Пароль", type: "password" },
 ];
@@ -36,10 +40,11 @@ export const toU = <T,>(v: T | null | undefined): T | undefined =>
   v == null ? undefined : v;
 
 export default function ProfileForm({ user }: ProfileFormProp) {
+  // console.log('user: ', user);
   const dispatch = useAppDispatch();
-  const resolver = yupResolver(schemaProfile) as Resolver<ProfileFormInputs>;
   const router = useRouter();
-  // const user = useAppSelector(selectUser);
+
+  const [imageError, setImageError] = useState(false);
 
   const {
     control,
@@ -48,29 +53,33 @@ export default function ProfileForm({ user }: ProfileFormProp) {
     watch,
     formState: { errors },
   } = useForm<ProfileFormInputs>({
-    resolver,
+    resolver: yupResolver(schemaProfile) as Resolver<ProfileFormInputs>,
     defaultValues: {
-      avatarUrl: null,
-      first_name: user.name || "",
-      last_name: user.surname || "",
-      // birthday: user.birthday || null,
-      // phone: user.phone || "",
+      photo: null,
+      first_name: user.first_name || "",
+      last_name: user.last_name || "",
+      dateOfBirth: parseSwaggerDate(user.dateOfBirth),
+      telephone: user.telephone || "",
       email: user.email || "",
       password: "",
     },
   });
 
-  // 1) дивимось за вибраним файлом
-  const avatarFile = watch("avatarUrl");
+  const avatarFile = watch("photo");
 
-  // 2) обчислюємо src для відмальовки:
-  //    якщо є файл — створюємо blob URL, інакше беремо URL з бекенда
+  // src для відображення аватара:
+  // 1) якщо вибрано новий файл — blob URL
+  // 2) інакше — user.photo (який вже нормалізований у thunks)
   const previewSrc = useMemo(() => {
     if (avatarFile instanceof File) {
       return URL.createObjectURL(avatarFile);
     }
-    return user.avatarUrl || null;
-  }, [avatarFile, user.avatarUrl]);
+
+    if (user.photo) {
+      return user.photo;
+    }
+    return null;
+  }, [avatarFile, user.photo]);
 
   // 3) при зміні файлу/унмаунті — прибираємо тимчасовий URL
   useEffect(() => {
@@ -82,15 +91,33 @@ export default function ProfileForm({ user }: ProfileFormProp) {
     }
   }, [avatarFile, previewSrc]);
 
+   // чистимо blob URL коли він більше не потрібен
+   useEffect(() => {
+    if (!previewSrc || !previewSrc.startsWith("blob:")) return;
+
+    return () => {
+      URL.revokeObjectURL(previewSrc);
+    };
+  }, [previewSrc]);
+
+  const isRenderableImageSrc = (src?: string | null) => {
+    if (!src) return false;
+    return src.startsWith("http://") || src.startsWith("https://") || src.startsWith("blob:") || src.startsWith("/");
+  };
+  
+  const canRenderImage = isRenderableImageSrc(previewSrc);
+
   const onSubmit = (data: ProfileFormInputs) => {
     const payload = {
-      name: toU(data.first_name),
-      surname: toU(data.last_name),
-      // birthday: data.birthday ? data.birthday.toISOString() : undefined,
-      // phone: toU(data.phone),
+      first_name: toU(data.first_name),
+      last_name: toU(data.last_name),
+      dateOfBirth: data.dateOfBirth
+        ? formatToSwaggerDate(data.dateOfBirth) // "DD.MM.YYYY"
+        : undefined,
+      telephone: toU(data.telephone),
       email: toU(data.email),
       password: toU(data.password),
-      avatar: data.avatarUrl ?? null, // 🟢 тут передаємо файл
+      photo: data.photo ?? null,
     };
 
     dispatch(updateUser(payload));
@@ -112,31 +139,34 @@ export default function ProfileForm({ user }: ProfileFormProp) {
     >
       <div className="w-45 mx-auto mb-12 md:mb-[50px] lg:w-[306px] lg:flex gap-[134px] items-center lg:mb-0 relative">
         <div className="relative w-45 h-45 lg:w-[306px] lg:h-[306px] shrink-0">
-          {previewSrc ? (
+          {canRenderImage && !imageError  ? (
             // Якщо це blob: можна безпечно показати <img>, Next/Image інколи вередує з blob:
-            previewSrc.startsWith("blob:") ? (
-              <Image
-                src={previewSrc}
-                alt="Avatar preview"
-                fill
-                className="w-45 h-45 rounded-lg lg:w-[306px] lg:h-[306px] object-cover mx-auto"
-              />
-            ) : (
+            // previewSrc.startsWith("blob:") ? (
+            //   <Image
+            //     src={previewSrc}
+            //     alt="Avatar preview"
+            //     fill
+            //     className="w-45 h-45 rounded-lg lg:w-[306px] lg:h-[306px] object-cover mx-auto"
+            //     onError={() => setImageError(true)}
+            //   />
+            // ) : (
               // {user.avatarUrl ? (
               <Image
-                src={previewSrc}
-                alt={user.email?.toUpperCase().charAt(0) || "U"}
+                src={previewSrc as string}
+                alt={user.first_name || "User"}
                 fill
+                unoptimized
                 className="w-45 h-45 rounded-lg lg:w-[306px] lg:h-[306px] object-cover mx-auto"
+                onError={() => setImageError(true)}
               />
-            )
+            // )
           ) : (
             <span
               className="w-45 h-45 lg:w-[306px] lg:h-[306px] rounded-lg border-1 border-black-10 bg-gray-10
           text-7xl font-medium text-white-30 flex items-center justify-center mx-auto lg:mx-0"
             >
-              {(user?.name
-                ? user.name[0]
+              {(user?.first_name
+                ? user.first_name[0]
                 : user?.email
                 ? user.email[0]
                 : "U"
@@ -146,15 +176,15 @@ export default function ProfileForm({ user }: ProfileFormProp) {
         </div>
 
         <Controller
-          name="avatarUrl"
+          name="photo"
           control={control}
           render={({ field: { onChange } }) => (
             <div className="flex flex-col gap-2">
-              <label htmlFor="avatarUrl" className={styles.editPhoto}>
+              <label htmlFor="photo" className={styles.editPhoto}>
                 <Icon name="icon-edit" className="w-[19px] h-[19px]" />
               </label>
               <input
-                id="avatarUrl"
+                id="photo"
                 type="file"
                 accept="image/*"
                 onChange={(e) => {
@@ -169,11 +199,11 @@ export default function ProfileForm({ user }: ProfileFormProp) {
       </div>
       <div className="lg:w-[856px] flex flex-col gap-3 lg:grid lg:grid-cols-2 lg:gap-y-10 lg:gap-x-8">
         {fields.map(({ name, label, type }) => {
-          if (name === "birthday") {
+          if (name === "dateOfBirth") {
             return (
               <Controller
-                key="date"
-                name="birthday"
+                key="dateOfBirth"
+                name="dateOfBirth"
                 control={control}
                 render={({ field }) => (
                   <DatePickerField
