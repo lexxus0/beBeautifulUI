@@ -1,50 +1,80 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { clearAuthHeader, handleError, instance, setAuthHeader } from "../init";
 import {
-  clearAuthHeader,
-  handleError,
-  instance,
-  setAuthHeader,
-} from "../init";
-import {
-  IUpdateUserResponse,
+  IUpdateUserApiUser,
+  IUpdateUserPayload,
   IUser,
   IUserResponse,
   RefreshResponse,
+  RegisterError,
+  ServerErrorBody,
 } from "@/types/types";
 import { RootState } from "../store";
 import { clearAuth } from "./slice";
-import { AxiosError } from "axios";
+import { AxiosError, isAxiosError } from "axios";
 import { clearCartState } from "../cart/slice";
 import { syncCartFromGuest } from "../cart/operations";
 import { clearAuthTokens, getAuthTokens } from "@/helpers/authUtils";
+import { appendIf } from "@/helpers/hooks/appendIf";
+import { normalizeBackendImageUrl } from "@/helpers/normalizeImage";
 
-const appendIf = (form: FormData, key: string, v?: string) => {
-  if (v && v.trim() !== "") form.append(key, v);
-};
+export const registerUser = createAsyncThunk<
+  IUserResponse,
+  IUser,
+  { rejectValue: RegisterError }
+>("users/signup", async (credentials, { rejectWithValue }) => {
+  try {
+    const payload = {
+      first_name: credentials.first_name,
+      email: credentials.email,
+      password: credentials.password,
+      agree: credentials.agree,
+    };
+    const res = await instance.post("auth/register", payload);
 
-export const registerUser = createAsyncThunk<IUserResponse, IUser>(
-  "users/signup",
-  async (credentials, { rejectWithValue }) => {
-    try {
-      const res = await instance.post("auth/register", credentials);
-      const { accessToken, refreshToken } = res.data.data;
-
-       if (accessToken) {
-        setAuthHeader(accessToken);
-      }
-
-      // return res.data.data;
-      return { accessToken, refreshToken };
-    } catch (e) {
-      if (typeof e === "object" && e !== null && "response" in e) {
-        const err = e as { response: { status: number; data: unknown } };
-        console.error("Status:", err.response.status);
-        console.error("Response data:", err.response.data);
-      }
-      return rejectWithValue(handleError(e, "Failed to register."));
+    if (!res.data?.data) {
+      return rejectWithValue({
+        code: 500,
+        message: "Invalid server response.",
+      });
     }
+
+    const { accessToken, refreshToken } = res.data.data;
+
+    if (!accessToken) {
+      return rejectWithValue({
+        code: 500,
+        message: "No access token in response.",
+      });
+    }
+
+    setAuthHeader(accessToken);
+
+    return { accessToken, refreshToken };
+  } catch (err: unknown) {
+    if (isAxiosError<ServerErrorBody>(err)) {
+      const status = err.response?.status;
+      const body = err.response?.data;
+
+      // 🎯 спец-кейс: email вже зайнятий
+      if (status === 409) {
+        return rejectWithValue({
+          code: 409,
+          field: "email",
+          message: body?.data || "Цей email вже використовується",
+        });
+      }
+
+      // інші помилки
+      return rejectWithValue({
+        code: status ?? 500,
+        message: body?.message || "Failed to register.",
+      });
+    }
+
+    return rejectWithValue({ code: 500, message: "Unexpected error." });
   }
-);
+});
 
 export const loginUser = createAsyncThunk<
   IUserResponse & { user: IUser },
@@ -64,10 +94,6 @@ export const loginUser = createAsyncThunk<
     // Fetch current user info immediately after login
     const userRes = await instance.get("/auth/current");
 
-    // return {
-    //   ...res.data.data,
-    //   user: userRes.data.data,
-    // };
     return {
       accessToken,
       refreshToken,
@@ -107,10 +133,10 @@ export const refreshUser = createAsyncThunk<
     const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
       res.data.data;
 
-      if (typeof window !== "undefined") {
-        localStorage.setItem("accessToken", newAccessToken);
-        localStorage.setItem("refreshToken", newRefreshToken);
-      }
+    if (typeof window !== "undefined") {
+      localStorage.setItem("accessToken", newAccessToken);
+      localStorage.setItem("refreshToken", newRefreshToken);
+    }
 
     setAuthHeader(newAccessToken);
 
@@ -138,7 +164,7 @@ export const getCurrentUser = createAsyncThunk<
   try {
     const state = thunkAPI.getState();
     let accessToken = state.auth.accessToken;
-    console.log(accessToken);
+    // console.log(accessToken);
 
     if (!accessToken) {
       const loaded = getAuthTokens();
@@ -152,6 +178,7 @@ export const getCurrentUser = createAsyncThunk<
     setAuthHeader(accessToken);
 
     const res = await instance.get("/auth/current");
+
     return res.data.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(handleError(e, "Failed to load user."));
@@ -204,54 +231,59 @@ export const refreshAndLoadUser = createAsyncThunk<
       const res = await instance.get("/auth/current");
       return res.data.data as IUser;
     } catch {
-     // 3) якщо нічого не вийшло — дропаємо сесію
-     dispatch(clearAuth());
-     clearAuthHeader();
-     clearAuthTokens();
- 
-     return rejectWithValue("Session expired, please log in again.");
+      // 3) якщо нічого не вийшло — дропаємо сесію
+      dispatch(clearAuth());
+      clearAuthHeader();
+      clearAuthTokens();
+
+      return rejectWithValue("Session expired, please log in again.");
     }
   }
 );
 
-export const updateUser = createAsyncThunk<IUpdateUserResponse, IUser>(
+export const updateUser = createAsyncThunk<IUser, IUpdateUserPayload>(
   "users/updateUser",
   async (payload, { rejectWithValue }) => {
     try {
-      console.log("🟢 payload перед відправкою:", payload);
+      // console.log("🟢 payload перед відправкою:", payload);
       const form = new FormData();
 
-      appendIf(form, "name", payload.name);
-      appendIf(form, "first_name", payload.name);
-      appendIf(form, "last_name", payload.surname);
+      appendIf(form, "first_name", payload.first_name);
+      appendIf(form, "last_name", payload.last_name);
 
       appendIf(form, "email", payload.email);
       // appendIf(form, "gender", payload.gender);
       // appendIf(form, "language", payload.language);
-      // appendIf(form, "phone", payload.phone);
-      // appendIf(form, "birthday", payload.birthday);
+      appendIf(form, "telephone", payload.telephone);
+      appendIf(form, "dateOfBirth", payload.dateOfBirth);
       appendIf(form, "password", payload.password);
-      if (payload.avatarUrl) {
-        form.append("avatarUrlLocal", payload.avatarUrl); // 👈 multer.single('avatarUrlLocal')
+      if (payload.photo) {
+        form.append("photo", payload.photo);
       }
 
       // Для діагностики:
-      for (const [k, v] of form.entries()) {
-        console.log("📦 FormData", k, v);
-      }
+      // for (const [k, v] of form.entries()) {
+      //   console.log("📦 FormData", k, v);
+      // }
 
-      const res = await instance.patch<IUpdateUserResponse>(
-        "auth/update-current-user",
-        form,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
+      const res = await instance.patch<{
+        status: number;
+        message: string;
+        data: IUpdateUserApiUser;
+      }>("auth/update-current-user", form);
 
-      // if (res.data.token) setAuthHeader(res.data.token);
-      console.log("✅ server:", res.data);
-      return res.data;
+      // console.log("✅ server:", res.data);
+
+      const user = res.data.data;
+
+      const normalized: IUser = {
+        ...user,
+        photo: normalizeBackendImageUrl(user.photo),
+      };
+
+      return normalized;
     } catch (error) {
       const e = error as AxiosError<{ message?: string }>;
-      console.error("❌ updateUser", e.response?.data || e.message);
       return rejectWithValue(
         e.response?.data?.message || e.message || "Failed to update."
       );

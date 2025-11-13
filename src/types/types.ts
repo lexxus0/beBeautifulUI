@@ -83,15 +83,16 @@ export interface IReviewResponse {
 
 export interface IUser {
   _id?: string;
-  name?: string;
-  surname?: string;
-  // birthday?: string | null;
+  first_name?: string;
+  last_name?: string;
+  dateOfBirth?: string;
   email?: string;
   // gender?: "woman" | "man";
   // language?: "en" | "uk";
-  // phone?: string;
+  telephone?: string;
   password?: string;
-  avatarUrl?: string | null;
+  photo?: string | null;
+  agree?: string;
 }
 
 export interface IUserResponse {
@@ -104,28 +105,32 @@ export interface RefreshResponse {
   refreshToken: string;
 }
 
-export interface IUpdateUserResponse {
-  // user: {
+export interface IUpdateUserPayload {
   first_name?: string;
   last_name?: string;
-  // birthday?: string;
-  // phone?: string;
-  avatarUrl?: string | null;
   email?: string;
   password?: string;
-  // gender: "woman" | "man";
-  // role: "user" | "admin";
-  // agree: "true" | "false";
-  // language: "en" | "uk";
-  // createdAt: string;
-  // updatedAt: string;
-  _id: string;
-  // };
-  // token?: string;
+  telephone?: string;
+  dateOfBirth?: string;   // "DD.MM.YYYY"
+  photo?: File | null;
 }
 
+export interface IUpdateUserApiUser {
+  _id: string;
+  first_name?: string;
+  last_name?: string;
+  email: string;
+  telephone?: string;
+  dateOfBirth?: string;
+  photo?: string | null;
+}
+
+export type RegisterError = { code: number; field?: "email"; message: string };
+
+export type ServerErrorBody = { status?: number; message?: string; data?: string };
+
 export interface RegisterFormInputs {
-  name: string;
+  first_name: string;
   email: string;
   password: string;
   agree: boolean;

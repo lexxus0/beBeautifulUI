@@ -7,7 +7,7 @@ import InputGroup from "../../InputGroup/InputGroup";
 import { schemaRegister } from "@/validation/authValidation";
 import Link from "next/link";
 import styles from "./RegisterForm.module.scss";
-import { RegisterFormInputs } from "@/types/types";
+import { RegisterError, RegisterFormInputs } from "@/types/types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { registerUser } from "@/store/auth/operations";
 import { selectError } from "@/store/auth/selectors";
@@ -27,13 +27,14 @@ const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
   const {
     control,
     register,
+    setError,
     handleSubmit,
     formState: { errors },
     reset
   } = useForm<RegisterFormInputs>({
     resolver: yupResolver(schemaRegister),
     defaultValues: {
-      name: "",
+      first_name: "",
       email: "",
       password: "",
       agree: false,
@@ -61,8 +62,18 @@ const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
 
       reset();
       onSuccess();
-    } else {
-      console.error("Помилка реєстрації:", resultAction.payload);
+    } 
+
+    if (registerUser.rejected.match(resultAction)) {
+      const payload = resultAction.payload as RegisterError | undefined;
+  
+      // 🎯 спеціально для email already in use (409)
+      if (payload?.code === 409 && payload.field === "email") {
+        setError("email", { type: "server", message: payload.message });
+        return; // не показуємо загальний банер
+      }
+      // інші помилки — ваш банер/тост
+      console.error("Помилка реєстрації:", payload?.message ?? resultAction.error.message);
       setShowErrorMsg(true);
       setTimeout(() => setShowErrorMsg(false), 3000);
     }
@@ -81,13 +92,13 @@ const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <Controller
           control={control}
-          name="name"
+          name="first_name"
           render={({ field }) => (
             <InputGroup
-              id="name"
+              id="first_name"
               label="Ім’я"
               type="text"
-              error={errors.name?.message}
+              error={errors.first_name?.message}
               {...field}
             />
           )}

@@ -123,20 +123,20 @@ function ReduxInitializer() {
       });
   }, [dispatch]);
 
-  useEffect(() => {
-    // Only try to refresh if there are valid tokens in localStorage
-    if (hasAuthTokens()) {
-      dispatch(refreshAndLoadUser()).catch((error) => {
-        // Silently handle auth errors - user will need to log in again
-        console.warn("Auth initialization failed:", error);
-        // Clear invalid tokens from localStorage
-        if (typeof window !== 'undefined') {
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
-        }
-      });
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   // Only try to refresh if there are valid tokens in localStorage
+  //   if (hasAuthTokens()) {
+  //     dispatch(refreshAndLoadUser()).catch((error) => {
+  //       // Silently handle auth errors - user will need to log in again
+  //       console.warn("Auth initialization failed:", error);
+  //       // Clear invalid tokens from localStorage
+  //       if (typeof window !== 'undefined') {
+  //         localStorage.removeItem('accessToken');
+  //         localStorage.removeItem('refreshToken');
+  //       }
+  //     });
+  //   }
+  // }, [dispatch]);
 
   return null;
 }

@@ -8,7 +8,7 @@ import {
   refreshAndLoadUser,
   updateUser,
 } from "./operations";
-import { IUser } from "@/types/types";
+import { IUser, RegisterError } from "@/types/types";
 import { clearAuthTokens } from "@/helpers/authUtils";
 interface AuthState {
   user: IUser | null;
@@ -60,7 +60,8 @@ const authSlice = createSlice({
         }
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.error = action.payload as string;
+        const p = action.payload as RegisterError | undefined;
+        state.error = p?.message || action.error.message || "Failed to register.";
       })
       .addCase(loginUser.pending, (state) => {
         state.error = null;
@@ -132,9 +133,7 @@ const authSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action) => {
         state.user = action.payload;
         console.log('action.payload updateUser: ', action.payload);
-        // if (action.payload.token) {
-        //   state.token = action.payload.token;
-        // }
+        state.error = null;
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.error = action.payload as string;

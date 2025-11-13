@@ -11,8 +11,8 @@ export const schemaProfile = yup.object({
     // .min(3, "Повинно бути мінімум 3 символи")
     // .max(20, "Повинно бути максімум 20 символів")
     .notRequired(),
-  birthday: yup.date().nullable().notRequired(),
-  phone: yup
+  dateOfBirth: yup.date().typeError("Некоректна дата").nullable().notRequired(),
+  telephone: yup
     .string()
     // .matches(/^\+380\d{9}$/, "Невірний формат телефону")
     .notRequired(),
@@ -24,7 +24,7 @@ export const schemaProfile = yup.object({
     .string()
     // .min(6, "Мінімум 6 символів")
     .notRequired(),
-  avatarUrl: yup
+  photo: yup
     .mixed<File>()
     .nullable()
     .notRequired()
@@ -38,4 +38,13 @@ export const schemaProfile = yup.object({
     ),
 });
 
-export type ProfileFormInputs = yup.InferType<typeof schemaProfile>;
+// export type ProfileFormInputs = yup.InferType<typeof schemaProfile>;
+export type ProfileFormInputs = {
+  first_name?: string;
+  last_name?: string;
+  dateOfBirth: Date | null;     // <- ВАЖЛИВО: тут Date
+  telephone?: string;
+  email?: string;
+  password?: string;
+  photo: File | null;
+};

@@ -18,7 +18,6 @@ type UserMenuProps = {
 export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
   const hasMounted = useHasMounted();
   const user = useAppSelector(selectUser);
-  console.log("user: ", user);
 
   const [openModal, setOpenModal] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
