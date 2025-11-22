@@ -50,32 +50,29 @@
   .divider {
     margin-bottom: 20px;
     border: none;
-    border-top: 1px solid #e4e4e4;
+    border-top: 1px solid #898989;
     margin-inline: -20px;
   }
 
   .total {
     display: flex;
     justify-content: flex-end;
-    gap: 40px;
+    gap: 24px;
+    font-family: var(--font-lato);
     font-weight: 600;
     font-size: 20px;
     line-height: 120%;
     color: var(--color-black-10);
-    margin-bottom: 32px;
+    margin-bottom: 24px;
 
     > :nth-child(2) {
-      width: 94px;
       text-align: right;
     }
 
     @media (min-width: 744px) {
       font-size: 24px;
       gap: 56px;
-
-      > :nth-child(2) {
-        width: 112px;
-      }
+      margin-bottom: 48px;
     }
 
     @media (min-width: 1440px) {
@@ -83,10 +80,6 @@
       font-size: 28px;
       line-height: 140%;
       gap: 23px;
-
-      > :nth-child(2) {
-        width: 132px;
-      }
     }
   }
 
