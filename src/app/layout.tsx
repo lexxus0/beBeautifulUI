@@ -102,8 +102,6 @@ export default function RootLayout({
 
 function ReduxInitializer() {
   const dispatch = useAppDispatch();
-  // const accessToken = useAppSelector((state) => state.auth.accessToken);
-  // const user = useAppSelector((state) => state.auth.user);
 
   useEffect(() => {
       if (typeof window === "undefined") return;
@@ -122,21 +120,6 @@ function ReduxInitializer() {
         clearAuthTokens(); // 👈 твоя утиліта, очищає localStorage
       });
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   // Only try to refresh if there are valid tokens in localStorage
-  //   if (hasAuthTokens()) {
-  //     dispatch(refreshAndLoadUser()).catch((error) => {
-  //       // Silently handle auth errors - user will need to log in again
-  //       console.warn("Auth initialization failed:", error);
-  //       // Clear invalid tokens from localStorage
-  //       if (typeof window !== 'undefined') {
-  //         localStorage.removeItem('accessToken');
-  //         localStorage.removeItem('refreshToken');
-  //       }
-  //     });
-  //   }
-  // }, [dispatch]);
 
   return null;
 }
