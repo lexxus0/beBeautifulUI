@@ -4,9 +4,9 @@ import { useState, useMemo, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/navigation";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
-import { deleteCartItem, updateCartItem } from "@/store/cart/operations";
-import { removeGuestItem, updateGuestItemQuantity } from "@/store/cart/slice";
 import { ICartItem } from "@/types/types";
+import { changeCartQuantity } from "@/helpers/changeCartQuantity";
+import { calculateCartTotal } from "@/helpers/calculateCartTotal";
 import ContactInfoForm from "@/components/ui/ContactInfoForm/ContactInfoForm";
 import LoginForm from "@/components/ui/Auth/LoginForm/LoginForm";
 import CheckoutTabs from "@/components/ui/CheckoutTabs/CheckoutTabs";
@@ -29,71 +29,35 @@ const CheckoutPage = () => {
   }, [items, router]);
 
   const handleIncrement = (item: ICartItem) => {
-    if (isLoggedIn && !isGuest) {
-      dispatch(
-        updateCartItem({
-          productId: item.product._id,
-          quantity: item.quantity + 1,
-        })
-      );
-    } else {
-      dispatch(
-        updateGuestItemQuantity({
-          productId: item.product._id,
-          selectedVolume: item.selectedVolume,
-          quantity: item.quantity + 1,
-        })
-      );
-    }
+    changeCartQuantity({
+      item,
+      type: "inc",
+      dispatch,
+      isLoggedIn,
+      isGuest,
+    });
   };
-
   const handleDecrement = (item: ICartItem) => {
-    if (item.quantity > 1) {
-      if (isLoggedIn && !isGuest) {
-        dispatch(
-          updateCartItem({
-            productId: item.product._id,
-            quantity: item.quantity - 1,
-          })
-        );
-      } else {
-        dispatch(
-          updateGuestItemQuantity({
-            productId: item.product._id,
-            selectedVolume: item.selectedVolume,
-            quantity: item.quantity - 1,
-          })
-        );
-      }
-    }
+    changeCartQuantity({
+      item,
+      type: "dec",
+      dispatch,
+      isLoggedIn,
+      isGuest,
+    });
   };
 
   const handleRemove = (item: ICartItem) => {
-    if (isLoggedIn && !isGuest) {
-      dispatch(deleteCartItem({ productId: item.product._id }));
-    } else {
-      dispatch(
-        removeGuestItem({
-          productId: item.product._id,
-          selectedVolume: item.selectedVolume,
-        })
-      );
-    }
+    changeCartQuantity({
+      item,
+      type: "remove",
+      dispatch,
+      isLoggedIn,
+      isGuest,
+    });
   };
 
-  const total = useMemo(() => {
-    if (!items || items.length === 0) return 0;
-    const sum = items.reduce((sum: number, item: ICartItem) => {
-      const option =
-        item.product.priceByVolume.find(
-          (opt) => opt.volume === item.selectedVolume
-        ) || item.product.priceByVolume[0];
-      const price = option ? option.price : 0;
-      return sum + item.quantity * price;
-    }, 0);
-
-    return Math.round(sum * 100) / 100;
-  }, [items]);
+  const total = useMemo(() => calculateCartTotal(items), [items]);
 
   const isEmpty = !items || items.length === 0;
 

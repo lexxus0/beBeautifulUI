@@ -3,23 +3,19 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
-import BasketItemsList from "@/components/ui/BasketItemsList/BasketItemsList";
 import { useRouter } from "next/navigation";
 import { setFromBasket } from "@/store/orders/slice";
 import Link from "next/link";
-import { deleteCartItem, updateCartItem } from "@/store/cart/operations";
 import { ICartItem, IOrderItem } from "@/types/types";
-import {
-  initGuestCart,
-  removeGuestItem,
-  updateGuestItemQuantity,
-} from "@/store/cart/slice";
-import BasketIcon from "@/components/elements/BasketIcon";
+import { initGuestCart } from "@/store/cart/slice";
+import { changeCartQuantity } from "@/helpers/changeCartQuantity";
+import { calculateCartTotal } from "@/helpers/calculateCartTotal";
+import BasketItemsList from "@/components/ui/BasketItemsList/BasketItemsList";
 import RecommendedProducts from "@/components/ui/RecommendedProducts/RecommendedProducts";
 import BackButton from "@/components/ui/BackButton/BackButton";
 import Loader from "@/components/ui/Loader/Loader";
-import styles from "./Basket.module.scss";
 import { BaseModal } from "@/components/shared/Modal";
+import styles from "./Basket.module.scss";
 
 const BasketPage = () => {
   const router = useRouter();
@@ -27,6 +23,7 @@ const BasketPage = () => {
 
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const { items, isLoading, isGuest } = useAppSelector((state) => state.cart);
+  console.log("items: ", items);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [removedProductName, setRemovedProductName] = useState<string | null>(
@@ -39,88 +36,54 @@ const BasketPage = () => {
     }
   }, [isLoggedIn, dispatch]);
 
-  const handleIncrement = (item: ICartItem) => {
-    if (isLoggedIn && !isGuest) {
-      dispatch(
-        updateCartItem({
-          productId: item.product._id,
-          quantity: item.quantity + 1,
-        })
-      );
-    } else {
-      dispatch(
-        updateGuestItemQuantity({
-          productId: item.product._id,
-          selectedVolume: item.selectedVolume,
-          quantity: item.quantity + 1,
-        })
-      );
-    }
-  };
-
-  const handleDecrement = (item: ICartItem) => {
-    if (item.quantity > 1) {
-      if (isLoggedIn && !isGuest) {
-        dispatch(
-          updateCartItem({
-            productId: item.product._id,
-            quantity: item.quantity - 1,
-          })
-        );
-      } else {
-        dispatch(
-          updateGuestItemQuantity({
-            productId: item.product._id,
-            selectedVolume: item.selectedVolume,
-            quantity: item.quantity - 1,
-          })
-        );
-      }
-    }
-  };
-
-  const handleRemove = (item: ICartItem) => {
+  const showRemoveModal = (item: ICartItem) => {
     setRemovedProductName(item.product.name);
     setIsModalOpen(true);
     setTimeout(() => setIsModalOpen(false), 1500);
-
-    if (isLoggedIn && !isGuest) {
-      dispatch(deleteCartItem({ productId: item.product._id }));
-    } else {
-      dispatch(
-        removeGuestItem({
-          productId: item.product._id,
-          selectedVolume: item.selectedVolume,
-        })
-      );
-    }
   };
 
-  const total = useMemo(() => {
-    if (!items || items.length === 0) return 0;
-    const sum = items.reduce((sum: number, item: ICartItem) => {
-      const option =
-        item.product.priceByVolume.find(
-          (opt) => opt.volume === item.selectedVolume
-        ) || item.product.priceByVolume[0];
-      const price = option ? option.price : 0;
-      return sum + item.quantity * price;
-    }, 0);
+  const handleIncrement = (item: ICartItem) => {
+    changeCartQuantity({
+      item,
+      type: "inc",
+      dispatch,
+      isLoggedIn,
+      isGuest,
+    });
+  };
 
-    return Math.round(sum * 100) / 100;
-  }, [items]);
+  const handleDecrement = (item: ICartItem) => {
+    changeCartQuantity({
+      item,
+      type: "dec",
+      dispatch,
+      isLoggedIn,
+      isGuest,
+      onRemove: showRemoveModal,
+    });
+  };
+
+  const handleRemove = (item: ICartItem) => {
+    changeCartQuantity({
+      item,
+      type: "remove",
+      dispatch,
+      isLoggedIn,
+      isGuest,
+      onRemove: showRemoveModal,
+    });
+  };
+
+  const total = useMemo(() => calculateCartTotal(items), [items]);
 
   const handleCheckout = () => {
     if (!items || items.length === 0) return;
 
-    const orderItems: IOrderItem[] = items.map((item: ICartItem) => {
-      const firstPrice = item.product.priceByVolume[0];
-      return {
-        product: item.product,
-        quantity: item.quantity,
-        selectedVolume: firstPrice?.volume || "",
-      };
-    });
+    const orderItems: IOrderItem[] = items.map((item: ICartItem) => ({
+      product: item.product,
+      quantity: item.quantity,
+      selectedVolume: item?.selectedVolume,
+    }));
     console.log("orderItems: ", orderItems);
 
     dispatch(
@@ -185,7 +148,6 @@ const BasketPage = () => {
                   className={styles.checkoutBtn}
                 >
                   Оформити замовлення
-                  <BasketIcon variant="white" className={styles.iconBasket} />
                 </button>
               </div>
               <RecommendedProducts />
@@ -205,9 +167,7 @@ const BasketPage = () => {
               <span className="block font-bold text-black">
                 {removedProductName}
               </span>
-              <span className="block text-gray-600">
-                видалено з кошика.
-              </span>
+              <span className="block text-gray-600">видалено з кошика.</span>
             </p>
           ) : (
             <p className="font-open-sans text-lg text-gray-600 text-center leading-snug">

@@ -39,7 +39,7 @@ export const addCartItem = createAsyncThunk<
 
 export const updateCartItem = createAsyncThunk<
   ICartItem[],
-  { productId: string; quantity: number },
+  { productId: string; selectedVolume: string, quantity: number },
   { rejectValue: string }
 >("cart/updateItem", async ({ productId, quantity }, { rejectWithValue }) => {
   try {

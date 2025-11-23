@@ -2,7 +2,7 @@
 import React from "react";
 import Navigation from "../Navigation/Navigation";
 import { useAppSelector } from "@/store/hooks";
-import { selectIsLoggedIn, selectUser } from "@/store/auth/selectors";
+import { selectIsLoggedIn } from "@/store/auth/selectors";
 import UserMenu from "../UserMenu/UserMenu";
 import LangSwitcher from "../LangSwitcher/LangSwitcher";
 import UserIcon from "../UserIcon/UserIcon";
@@ -16,8 +16,8 @@ type MobileMenuProps = {
 
 export default function MobileMenu({ onClose }: MobileMenuProps) {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  const user = useAppSelector(selectUser);
-  console.log("user: ", user);
+  // const user = useAppSelector(selectUser);
+  // console.log("user: ", user);
 
   return (
     <div className={styles.modal}>

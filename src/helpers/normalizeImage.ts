@@ -1,24 +1,3 @@
-// export const normalizeBackendImageUrl = (src?: string | null): string | null => {
-//   if (!src) return null;
-
-//   // якщо бек вже повернув повну URL
-//   if (src.startsWith("http://") || src.startsWith("https://" || src.startsWith("blob:"))) {
-//     return src;
-//   }
-
-//   // прибираємо початкові слеші
-//   let cleaned = src.replace(/^\/+/, "");
-
-//   // якщо рядок починається з "3001/", вирізаємо цей префікс
-//   if (cleaned.startsWith("3001/")) {
-//     cleaned = cleaned.slice("3001/".length);
-//   }
-//   const origin =
-//     process.env.NEXT_PUBLIC_API_ORIGIN || "https://be-beautiful-backend.onrender.com";
-
-//   return `${origin}/${cleaned}`;
-// };
-
 export const normalizeBackendImageUrl = (src?: string | null): string | null => {
   if (!src) return null;
 

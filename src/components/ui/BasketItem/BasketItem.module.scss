@@ -5,45 +5,54 @@
 
   @media (min-width: 744px) {
     flex-direction: row;
-    gap: 0;
+    gap: 30px;
   }
   @media (min-width: 1440px) {
+    gap: 100px;
   }
 
   .wrapperInfo {
     display: flex;
     justify-content: start;
-    gap: 18px;
+    align-items: center;
+    gap: 14px;
 
     @media (min-width: 744px) {
-      gap: 30px;
+      gap: 20px;
     }
     @media (min-width: 1440px) {
       gap: 34px;
     }
 
-    .img {
-      width: 124px;
-      height: 112px;
+    // .img {
+    //   width: 124px;
+    //   height: 112px;
+    //   object-fit: cover;
 
-      @media (min-width: 744px) {
-        width: 94px;
-        height: 100px;
-      }
-      @media (min-width: 1440px) {
-        width: 196px;
-        height: 156px;
-      }
-    }
+    //   @media (min-width: 744px) {
+    //     width: 94px;
+    //     height: 100px;
+    //   }
+    //   @media (min-width: 1440px) {
+    //     width: 196px;
+    //     height: 156px;
+    //   }
+    // }
 
     .info {
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 10px;
+      gap: 12px;
+      color: var(--color-black);
+
+      @media (min-width: 744px) {
+        gap: 4px;
+      }
 
       .titleEn {
+        font-family: var(--font-lato);
         font-weight: 700;
         font-size: 18px;
         line-height: 150%;
@@ -78,6 +87,7 @@
       }
 
       .priceMob {
+        font-family: var(--font-lato);
         font-weight: 700;
         font-size: 18px;
         line-height: 150%;
@@ -102,11 +112,12 @@
     .quantity {
       display: flex;
       align-items: center;
-     
+
       @media (min-width: 744px) {
-              }
+        gap: 10px;
+      }
       @media (min-width: 1440px) {
-      
+        gap: 20px;
       }
 
       button {
@@ -139,6 +150,7 @@
       }
 
       p {
+        font-family: var(--font-lato);
         font-weight: 700;
         font-size: 18px;
         line-height: 150%;
@@ -168,7 +180,7 @@
         font-size: 18px;
         line-height: 150%;
         letter-spacing: 0.01em;
-        margin-left: 84px;
+        margin-left: 60px;
       }
 
       @media (min-width: 1440px) {
@@ -176,7 +188,7 @@
         font-weight: 600;
         font-size: 24px;
         line-height: 120%;
-        margin-left: 108px;
+        margin-left: 100px;
       }
     }
 

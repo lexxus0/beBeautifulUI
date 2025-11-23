@@ -1,7 +1,11 @@
 "use client";
 
 import { ICartItem } from "@/types/types";
+import { useBreakpoint } from "@/helpers/hooks/useBreakpoint";
+import { useMemo, useState } from "react";
+import { normalizeBackendImageUrl } from "@/helpers/normalizeImage";
 import Image from "next/image";
+import Icon from "@/components/shared/Icon";
 import styles from "./BasketItem.module.scss";
 
 interface BasketItemProps {
@@ -17,7 +21,18 @@ const BasketItem = ({
   onDecrement,
   onRemove,
 }: BasketItemProps) => {
+  const [imgError, setImgError] = useState(false);
+
   const { product, quantity, selectedVolume } = item;
+  console.log("product: ", product);
+  const bp = useBreakpoint();
+
+  const size =
+    bp === "mobile"
+      ? { w: 124, h: 112 }
+      : bp === "tablet"
+      ? { w: 94, h: 94 }
+      : { w: 196, h: 156 };
 
   const option =
     product.priceByVolume.find((opt) => opt.volume === selectedVolume) ||
@@ -26,6 +41,19 @@ const BasketItem = ({
   const unitPrice = option?.price ?? 0;
   const volumeLabel = option?.volume ?? "";
   const totalPrice = Math.round(unitPrice * quantity * 100) / 100;
+
+  const imageSrc = useMemo(() => {
+    return normalizeBackendImageUrl(product.imageUrl);
+  }, [product.imageUrl]);
+
+  const canRenderImage = !!imageSrc && !imgError;
+
+  const srcPlaceholder =
+    bp === "mobile"
+      ? "/images/placeholder/placeholder-tab.png"
+      : bp === "tablet"
+      ? "/images/placeholder/placeholder-tab.png"
+      : "/images/placeholder/placeholder-desk.png";
 
   const handleDecrement = () => {
     if (quantity > 1) {
@@ -38,27 +66,42 @@ const BasketItem = ({
   return (
     <div className={styles.item}>
       <div className={styles.wrapperInfo}>
-        <Image
-          className={styles.img}
-          src={item.product.imageUrl}
-          alt={item.product.name}
-          width={124}
-          height={112}
-        />
+        {canRenderImage ? (
+          <Image
+            // className={styles.img}
+            src={item.product.imageUrl}
+            alt={item.product.name}
+            width={size.w}
+            height={size.h}
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <Image
+            // className={styles.img}
+            src={srcPlaceholder}
+            alt={item.product.name}
+            width={size.w}
+            height={size.h}
+          />
+        )}
         <div className={styles.info}>
           <p className={styles.titleEn}>{item.product.name}</p>
           <p className={styles.titleUk}>
             {item.product.name}
-              <span className={styles.volume}> {volumeLabel}</span>
+            <span className={styles.volume}> {volumeLabel}</span>
           </p>
           <p className={styles.priceMob}>{totalPrice} грн</p>
         </div>
       </div>
       <div className={styles.wrapperPrice}>
         <div className={styles.quantity}>
-          <button onClick={handleDecrement}>-</button>
+          <button onClick={handleDecrement}>
+            <Icon name="icon-minus" />
+          </button>
           <p>{quantity}</p>
-          <button onClick={onIncrement}>+</button>
+          <button onClick={onIncrement}>
+            <Icon name="icon-plus" />
+          </button>
         </div>
         <p className={styles.priceDesk}>{totalPrice} грн</p>
         <button className={styles.remove} onClick={onRemove}>
