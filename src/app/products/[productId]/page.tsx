@@ -11,7 +11,7 @@ export default async function ProductDetails({
 
   return (
     <>
-      {/* <section className="container"> */}
+      <section className="container">
         <Product productId={productId} />
         <section>
           <RecentlyViewed />
@@ -19,7 +19,7 @@ export default async function ProductDetails({
         <section>
           <WantToKnowMore />
         </section>
-      {/* </section> */}
+      </section>
     </>
   );
 }

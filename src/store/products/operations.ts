@@ -30,6 +30,9 @@ export const fetchProducts = createAsyncThunk<
         },
       });
 
+      // console.log("LIST PRODUCT RAW:", res.data);
+      // console.log("LIST PRODUCT KEYS:", Object.keys(res.data.data[0]));
+
       return {
         data: res.data.data,
         pagination: res.data.pagination,
@@ -50,6 +53,34 @@ export const fetchProducts = createAsyncThunk<
     }
   }
 );
+
+export const fetchProductById = createAsyncThunk<
+  IProduct,
+  string,
+  { rejectValue: string }
+>("products/fetchById", async (id, ThunkAPI) => {
+  try {
+    const res = await instance.get(`/products/${id}`);
+
+    // console.log("DETAIL PRODUCT RAW:", res.data);
+    // console.log("DETAIL PRODUCT KEYS:", Object.keys(res.data.data || res.data));
+
+    const product = res.data.data as IProduct;
+    // console.log("product: ", product);
+
+    if (!product) {
+      throw new Error("Product data is missing in response");
+    }
+
+    return product;
+  } catch (error: unknown) {
+    console.error("Failed to fetch product:", error);
+
+    return ThunkAPI.rejectWithValue(
+      handleError(error, "Failed to fetch product")
+    );
+  }
+});
 
 export const fetchProductsByIds = createAsyncThunk<
   IProduct[],

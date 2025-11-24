@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchProducts, fetchProductsByIds } from "./operations";
+import { fetchProductById, fetchProducts, fetchProductsByIds } from "./operations";
 import { IProduct, IProductResponse } from "@/types/types";
 import { handlePending, handleRejected } from "../init";
 
 interface ProductState {
   products: IProduct[];
+  productDetails: IProduct | null;
   recentlyViewed: IProduct[];
   totalItems: number | null;
   limit: number | null;
@@ -16,6 +17,7 @@ interface ProductState {
 
 const initialState: ProductState = {
   products: [],
+  productDetails: null,
   recentlyViewed: [],
   totalItems: null,
   limit: null,
@@ -47,6 +49,23 @@ const productSlice = createSlice({
       )
       .addCase(fetchProducts.rejected, (state, action) => {
         handleRejected(state, action);
+      })
+      .addCase(fetchProductById.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      
+      .addCase(fetchProductById.fulfilled, (state, action) => {
+        state.isLoading = false;
+      
+        // нормалізуємо продукт, щоб не було undefined
+        state.productDetails = action.payload;
+        console.log('action.payload: ', action.payload);
+      })
+      
+      .addCase(fetchProductById.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload ?? "Unknown error";
       })
       .addCase(fetchProductsByIds.pending, (state) => {
         state.isLoading = true;
