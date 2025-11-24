@@ -1,7 +1,7 @@
 import { IProduct } from "@/types/types";
 import React from "react";
 import ProductItem from "./ProductItem";
-import Filter from "./Filter";
+// import Filter from "./Filter";
 
 interface IProductsListProps {
   products: IProduct[];
@@ -10,7 +10,7 @@ interface IProductsListProps {
 export default function ProductsList({ products }: IProductsListProps) {
   return (
     <div>
-      <Filter />
+      {/* <Filter /> */}
       <ul className="flex flex-col gap-5 mb-10 md:flex-row md:flex-wrap lg:gap-10">
         {products.map((item: IProduct) => (
           <ProductItem item={item} key={item._id} />

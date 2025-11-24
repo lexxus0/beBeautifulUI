@@ -9,7 +9,10 @@ interface NavigationPanelProps {
   name: string;
 }
 
-const NavigationPanel: React.FC<NavigationPanelProps> = ({ category, name }) => {
+const NavigationPanel: React.FC<NavigationPanelProps> = ({
+  category,
+  name,
+}) => {
   const router = useRouter();
 
   const handleNavigate = (path: string) => {
@@ -17,6 +20,8 @@ const NavigationPanel: React.FC<NavigationPanelProps> = ({ category, name }) => 
   };
 
   const firstWord = name.split(" ")[0];
+
+  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
   return (
     <div className={styles.navigationWrapper}>
@@ -35,7 +40,7 @@ const NavigationPanel: React.FC<NavigationPanelProps> = ({ category, name }) => 
             className={styles.link}
             onClick={() => handleNavigate(`/products?category=${category}`)}
           >
-            {category}
+            {capitalize(category)}
           </button>
           <Icon name="icon-double-arrow" className={styles.icon} />
 
