@@ -35,7 +35,7 @@ const ReviewSummary: React.FC<ReviewSummaryProps> = ({
   if (reviewSummary.count === 0) {
     return (
       <div className={`${styles.container} ${className}`}>
-        <span className={styles.noReviews}>Ще немає відгуків</span>
+        {/* <span className={styles.noReviews}>Ще немає відгуків</span> */}
       </div>
     );
   }
