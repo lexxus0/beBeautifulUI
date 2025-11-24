@@ -7,6 +7,7 @@ import Certificates from "@/components/ui/HomePage/Certificates/Certificates";
 import Category from "@/components/ui/HomePage/Category/Category";
 import Banner from "@/components/ui/HomePage/Banner/Banner";
 import TopProducts from "@/components/ui/HomePage/TopProducts/TopProducts";
+import ProductBadges from "@/components/ui/HomePage/ProductBadges/ProductBadges";
 
 export const metadata = homeMetadata;
 
@@ -18,6 +19,7 @@ export default function page() {
       <Description />
       <History />
       <Category />
+      <ProductBadges />
       <Certificates />
       <FAQ />
       <Reviews />
