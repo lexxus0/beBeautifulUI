@@ -32,6 +32,7 @@ const Product = ({ productId }: { productId: string }) => {
   return (
     <>
       <NavigationPanel category={product.category} name={product.name} />
+      <section className="container">
         <VisitedProduct productId={productId} />
         <div className={css.productContainer}>
           <div className={css.header}>
@@ -56,6 +57,7 @@ const Product = ({ productId }: { productId: string }) => {
           productId={productId}
           productName={product.name || "продукт"}
         />
+      </section>
     </>
   );
 };

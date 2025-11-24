@@ -11,15 +11,13 @@ export default async function ProductDetails({
 
   return (
     <>
-      <section className="container">
         <Product productId={productId} />
-        <section>
+        <section className="container">
           <RecentlyViewed />
         </section>
-        <section>
+        <section className="container">
           <WantToKnowMore />
         </section>
-      </section>
     </>
   );
 }
