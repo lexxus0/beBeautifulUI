@@ -117,8 +117,10 @@ export default function Filter() {
 
       <button
         onClick={handleResetFilters}
-        className="border-[0.4px] rounded-lg px-4 py-2 text-sm hover:bg-gray-100 transition"
-      >
+        className="border-[0.4px] border-[#2d2d2d] h-[44px] rounded-lg px-4 py-2 text-sm 
+             transition-colors duration-300
+             hover:bg-[#2d2d2d] hover:text-white"
+>
         Скинути фільтри
       </button>
     </div>
