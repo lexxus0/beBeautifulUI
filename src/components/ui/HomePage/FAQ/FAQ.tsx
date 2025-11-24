@@ -4,7 +4,7 @@ import { useState } from "react";
 import { faqData } from "./faqData";
 import Icon from "@/components/shared/Icon";
 
-export default function FAQ() {
+const FAQ = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const toggleAccordion = (index: number) => {
@@ -87,3 +87,5 @@ export default function FAQ() {
     </div>
   );
 }
+
+export default FAQ;

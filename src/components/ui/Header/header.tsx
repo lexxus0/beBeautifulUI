@@ -35,10 +35,13 @@ export default function Header() {
         </div>
         <div className={styles.wrapper}>
           <div className="flex items-center gap-4 md:gap-5 lg:gap-6">
-            <Link href="favorites" className="">
+            <Link
+              href="/favorites"
+              className="flex items-center justify-center px-1"
+            >
               <Icon
                 name="icon-hard"
-                className="w-7 h-6 lg:w-[30px] lg:h-[26px]"
+                 className="w-[26px] h-[22px] md:w-[26px] md:h-[22px] lg:w-[28px] lg:h-[24px]"
               />
             </Link>
             <BasketHeader />
