@@ -1,5 +1,5 @@
 .productContainer {
-  padding-top: 2px;
+  padding: 2px 0 20px;
   padding-bottom: 20px;
   display: grid;
   grid-template-areas:
@@ -9,7 +9,7 @@
     "actions";
 
   @media (min-width: 744px) {
-    padding-top: 40px;
+    padding: 40px 0 30px;
     grid-template-columns: auto 1fr;
     column-gap: 20px;
     grid-template-areas:
@@ -18,7 +18,7 @@
       "actions actions";
   }
   @media (min-width: 1440px) {
-    padding-top: 16px;
+    padding: 16px 0 60px;
     grid-template-columns: auto 1fr;
     column-gap: 50px;
     grid-template-areas:
