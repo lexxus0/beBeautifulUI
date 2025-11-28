@@ -1,15 +1,14 @@
+"use client";
 import { useEffect, useState } from "react";
 
 export const useViewport = () => {
-  const [width, setWidth] = useState<number | null>(null);
+  const [width, setWidth] = useState<number>(0); // 🔥 не null, а 0 (SSR-safe)
 
   useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
+    const update = () => setWidth(window.innerWidth);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
   return { width };

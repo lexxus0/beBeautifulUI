@@ -198,5 +198,8 @@
 <symbol id="icon-close-modal" viewBox="0 0 32 32">
 <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="8" d="M4 4l24 24M4 28l24-24"></path>
 </symbol>
+<symbol id="icon-right-maxlong-arrow" viewBox="0 0 134 32">
+<path d="M112.566 16.566c0.313-0.312 0.313-0.819 0-1.131l-5.091-5.091c-0.312-0.312-0.819-0.312-1.131 0s-0.313 0.819 0 1.131l4.526 4.526-4.526 4.526c-0.313 0.312-0.313 0.819 0 1.131s0.819 0.312 1.131 0l5.091-5.091zM32 16v0.8h80v-1.6h-80v0.8z"></path>
+</symbol>
 </defs>
 </svg>

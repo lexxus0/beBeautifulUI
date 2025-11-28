@@ -1,51 +1,51 @@
 "use client";
 
-import StarRating from "@/helpers/StarRating";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchReviews, reactToReview } from "@/store/reviews/operations";
-import { selectReviews } from "@/store/reviews/selectors";
-import { IReview } from "@/types/types";
-import { useEffect, useState } from "react";
-import defaultImage from "../../../../public/images/def.jpg";
+import { memo, useRef, useState } from "react";
 import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { convertDayToString } from "@/helpers/covertDateToString";
 import { BiLike, BiDislike } from "react-icons/bi";
+import defaultImage from "../../../../public/images/def.jpg";
+import StarRating from "@/helpers/StarRating";
+
+import styles from "./Reviews.module.scss";
+import Icon from "@/components/shared/Icon";
+import { IUIReview, ILocalReaction } from "@/types/reviews";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
+import toast from "react-hot-toast";
+import {
+  reactToProductReview,
+  reactToWebReview,
+} from "@/store/reviews/operations";
 
 interface ReviewsProps {
-  productId?: string;
   showTitle?: boolean;
-  reviews?: IReview[];
+  reviews?: IUIReview[];
 }
 
-export default function Reviews({ productId, showTitle = false, reviews: propReviews }: ReviewsProps) {
+function Reviews({ showTitle = false, reviews }: ReviewsProps) {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  const [expandedReviews, setExpandedReviews] = useState<{
-    [key: string]: boolean;
-  }>({});
+  const currentUserId = useAppSelector((s) => s.auth.user?._id);
 
-  const storeReviews = useAppSelector(selectReviews);
-  
-  // Use prop reviews if provided, otherwise use store reviews
-  const reviews = propReviews || storeReviews;
+  const [expandedReviews, setExpandedReviews] = useState<
+    Record<string, boolean>
+  >({});
+  const [localReactions, setLocalReactions] = useState<
+    Record<string, ILocalReaction>
+  >({});
 
-  useEffect(() => {
-    // Only fetch from store if no reviews are provided as props
-    if (!propReviews) {
-      if (productId) {
-        dispatch(fetchReviews({ 
-          productId, 
-          limit: 10, 
-          currentPage: 1 
-        }));
-      } else {
-        dispatch(fetchReviews({ limit: 10, currentPage: 1 }));
-      }
-    }
-  }, [dispatch, productId, propReviews]);
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
 
   const CHARACTER_LIMIT = 50;
+
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
 
   const toggleExpand = (id: string) => {
     setExpandedReviews((prev) => ({
@@ -54,108 +54,231 @@ export default function Reviews({ productId, showTitle = false, reviews: propRev
     }));
   };
 
+  const applyOptimisticReaction = (
+    review: IUIReview,
+    type: "like" | "dislike"
+  ) => {
+    setLocalReactions((prev) => {
+      const base = prev[review._id] ?? {
+        likes: review.likes,
+        dislikes: review.dislikes,
+        hasLiked: review.hasLiked,
+        hasDisliked: review.hasDisliked,
+      };
+
+      const updated: ILocalReaction = {
+        ...base,
+      };
+
+      if (type === "like" && !updated.hasLiked) {
+        updated.likes!++;
+        updated.hasLiked = true;
+
+        if (updated.hasDisliked) {
+          updated.dislikes!--;
+          updated.hasDisliked = false;
+        }
+      }
+
+      if (type === "dislike" && !updated.hasDisliked) {
+        updated.dislikes!++;
+        updated.hasDisliked = true;
+
+        if (updated.hasLiked) {
+          updated.likes!--;
+          updated.hasLiked = false;
+        }
+      }
+
+      return {
+        ...prev,
+        [review._id]: updated,
+      };
+    });
+  };
+
+  const rollbackOptimistic = (id: string) => {
+    setLocalReactions((prev) => {
+      const copy = { ...prev };
+      delete copy[id];
+      return copy;
+    });
+  };
+
+  const handleReaction = (merged: IUIReview, type: "like" | "dislike") => {
+    if (!isLoggedIn) {
+      toast.error("Увійдіть, щоб поставити оцінку", {
+        duration: 2000,
+      });
+      return;
+    }
+
+    if (merged.isMine || merged.userId === currentUserId) {
+      toast.error("Ви не можете реагувати на власний відгук");
+      return;
+    }
+
+    applyOptimisticReaction(merged, type);
+
+    const isProduct = Boolean(merged.productId);
+    const thunk = isProduct ? reactToProductReview : reactToWebReview;
+
+    dispatch(thunk({ id: merged._id, type }))
+      .unwrap()
+      .catch(() => rollbackOptimistic(merged._id));
+  };
+
   return (
-    <div className="container mb-20">
+    <div className="flex flex-col items-center">
       {showTitle && (
-        <h2 className="font-lato font-semibold text-3xl text-[#2d2d2d] mb-8 text-left md:text-center md:text-[40px] md:font-normal">
+        <h2 className="w-[270px] font-lato text-2xl mb-1 md:w-[660px] md:text-[42px] md:mb-8 lg:w-full lg:mb-10 text-center">
           Краса, яку підтверджують наші клієнти
         </h2>
       )}
-      <div className="flex flex-nowrap gap-16 flex-col lg:flex-row lg:flex-wrap">
-        {reviews.map((review: IReview) => {
-          const handleReaction = (type: "like" | "dislike") => {
-            const isAlreadyReacted =
-              (type === "like" && review.hasLiked) ||
-              (type === "dislike" && review.hasDisliked);
 
-            if (isAlreadyReacted) return;
+      {/* NAV BUTTONS */}
+      <div className="flex md:gap-20 lg:gap-14 mb-6 md:mb-10 lg:mb-12">
+        <button
+          type="button"
+          ref={prevRef}
+          disabled={isBeginning}
+          className={styles.navBtn}
+        >
+          <Icon
+            name="icon-right-maxlong-arrow"
+            className="w-[168px] md:w-[180px] h-10 rotate-180"
+          />
+        </button>
 
-            dispatch(reactToReview({ id: review._id, type }));
-          };
+        <button ref={nextRef} disabled={isEnd} className={styles.navBtn}>
+          <Icon
+            name="icon-right-maxlong-arrow"
+            className="w-[168px] md:w-[180px] h-10"
+          />
+        </button>
+      </div>
 
-          const isExpanded = expandedReviews[review._id];
-          const isLong = (review.comment?.length || 0) > CHARACTER_LIMIT;
-          const visibleComment =
-            isExpanded || !isLong
-              ? review.comment || ""
-              : (review.comment || "").slice(0, CHARACTER_LIMIT) + "...";
+      {/* SLIDER */}
+      <div className="w-full mx-auto">
+        <Swiper
+          modules={[Navigation]}
+          navigation={{
+            prevEl: prevRef.current,
+            nextEl: nextRef.current,
+          }}
+          onInit={(swiper) => {
+            const nav = swiper.params.navigation as {
+              prevEl: HTMLElement | null;
+              nextEl: HTMLElement | null;
+            };
+            nav.prevEl = prevRef.current;
+            nav.nextEl = nextRef.current;
+            swiper.navigation.init();
+            swiper.navigation.update();
 
-          return (
-            <div
-              key={review._id}
-              className="px-6 py-4 bg-gray-200 rounded-2xl w-full relative lg:w-[616px]"
-            >
-              <p className="absolute right-5">
-                {convertDayToString(review.createdAt)}
-              </p>
-              <div className="flex items-center gap-4 mb-6 mt-5">
-                <div className="size-[100px] rounded-3xl">
-                  <Image
-                    src={defaultImage}
-                    alt="Reviewer profile picture"
-                    width={100}
-                    height={100}
-                    className="rounded-3xl"
-                  />
+            setIsBeginning(swiper.isBeginning);
+            setIsEnd(swiper.isEnd);
+          }}
+          onSlideChange={(swiper) => {
+            setIsBeginning(swiper.isBeginning);
+            setIsEnd(swiper.isEnd);
+          }}
+          breakpoints={{
+            320: { slidesPerView: 1, spaceBetween: 20 },
+            744: { slidesPerView: 1, spaceBetween: 30 },
+            1440: { slidesPerView: 2, spaceBetween: 40 },
+          }}
+        >
+          {reviews?.map((review: IUIReview) => {
+            const reaction = localReactions[review._id] || {};
+            const merged: IUIReview = { ...review, ...reaction };
+            const isLong = (merged.comment?.length ?? 0) > CHARACTER_LIMIT;
+            const visibleComment =
+              expandedReviews[review._id] || !isLong
+                ? merged.comment
+                : merged.comment?.slice(0, CHARACTER_LIMIT) + "...";
+
+            return (
+              <SwiperSlide key={review._id} className="!flex !justify-center">
+                <div
+                  className="w-full max-w-[275px] h-[400px] sm:max-w-[295px] md:max-w-[664px] md:h-[434px] lg:max-w-[616px] pt-[66px] px-4 pb-6 bg-gray rounded-4xl relative
+              "
+                >
+                  <p className="absolute right-4 top-6 font-lato text-lg lg:font-bold">
+                    {convertDayToString(merged.createdAt)}
+                  </p>
+                  <div className="flex items-center gap-4 mb-6 mt-5">
+                    <Image
+                      src={defaultImage}
+                      alt="Reviewer avatar"
+                      width={100}
+                      height={100}
+                      className="rounded-3xl"
+                    />
+                    <div className="flex flex-col gap-[10px] font-light text-lg text-black-10">
+                      <p>{merged.name}</p>
+                      <p>{merged.location}</p>
+                      <StarRating
+                        rating={merged.rating}
+                        size={12}
+                        color="#FFD700"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-end">
+                    <p className="font-roboto italic uppercase font-light text-lg md:text-xl lg:text-2xl text-black-10 self-start mb-3">
+                      {visibleComment}
+                    </p>
+
+                    {isLong && (
+                      <button
+                        onClick={() => toggleExpand(review._id)}
+                        className="font-lato text-lg lg:text-2xl ml-auto mt-3"
+                      >
+                        {expandedReviews[review._id]
+                          ? "Сховати"
+                          : "Дивитись більше"}
+                      </button>
+                    )}
+
+                    <div className="absolute bottom-6 right-4 flex flex-col gap-2">
+                      <p className="font-lato text-lg">
+                        Вам допоміг цей відгук?
+                      </p>
+
+                      <div className="flex gap-3 ml-auto">
+                        <button
+                          disabled={merged.hasLiked}
+                          className={`transition ${
+                            merged.hasLiked ? "text-green-600 font-bold" : ""
+                          }`}
+                          onClick={() => handleReaction(merged, "like")}
+                        >
+                          <BiLike />
+                        </button>
+                        <p>{merged.likes}</p>
+
+                        <button
+                          disabled={merged.hasDisliked}
+                          className={`transition ${
+                            merged.hasDisliked ? "text-red-600 font-bold" : ""
+                          }`}
+                          onClick={() => handleReaction(merged, "dislike")}
+                        >
+                          <BiDislike />
+                        </button>
+                        <p>{merged.dislikes}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <h3 className="font-lato font-light text-lg text-[#333]">
-                    {review.name}
-                  </h3>
-                  <h3 className="font-lato font-light text-lg text-[#333]">
-                    {review.location}
-                  </h3>
-                  <StarRating
-                    rating={review.rating}
-                    size={16}
-                    color="#FFD700"
-                  />
-                </div>
-              </div>
-              <div className="flex flex-col items-end">
-                <p className="font-roboto italic uppercase font-light text-lg text-[#2d2d2d] self-start">
-                  {visibleComment}
-                </p>
-
-                {isLong && (
-                  <button
-                    onClick={() => toggleExpand(review._id)}
-                    className="text-sm ml-auto mt-3"
-                  >
-                    {isExpanded ? "Сховати" : "Дивитись більше"}
-                  </button>
-                )}
-
-                <p className="ml-auto mt-2">Вам допоміг цей відгук?</p>
-
-                <div className="flex gap-1.5 ml-auto">
-                  <button
-                    disabled={!isLoggedIn || review.hasLiked}
-                    className={`transition ${
-                      review.hasLiked ? "text-green-600 font-bold" : ""
-                    }`}
-                    onClick={() => handleReaction("like")}
-                  >
-                    <BiLike />
-                  </button>
-                  <p>{review.likes}</p>
-
-                  <button
-                    disabled={!isLoggedIn || review.hasDisliked}
-                    className={`transition ${
-                      review.hasDisliked ? "text-red-600 font-bold" : ""
-                    }`}
-                    onClick={() => handleReaction("dislike")}
-                  >
-                    <BiDislike />
-                  </button>
-                  <p>{review.dislikes}</p>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
       </div>
     </div>
   );
 }
+
+export default memo(Reviews);
