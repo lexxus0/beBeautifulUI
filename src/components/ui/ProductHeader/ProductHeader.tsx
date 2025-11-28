@@ -3,6 +3,8 @@ import { IProduct } from "@/types/types";
 import ProductRating from "../ProductRating/ProductRating";
 import { useViewport } from "@/helpers/hooks/useViewport";
 import css from "@/components/ui/ProductHeader/ProductHeader.module.scss";
+import { memo, useMemo } from "react";
+import { useReviewData } from "@/helpers/hooks/useReviewData";
 
 export interface ProductHeaderProps {
   product: IProduct;
@@ -10,6 +12,28 @@ export interface ProductHeaderProps {
 
 const ProductHeader = ({ product }: ProductHeaderProps) => {
   const { width } = useViewport();
+  const { avgRating, count } = useReviewData(product._id);
+
+  const sizeConfig = useMemo(
+    () => ({
+      mobile: 24,
+      tablet: 24,
+      desktop: 32,
+    }),
+    []
+  );
+
+  const layoutConfig = useMemo(
+    () => ({
+      gap: { mobile: 4, tablet: 4, desktop: 16 },
+      marginRight: { mobile: 0, tablet: 16, desktop: 0 },
+    }),
+    []
+  );
+
+  const isTablet = width !== null && width > 743;
+
+  if (width === null) return null;
 
   return (
     <div className={css.headercontainer}>
@@ -27,29 +51,17 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
             </p>
           </div>
         </div>
-        {width !== null && width > 743 ? (
+        {isTablet && (
           <div className={css.stars}>
             <ProductRating
-              productId={product._id}
-              value={
-                product.reviews?.length
-                  ? product.reviews.reduce((sum, r) => sum + r.rating, 0) /
-                    product.reviews.length
-                  : 0
-              }
-              reviews={product.reviews?.length || 0}
-              sizeConfig={{
-                mobile: 24,
-                tablet: 24,
-                desktop: 32,
-              }}
-              layoutConfig={{
-                gap: { mobile: 4, tablet: 4, desktop: 16 },
-                marginRight: { mobile: 0, tablet: 16, desktop: 0 },
-              }}
+              value={avgRating}
+              reviews={count}
+              sizeConfig={sizeConfig}
+              layoutConfig={layoutConfig}
             />
           </div>
-        ) : null}
+        )}
+
         <p className={css.features}>
           {product.features && product.features.length > 0
             ? product.features.join(" | ")
@@ -66,4 +78,4 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
   );
 };
 
-export default ProductHeader;
+export default memo(ProductHeader);

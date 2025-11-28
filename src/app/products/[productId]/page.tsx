@@ -1,6 +1,7 @@
-import Product from "@/components/ui/products/Product";
+// import Product from "@/components/ui/products/Product";
 import WantToKnowMore from "@/components/ui/WantToKnowMore/WantToKnowMore";
 import RecentlyViewed from "@/components/ui/RecentlyViewed/RecentlyViewed";
+import ProductWrapper from "@/components/ui/products/ProductWrapper";
 
 export default async function ProductDetails({
   params,
@@ -8,16 +9,16 @@ export default async function ProductDetails({
   params: Promise<{ productId: string }>;
 }) {
   const { productId } = await params;
-
+  console.log("Render ProductDetails");
   return (
     <>
-        <Product productId={productId} />
-        <section className="container">
-          <RecentlyViewed />
-        </section>
-        <section className="container">
-          <WantToKnowMore />
-        </section>
+      <ProductWrapper productId={productId} />
+      <section className="container">
+        <RecentlyViewed />
+      </section>
+      <section className="container">
+        <WantToKnowMore />
+      </section>
     </>
   );
 }

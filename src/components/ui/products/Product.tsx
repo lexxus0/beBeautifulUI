@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { memo } from "react";
 import ProductActions from "@/components/ui/ProductActions/ProductActions";
 import ProductDescription from "@/components/ui/ProductDescription/ProductDescription";
 import ProductGallery from "@/components/ui/ProductGallery/ProductGallery";
@@ -7,28 +7,16 @@ import ProductHeader from "@/components/ui/ProductHeader/ProductHeader";
 import BrandPhilosophy from "@/components/ui/BrandPhilosophy/BrandPhilosophy";
 import VisitedProduct from "@/app/products/[productId]/VisitedProduct";
 import ProductReviews from "@/components/ui/ProductReviews/ProductReviews";
-import NavigationPanel from "../NavigationPanel/NavigationPanel";
-import { fetchProductById } from "@/store/products/operations";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { selectIsLoading, selectProductDetails } from "@/store/products/selectors";
+import NavigationPanel from "@/components/ui/NavigationPanel/NavigationPanel";
+import { IProduct } from "@/types/types";
 import css from "./page.module.scss";
 
-const Product = ({ productId }: { productId: string }) => {
-  const dispatch = useAppDispatch();
+interface ProductProps {
+  product: IProduct;
+  productId: string;
+}
 
-  const product = useAppSelector(selectProductDetails);
-  console.log('product: ', product);
-  const loading = useAppSelector(selectIsLoading);
-
-    useEffect(() => {
-    if (productId) {
-      dispatch(fetchProductById(productId));
-    }
-  }, [productId, dispatch]);
-
-  if (loading) return <span>Loading....</span>;
-  if (!product) return <span>some problems...</span>;
-
+const Product = ({ product, productId }: ProductProps) => {
   return (
     <>
       <NavigationPanel category={product.category} name={product.name} />
@@ -55,11 +43,11 @@ const Product = ({ productId }: { productId: string }) => {
 
         <ProductReviews
           productId={productId}
-          productName={product.name || "продукт"}
+          productName={product.name}
         />
       </section>
     </>
   );
 };
 
-export default Product;
+export default memo(Product);

@@ -1,10 +1,11 @@
 "use client";
-import { IProduct } from "@/types/types";
 import Image from "next/image";
 import React, { useMemo, useState } from "react";
+import { IProduct } from "@/types/types";
 
 import { useViewport } from "@/helpers/hooks/useViewport";
 import { normalizeBackendImageUrl } from "@/helpers/normalizeImage";
+import { useReviewData } from "@/helpers/hooks/useReviewData";
 import ProductRating from "../ProductRating/ProductRating";
 import css from "@/components/ui/ProductGallery/ProductGallery.module.scss";
 
@@ -18,9 +19,11 @@ const ProductGallery = ({ product }: ProductGalleryProps) => {
   const [lightboxImage, setLightboxImage] = useState("");
 
   const { width } = useViewport();
+  const { avgRating, count } = useReviewData(product._id);
 
-  const isTablet = width !== null && width >= 744;
-  const isDesktop = width !== null && width >= 1440;
+  const isMobile = width <= 743;
+  const isTablet = width >= 744 && width <= 1439;
+  const isDesktop = width >= 1440;
 
   const openLightbox = (image: string) => {
     setLightboxImage(image);
@@ -45,6 +48,23 @@ const ProductGallery = ({ product }: ProductGalleryProps) => {
     : isTablet
     ? "/images/placeholder/placeholder-tab.png"
     : "/images/placeholder/placeholder-tab.png";
+
+  const sizeConfig = useMemo(
+    () => ({
+      mobile: 24,
+      tablet: 24,
+      desktop: 32,
+    }),
+    []
+  );
+
+  const layoutConfig = useMemo(
+    () => ({
+      gap: { mobile: 4, tablet: 4, desktop: 16 },
+      marginRight: { mobile: 0, tablet: 16, desktop: 0 },
+    }),
+    []
+  );
 
   return (
     <div className={css.galleryContainer}>
@@ -74,18 +94,12 @@ const ProductGallery = ({ product }: ProductGalleryProps) => {
         )}
       </div>
 
-      {width !== null && width < 744 ? (
+      {isMobile ? (
         <ProductRating
-          productId={product._id}
-          value={3.3}
-          sizeConfig={{
-            mobile: 24,
-            tablet: 24,
-            desktop: 32,
-          }}
-          layoutConfig={{
-            gap: { mobile: 4, tablet: 4, desktop: 16 },
-          }}
+          value={avgRating}
+          reviews={count}
+          sizeConfig={sizeConfig}
+          layoutConfig={layoutConfig}
         />
       ) : null}
 

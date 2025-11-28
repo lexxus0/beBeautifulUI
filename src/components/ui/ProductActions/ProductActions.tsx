@@ -28,7 +28,7 @@ const ProductActions = ({ product }: ProductActionsProps) => {
   );
   const [quantity, setQuantity] = useState<number>(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 

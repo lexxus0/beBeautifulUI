@@ -2,11 +2,12 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { useReviews } from '@/hooks/useReviews';
-import { useAppSelector } from '@/store/hooks';
+// import { useReviews } from '@/hooks/useReviews';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectIsLoggedIn } from '@/store/auth/selectors';
 // import StarRating from '@/helpers/StarRating';
 import styles from '../ui/ReviewForm/review-form.module.css';
+import { createReview } from '@/store/reviews/operations';
 
 interface ReviewFormProps {
   productId: string;
@@ -23,8 +24,10 @@ export default function ReviewForm({
   onSuccess,
   onCancel 
 }: ReviewFormProps) {
-  const { addReview } = useReviews(productId);
+  const dispatch = useAppDispatch();
+  // const { addReview } = useReviews(productId);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  // const currentUserId = useAppSelector(s => s.auth.user?._id);
   
   const [rating, setRating] = useState(initialValue?.rating || 0);
   const [comment, setComment] = useState(initialValue?.comment || '');
@@ -53,16 +56,9 @@ export default function ReviewForm({
     setError(null);
     
     try {
-      if (mode === 'create') {
-        await addReview({
-          productId,
-          rating,
-          comment: comment.trim()
-        });
-      } else if (mode === 'edit' && initialValue) {
-        // For edit mode, we'd need the review ID - this would need to be passed as a prop
-        // await editReview(reviewId, { rating, comment: comment.trim() });
-      }
+      await dispatch(
+        createReview({ productId, rating, comment: comment.trim() })
+      ).unwrap();
       
       onSuccess?.();
     } catch (error: unknown) {

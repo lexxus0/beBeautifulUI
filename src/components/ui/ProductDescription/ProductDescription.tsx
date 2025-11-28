@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import css from "@/components/ui/ProductDescription/ProductDescription.module.css";
 import { IProduct } from "@/types/types";
 import Icon from "@/components/elements/Icons";
+
 export interface ProductDescriptionProps {
   product: IProduct;
 }
@@ -21,7 +22,8 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           onClick={() => handleClick(0)}
           className={`${css.accordionHeader} ${
             activeIndex === 0 ? css.active : ""
-          }`}>
+          }`}
+        >
           <span className={css.descriptionTitle}>Опис продукту:</span>
           <div
             className={`${css.arrow} ${
@@ -46,7 +48,8 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           onClick={() => handleClick(1)}
           className={`${css.accordionHeader} ${
             activeIndex === 1 ? css.active : ""
-          }`}>
+          }`}
+        >
           <span className={css.descriptionTitle}>
             Чому цей шампунь — більше, ніж очищення
           </span>
@@ -75,7 +78,8 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           onClick={() => handleClick(2)}
           className={`${css.accordionHeader} ${
             activeIndex === 2 ? css.active : ""
-          }`}>
+          }`}
+        >
           <span className={css.descriptionTitle}>
             Основні активні компоненти:
           </span>
@@ -108,7 +112,8 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           onClick={() => handleClick(3)}
           className={`${css.accordionHeader} ${
             activeIndex === 3 ? css.active : ""
-          }`}>
+          }`}
+        >
           <span className={css.descriptionTitle}>Повний склад (INCI):</span>
           <div
             className={`${css.arrow} ${
@@ -133,7 +138,8 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           onClick={() => handleClick(4)}
           className={`${css.accordionHeader} ${
             activeIndex === 4 ? css.active : ""
-          }`}>
+          }`}
+        >
           <span className={css.descriptionTitle}>Спосіб застосування:</span>
           <div
             className={`${css.arrow} ${
@@ -158,7 +164,8 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           onClick={() => handleClick(5)}
           className={`${css.accordionHeader} ${
             activeIndex === 5 ? css.active : ""
-          }`}>
+          }`}
+        >
           <span className={css.descriptionTitle}>Застереження:</span>
           <div
             className={`${css.arrow} ${
@@ -185,7 +192,8 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           onClick={() => handleClick(6)}
           className={`${css.accordionHeader} ${
             activeIndex === 6 ? css.active : ""
-          }`}>
+          }`}
+        >
           <span className={css.descriptionTitle}>Термін придатності:</span>
           <div
             className={`${css.arrow} ${
