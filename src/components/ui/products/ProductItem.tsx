@@ -94,7 +94,7 @@ const ProductItem = ({ item }: ProductItemProps) => {
         <div className="relative flex flex-col items-center p-4 md:w-[322px] lg:w-[400px]">
           <button
             onClick={handleFavoriteClick}
-            className="absolute top-6 right-4 z-10"
+            className="absolute top-6 right-4"
           >
             {isFavorite ? (
               <Icon name="icon-hard" className="w-7 h-6" />
