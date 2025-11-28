@@ -10,9 +10,7 @@
     width: 88px;
   }
 
-  &:hover,
-  &:focus,
-  &:active {
+  &:hover {
     border-bottom: 1px solid #3e4f34;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   }
