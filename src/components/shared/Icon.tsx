@@ -8,7 +8,8 @@ interface IconProps {
   width?: number;
   height?: number;
   className?: string;
-  title?: string; // опційно: підпис для a11y
+  title?: string;
+  onClick?: React.MouseEventHandler<SVGSVGElement>;
 }
 
 export default function Icon({
@@ -17,6 +18,7 @@ export default function Icon({
   name,
   className,
   title,
+  onClick,
 }: IconProps) {
   return (
     <svg
@@ -26,6 +28,7 @@ export default function Icon({
       role={title ? "img" : "presentation"}
       // focusable="false"
       className={clsx("fill-current stroke-current", className)}
+      onClick={onClick}
     >
       <use href={`/icons/sprite.svg#${name}`} />
     </svg>

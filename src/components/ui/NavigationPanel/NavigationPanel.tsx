@@ -44,7 +44,7 @@ const NavigationPanel: React.FC<NavigationPanelProps> = ({
           </button>
           <Icon name="icon-double-arrow" className={styles.icon} />
 
-          <span className={styles.link}>{firstWord}</span>
+          <span>{firstWord}</span>
         </div>
       </div>
     </div>
