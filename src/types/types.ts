@@ -1,4 +1,5 @@
 import { ChangeEventHandler } from "react";
+import { IUIReview } from "./reviews";
 
 export interface IState {
   isLoading: boolean;
@@ -36,7 +37,7 @@ export interface IProduct {
   inciList: string[];
   category: string;
   isVegan: boolean;
-  reviews: IReview[];
+  reviews: IUIReview[];
   isPromoted: boolean;
   imageUrl: string;
   inStock: boolean;
@@ -58,28 +59,6 @@ export type CategoryData = {
 };
 
 export type CategoryCardProps = CategoryData;
-
-export interface IReview {
-  _id: string;
-  productId: string; // Required - matches backend schema
-  userId: string; // Required - matches backend schema (for unique constraint)
-  rating: number; // 1-5, required, matches backend schema
-  comment?: string; // Optional, max 1000 chars, matches backend schema
-  createdAt: string; // From timestamps
-  updatedAt: string; // From timestamps
-  // Frontend-specific fields (not in backend schema)
-  name: string; // From user profile
-  location: string; // From user profile
-  likes: number; // For future like/dislike feature
-  dislikes: number; // For future like/dislike feature
-  hasLiked?: boolean; // For future like/dislike feature
-  hasDisliked?: boolean; // For future like/dislike feature
-}
-
-export interface IReviewResponse {
-  data: IReview[];
-  pagination: IPagination;
-}
 
 export interface IUser {
   _id?: string;
@@ -111,7 +90,7 @@ export interface IUpdateUserPayload {
   email?: string;
   password?: string;
   telephone?: string;
-  dateOfBirth?: string;   // "DD.MM.YYYY"
+  dateOfBirth?: string; // "DD.MM.YYYY"
   photo?: File | null;
 }
 
@@ -127,7 +106,11 @@ export interface IUpdateUserApiUser {
 
 export type RegisterError = { code: number; field?: "email"; message: string };
 
-export type ServerErrorBody = { status?: number; message?: string; data?: string };
+export type ServerErrorBody = {
+  status?: number;
+  message?: string;
+  data?: string;
+};
 
 export interface RegisterFormInputs {
   first_name: string;
@@ -244,7 +227,7 @@ export interface ICartRaw {
 }
 
 export interface ICartItem {
-  product: IProduct; 
+  product: IProduct;
   selectedVolume: string;
   quantity: number;
 }
@@ -269,5 +252,3 @@ export interface BasketItemsListProps {
   onDecrement: (item: ICartItem) => void;
   onRemove: (item: ICartItem) => void;
 }
-
-
