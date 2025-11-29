@@ -5,7 +5,7 @@ import { fetchProducts } from "@/store/products/operations";
 import { selectProducts } from "@/store/products/selectors";
 import ProductsList from "@/components/ui/products/ProductsList";
 import BackButton from "@/components/ui/BackButton/BackButton";
-import Filter from "@/components/ui/products/Filter";
+import Filter from "@/components/ui/products/Filter/Filter";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
