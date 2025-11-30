@@ -1,0 +1,88 @@
+.philosophyContainer{
+  padding: 26px 0 24px;
+
+  @media (min-width: 744px) {
+  padding: 34px 0 32px;
+  }
+
+  @media (min-width: 1440px) {
+  }
+}
+.container {
+  flex-direction: column;
+  display: flex;
+  gap: 20px;
+  color: var(--color-black-10);
+  font-size: 14px;
+  font-family: var(--font-roboto);
+  font-weight: 300;
+  line-height: 21px;
+  letter-spacing: 0.28px;
+  text-align: center;
+  
+  @media (min-width: 744px) {
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: 0.36px;
+  
+  }
+
+  @media (min-width: 1440px) {
+    font-size: 22px;
+    line-height: 33px;
+    align-items: center; 
+    
+
+    > :nth-child(1) {
+      width: 970px;
+    }
+
+    > :nth-child(2) {
+      width: 516px;
+    }
+
+    > :nth-child(3) {
+      width: 720px;
+    }
+  }
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 22px;
+  color: var(--color-black-10);
+  font-family: var(--font-lato);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+
+  @media (min-width: 744px) {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 36px;
+    letter-spacing: 0.24px;
+  }
+
+  @media (min-width: 1440px) {
+  }
+}
+
+.scienceSpan {
+  font-size: 16px;
+  font-family: var(--font-source-sans-pro);
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.16px;
+
+  @media (min-width: 744px) {
+    font-size: 22px;
+    line-height: 33px;
+    letter-spacing: 0.22px;
+  }
+
+  @media (min-width: 1440px) {
+    font-size: 28px;
+    line-height: 42px;
+    letter-spacing: 0.28px;
+  }
+}

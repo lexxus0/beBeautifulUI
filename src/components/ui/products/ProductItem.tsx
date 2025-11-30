@@ -1,17 +1,18 @@
 "use client";
 
 import StarRating from "@/helpers/StarRating";
-import { IProduct, IReview } from "@/types/types";
+import { IProduct } from "@/types/types";
+import { IUIReview } from "@/types/reviews";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addCartItem } from "@/store/cart/operations";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
+import { toggleFavorite } from "@/store/favorites/slice";
 import { addToGuestCart } from "@/store/cart/slice";
 import { BaseModal } from "@/components/shared/Modal";
 import Icon from "@/components/shared/Icon";
-import { toggleFavorite } from "@/store/favorites/slice";
 
 interface ProductItemProps {
   item: IProduct;
@@ -43,7 +44,7 @@ const ProductItem = ({ item }: ProductItemProps) => {
     }
   };
 
-  const getAverageRating = (reviews?: IReview[]) => {
+  const getAverageRating = (reviews?: IUIReview[]) => {
     if (!Array.isArray(reviews) || reviews.length === 0) return 0;
     const total = reviews.reduce((sum, r) => sum + r.rating, 0);
     return total / reviews.length;

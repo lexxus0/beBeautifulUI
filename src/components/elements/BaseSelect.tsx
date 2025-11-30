@@ -137,7 +137,7 @@ export default function BaseSelect({
               iconLeft ? "pl-[48px]" : ""
             }`}
           >
-            <span className="block font-roboto font-light text-start">
+            <span className={`block font-roboto font-light text-start ${className}`}>
               {selected?.label ?? placeholder}
             </span>
           </button>
@@ -149,7 +149,7 @@ export default function BaseSelect({
               e.stopPropagation();
               setOpen((prev) => !prev);
             }}
-            className="absolute right-2"
+            className={`absolute right-2 ${className}`}
           >
             <Icon
               name={iconRight}

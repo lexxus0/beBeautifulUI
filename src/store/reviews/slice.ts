@@ -1,142 +1,116 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchReviews, reactToReview, createReview, updateReview, deleteReview, fetchReviewSummary } from "./operations";
-import { IReview, IReviewResponse } from "@/types/types";
+import { createSlice } from "@reduxjs/toolkit";
+import { IUIReview } from "@/types/reviews";
+import {
+  createReview,
+  updateReview,
+  deleteReview,
+  fetchWebReviews,
+  fetchProductReviews,
+  reactToWebReview,
+  reactToProductReview,
+} from "./operations";
 import { handlePending, handleRejected } from "../init";
 
 interface ReviewState {
-  reviews: IReview[];
-  productReviews: Record<string, IReview[]>; // Store reviews by productId
-  totalItems: number | null;
-  limit: number | null;
-  totalPages: number | null;
-  currentPage: number | null;
+  webReviews: IUIReview[];
+  productReviews: Record<string, IUIReview[]>;
   isLoading: boolean;
   error: string | null;
-  summaries: Record<string, { avg: number; count: number }>;
 }
 
 const initialState: ReviewState = {
-  reviews: [],
+  webReviews: [],
   productReviews: {},
-  totalItems: null,
-  limit: null,
-  totalPages: null,
-  currentPage: null,
   isLoading: false,
   error: null,
-  summaries: {},
 };
 
-const productSlice = createSlice({
+const reviewsSlice = createSlice({
   name: "reviews",
   initialState,
-  reducers: {
-    setProductReviews: (state, action: PayloadAction<{ productId: string; reviews: IReview[] }>) => {
-      const { productId, reviews } = action.payload;
-      state.productReviews[productId] = reviews;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchReviews.pending, (state) => {
-        handlePending(state);
+      .addCase(fetchWebReviews.pending, handlePending)
+      .addCase(fetchWebReviews.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.webReviews = action.payload;
       })
-      .addCase(
-        fetchReviews.fulfilled,
-        (state, action: PayloadAction<IReviewResponse>) => {
-          state.isLoading = false;
-          state.reviews = action.payload.data;
-          state.totalItems = action.payload.pagination.total;
-          state.limit = action.payload.pagination.perPage;
-          state.totalPages = action.payload.pagination.totalPages;
-          state.currentPage = action.payload.pagination.page;
-        }
-      )
-      .addCase(fetchReviews.rejected, (state, action) => {
-        handleRejected(state, action);
+      .addCase(fetchWebReviews.rejected, handleRejected)
+      .addCase(fetchProductReviews.pending, handlePending)
+      .addCase(fetchProductReviews.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const { productId, reviews } = action.payload;
+        state.productReviews[productId] = reviews;
       })
-      .addCase(reactToReview.fulfilled, (state, action) => {
-        const { id, type } = action.payload;
-        const review = state.reviews.find((r) => r._id === id);
-        if (review) {
-          if (type === "like") {
-            if (review.hasDisliked) {
-              review.dislikes -= 1;
-              review.hasDisliked = false;
-            }
-
-            review.likes += 1;
-            review.hasLiked = true;
-          } else if (type === "dislike") {
-            if (review.hasLiked) {
-              review.likes -= 1;
-              review.hasLiked = false;
-            }
-
-            review.dislikes += 1;
-            review.hasDisliked = true;
-          }
+      .addCase(fetchProductReviews.rejected, handleRejected)
+      .addCase(reactToWebReview.fulfilled, (state, action) => {
+        const updated = action.payload;
+        const idx = state.webReviews.findIndex((r) => r._id === updated._id);
+        if (idx !== -1) {
+          state.webReviews[idx] = updated;
         }
       })
-      // New reducers for backend integration
-      .addCase(createReview.pending, (state) => {
-        handlePending(state);
+      .addCase(reactToProductReview.fulfilled, (state, action) => {
+        const updated = action.payload;
+
+        if (!updated.productId) return;
+
+        const list = state.productReviews[updated.productId];
+        if (!list) return;
+
+        const idx = list.findIndex((r) => r._id === updated._id);
+        if (idx !== -1) {
+          list[idx] = updated;
+        }
       })
+      .addCase(createReview.pending, handlePending)
       .addCase(createReview.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.reviews.unshift(action.payload);
-        state.error = null;
-        
-        // Add to product-specific reviews
         const review = action.payload;
-        const productId = review.productId;
-        if (productId) {
-          if (!state.productReviews[productId]) {
-            state.productReviews[productId] = [];
+
+        if (review.productId) {
+          if (!state.productReviews[review.productId]) {
+            state.productReviews[review.productId] = [];
           }
-          state.productReviews[productId].unshift(review);
+          state.productReviews[review.productId].unshift(review);
         }
       })
-      .addCase(createReview.rejected, (state, action) => {
-        handleRejected(state, action);
-      })
-      .addCase(updateReview.pending, (state) => {
-        handlePending(state);
-      })
+      .addCase(createReview.rejected, handleRejected)
+      .addCase(updateReview.pending, handlePending)
       .addCase(updateReview.fulfilled, (state, action) => {
         state.isLoading = false;
-        const index = state.reviews.findIndex(r => r._id === action.payload._id);
-        if (index !== -1) {
-          state.reviews[index] = action.payload;
+        const updated = action.payload;
+
+        if (updated.productId) {
+          const arr = state.productReviews[updated.productId];
+          if (arr) {
+            const idx = arr.findIndex((r) => r._id === updated._id);
+            if (idx !== -1) arr[idx] = updated;
+          }
         }
         state.error = null;
       })
-      .addCase(updateReview.rejected, (state, action) => {
-        handleRejected(state, action);
-      })
-      .addCase(deleteReview.pending, (state) => {
-        handlePending(state);
-      })
+      .addCase(updateReview.rejected, handleRejected)
+      .addCase(deleteReview.pending, handlePending)
       .addCase(deleteReview.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.reviews = state.reviews.filter(r => r._id !== action.payload.id);
+        const id = action.payload.id;
+
+        // Видаляємо з web reviews
+        state.webReviews = state.webReviews.filter((r) => r._id !== id);
+
+        // Видаляємо з product reviews
+        Object.keys(state.productReviews).forEach((productId) => {
+          state.productReviews[productId] = state.productReviews[
+            productId
+          ].filter((r) => r._id !== id);
+        });
+        // state.reviews = state.reviews.filter(r => r._id !== action.payload.id);
         state.error = null;
       })
-      .addCase(deleteReview.rejected, (state, action) => {
-        handleRejected(state, action);
-      })
-      .addCase(fetchReviewSummary.pending, () => {
-        // Don't set loading for summary as it's not critical
-      })
-      .addCase(fetchReviewSummary.fulfilled, (state, action) => {
-        const { productId, summary } = action.payload;
-        state.summaries[productId] = summary;
-      })
-      .addCase(fetchReviewSummary.rejected, () => {
-        // Don't set error for summary as it's not critical
-      });
+      .addCase(deleteReview.rejected, handleRejected);
   },
 });
 
-export const { setProductReviews } = productSlice.actions;
-export default productSlice.reducer;
+export default reviewsSlice.reducer;

@@ -1,5 +1,5 @@
 import React from "react";
-import css from "@/components/ui/BrandPhilosophy/BrandPhilosophy.module.css";
+import css from "@/components/ui/BrandPhilosophy/BrandPhilosophy.module.scss";
 
 interface BrandPhilosophyProps {
   dynamicText: string;
@@ -7,7 +7,7 @@ interface BrandPhilosophyProps {
 
 const BrandPhilosophy: React.FC<BrandPhilosophyProps> = ({ dynamicText }) => {
   return (
-    <>
+    <div className={css.philosophyContainer}>
       <h2 className={css.title}>Цінність бренду у кожній баночці</h2>
       <div className={css.container}>
         <p>
@@ -22,7 +22,7 @@ const BrandPhilosophy: React.FC<BrandPhilosophyProps> = ({ dynamicText }) => {
           баночка — як спокій. Як обійми. Як наука, що працює для тебе.
         </p>
       </div>
-    </>
+    </div>
   );
 };
 
