@@ -32,6 +32,7 @@
   --color-gray-10: #898989;
   --color-gray-80: rgba(45, 45, 45, 0.8);
   --color-gray-100: rgba(45, 45, 45, 0.1);
+  --color-gray-300: rgba(45, 45, 45, 0.3);
 }
 
 *,

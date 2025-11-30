@@ -6,7 +6,7 @@ export function normalizeReview(
 ): IUIReview {
   const isProduct = "productId" in raw;
 
-  const name = isProduct ? raw.author?.name || "Anonymous" : raw.name;
+  const name = isProduct ? raw.author?.name || "Anonim" : raw.name;
 
   const location = isProduct ? raw.author?.location || "" : raw.location || "";
 

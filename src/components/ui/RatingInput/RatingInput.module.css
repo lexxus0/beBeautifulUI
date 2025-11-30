@@ -1,12 +1,44 @@
-.starRating button {
-  background-color: transparent;
+.starsRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.starBtn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
   border: none;
-  outline: none;
   cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    outline: transparent;
+  }
+
+  &:focus {
+    outline: transparent;
+    fill: #c48e28;
+  }
+
+  @media (min-width: 744px) {
+    width: 48px;
+    height: 48px;
+  }
+
+  @media (min-width: 1440px) {
+    width: 74px;
+    height: 74px;
+  }
 }
 
 .on {
-  color: #ffd700; 
+  color: #c48e28;
 }
 
 .off {
