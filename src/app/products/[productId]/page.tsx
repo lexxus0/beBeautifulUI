@@ -14,10 +14,10 @@ export default async function ProductDetails({
     <>
       <ProductWrapper productId={productId} />
       <section className="container">
-        <RecentlyViewed />
+        <WantToKnowMore />
       </section>
       <section className="container">
-        <WantToKnowMore />
+        <RecentlyViewed />
       </section>
     </>
   );

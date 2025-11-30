@@ -30,15 +30,12 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
   const hasMounted = useHasMounted();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
-  const selectReviewsForProduct = React.useMemo(
-    makeSelectProductReviews,
-    []
-  );
-  
-  const reviews = useAppSelector(state =>
+  const selectReviewsForProduct = React.useMemo(makeSelectProductReviews, []);
+
+  const reviews = useAppSelector((state) =>
     selectReviewsForProduct(state, productId)
   );
-  const currentUserId = useAppSelector(s => s.auth.user?._id);
+  const currentUserId = useAppSelector((s) => s.auth.user?._id);
 
   const isLoading = useAppSelector(selectReviewsLoading);
 
@@ -63,7 +60,9 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
     );
   };
 
-  const hasMyReview = reviews.some((r: IUIReview) => r.userId === currentUserId);
+  const hasMyReview = reviews.some(
+    (r: IUIReview) => r.userId === currentUserId
+  );
 
   const handleShowReviewForm = () => {
     if (!isLoggedIn) {
@@ -73,10 +72,10 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
       return;
     }
 
-     if (hasMyReview) {
-    toast.error("Ви вже залишили відгук до цього продукту");
-    return;
-  }
+    if (hasMyReview) {
+      toast.error("Ви вже залишили відгук до цього продукту");
+      return;
+    }
 
     setShowReviewForm(true);
   };
@@ -144,7 +143,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
             )}
           </div>
         )}
-        <div className="w-screen h-px bg-[#e0e0e0] absolute left-1/2 -translate-x-1/2 bottom-0 lg:-bottom-16"></div>
+        <div className="w-screen h-px bg-[#e0e0e0] absolute left-1/2 -translate-x-1/2 bottom-0 lg:-bottom-0"></div>
       </div>
     </ErrorBoundary>
   );
