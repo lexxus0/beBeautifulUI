@@ -7,6 +7,7 @@ import { normalizeBackendImageUrl } from "@/helpers/normalizeImage";
 import Image from "next/image";
 import Icon from "@/components/shared/Icon";
 import styles from "./BasketItem.module.scss";
+import Link from "next/link";
 
 interface BasketItemProps {
   item: ICartItem;
@@ -24,7 +25,8 @@ const BasketItem = ({
   const [imgError, setImgError] = useState(false);
 
   const { product, quantity, selectedVolume } = item;
-  console.log("product: ", product);
+  // console.log('selectedVolume: ', selectedVolume);
+  // console.log("item: ", item);
   const bp = useBreakpoint();
 
   const size =
@@ -65,7 +67,7 @@ const BasketItem = ({
 
   return (
     <div className={styles.item}>
-      <div className={styles.wrapperInfo}>
+      <Link href={`/products/${product._id}`} className={styles.wrapperInfo}>
         {canRenderImage ? (
           <Image
             // className={styles.img}
@@ -87,12 +89,13 @@ const BasketItem = ({
         <div className={styles.info}>
           <p className={styles.titleEn}>{item.product.name}</p>
           <p className={styles.titleUk}>
-            {item.product.name}
+            {item.product.category.charAt(0).toUpperCase() + item.product.category.slice(1)}
             <span className={styles.volume}> {volumeLabel}</span>
           </p>
           <p className={styles.priceMob}>{totalPrice} грн</p>
         </div>
-      </div>
+      </Link>
+
       <div className={styles.wrapperPrice}>
         <div className={styles.quantity}>
           <button onClick={handleDecrement}>
