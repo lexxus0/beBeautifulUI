@@ -83,13 +83,14 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
         ) : (
           <p className={styles.text}>User</p>
         )}
+
         <button
           type="button"
           onClick={onToggleModal}
-          className="hidden lg:flex w-[18px] h-[9px] items-center justify-center
+          className="hidden lg:flex w-8 h-8 items-center justify-center
         text-white-30 lg:text-black-10 hover:text-black-10 lg:hover:text-gray-10"
         >
-          <Icon name="icon-arrow-down" className="w-[10px] h-[6px]" />
+          <Icon name="icon-arrow-down" className="w-[12px] h-[8px]" />
         </button>
       </div>
       {isDesktop ? (

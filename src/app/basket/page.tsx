@@ -7,7 +7,9 @@ import { useRouter } from "next/navigation";
 import { setFromBasket } from "@/store/orders/slice";
 import Link from "next/link";
 import { ICartItem, IOrderItem } from "@/types/types";
-import { initGuestCart } from "@/store/cart/slice";
+import {
+  initGuestCart,
+} from "@/store/cart/slice";
 import { changeCartQuantity } from "@/helpers/changeCartQuantity";
 import { calculateCartTotal } from "@/helpers/calculateCartTotal";
 import BasketItemsList from "@/components/ui/BasketItemsList/BasketItemsList";
@@ -23,7 +25,7 @@ const BasketPage = () => {
 
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const { items, isLoading, isGuest } = useAppSelector((state) => state.cart);
-  console.log("items: ", items);
+  // console.log('items: ', items);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [removedProductName, setRemovedProductName] = useState<string | null>(
@@ -59,7 +61,7 @@ const BasketPage = () => {
       dispatch,
       isLoggedIn,
       isGuest,
-      onRemove: showRemoveModal,
+      onRemove: showRemoveModal,   // показати модалку, якщо товар видалився
     });
   };
 
@@ -70,9 +72,10 @@ const BasketPage = () => {
       dispatch,
       isLoggedIn,
       isGuest,
-      onRemove: showRemoveModal,
+      onRemove: showRemoveModal,   // показати модалку завжди
     });
   };
+
 
   const total = useMemo(() => calculateCartTotal(items), [items]);
 
@@ -80,9 +83,9 @@ const BasketPage = () => {
     if (!items || items.length === 0) return;
 
     const orderItems: IOrderItem[] = items.map((item: ICartItem) => ({
-      product: item.product,
-      quantity: item.quantity,
-      selectedVolume: item?.selectedVolume,
+        product: item.product,
+        quantity: item.quantity,
+        selectedVolume: item?.selectedVolume,
     }));
     console.log("orderItems: ", orderItems);
 
@@ -99,7 +102,7 @@ const BasketPage = () => {
       router.push("/checkout");
     }
   };
-  console.log("itemCart: ", items);
+  // console.log("itemCart: ", items);
 
   const isEmpty = !items || items.length === 0;
 
@@ -167,7 +170,9 @@ const BasketPage = () => {
               <span className="block font-bold text-black">
                 {removedProductName}
               </span>
-              <span className="block text-gray-600">видалено з кошика.</span>
+              <span className="block text-gray-600">
+                видалено з кошика.
+              </span>
             </p>
           ) : (
             <p className="font-open-sans text-lg text-gray-600 text-center leading-snug">

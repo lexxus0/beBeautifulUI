@@ -45,15 +45,6 @@ export default function Header() {
               />
             </Link>
             <BasketHeader />
-            {/* <Link
-            href="/basket"
-            className="w-9 h-9 flex items-center justify-center relative"
-          >
-            <BasketIcon className="w-6 h-6 md:w-7 md:h-7 lg:w-[30px] lg:h-[30px]" />
-            <div className="absolute top-[3px] -right-[2px] flex items-center justify-center bg-white-20 w-[14px] h-[14px] rounded-3xl border-1 border-black-10">
-              <p className="font-lato text-[10px]">2</p>
-            </div>
-          </Link> */}
             <LangSwitcher className="hidden md:block" />
             <button
               type="button"

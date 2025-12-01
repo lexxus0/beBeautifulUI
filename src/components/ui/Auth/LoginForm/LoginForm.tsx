@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { loginUser } from "@/store/auth/operations";
 import { selectError } from "@/store/auth/selectors";
+import { syncCartFromGuest } from "@/store/cart/operations";
 
 interface LoginFormProps {
   redirectTo?: string;
@@ -41,6 +42,8 @@ const LoginForm = ({ redirectTo = "/" }: LoginFormProps) => {
     const resultAction = await dispatch(loginUser(data));
 
     if (loginUser.fulfilled.match(resultAction)) {
+         // 1️⃣ Синхронізуємо кошик
+    await dispatch(syncCartFromGuest());
       setShowSuccessMsg(true);
       setTimeout(() => {
         setShowSuccessMsg(false);
