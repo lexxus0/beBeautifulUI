@@ -4,7 +4,13 @@ import CategoryCard from "./CategoryCard/CategoryCard";
 import categoriesData from "./categoryData.json";
 import { CategoryData } from "@/types/types";
 
-const categories: CategoryData[] = categoriesData;
+const categories: CategoryData[] = categoriesData.map(item => ({
+  ...item,
+  href: {
+    pathname: "/products",
+    query: { category: item.category }
+  }
+}));
 
 const Category = () => {
   return (
