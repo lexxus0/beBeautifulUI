@@ -38,6 +38,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
           position: "relative",
           "&:hover": {
             borderColor: "#2d2d2d",
+            boxShadow: "0 0 5px var(--color-gray-10)",
           },
           "&:focus": {
             borderColor: "#2d2d2d",
