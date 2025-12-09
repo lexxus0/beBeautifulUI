@@ -15,13 +15,17 @@ export interface IPagination {
 
 export interface IPriceByVolume {
   _id: string;
-  volume: string;
+  stockQuantity: number;
+  volume: number;
   price: number;
 }
 
 export interface IProduct {
   _id: string;
-  name: string;
+  name: {
+    en: string;
+    ua: string;
+  };
   sku: string;
   volumeOptions: string[];
   priceByVolume: IPriceByVolume[];
@@ -30,8 +34,10 @@ export interface IProduct {
   description: string;
   instructions: string;
   activeIngredients: {
-    name: string;
-    description: string;
+    name: {
+      en: string;
+      ua: string;
+    };
     _id: string;
   }[];
   inciList: string[];
@@ -149,94 +155,10 @@ export interface TopProduct {
   imageDesktop: string;
 }
 
-export interface IOrderItem {
-  product: IProduct;
-  selectedVolume: string;
-  quantity: number;
-}
-
-export interface IDelivery {
-  deliveryMethod: "nova_poshta";
-  city: string;
-  warehouse?: string;
-  street?: string;
-  house?: string;
-  apartment?: string;
-}
-
-export type PaymentChoice = "card" | "invoice" | "cod";
-
-export interface ICertificate {
-  _id: string;
-  number: string;
-  amount: number;
-  balance: number;
-  isActive: boolean;
-  activatedAt: string;
-  expiresAt: string;
-}
-
-export interface IOrderDraft {
-  items: IOrderItem[];
-  delivery: IDelivery | null;
-  paymentMethod: PaymentChoice | null;
-  comment?: string;
-  certificate?: ICertificate | null;
-  amount: number; // сума товарів
-  totalAmount: number; // з урахуванням знижок/сертифіката/доставки
-}
-
-export type OrderStatus = "draft" | "ordered" | "payed" | "done";
-
-export interface IOrder {
-  _id: string;
-  clientId: string;
-  customerName?: string;
-  phone?: string;
-  email?: string;
-  items: IOrderItem[];
-  orderNumber: string;
-  date: string;
-  status: OrderStatus;
-  delivery: IDelivery;
-  paymentMethod: PaymentChoice;
-  // ttn: string;
-  comment?: string;
-  certificate?: string;
-  amount: number;
-  totalAmount: number;
-}
-
 export type BasketIconVariant = "black" | "white";
 
 export interface BasketIconProps extends React.SVGProps<SVGSVGElement> {
   variant?: BasketIconVariant;
-}
-
-export interface ICartItemRaw {
-  productId: string | IProduct;
-  quantity: number;
-}
-
-export interface ICartRaw {
-  _id: string;
-  userId: string;
-  items: ICartItemRaw[];
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface ICartItem {
-  product: IProduct;
-  selectedVolume: string;
-  quantity: number;
-}
-
-export interface CartState {
-  isLoading: boolean;
-  error: string | null;
-  items: ICartItem[];
-  isGuest: boolean;
 }
 
 export interface ContactInfoInputs {
@@ -244,11 +166,4 @@ export interface ContactInfoInputs {
   lastName: string;
   phone: string;
   email: string;
-}
-
-export interface BasketItemsListProps {
-  basketItems: ICartItem[];
-  onIncrement: (item: ICartItem) => void;
-  onDecrement: (item: ICartItem) => void;
-  onRemove: (item: ICartItem) => void;
 }

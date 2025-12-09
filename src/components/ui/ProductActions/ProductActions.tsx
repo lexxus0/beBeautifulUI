@@ -12,7 +12,7 @@ import { BaseModal } from "@/components/shared/Modal";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import BaseSelect from "@/components/elements/BaseSelect";
-import { getFormattedVolume } from "@/helpers/hooks/getFormattedVolume";
+import { getFormattedVolume } from "@/helpers/getFormattedVolume";
 import Icon from "@/components/shared/Icon";
 
 export interface ProductActionsProps {
@@ -23,12 +23,12 @@ const ProductActions = ({ product }: ProductActionsProps) => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
-  const [selectedVolume, setSelectedVolume] = useState(
-    product.volumeOptions?.[0] || ""
+  const [selectedVolume, setSelectedVolume] = useState<number>(
+    product.priceByVolume[0]?.volume
   );
   const [quantity, setQuantity] = useState<number>(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -84,23 +84,24 @@ const ProductActions = ({ product }: ProductActionsProps) => {
           <p className={css.label}>Об&apos;єм</p>
           <div className={css.actionValueButton}>
             {product.volumeOptions && product.volumeOptions.length !== 0 ? (
-              product.volumeOptions.map((vol) => (
-                <button
-                  key={vol}
-                  onClick={() => setSelectedVolume(vol)}
-                  className={`${css.volumeButton} ${
-                    selectedVolume === vol ? css.active : ""
-                  }`}
-                >
-                  {getFormattedVolume(vol)}
-                </button>
-              ))
+              product.volumeOptions.map((vol) => {
+                const volNum = parseInt(vol);
+                return (
+                  <button
+                    key={vol}
+                    onClick={() => setSelectedVolume(volNum)}
+                    className={`${css.volumeButton} ${
+                      selectedVolume === volNum ? css.active : ""
+                    }`}
+                  >
+                    {getFormattedVolume(vol)}
+                  </button>
+                );
+              })
             ) : (
               <button
                 className={`${css.volumeButton} ${css.active}`}
-                onClick={() =>
-                  setSelectedVolume(product.stockQuantity.toString())
-                }
+                onClick={() => setSelectedVolume(product.stockQuantity)}
               >
                 {product.stockQuantity} мл
               </button>

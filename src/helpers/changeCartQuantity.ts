@@ -1,7 +1,7 @@
 import { deleteCartItem, updateCartItem } from "@/store/cart/operations";
 import { removeGuestItem, updateGuestItemQuantity } from "@/store/cart/slice";
 import { AppDispatch } from "@/store/store";
-import { ICartItem } from "@/types/types";
+import { ICartItem } from "@/types/cart";
 
 export const changeCartQuantity = ({
   item,

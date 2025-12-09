@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Icon from "@/components/shared/Icon";
 import OrdersList from "./OrdersList/OrdersList";
-// import { IOrder } from "@/types/types";
+// import { IOrder } from "@/types/orders";
 // import ordersData from "./orders.json";
 
 import styles from "./MyOrders.module.scss";

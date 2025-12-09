@@ -4,7 +4,7 @@ import React, { useState, useEffect, memo } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchProductReviews } from "@/store/reviews/operations";
 import {
-  makeSelectProductReviews,
+  selectProductReviews,
   selectReviewsLoading,
 } from "@/store/reviews/selectors";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
@@ -30,10 +30,8 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
   const hasMounted = useHasMounted();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
-  const selectReviewsForProduct = React.useMemo(makeSelectProductReviews, []);
-
   const reviews = useAppSelector((state) =>
-    selectReviewsForProduct(state, productId)
+    selectProductReviews(state, productId)
   );
   const currentUserId = useAppSelector((s) => s.auth.user?._id);
 

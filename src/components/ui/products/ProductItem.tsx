@@ -35,7 +35,7 @@ const ProductItem = ({ item }: ProductItemProps) => {
 
   const handleVolumeClick = (
     e: React.MouseEvent<HTMLButtonElement>,
-    volume: string
+    volume: number
   ) => {
     e.preventDefault();
     const selected = item.priceByVolume.find((v) => v.volume === volume);
@@ -55,7 +55,7 @@ const ProductItem = ({ item }: ProductItemProps) => {
 
     if (!selectedVolume) return;
 
-    setAddedProductName(item.name);
+    setAddedProductName(item.name.en);
 
     if (!isLoggedIn) {
       // Гостьовий кошик: зберігаємо повний продукт
@@ -106,7 +106,7 @@ const ProductItem = ({ item }: ProductItemProps) => {
 
           <Image
             src={"https://picsum.photos/id/237/290/306"}
-            alt={item.name}
+            alt={item.name.en}
             width={230}
             height={260}
             className="lg:w-[384px] object-cover"
@@ -114,9 +114,10 @@ const ProductItem = ({ item }: ProductItemProps) => {
 
           <div className="my-6 text-center flex flex-col items-center w-full">
             <p className="font-lato font-semibold text-2xl mb-2 h-16 line-clamp-2 overflow-hidden">
-              {item.name}
+              {item.name.en}
             </p>
             <p className="font-roboto text-xl capitalize mb-2">
+            {/* {item.name.ua} */}
               {item.category}
             </p>
             <div className="flex items-center gap-3 justify-center">
@@ -124,7 +125,7 @@ const ProductItem = ({ item }: ProductItemProps) => {
               <p>{item.reviews?.length ?? 0} відгуків</p>
             </div>
 
-            <div className="flex justify-between items-center mt-4">
+            <div className="w-full flex justify-between items-center mt-4">
               <p className="font-roboto text-xl">
                 <span className="font-semibold">{selectedVolume?.price} ₴</span>
               </p>
@@ -140,7 +141,7 @@ const ProductItem = ({ item }: ProductItemProps) => {
                         : "bg-white text-black border-gray-300"
                     }`}
                   >
-                    {option.volume}
+                    {option.volume} мл
                   </button>
                 ))}
               </div>

@@ -1,9 +1,9 @@
 import React from "react";
-import { BasketItemsListProps } from "@/types/types";
+import { CartItemsListProps } from "@/types/cart";
 import BasketItem from "@/components/ui/BasketItem/BasketItem";
 import styles from "./BasketItemsList.module.scss";
 
-const BasketItemsList: React.FC<BasketItemsListProps> = ({
+const BasketItemsList: React.FC<CartItemsListProps> = ({
   basketItems,
   onIncrement,
   onDecrement,

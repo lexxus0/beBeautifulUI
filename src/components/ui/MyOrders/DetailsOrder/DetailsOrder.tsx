@@ -2,7 +2,7 @@
 import React from "react";
 
 import styles from "./DetailsOrder.module.scss";
-import { IOrder, IOrderItem } from "@/types/types";
+import { IOrder, IOrderItem } from "@/types/orders";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -25,7 +25,7 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
           </li>
           <li>
             <p className={styles.textOrder}>Дата оформлення:</p>
-            <span className={styles.spanOrder}>{order?.date}</span>
+            <span className={styles.spanOrder}>{order?.createdAt}</span>
           </li>
           {/* <li>
             <p className={styles.textOrder}>Статус:</p>
@@ -85,11 +85,11 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
                   <div className="flex flex-col gap-2">
                     <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-6">
                       <p className="font-lato font-bold text-black text-lg">
-                        {item.product.name}
+                        {item.product.name.en}
                       </p>
                       <div className="flex gap-2">
                         <p className="font-light text-sm md:text-lg">
-                          {item.product.name}
+                          {item.product.name.ua}
                         </p>
                         <p className="font-light text-sm md:text-lg">
                           {item.selectedVolume}

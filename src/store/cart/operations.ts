@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { instance, handleError } from "../init";
-import { ICartItem } from "@/types/types";
+import { ICartItem } from "@/types/cart";
 import { clearGuestCart, loadGuestCart, mapCartResponseToItems } from "./utils";
 import { RootState } from "../store";
 
@@ -22,7 +22,7 @@ export const fetchCart = createAsyncThunk<
 
 export const addCartItem = createAsyncThunk<
   ICartItem[],
-  { productId: string; quantity: number; selectedVolume?: string },
+  { productId: string; quantity: number; selectedVolume?: number },
   { rejectValue: string }
 >("cart/addItem", async ({ productId, quantity }, { rejectWithValue }) => {
   try {
@@ -39,7 +39,7 @@ export const addCartItem = createAsyncThunk<
 
 export const updateCartItem = createAsyncThunk<
   ICartItem[],
-  { productId: string; selectedVolume: string, quantity: number },
+  { productId: string; selectedVolume: number, quantity: number },
   { rejectValue: string }
 >("cart/updateItem", async ({ productId, quantity }, { rejectWithValue }) => {
   try {

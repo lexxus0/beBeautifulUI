@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { selectDraft } from "@/store/orders/selectors";
-import { PaymentChoice } from "@/types/types";
+import { PaymentChoice } from "@/types/orders";
 import { Controller, Resolver, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
@@ -17,7 +17,7 @@ import {
   setDelivery,
   setPaymentMethod,
 } from "@/store/orders/slice";
-import { fetchCertificateById } from "@/store/orders/operations";
+import { fetchCertificateByNumber } from "@/store/orders/operations";
 import { BaseModal } from "@/components/shared/Modal";
 import Image from "next/image";
 import Icon from "@/components/shared/Icon";
@@ -40,7 +40,8 @@ export default function DeliveryFormMarkup() {
   const dispatch = useAppDispatch();
 
   const draft = useAppSelector(selectDraft);
-  console.log("draft: ", draft);
+  console.log("📄 PAYMENT PAGE LOADED:", draft);
+  
   const [cities, setCities] = useState<City[]>([]);
   const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
   const [selectedCity, setSelectedCity] = useState<string>("");
@@ -72,7 +73,7 @@ export default function DeliveryFormMarkup() {
       house: "",
       apartment: "",
       comment: "",
-      certificate: '',
+      certificate: "",
       payment: undefined,
       // noCall: false,
       saveCard: false,
@@ -150,6 +151,8 @@ export default function DeliveryFormMarkup() {
     setValue("warehouse", selectedWarehouse || "");
   }, [selectedWarehouse, setValue]);
 
+  const certValue = watch("certificate");
+
   const onSubmit = (data: DeliveryFormValues) => {
     const delivery =
       data.deliveryType === "warehouse"
@@ -165,20 +168,22 @@ export default function DeliveryFormMarkup() {
             house: data.house,
             apartment: data.apartment,
           };
+    console.log("📦 DELIVERY FORM SUBMIT:", data);
     dispatch(setDelivery(delivery));
-    console.log("delivery: ", delivery);
+    console.log("📦 SET DELIVERY:", delivery);
 
     if (data.comment) {
       dispatch(setComment(data.comment));
     }
     if (data.certificate) {
-      dispatch(fetchCertificateById(data.certificate));
+      dispatch(fetchCertificateByNumber(data.certificate));
       // тут за бажанням можна ще перерахувати totalAmount і зробити setTotalAmount(...)
     } else {
       dispatch(setCertificate(null)); // якщо очищено
     }
 
     if (data.payment) {
+      console.log("🎫 APPLY CERTIFICATE:", certValue);
       dispatch(setPaymentMethod(data.payment));
       // тут за бажанням можна ще перерахувати totalAmount і зробити setTotalAmount(...)
     }
@@ -193,7 +198,6 @@ export default function DeliveryFormMarkup() {
         router.push("/");
       }, 3000);
     }
-    
   };
 
   // useEffect(()=> {
@@ -433,7 +437,15 @@ export default function DeliveryFormMarkup() {
                     className={`${styles.input} ${styles.house}`}
                   />
                 </div>
-                <button className={`${styles.submit} ${styles.certifictBtn}`}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!certValue?.trim()) return;
+                    console.log("🎫 APPLY CERTIFICATE:", certValue);
+                    dispatch(fetchCertificateByNumber(certValue));
+                  }}
+                  className={`${styles.submit} ${styles.certifictBtn}`}
+                >
                   Застосувати код
                 </button>
               </div>
@@ -488,7 +500,10 @@ export default function DeliveryFormMarkup() {
                       <span className="ml-[10px]">{`${draft.amount} грн`}</span>
                     </p>
                     <p className="font-roboto font-light text-sm md:text-lg lg:text-[22px] text-[#af1818] text-end">
-                      Сертифікат:<span className="ml-[10px]">-500 грн</span>
+                      Сертифікат:
+                      <span className="ml-[10px]">{`${
+                        draft.certificate.balance || "0"
+                      } грн`}</span>
                     </p>
                     <p className="font-lato font-bold lg:font-semibold text-sm md:text-lg lg:text-2xl text-end">
                       Загальна сума до сплати:
@@ -514,10 +529,7 @@ export default function DeliveryFormMarkup() {
         </div>
       </form>
 
-      <BaseModal
-        isOpen={modalIsOpen}
-        onClose={() => setModalIsOpen(false)}
-      >
+      <BaseModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
         <p className="text-center text-gray-700 mb-4">
           Ваше замовлення прийнято в обробку.
         </p>

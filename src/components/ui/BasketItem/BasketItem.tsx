@@ -1,6 +1,6 @@
 "use client";
 
-import { ICartItem } from "@/types/types";
+import { ICartItem } from "@/types/cart";
 import { useBreakpoint } from "@/helpers/hooks/useBreakpoint";
 import { useMemo, useState } from "react";
 import { normalizeBackendImageUrl } from "@/helpers/normalizeImage";
@@ -72,7 +72,7 @@ const BasketItem = ({
           <Image
             // className={styles.img}
             src={item.product.imageUrl}
-            alt={item.product.name}
+            alt={item.product.name.en}
             width={size.w}
             height={size.h}
             onError={() => setImgError(true)}
@@ -81,14 +81,15 @@ const BasketItem = ({
           <Image
             // className={styles.img}
             src={srcPlaceholder}
-            alt={item.product.name}
+            alt={item.product.name.en}
             width={size.w}
             height={size.h}
           />
         )}
         <div className={styles.info}>
-          <p className={styles.titleEn}>{item.product.name}</p>
+          <p className={styles.titleEn}>{item.product.name.en}</p>
           <p className={styles.titleUk}>
+          {/* {item.product.name.ua} */}
             {item.product.category.charAt(0).toUpperCase() + item.product.category.slice(1)}
             <span className={styles.volume}> {volumeLabel}</span>
           </p>
