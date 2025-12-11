@@ -2,6 +2,7 @@ import { IProduct } from "./types";
 
 export interface ICartItemRaw {
     productId: string | IProduct;
+    selectedVolume: number;
     quantity: number;
   }
   

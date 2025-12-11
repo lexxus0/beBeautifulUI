@@ -91,7 +91,7 @@ const BasketItem = ({
           <p className={styles.titleUk}>
           {/* {item.product.name.ua} */}
             {item.product.category.charAt(0).toUpperCase() + item.product.category.slice(1)}
-            <span className={styles.volume}> {volumeLabel}</span>
+            <span className={styles.volume}>{volumeLabel} мл</span>
           </p>
           <p className={styles.priceMob}>{totalPrice} грн</p>
         </div>

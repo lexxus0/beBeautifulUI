@@ -50,18 +50,18 @@ export const mapCartResponseToItems = (data: CartApiResponse): ICartItem[] => {
 
   return rawItems
     .map((item) => {
-      const { productId, quantity } = item;
+      const { productId, quantity, selectedVolume } = item;
 
       // Випадок з populate: productId = об'єкт продукту
       if (productId && typeof productId === "object") {
         const product = productId as IProduct;
 
-        const defaultVolume = product.priceByVolume[0]?.volume || "";
+        const fallbackVolume = product.priceByVolume[0]?.volume || "";
 
         return {
           product,
           quantity,
-          selectedVolume: defaultVolume,
+          selectedVolume: selectedVolume || fallbackVolume,
         };
       }
       return null;
