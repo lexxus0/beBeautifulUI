@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import {useAppSelector } from '@/store/hooks';
-import { ICartItem } from '@/types/cart';
+import { ICartItem } from '@/types/types';
 import BasketIcon from '@/components/elements/BasketIcon'
 
 

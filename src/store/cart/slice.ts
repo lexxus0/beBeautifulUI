@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IProduct } from "@/types/types";
+import { CartState, IProduct } from "@/types/types";
 import {
   fetchCart,
   addCartItem,
@@ -9,7 +9,6 @@ import {
 } from "./operations";
 import { handlePending, handleRejected } from "../init";
 import { clearGuestCart, loadGuestCart, saveGuestCart } from "./utils";
-import { CartState } from "@/types/cart";
 
 const initialState: CartState = {
   items: [],
@@ -22,6 +21,7 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+
     clearCartState(state) {
       state.items = [];
       state.error = null;
@@ -30,8 +30,8 @@ const cartSlice = createSlice({
     },
     // завантажити гостьовий кошик з localStorage при старті / коли не залогінені
     initGuestCart(state) {
-      state.items = loadGuestCart();
-      console.log("🛒 INIT GUEST CART:", state.items);
+      const items = loadGuestCart();
+      state.items = items;
       state.isGuest = true;
     },
     // додати товар у гостьовий кошик
@@ -39,7 +39,7 @@ const cartSlice = createSlice({
       state,
       action: PayloadAction<{
         product: IProduct;
-        selectedVolume: number;
+        selectedVolume: string;
         quantity?: number;
       }>
     ) {
@@ -63,24 +63,21 @@ const cartSlice = createSlice({
       state,
       action: PayloadAction<{
         productId: string;
-        selectedVolume: number;
+        selectedVolume: string;
         quantity: number;
       }>
     ) {
       const { productId, selectedVolume, quantity } = action.payload;
-      const existing = state.items.find(
+      const item = state.items.find(
         (i) =>
           i.product._id === productId && i.selectedVolume === selectedVolume
       );
-      if (existing) {
-        existing.quantity = quantity;
-        if (existing.quantity <= 0) {
+      if (item) {
+        item.quantity = quantity;
+        if (item.quantity <= 0) {
           state.items = state.items.filter(
             (i) =>
-              !(
-                i.product._id === productId &&
-                i.selectedVolume === selectedVolume
-              )
+              i.product._id === productId && i.selectedVolume === selectedVolume
           );
         }
         saveGuestCart(state.items);
@@ -89,7 +86,7 @@ const cartSlice = createSlice({
     // видалити позицію з гостьового
     removeGuestItem(
       state,
-      action: PayloadAction<{ productId: string; selectedVolume: number }>
+      action: PayloadAction<{ productId: string; selectedVolume: string }>
     ) {
       const { productId, selectedVolume } = action.payload;
 
@@ -104,13 +101,10 @@ const cartSlice = createSlice({
     builder
       .addCase(fetchCart.pending, handlePending)
       .addCase(fetchCart.fulfilled, (state, action) => {
-        console.log("🟢 FETCH CART:", action.payload);
         state.isLoading = false;
-        state.isGuest = false;
         state.error = null;
         state.items = action.payload;
-
-        console.log("serverItems fetchCart: ", action.payload);
+        state.isGuest = false;
       })
       .addCase(fetchCart.rejected, handleRejected)
       .addCase(addCartItem.pending, (state) => {
@@ -119,33 +113,31 @@ const cartSlice = createSlice({
       .addCase(addCartItem.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isGuest = false;
-        state.error = null;
-        state.items = action.payload;
 
-        // const { productId, selectedVolume } = action.meta.arg;
-        // const serverItems = action.payload;
-        // console.log("serverItems addCartItem: ", serverItems);
+        const { productId, selectedVolume } = action.meta.arg;
+        const serverItems = action.payload;
 
-        // state.items = serverItems.map((item) => {
-        //   const existing = state.items.find(
-        //     (i) => i.product._id === item.product._id
-        //   );
-        //   if (existing) {
-        //     return {
-        //       ...item,
-        //       selectedVolume: existing.selectedVolume,
-        //     };
-        //   }
-        //   // 2) якщо це новий продукт і це якраз той, що ми тільки що додали з selectedVolume
-        //   if (selectedVolume && item.product._id === productId) {
-        //     return {
-        //       ...item,
-        //       selectedVolume,
-        //     };
-        //   }
-        //   // 3) інакше залишаємо те, що виставив mapCartResponseToItems (defaultVolume)
-        //   return item;
-        // });
+        state.items = serverItems.map((item) => {
+          // 1) якщо цей продукт уже був в state — зберігаємо його selectedVolume
+          const existing = state.items.find(
+            (i) => i.product._id === item.product._id
+          );
+          if (existing) {
+            return {
+              ...item,
+              selectedVolume: existing.selectedVolume,
+            };
+          }
+          // 2) якщо це новий продукт і це якраз той, що ми тільки що додали з selectedVolume
+          if (selectedVolume && item.product._id === productId) {
+            return {
+              ...item,
+              selectedVolume,
+            };
+          }
+          // 3) інакше залишаємо те, що виставив mapCartResponseToItems (defaultVolume)
+          return item;
+        });
       })
       .addCase(addCartItem.rejected, handleRejected)
       .addCase(updateCartItem.pending, (state) => {
@@ -153,19 +145,8 @@ const cartSlice = createSlice({
       })
       .addCase(updateCartItem.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isGuest = false;
-        state.error = null;
         state.items = action.payload;
-        // state.items = action.payload.map((item) => {
-        //   const existing = state.items.find(
-        //     (i) => i.product._id === item.product._id
-        //   );
-        //   return {
-        //     ...item,
-        //     selectedVolume: existing?.selectedVolume ?? item.selectedVolume,
-        //   };
-        // });
-        // console.log("serverItems addCartItem: ", state.items);
+        state.isGuest = false;
       })
       .addCase(updateCartItem.rejected, handleRejected)
       .addCase(deleteCartItem.pending, (state) => {
@@ -173,18 +154,8 @@ const cartSlice = createSlice({
       })
       .addCase(deleteCartItem.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isGuest = false;
-        state.error = null;
         state.items = action.payload;
-        // state.items = action.payload.map((item) => {
-        //   const existing = state.items.find(
-        //     (i) => i.product._id === item.product._id
-        //   );
-        //   return {
-        //     ...item,
-        //     selectedVolume: existing?.selectedVolume ?? item.selectedVolume,
-        //   };
-        // });
+        state.isGuest = false;
       })
       .addCase(deleteCartItem.rejected, handleRejected)
       // синк після логіну
@@ -192,7 +163,6 @@ const cartSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(syncCartFromGuest.fulfilled, (state, action) => {
-        console.log("🔄 SYNC FROM GUEST:", action.payload);
         state.isLoading = false;
         state.error = null;
         state.items = action.payload;

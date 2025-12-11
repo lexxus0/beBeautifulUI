@@ -2,40 +2,33 @@ import { IProductReview, IUIReview, IWebReview } from "@/types/reviews";
 
 export function normalizeReview(
   raw: IWebReview | IProductReview,
-  currentUserId?: string
+  currentUserId: string
 ): IUIReview {
+  const isProduct = "productId" in raw;
 
-  const productId = (raw as IProductReview).productId ?? null;
-  const userId = (raw as IProductReview).userId ?? null;
+  const name = isProduct ? raw.author?.name || "Anonim" : raw.name;
 
-  const name =
-    (raw as IProductReview).author?.name ??
-    (raw as IWebReview).name ??
-    "Anonymous";
+  const location = isProduct ? raw.author?.location || "" : raw.location || "";
 
-  const location =
-    (raw as IProductReview).author?.location ??
-    (raw as IWebReview).location ??
-    "";
-
-  const likedBy = raw.likedBy ?? [];
-  const dislikedBy = raw.dislikedBy ?? [];
+  const hasLiked = raw.likedBy?.includes(currentUserId ?? "") || false;
+  const hasDisliked = raw.dislikedBy?.includes(currentUserId ?? "") || false;
+  
+  const isMine = isProduct ? raw.userId.toString() === currentUserId.toString() : false; // веб-відгук ніколи не мій
 
   return {
     _id: raw._id,
-    productId,
-    userId,
+    productId: isProduct ? raw.productId : null,
+    userId: isProduct ? raw.userId : null,
     name,
     location,
     rating: raw.rating,
     comment: raw.comment ?? "",
     createdAt: raw.createdAt,
 
-    likes: raw.likes ?? likedBy.length,
-    dislikes: raw.dislikes ?? dislikedBy.length,
-    likedBy,
-    dislikedBy,
-
-    isMine: userId === currentUserId,
+    likes: raw.likes ?? 0,
+    dislikes: raw.dislikes ?? 0,
+    hasLiked,
+    hasDisliked,
+    isMine,
   };
 }

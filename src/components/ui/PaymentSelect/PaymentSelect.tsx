@@ -1,7 +1,7 @@
 "use client";
 
 import BaseSelect from "@/components/elements/BaseSelect";
-import { PaymentChoice } from "@/types/orders";
+import { PaymentChoice } from "@/types/types";
 
 // export type PaymentChoice = "card" | "invoice" | "cod";
 export type PaymentOption = {

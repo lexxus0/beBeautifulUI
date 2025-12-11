@@ -5,8 +5,6 @@ import Icon from "@/components/shared/Icon";
 
 import styles from "./Liqpay.module.scss";
 import ApplePayIcon from "@/components/elements/ApplePayIcon";
-import { useAppDispatch } from "@/store/hooks";
-import { createOrder } from "@/store/orders/operations";
 
 type LigpayProps = {
   onOpen: () => void;
@@ -14,23 +12,6 @@ type LigpayProps = {
 };
 
 export default function Liqpay({ onOpen, onClose }: LigpayProps) {
-
-  const dispatch = useAppDispatch();
-  const handleApplePay = async () => {
-    console.log("💳 CARD SUBMIT CLICKED");
-
-    const result = await dispatch(createOrder());
-    console.log("📨 CREATE ORDER RESULT:", result);
-  
-    if (createOrder.fulfilled.match(result)) {
-          console.log("🟢 ORDER CREATED SUCCESSFULLY:", result.payload);
-            const paymentLink = result.payload.paymentLink;
-            console.log("🔗 PAYMENT LINK:", paymentLink);
-
-      window.location.href = paymentLink;
-    }
-    onClose();
-  };
   return (
     <div className="py-6 border-[0.4px] border-gray-10 rounded-lg md:px-4 lg:px-6 lg:w-[684px] mx-auto">
       <div className="flex items-center gap-[10px] ml-5 mb-[34px] md:ml-0 md:mb-[42px]">
@@ -51,7 +32,7 @@ export default function Liqpay({ onOpen, onClose }: LigpayProps) {
           1008 грн
         </p>
       </div>
-      <button className={styles.applePay} onClick={handleApplePay}>
+      <button type="button" className={styles.applePay} onClick={onClose}>
         <ApplePayIcon />
         Pay
       </button>
@@ -63,7 +44,7 @@ export default function Liqpay({ onOpen, onClose }: LigpayProps) {
           Картка
           <Icon name="icon-card-pay" className="w-8 h-8 ml-2" />
         </button>
-        <button className={styles.cardPay} onClick={handleApplePay}>
+        <button type="button" className={styles.cardPay} onClick={onClose}>
           Рrivat24
           <Icon
             name="icon-privat-pay"

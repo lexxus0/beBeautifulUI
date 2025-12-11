@@ -35,7 +35,7 @@ const ProductItem = ({ item }: ProductItemProps) => {
 
   const handleVolumeClick = (
     e: React.MouseEvent<HTMLButtonElement>,
-    volume: number
+    volume: string
   ) => {
     e.preventDefault();
     const selected = item.priceByVolume.find((v) => v.volume === volume);
@@ -55,7 +55,7 @@ const ProductItem = ({ item }: ProductItemProps) => {
 
     if (!selectedVolume) return;
 
-    setAddedProductName(item.name.en);
+    setAddedProductName(item.name);
 
     if (!isLoggedIn) {
       // Гостьовий кошик: зберігаємо повний продукт
@@ -91,8 +91,8 @@ const ProductItem = ({ item }: ProductItemProps) => {
 
   return (
     <>
-        <div className="relative flex flex-col items-center p-4 md:w-[322px] lg:w-[400px]">
       <Link href={`/products/${item._id}`}>
+        <div className="relative flex flex-col items-center p-4 md:w-[322px] lg:w-[400px]">
           <button
             onClick={handleFavoriteClick}
             className="absolute top-6 right-4"
@@ -106,28 +106,25 @@ const ProductItem = ({ item }: ProductItemProps) => {
 
           <Image
             src={"https://picsum.photos/id/237/290/306"}
-            alt={item.name.en}
+            alt={item.name}
             width={230}
             height={260}
             className="lg:w-[384px] object-cover"
           />
 
           <div className="my-6 text-center flex flex-col items-center w-full">
-            <p className="font-lato font-semibold text-2xl mb-4 h-16 line-clamp-2 overflow-hidden">
-              {item.name.en}
+            <p className="font-lato font-semibold text-2xl mb-2 h-16 line-clamp-2 overflow-hidden">
+              {item.name}
             </p>
-            <p className="font-roboto text-xl capitalize mb-6">
-            {/* {item.name.ua} */}
+            <p className="font-roboto text-xl capitalize mb-2">
               {item.category}
             </p>
             <div className="flex items-center gap-3 justify-center">
               <StarRating rating={getAverageRating(item.reviews)} />
               <p>{item.reviews?.length ?? 0} відгуків</p>
             </div>
-            </div>
-            </Link>
 
-            <div className="w-full flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center mt-4">
               <p className="font-roboto text-xl">
                 <span className="font-semibold">{selectedVolume?.price} ₴</span>
               </p>
@@ -137,18 +134,18 @@ const ProductItem = ({ item }: ProductItemProps) => {
                   <button
                     key={option._id}
                     onClick={(e) => handleVolumeClick(e, option.volume)}
-                    className={`text-sm ${
+                    className={`border px-3 py-1 rounded text-sm ${
                       selectedVolume.volume === option.volume
-                        && "border-b border-b-black "
-                        // : "bg-white text-black border-gray-300"
+                        ? "bg-black text-white border-black"
+                        : "bg-white text-black border-gray-300"
                     }`}
                   >
-                    {option.volume} мл
+                    {option.volume}
                   </button>
                 ))}
               </div>
             </div>
-     
+          </div>
 
           <button
             onClick={handleAddToCart}
@@ -157,6 +154,7 @@ const ProductItem = ({ item }: ProductItemProps) => {
             Додати до кошика
           </button>
         </div>
+      </Link>
       {isModalOpen && (
         <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <div className="relative w-[150px] h-[150px] object-contain mb-4 mx-auto">

@@ -43,7 +43,7 @@ const Product = ({ product, productId }: ProductProps) => {
 
         <ProductReviews
           productId={productId}
-          productName={product.name.en}
+          productName={product.name}
         />
       </section>
     </>

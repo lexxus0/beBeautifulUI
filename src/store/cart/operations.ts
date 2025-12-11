@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { instance, handleError } from "../init";
-import { ICartItem } from "@/types/cart";
+import { ICartItem } from "@/types/types";
 import { clearGuestCart, loadGuestCart, mapCartResponseToItems } from "./utils";
 import { RootState } from "../store";
 
@@ -22,11 +22,11 @@ export const fetchCart = createAsyncThunk<
 
 export const addCartItem = createAsyncThunk<
   ICartItem[],
-  { productId: string; quantity: number; selectedVolume?: number },
+  { productId: string; quantity: number; selectedVolume?: string },
   { rejectValue: string }
->("cart/addItem", async ({ productId, quantity, selectedVolume }, { rejectWithValue }) => {
+>("cart/addItem", async ({ productId, quantity }, { rejectWithValue }) => {
   try {
-    await instance.post("/cart", { productId, quantity, selectedVolume });
+    await instance.post("/cart", { productId, quantity });
     const res = await instance.get("/cart");
     // console.log('cart add: ', res.data);
     const items = mapCartResponseToItems(res.data);
@@ -39,11 +39,11 @@ export const addCartItem = createAsyncThunk<
 
 export const updateCartItem = createAsyncThunk<
   ICartItem[],
-  { productId: string; selectedVolume: number, quantity: number },
+  { productId: string; selectedVolume: string, quantity: number },
   { rejectValue: string }
->("cart/updateItem", async ({ productId, quantity, selectedVolume }, { rejectWithValue }) => {
+>("cart/updateItem", async ({ productId, quantity }, { rejectWithValue }) => {
   try {
-    await instance.put(`/cart/${productId}`, { quantity, selectedVolume });
+    await instance.put(`/cart/${productId}`, { quantity });
     const res = await instance.get("/cart");
     // console.log('cart put: ', res.data);
 
@@ -57,11 +57,11 @@ export const updateCartItem = createAsyncThunk<
 
 export const deleteCartItem = createAsyncThunk<
   ICartItem[],
-  { productId: string; selectedVolume: number },
+  { productId: string },
   { rejectValue: string }
->("cart/deleteItem", async ({ productId, selectedVolume }, { rejectWithValue }) => {
+>("cart/deleteItem", async ({ productId }, { rejectWithValue }) => {
   try {
-    await instance.delete(`/cart/${productId}`, { data: { selectedVolume } });
+    await instance.delete(`/cart/${productId}`);
     const res = await instance.get("/cart");
     // console.log('cart delete: ', res.data);
 
@@ -78,34 +78,35 @@ export const syncCartFromGuest = createAsyncThunk<
   ICartItem[],
   void,
   { rejectValue: string; state: RootState }
->("cart/syncGuest", async (_, { rejectWithValue, getState }) => {
+>("cart/syncGuest", async (_, { rejectWithValue }) => {
   try {
+    if (typeof window === "undefined") {
+      return [];
+    }
 
-    const {auth} = getState();
+    const token = localStorage.getItem("accessToken");
 
-    if (!auth.isLoggedIn) {
+    if (!token) {
       return loadGuestCart();
     }
 
     const guestItems = loadGuestCart();
 
-    if (guestItems.length === 0) {
+    if (!guestItems.length) {
       const res = await instance.get("/cart");
       return mapCartResponseToItems(res.data);
     }
 
     const itemsForBulk = guestItems.map((item) => ({
       productId: item.product._id,
-      selectedVolume: item.selectedVolume,
       quantity: item.quantity,
     }));
 
     await instance.post("/cart/bulk", { items: itemsForBulk });
 
-    const finalRes = await instance.get("/cart");
+    const res = await instance.get("/cart");
     clearGuestCart();
-    console.log('finalRes.data: ', finalRes.data);
-    return mapCartResponseToItems(finalRes.data);
+    return mapCartResponseToItems(res.data);
   } catch (e) {
     return rejectWithValue(handleError(e, "Не вдалося синхронізувати кошик"));
   }

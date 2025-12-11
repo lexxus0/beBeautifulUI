@@ -38,7 +38,7 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
   return (
     <div className={css.headercontainer}>
       <div className={css.categoryContainer}>
-        <h3 className={css.name}>{product.name.en}</h3>
+        <h3 className={css.name}>{product.name}</h3>
         <div className={css.rate}>
           <div className={css.inStockContainer}>
             <div

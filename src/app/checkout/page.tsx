@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/navigation";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
-import { ICartItem } from "@/types/cart";
+import { ICartItem } from "@/types/types";
 import ContactInfoForm from "@/components/ui/ContactInfoForm/ContactInfoForm";
 import LoginForm from "@/components/ui/Auth/LoginForm/LoginForm";
 import { changeCartQuantity } from "@/helpers/changeCartQuantity";

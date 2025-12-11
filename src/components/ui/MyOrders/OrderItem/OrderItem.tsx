@@ -1,5 +1,5 @@
 import React from "react";
-import { IOrderItem, IOrder} from "@/types/orders";
+import { IOrderItem, IOrder} from "@/types/types";
 
 import styles from "./OrderItem.module.scss";
 
@@ -57,10 +57,10 @@ export default function OrderItem({ order, onDetailsClick }: IOrderItemProps) {
                   </p>
                   <div className="flex flex-col gap-1 md:flex-row md:gap-9">
                     <p className="w-[100px] font-lato text-black text-lg">
-                      {item.product.name.en}
+                      {item.product.name}
                     </p>
                     <div className="flex gap-2">
-                      <p className="font-light text-lg">{item.product.name.ua}</p>
+                      <p className="font-light text-lg">{item.product.name}</p>
                       <p className="font-light text-lg">
                         {item.selectedVolume}
                       </p>

@@ -2,7 +2,7 @@
 
 import DetailsOrder from "@/components/ui/MyOrders/DetailsOrder/DetailsOrder";
 import ordersData from "@/components/ui/MyOrders/orders.json";
-import { IOrder } from "@/types/orders";
+import { IOrder } from "@/types/types";
 import { useParams } from "next/navigation";
   
   export default function OrderDetailPage() {

@@ -1,7 +1,7 @@
 import { deleteCartItem, updateCartItem } from "@/store/cart/operations";
 import { removeGuestItem, updateGuestItemQuantity } from "@/store/cart/slice";
 import { AppDispatch } from "@/store/store";
-import { ICartItem } from "@/types/cart";
+import { ICartItem } from "@/types/types";
 
 export const changeCartQuantity = ({
   item,
@@ -26,7 +26,7 @@ export const changeCartQuantity = ({
     onRemove && onRemove(item);
 
     if (isLoggedIn && !isGuest) {
-      dispatch(deleteCartItem({ productId: product._id, selectedVolume }));
+      dispatch(deleteCartItem({ productId: product._id }));
     } else {
       dispatch(
         removeGuestItem({

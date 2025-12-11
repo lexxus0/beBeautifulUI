@@ -47,13 +47,6 @@ function Reviews({ showTitle = false, reviews }: ReviewsProps) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
-  const getUserReaction = (review: IUIReview) => {
-    return {
-      liked: review.likedBy?.includes(currentUserId ?? "") ?? false,
-      disliked: review.dislikedBy?.includes(currentUserId ?? "") ?? false,
-    };
-  };
-
   const toggleExpand = (id: string) => {
     setExpandedReviews((prev) => ({
       ...prev,
@@ -65,39 +58,35 @@ function Reviews({ showTitle = false, reviews }: ReviewsProps) {
     review: IUIReview,
     type: "like" | "dislike"
   ) => {
-    const userId = currentUserId ?? "";
-
     setLocalReactions((prev) => {
       const base = prev[review._id] ?? {
         likes: review.likes,
         dislikes: review.dislikes,
-        likedBy: [...(review.likedBy ?? [])],
-        dislikedBy: [...(review.dislikedBy ?? [])],
+        hasLiked: review.hasLiked,
+        hasDisliked: review.hasDisliked,
       };
 
-      const updated: ILocalReaction = { ...base };
+      const updated: ILocalReaction = {
+        ...base,
+      };
 
-      if (type === "like") {
-        if (!updated.likedBy?.includes(userId)) {
-          updated.likedBy = [...(updated.likedBy ?? []), userId];
-          updated.likes!++;
-        }
+      if (type === "like" && !updated.hasLiked) {
+        updated.likes!++;
+        updated.hasLiked = true;
 
-        if (updated.dislikedBy?.includes(userId)) {
-          updated.dislikedBy = updated.dislikedBy.filter((id) => id !== userId);
+        if (updated.hasDisliked) {
           updated.dislikes!--;
+          updated.hasDisliked = false;
         }
       }
 
-      if (type === "dislike") {
-        if (!updated.dislikedBy?.includes(userId)) {
-          updated.dislikedBy = [...(updated.dislikedBy ?? []), userId];
-          updated.dislikes!++;
-        }
+      if (type === "dislike" && !updated.hasDisliked) {
+        updated.dislikes!++;
+        updated.hasDisliked = true;
 
-        if (updated.likedBy?.includes(userId)) {
-          updated.likedBy = updated.likedBy.filter((id) => id !== userId);
+        if (updated.hasLiked) {
           updated.likes!--;
+          updated.hasLiked = false;
         }
       }
 
@@ -118,7 +107,9 @@ function Reviews({ showTitle = false, reviews }: ReviewsProps) {
 
   const handleReaction = (merged: IUIReview, type: "like" | "dislike") => {
     if (!isLoggedIn) {
-      toast.error("Увійдіть, щоб поставити оцінку");
+      toast.error("Увійдіть, щоб поставити оцінку", {
+        duration: 2000,
+      });
       return;
     }
 
@@ -129,7 +120,8 @@ function Reviews({ showTitle = false, reviews }: ReviewsProps) {
 
     applyOptimisticReaction(merged, type);
 
-    const thunk = merged.productId ? reactToProductReview : reactToWebReview;
+    const isProduct = Boolean(merged.productId);
+    const thunk = isProduct ? reactToProductReview : reactToWebReview;
 
     dispatch(thunk({ id: merged._id, type }))
       .unwrap()
@@ -200,7 +192,6 @@ function Reviews({ showTitle = false, reviews }: ReviewsProps) {
           {reviews?.map((review: IUIReview) => {
             const reaction = localReactions[review._id] || {};
             const merged: IUIReview = { ...review, ...reaction };
-            const { liked, disliked } = getUserReaction(merged);
             const isLong = (merged.comment?.length ?? 0) > CHARACTER_LIMIT;
             const visibleComment =
               expandedReviews[review._id] || !isLong
@@ -257,9 +248,9 @@ function Reviews({ showTitle = false, reviews }: ReviewsProps) {
 
                       <div className="flex gap-3 ml-auto">
                         <button
-                          disabled={liked}
+                          disabled={merged.hasLiked}
                           className={`transition ${
-                            liked ? "text-green-600 font-bold" : ""
+                            merged.hasLiked ? "text-green-600 font-bold" : ""
                           }`}
                           onClick={() => handleReaction(merged, "like")}
                         >
@@ -268,9 +259,9 @@ function Reviews({ showTitle = false, reviews }: ReviewsProps) {
                         <p>{merged.likes}</p>
 
                         <button
-                          disabled={disliked}
+                          disabled={merged.hasDisliked}
                           className={`transition ${
-                            disliked ? "text-red-600 font-bold" : ""
+                            merged.hasDisliked ? "text-red-600 font-bold" : ""
                           }`}
                           onClick={() => handleReaction(merged, "dislike")}
                         >

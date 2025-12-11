@@ -8,8 +8,8 @@ export const useBreakpoint = () => {
   useEffect(() => {
     const onResize = () => {
       const w = window.innerWidth;
-      if (w < 743) setBp("mobile");
-      else if (w < 1439) setBp("tablet");
+      if (w < 768) setBp("mobile");
+      else if (w < 1339) setBp("tablet");
       else setBp("desktop");
     };
 

@@ -9,8 +9,8 @@ export interface IWebReview {
   dislikes: number;
   likedBy?: string[];
   dislikedBy?: string[];
-  // hasLiked?: boolean;
-  // hasDisliked?: boolean;
+  hasLiked?: boolean;
+  hasDisliked?: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -26,8 +26,8 @@ export interface IProductReview {
   dislikes: number;
   likedBy?: string[];
   dislikedBy?: string[];
-  // hasLiked?: boolean;
-  // hasDisliked?: boolean;
+  hasLiked?: boolean;
+  hasDisliked?: boolean;
   createdAt: string;
   updatedAt: string;
   author: {
@@ -60,10 +60,8 @@ export interface IProductReviewResponse {
 export interface ILocalReaction {
   likes?: number;
   dislikes?: number;
-  likedBy?: string[];
-  dislikedBy?: string[];
-  // hasLiked?: boolean;
-  // hasDisliked?: boolean;
+  hasLiked?: boolean;
+  hasDisliked?: boolean;
 }
 
 export interface CreateReviewData {
@@ -90,10 +88,8 @@ export interface IUIReview {
 
   likes: number;
   dislikes: number;
-  likedBy?: string[];
-  dislikedBy?: string[];
-  // hasLiked: boolean;
-  // hasDisliked: boolean;
+  hasLiked: boolean;
+  hasDisliked: boolean;
   // --- UI helper ---
   isMine: boolean;
 }

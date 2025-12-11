@@ -35,7 +35,7 @@ const TopProducts: React.FC = () => {
     dispatch(
       addToGuestCart({
         product: cartProduct as unknown as IProduct,
-        selectedVolume: 0, // "default",
+        selectedVolume: "default",
         quantity: 1,
       })
     );

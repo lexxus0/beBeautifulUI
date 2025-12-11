@@ -5,14 +5,12 @@ import {
   IOrderDraft,
   IOrderItem,
   PaymentChoice,
-} from "@/types/orders";
+} from "@/types/types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
-  createOrder,
   fetchAllCertificates,
   fetchAllOrders,
-  // fetchCertificateById,
-  fetchCertificateByNumber,
+  fetchCertificateById,
 } from "./operations";
 
 interface OrderState {
@@ -96,7 +94,7 @@ const ordersSlice = createSlice({
         state.error =
           typeof action.payload === "string"
             ? action.payload
-            : "Не вдалося завантажити замовлення";
+            : "Не вдалося завантажити сертифікати";
         state.isLoading = false;
       })
       .addCase(fetchAllCertificates.pending, (state) => {
@@ -116,68 +114,21 @@ const ordersSlice = createSlice({
             : "Не вдалося завантажити сертифікати";
         state.isLoading = false;
       })
-      .addCase(fetchCertificateByNumber.pending, (state) => {
+      .addCase(fetchCertificateById.pending, (state) => {
         state.error = null;
         state.isLoading = true;
       })
-      .addCase(fetchCertificateByNumber.fulfilled, (state, action) => {
-        console.log("🎉 CERTIFICATE LOADED:", action.payload);
-        console.log("💰 TOTAL AMOUNT BEFORE:", state.draft.totalAmount);
+      .addCase(fetchCertificateById.fulfilled, (state, action) => {
         state.error = null;
         state.isLoading = false;
         state.draft.certificate = action.payload;
         // console.log("state.draft.certificate: ", state.draft.certificate);
-         // 🟢 Перерахунок totalAmount
-  const cert = action.payload;
-  // console.log('cert: ', cert);
-  const amount = state.draft.amount;
-
-  // Приклад: якщо сертифікат дає суму знижки
-  const discount = cert.balance ?? cert.amount ?? 0;
-  // console.log('discount: ', discount);
-
-  state.draft.totalAmount = Math.max(amount - discount, 0);
-
-  console.log("💰 TOTAL AMOUNT AFTER:", state.draft.totalAmount);
       })
-      .addCase(fetchCertificateByNumber.rejected, (state, action) => {
+      .addCase(fetchCertificateById.rejected, (state, action) => {
         state.error =
           typeof action.payload === "string"
             ? action.payload
             : "Не вдалося завантажити сертифікати";
-        state.isLoading = false;
-      })
-      // .addCase(fetchCertificateById.pending, (state) => {
-      //   state.error = null;
-      //   state.isLoading = true;
-      // })
-      // .addCase(fetchCertificateById.fulfilled, (state, action) => {
-      //   state.error = null;
-      //   state.isLoading = false;
-      //   state.draft.certificate = action.payload;
-      //   // console.log("state.draft.certificate: ", state.draft.certificate);
-      // })
-      // .addCase(fetchCertificateById.rejected, (state, action) => {
-      //   state.error =
-      //     typeof action.payload === "string"
-      //       ? action.payload
-      //       : "Не вдалося завантажити сертифікати";
-      //   state.isLoading = false;
-      // })
-      .addCase(createOrder.pending, (state) => {
-        state.error = null;
-        state.isLoading = true;
-      })
-      .addCase(createOrder.fulfilled, (state, action) => {
-        state.currentOrder = action.payload; // тут буде paymentLink
-        state.isLoading = false;
-        state.error = null;
-      })
-      .addCase(createOrder.rejected, (state, action) => {
-        state.error =
-          typeof action.payload === "string"
-            ? action.payload
-            : "Не вдалося створити замовлення";
         state.isLoading = false;
       });
   },
