@@ -91,8 +91,8 @@ const ProductItem = ({ item }: ProductItemProps) => {
 
   return (
     <>
-      <Link href={`/products/${item._id}`}>
         <div className="relative flex flex-col items-center p-4 md:w-[322px] lg:w-[400px]">
+      <Link href={`/products/${item._id}`}>
           <button
             onClick={handleFavoriteClick}
             className="absolute top-6 right-4"
@@ -113,10 +113,10 @@ const ProductItem = ({ item }: ProductItemProps) => {
           />
 
           <div className="my-6 text-center flex flex-col items-center w-full">
-            <p className="font-lato font-semibold text-2xl mb-2 h-16 line-clamp-2 overflow-hidden">
+            <p className="font-lato font-semibold text-2xl mb-4 h-16 line-clamp-2 overflow-hidden">
               {item.name.en}
             </p>
-            <p className="font-roboto text-xl capitalize mb-2">
+            <p className="font-roboto text-xl capitalize mb-6">
             {/* {item.name.ua} */}
               {item.category}
             </p>
@@ -124,8 +124,10 @@ const ProductItem = ({ item }: ProductItemProps) => {
               <StarRating rating={getAverageRating(item.reviews)} />
               <p>{item.reviews?.length ?? 0} відгуків</p>
             </div>
+            </div>
+            </Link>
 
-            <div className="w-full flex justify-between items-center mt-4">
+            <div className="w-full flex justify-between items-center mb-6">
               <p className="font-roboto text-xl">
                 <span className="font-semibold">{selectedVolume?.price} ₴</span>
               </p>
@@ -135,10 +137,10 @@ const ProductItem = ({ item }: ProductItemProps) => {
                   <button
                     key={option._id}
                     onClick={(e) => handleVolumeClick(e, option.volume)}
-                    className={`border px-3 py-1 rounded text-sm ${
+                    className={`text-sm ${
                       selectedVolume.volume === option.volume
-                        ? "bg-black text-white border-black"
-                        : "bg-white text-black border-gray-300"
+                        && "border-b border-b-black "
+                        // : "bg-white text-black border-gray-300"
                     }`}
                   >
                     {option.volume} мл
@@ -146,7 +148,7 @@ const ProductItem = ({ item }: ProductItemProps) => {
                 ))}
               </div>
             </div>
-          </div>
+     
 
           <button
             onClick={handleAddToCart}
@@ -155,7 +157,6 @@ const ProductItem = ({ item }: ProductItemProps) => {
             Додати до кошика
           </button>
         </div>
-      </Link>
       {isModalOpen && (
         <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <div className="relative w-[150px] h-[150px] object-contain mb-4 mx-auto">
