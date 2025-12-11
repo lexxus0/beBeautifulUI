@@ -56,12 +56,19 @@ export interface IProductResponse {
   pagination: IPagination;
 }
 
+type UrlObject = {
+  pathname?: string;
+  query?: Record<string, string | number | boolean | undefined>;
+  hash?: string;
+};
+
 export type CategoryData = {
   title: string;
   description: string;
   imageMobile: string;
   imageDesktop: string;
-  href: string;
+  category: string; 
+  href: UrlObject;
 };
 
 export type CategoryCardProps = CategoryData;

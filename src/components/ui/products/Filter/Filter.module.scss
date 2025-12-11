@@ -15,6 +15,11 @@
       border-radius: 8px;
       padding-left: 40px;
       font-size: 14px;
+      transition: box-shadow 0.3s ease;
+
+      &:hover {
+        box-shadow: 0 0 5px var(--color-gray-10);
+      }
     }
 
     .searchIcon {
@@ -45,27 +50,56 @@
         display: flex;
         flex-direction: row;
         gap: 20px;
+        position: relative;
 
-        .iconCategory,
-        .iconVolume {
-          border: 1px solid var(--color-gray-10);
-          border-radius: 8px;
+        .iconCategoryButton,
+        .iconVolumeButton {
+          background: transparent;
+          border: none;
+          padding: 10px;
+          border: 1px solid var(--color-black-10);
           width: 48px;
           height: 48px;
-          cursor: pointer;
-          display: inline-flex;
+          display: flex;
           justify-content: center;
           align-items: center;
+          border-radius: 8px;
+          transition: border 0.3s ease, box-shadow 0.3s ease;
+
+          &:hover {
+            box-shadow: 0 0 5px var(--color-gray-10);
+          }
+
+          &:active {
+            color: var(--color-gray-10);
+          }
         }
 
-        .iconCategory:hover,
-        .iconVolume:hover {
-          box-shadow: 0 0 5px var(--color-gray-10);
-        }
+        .menuSelect {
+          position: absolute;
+          width: 160px;
+          background-color: white;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+          z-index: 1000;
+          list-style: none;
+          padding: 8px 0;
+          margin: 0;
 
-        .iconCategory:active,
-        .iconVolume:active {
-          color: var(--color-gray-10);
+          li {
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+              background-color: #f0f0f0;
+            }
+            &.selectedOption {
+              background-color: #e0e0e0;
+              color: #fff;
+              font-weight: 500;
+            }
+          }
         }
       }
 
