@@ -6,8 +6,11 @@ import { useRouter } from "next/navigation";
 import { CardForm, schemaCardPay } from "@/validation/cardPayValidation";
 import InputGroup from "../../InputGroup/InputGroup";
 import styles from "./CardPay.module.scss";
+import { useAppDispatch } from "@/store/hooks";
+import { createOrder } from "@/store/orders/operations";
 
 export default function CardPay() {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const resolver = yupResolver(schemaCardPay) as Resolver<CardForm>;
 
@@ -25,9 +28,21 @@ export default function CardPay() {
       sendReceipt: false,
     },
   });
+  
+  const onSubmit = async () => {
+    console.log("💳 CARD SUBMIT CLICKED");
+    const result = await dispatch(createOrder());
+    console.log("📨 CREATE ORDER RESULT:", result);
 
-  const onSubmit = (data: CardForm) => {
-    console.log("Збережені дані картки:", data);
+    if (createOrder.fulfilled.match(result)) {
+      console.log("🟢 ORDER CREATED SUCCESSFULLY:", result.payload);
+      const paymentLink = result.payload.paymentLink;
+      console.log("🔗 PAYMENT LINK:", paymentLink);
+      // 👉 Перехід на оплату
+      window.location.href = paymentLink;
+    } else {
+      console.error("Не вдалося створити замовлення");
+    }
   };
 
   return (
