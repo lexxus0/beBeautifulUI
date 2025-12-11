@@ -26,7 +26,7 @@ export const changeCartQuantity = ({
     onRemove && onRemove(item);
 
     if (isLoggedIn && !isGuest) {
-      dispatch(deleteCartItem({ productId: product._id }));
+      dispatch(deleteCartItem({ productId: product._id, selectedVolume }));
     } else {
       dispatch(
         removeGuestItem({
