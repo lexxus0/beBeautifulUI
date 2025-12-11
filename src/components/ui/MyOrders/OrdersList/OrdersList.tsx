@@ -1,6 +1,6 @@
 import React from "react";
 import OrderItem from "../OrderItem/OrderItem";
-import { IOrder } from "@/types/types";
+import { IOrder } from "@/types/orders";
 import styles from "./OrdersList.module.scss";
 
 interface IOrdersListProps {

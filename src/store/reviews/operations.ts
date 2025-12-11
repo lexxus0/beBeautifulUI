@@ -64,7 +64,7 @@ export const reactToWebReview = createAsyncThunk<
     const currentUserId = auth.user?._id;
 
     const res = await instance.patch(`/web-reviews/${id}/react`, { type });
-    return normalizeReview(res.data, currentUserId);
+    return normalizeReview(res.data.data, currentUserId);
   } catch (error) {
     return ThunkAPI.rejectWithValue(
       handleError(error, `Failed to ${type} review`)
@@ -82,7 +82,7 @@ export const reactToProductReview = createAsyncThunk<
     const currentUserId = auth.user?._id;
 
     const res = await instance.patch(`/reviews/${id}/react`, { type });
-    return normalizeReview(res.data, currentUserId);
+    return normalizeReview(res.data.data, currentUserId);
   } catch (error) {
     return ThunkAPI.rejectWithValue(
       handleError(error, `Failed to ${type} review`)
@@ -122,7 +122,7 @@ export const createReview = createAsyncThunk<
 
     const res = await instance.post("/reviews", data);
 
-    return normalizeReview(res.data.data, user);
+    return normalizeReview(res.data.data, user._id);
   } catch (e: unknown) {
     return ThunkAPI.rejectWithValue(handleError(e, "Failed to create review"));
   }

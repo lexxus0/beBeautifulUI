@@ -6,7 +6,8 @@ import { selectIsLoggedIn } from "@/store/auth/selectors";
 import { useRouter } from "next/navigation";
 import { setFromBasket } from "@/store/orders/slice";
 import Link from "next/link";
-import { ICartItem, IOrderItem } from "@/types/types";
+import { ICartItem } from "@/types/cart";
+import { IOrderItem } from "@/types/orders";
 import {
   initGuestCart,
 } from "@/store/cart/slice";
@@ -39,7 +40,7 @@ const BasketPage = () => {
   }, [isLoggedIn, dispatch]);
 
   const showRemoveModal = (item: ICartItem) => {
-    setRemovedProductName(item.product.name);
+    setRemovedProductName(item.product.name.en);
     setIsModalOpen(true);
     setTimeout(() => setIsModalOpen(false), 1500);
   };

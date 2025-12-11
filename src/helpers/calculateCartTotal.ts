@@ -1,4 +1,4 @@
-import { ICartItem } from "@/types/types";
+import { ICartItem } from "@/types/cart";
 
 export const calculateCartTotal = (items: ICartItem[]): number => {
   if (!items || items.length === 0) return 0;
