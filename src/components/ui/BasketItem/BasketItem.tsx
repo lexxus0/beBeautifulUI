@@ -1,7 +1,7 @@
 "use client";
 
 import { ICartItem } from "@/types/cart";
-import { useBreakpoint } from "@/helpers/hooks/useBreakpoint";
+import { useResponsiveImage } from "@/helpers/hooks/useResponsiveImage";
 import { useMemo, useState } from "react";
 import { normalizeBackendImageUrl } from "@/helpers/normalizeImage";
 import Image from "next/image";
@@ -27,14 +27,12 @@ const BasketItem = ({
   const { product, quantity, selectedVolume } = item;
   // console.log('selectedVolume: ', selectedVolume);
   // console.log("item: ", item);
-  const bp = useBreakpoint();
 
-  const size =
-    bp === "mobile"
-      ? { w: 124, h: 112 }
-      : bp === "tablet"
-      ? { w: 94, h: 94 }
-      : { w: 196, h: 156 };
+  const { size, srcPlaceholder } = useResponsiveImage(
+    { w: 124, h: 112 },
+    { w: 94, h: 94 },
+    { w: 196, h: 156 }
+  );
 
   const option =
     product.priceByVolume.find((opt) => opt.volume === selectedVolume) ||
@@ -49,13 +47,6 @@ const BasketItem = ({
   }, [product.imageUrl]);
 
   const canRenderImage = !!imageSrc && !imgError;
-
-  const srcPlaceholder =
-    bp === "mobile"
-      ? "/images/placeholder/placeholder-tab.png"
-      : bp === "tablet"
-      ? "/images/placeholder/placeholder-tab.png"
-      : "/images/placeholder/placeholder-desk.png";
 
   const handleDecrement = () => {
     if (quantity > 1) {
@@ -89,8 +80,9 @@ const BasketItem = ({
         <div className={styles.info}>
           <p className={styles.titleEn}>{item.product.name.en}</p>
           <p className={styles.titleUk}>
-          {/* {item.product.name.ua} */}
-            {item.product.category.charAt(0).toUpperCase() + item.product.category.slice(1)}
+            {/* {item.product.name.ua} */}
+            {item.product.category.charAt(0).toUpperCase() +
+              item.product.category.slice(1)}
             <span className={styles.volume}>{volumeLabel} мл</span>
           </p>
           <p className={styles.priceMob}>{totalPrice} грн</p>

@@ -3,18 +3,21 @@ import {
   fetchProductById,
   fetchProducts,
   fetchProductsByIds,
+  fetchProductsHome,
 } from "./operations";
 import { IProduct, IProductResponse } from "@/types/types";
 
 interface ProductState {
   products: IProduct[];
   productDetails: IProduct | null;
+  productsByCategory: Record<string, IProduct[]>;
   recentlyViewed: IProduct[];
   totalItems: number | null;
   limit: number | null;
   totalPages: number | null;
   currentPage: number | null;
   isLoadingProduct: boolean;
+  isLoadingHome: boolean;
   isLoadingRecently: boolean;
   error: string | null;
 }
@@ -22,12 +25,14 @@ interface ProductState {
 const initialState: ProductState = {
   products: [],
   productDetails: null,
+  productsByCategory: {},
   recentlyViewed: [],
   totalItems: null,
   limit: null,
   totalPages: null,
   currentPage: null,
   isLoadingProduct: false,
+  isLoadingHome: false,
   isLoadingRecently: false,
   error: null,
 };
@@ -85,6 +90,24 @@ const productSlice = createSlice({
       .addCase(fetchProductsByIds.rejected, (state, action) => {
         state.isLoadingRecently = false;
         state.error = action.payload ?? "Unknown error";
+      })
+      .addCase(fetchProductsHome.pending, (state) => {
+        state.isLoadingHome = true;
+        state.error = null;
+      })
+      .addCase(
+        fetchProductsHome.fulfilled,
+        (
+          state,
+          action: PayloadAction<{ data: Record<string, IProduct[]> }>
+        ) => {
+          state.isLoadingHome = false;
+          state.productsByCategory = action.payload.data;
+        }
+      )
+      .addCase(fetchProductsHome.rejected, (state, action) => {
+        state.isLoadingHome = false;
+        state.error = action.payload ?? action.error.message ?? "Unknown error";
       });
   },
 });

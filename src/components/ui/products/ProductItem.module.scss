@@ -1,0 +1,251 @@
+.itemWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 158px;
+  padding-bottom: 2px;
+  border: 0.4px solid transparent;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+
+  .hardBtn {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+
+    .hardIcon {
+      width: 24px;
+      height: 20px;
+    }
+  }
+
+  .image {
+    width: 158px;
+    height: 158px;
+  }
+
+  .description {
+    text-align: center;
+
+    .productName {
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 150%;
+      margin-bottom: 16px;
+    }
+    .productCategory {
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 150%;
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    .reviews {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+
+      .textReviews {
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 132%;
+        letter-spacing: 0.01em;
+      }
+    }
+
+    .priceVolumeWrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+
+      .price {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 150%;
+      }
+
+      .volumeWrapper {
+        display: flex;
+        gap: 4px;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 150%;
+
+        .volumeButton {
+          border-bottom: 1px solid var(--color-black);
+          padding: 2px;
+          transition: all 0.3s ease;
+        }
+
+        .volumeButtonDefault {
+          border-color: transparent;
+          font-weight: 400;
+
+          &:hover {
+            border-color: #9ca3af;
+          }
+        }
+
+        .volumeButtonActive {
+          border-color: black;
+
+          &:hover {
+            border-color: #9ca3af;
+          }
+        }
+      }
+    }
+  }
+
+  .addCartBtn {
+    border-radius: 8px;
+    width: 158px;
+    height: 48px;
+    font-weight: 400;
+    font-size: 14px;
+    color: #fff;
+    line-height: 120%;
+    background: linear-gradient(180deg, #2d2d2d 4.33%);
+
+    &:hover {
+      background: #1a1a1a;
+    }
+    &:active {
+      background: #111;
+    }
+  }
+
+  @media (min-width: 744px) {
+    width: 322px;
+    padding: 24px 16px;
+    border-radius: 8px;
+    gap: 24px;
+
+    .hardBtn {
+      top: 34px;
+      right: 26px;
+
+      .hardIcon {
+        width: 28px;
+        height: 24px;
+      }
+    }
+
+    .image {
+      width: 242px;
+      height: 306px;
+    }
+
+    .description {
+      .productName {
+        font-weight: 600;
+        font-size: 24px;
+        margin-bottom: 16px;
+      }
+
+      .productCategory {
+        font-weight: 400;
+        font-size: 20px;
+        margin-bottom: 24px;
+      }
+
+      .reviews {
+        width: 258px;
+        margin-bottom: 24px;
+        margin-inline: auto;
+
+        .textReviews {
+          font-size: 14px;
+        }
+      }
+
+      .priceVolumeWrap {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        .price {
+          font-size: 24px;
+          font-weight: 600;
+        }
+
+        .volumeWrapper {
+          gap: 6px;
+          font-size: 18px;
+
+          .volumeButtonDefault {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+
+    .addCartBtn {
+      width: 290px;
+      font-size: 18px;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    width: 416px;
+
+    .image {
+      width: 268px;
+      height: auto;
+    }
+
+    .description {
+      .reviews {
+        width: 266px;
+      }
+
+      .priceVolumeWrap {
+        .volumeWrapper {
+          gap: 8px;
+        }
+      }
+    }
+
+    .addCartBtn {
+      width: 384px;
+      height: 56px;
+      font-size: 20px;
+    }
+  }
+}
+
+.outOfStock {
+  border-color: #e0e0e0;
+
+  p {
+    color: #8d8d8d;
+  }
+
+  .priceVolumeWrap {
+    display: none;
+  }
+
+  .noStock {
+    margin-bottom: 40px;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 150%;
+  }
+
+  .addCartBtn {
+    background: #e0e0e0;
+    pointer-events: none;
+  }
+
+  @media (min-width: 744px) {
+    .noStock {
+      margin-bottom: 5px;
+      font-weight: 400;
+      font-size: 20px;
+    }
+  }
+}

@@ -7,40 +7,32 @@ import CustomSelect from "@/components/ui/CustomSelect/CustomSelect";
 import Icon from "@/components/shared/Icon";
 import IconCategory from "./IconCategory";
 import IconVolume from "./IconVolume";
+import { categoryNames } from "@/constants/categoryNames";
 import styles from "./Filter.module.scss";
 
-const categories = ["hair", "makeup", "face", "body", "home"];
-const volumes = ["200ml", "250ml", "400ml", "500ml", "1L"];
-const categoryNames = {
-  hair: "Для волосся",
-  makeup: "Для макіяжу",
-  face: "Для обличчя",
-  body: "Для тіла",
-  home: "Для дому",
-};
-
-type CategoryKey = keyof typeof categoryNames;
-
-const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+const categories = Object.keys(categoryNames);
+const volumes = ["200ml", "250ml", "400ml", "500ml", "1000ml"];
 
 const catOptions = categories.map((c) => ({
   value: c,
-  label: categoryNames[c as CategoryKey] || capitalize(c),
+  label: categoryNames[c] || c,
 }));
 
-const volumeOptions = volumes.map((v) => ({ value: v, label: v }));
+const volumeOptions = volumes.map((v) => ({
+  value: v,
+  label: v,
+}));
 
 export default function Filter() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
-    undefined
-  );
-  const [selectedVolume, setSelectedVolume] = useState<string | undefined>(
-    undefined
-  );
+  const [selectedCategory, setSelectedCategory] = useState<
+    string | undefined
+  >();
+  const [selectedVolume, setSelectedVolume] = useState<string | undefined>();
+
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [isVolumeMenuOpen, setIsVolumeMenuOpen] = useState(false);
 
@@ -59,6 +51,16 @@ export default function Filter() {
   });
 
   useEffect(() => {
+    const category = searchParams.get("category") || undefined;
+    const volume = searchParams.get("volume") || undefined;
+    const keyword = searchParams.get("keyword") || "";
+
+    setSelectedCategory(category);
+    setSelectedVolume(volume);
+    setSearchTerm(keyword);
+  }, [searchParams]);
+
+  useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
         categoryMenuRef.current &&
@@ -75,19 +77,8 @@ export default function Filter() {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  useEffect(() => {
-    const category = searchParams.get("category") || undefined;
-    const volume = searchParams.get("volume") || undefined;
-    const keyword = searchParams.get("keyword") || "";
-    setSelectedCategory(category);
-    setSelectedVolume(volume);
-    setSearchTerm(keyword);
-  }, [searchParams?.toString()]);
 
   useEffect(() => {
     if (categoryButtonRef.current) {
@@ -102,7 +93,7 @@ export default function Filter() {
         left: volumeButtonRef.current.offsetLeft,
       });
     }
-  }, [categoryButtonRef.current, volumeButtonRef.current]);
+  }, []);
 
   const updateQuery = (
     category?: string,
@@ -111,25 +102,21 @@ export default function Filter() {
   ) => {
     const params = new URLSearchParams();
 
-    if (category) params.set("category", category.toLowerCase());
+    if (category) params.set("category", category);
     if (volume) params.set("volume", volume);
     if (keyword) params.set("keyword", keyword);
 
     router.push(`/products?${params.toString()}`);
   };
 
-  const handleCategoryChange = (
-    option: { value: string; label: string } | null
-  ) => {
+  const handleCategoryChange = (option: { value: string } | null) => {
     const value = option?.value;
     setSelectedCategory(value);
     updateQuery(value, selectedVolume, searchTerm);
     setIsCategoryMenuOpen(false);
   };
 
-  const handleVolumeChange = (
-    option: { value: string; label: string } | null
-  ) => {
+  const handleVolumeChange = (option: { value: string } | null) => {
     const value = option?.value;
     setSelectedVolume(value);
     updateQuery(selectedCategory, value, searchTerm);
@@ -147,22 +134,6 @@ export default function Filter() {
     router.push("/products");
   };
 
-  const handleCategoryReset = () => {
-    setSelectedCategory(undefined);
-    updateQuery(undefined, selectedVolume, searchTerm);
-  };
-
-  const handleVolumeReset = () => {
-    setSelectedVolume(undefined);
-    updateQuery(selectedCategory, undefined, searchTerm);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
-  };
-
   const isFilterActive =
     selectedCategory || selectedVolume || searchTerm.trim() !== "";
 
@@ -174,7 +145,7 @@ export default function Filter() {
           placeholder="Пошук"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyDown={handleKeyDown}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           className={styles.searchInput}
         />
         <HiMiniMagnifyingGlass
@@ -187,68 +158,62 @@ export default function Filter() {
         <div className={styles.filtersSelects}>
           <div className={styles.iconSelectsWrap}>
             <button
+              ref={categoryButtonRef}
               className={styles.iconCategoryButton}
               onClick={() => setIsCategoryMenuOpen((prev) => !prev)}
-              ref={categoryButtonRef}
             >
               <IconCategory />
             </button>
+
             {isCategoryMenuOpen && (
               <ul
-                className={`${styles.menuSelect} ${
-                  isCategoryMenuOpen ? "open" : ""
-                }`}
                 ref={categoryMenuRef}
+                className={`${styles.menuSelect} open`}
                 style={{
                   top: `${categoryMenuPosition.top}px`,
                   left: `${categoryMenuPosition.left}px`,
                 }}
               >
-                {catOptions.map((option) => (
+                {catOptions.map((op) => (
                   <li
-                    key={option.value}
-                    onClick={() => handleCategoryChange(option)}
+                    key={op.value}
+                    onClick={() => handleCategoryChange(op)}
                     className={
-                      selectedCategory === option.value
-                        ? styles.selectedOption
-                        : ""
+                      selectedCategory === op.value ? styles.selectedOption : ""
                     }
                   >
-                    {option.label}
+                    {op.label}
                   </li>
                 ))}
               </ul>
             )}
 
             <button
+              ref={volumeButtonRef}
               className={styles.iconVolumeButton}
               onClick={() => setIsVolumeMenuOpen((prev) => !prev)}
-              ref={volumeButtonRef}
             >
               <IconVolume />
             </button>
+
             {isVolumeMenuOpen && (
               <ul
-                className={`${styles.menuSelect} ${
-                  isVolumeMenuOpen ? "open" : ""
-                }`}
                 ref={volumeMenuRef}
+                className={`${styles.menuSelect} open`}
                 style={{
                   top: `${volumeMenuPosition.top}px`,
                   left: `${volumeMenuPosition.left}px`,
                 }}
               >
-                {volumeOptions.map((option) => (
+                {volumeOptions.map((op) => (
                   <li
-                    key={option.value}
-                    onClick={() => handleVolumeChange(option)}
+                    key={op.value}
+                    onClick={() => handleVolumeChange(op)}
                     className={
-                      selectedVolume === option.value
-                        ? styles.selectedOption
-                        : ""
+                      selectedVolume === op.value ? styles.selectedOption : ""
                     }
                   >
-                    {option.label}
+                    {op.label}
                   </li>
                 ))}
               </ul>
@@ -277,29 +242,6 @@ export default function Filter() {
             Очистити фільтри
             <Icon name="icon-close" className={styles.resetIcon} />
           </button>
-        )}
-      </div>
-
-      <div className={styles.selectedFilters}>
-        {selectedCategory && (
-          <div className={styles.selectedFilter}>
-            <span>{categoryNames[selectedCategory as CategoryKey]}</span>
-            <Icon
-              name="icon-close"
-              className={styles.resetFilters}
-              onClick={handleCategoryReset}
-            />
-          </div>
-        )}
-        {selectedVolume && (
-          <div className={styles.selectedFilter}>
-            <span>{selectedVolume}</span>
-            <Icon
-              name="icon-close"
-              className={styles.resetFilters}
-              onClick={handleVolumeReset}
-            />
-          </div>
         )}
       </div>
     </div>
