@@ -18,6 +18,7 @@ import styles from "./ProductItem.module.scss";
 
 interface ProductItemProps {
   item: IProduct;
+  // productId: string;
 }
 
 export default function ProductItem({ item }: ProductItemProps) {
@@ -25,6 +26,8 @@ export default function ProductItem({ item }: ProductItemProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addedProductName, setAddedProductName] = useState<string | null>(null);
   const [imgError, setImgError] = useState(false);
+  const isOutOfStock = item.inStock === false;
+  // const isOutOfStock = true;
 
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
@@ -96,7 +99,11 @@ export default function ProductItem({ item }: ProductItemProps) {
   return (
     <>
       <Link href={`/products/${item._id}`}>
-        <div className={styles.itemWrapper}>
+        <div
+          className={`${styles.itemWrapper} ${
+            isOutOfStock ? styles.outOfStock : ""
+          }`}
+        >
           <button onClick={handleFavoriteClick} className={styles.hardBtn}>
             {isFavorite ? (
               <Icon name="icon-hard" className={styles.hardIcon} />
@@ -124,35 +131,52 @@ export default function ProductItem({ item }: ProductItemProps) {
             />
           )}
 
-          <div className={styles.description}>
+          <div
+            className={`${styles.description} ${
+              isOutOfStock ? styles.textDisabled : ""
+            }`}
+          >
             <p className={styles.productName}>{item.name.ua}</p>
             <p className={styles.productCategory}>{item.category}</p>
             <div className={styles.reviews}>
               <StarRating size={16} rating={getAverageRating(item.reviews)} />
-              <p className={styles.textReviews}>({item.reviews?.length ?? 0} відгуків)</p>
+              <p className={styles.textReviews}>
+                ({item.reviews?.length ?? 0} відгуків)
+              </p>
             </div>
 
-            <div className={styles.priceVolumeWrap}>
-              <p className={styles.price}>{selectedVolume?.price} грн</p>
-              <div className={styles.volumeWrapper}>
-                {item.priceByVolume.map((option) => (
-                  <button
-                    key={option._id}
-                    onClick={(e) => handleVolumeClick(e, option._id)}
-                    className={`${styles.volumeButton} ${
-                      selectedVolume._id === option._id
-                        ? styles.volumeButtonActive
-                        : styles.volumeButtonDefault
-                    }`}
-                  >
-                    {option.volume}ml
-                  </button>
-                ))}
+            {isOutOfStock ? (
+              <p className={styles.noStock}>Немає в наявності</p>
+            ) : (
+              <div className={styles.priceVolumeWrap}>
+                <p className={styles.price}>{selectedVolume?.price} грн</p>
+
+                <div className={styles.volumeWrapper}>
+                  {item.priceByVolume.map((option) => (
+                    <button
+                      key={option._id}
+                      onClick={(e) => handleVolumeClick(e, option._id)}
+                      className={`${styles.volumeButton} ${
+                        selectedVolume._id === option._id
+                          ? styles.volumeButtonActive
+                          : styles.volumeButtonDefault
+                      }`}
+                    >
+                      {option.volume}ml
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
-          <button onClick={handleAddToCart} className={styles.addCartBtn}>
+          <button
+            onClick={isOutOfStock ? undefined : handleAddToCart}
+            disabled={isOutOfStock}
+            className={`${styles.addCartBtn} ${
+              isOutOfStock ? styles.addCartBtnDisabled : ""
+            }`}
+          >
             Додати до кошика
           </button>
         </div>
