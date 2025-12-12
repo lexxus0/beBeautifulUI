@@ -1,41 +1,84 @@
 "use client";
 
+import { useEffect, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchProducts } from "@/store/products/operations";
-import { selectProducts } from "@/store/products/selectors";
+import { fetchProductsHome } from "@/store/products/operations";
 import ProductsList from "@/components/ui/products/ProductsList";
 import BackButton from "@/components/ui/BackButton/BackButton";
 import Filter from "@/components/ui/products/Filter/Filter";
-import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import Loader from "@/components/ui/Loader/Loader";
+import { categoryNames } from "@/constants/categoryNames";
+import { IProduct } from "@/types/types";
 
 export default function ProductsPage() {
   const dispatch = useAppDispatch();
-  const products = useAppSelector(selectProducts);
-
   const searchParams = useSearchParams();
-  const category = searchParams.get("category") || undefined;
-  const volume = searchParams.get("volume") || undefined;
-  const keyword = searchParams.get("keyword") || undefined;
+
+  const { productsByCategory, isLoadingHome } = useAppSelector(
+    (state) => state.products
+  );
 
   useEffect(() => {
-    dispatch(
-      fetchProducts({
-        limit: 8,
-        currentPage: 1,
-        category,
-        volumeOptions: volume,
-        keyword,
-      })
+    dispatch(fetchProductsHome());
+  }, [dispatch]);
+
+  const selectedCategory = searchParams.get("category") || "";
+  const selectedVolume = searchParams.get("volume") || "";
+  const keyword = searchParams.get("keyword")?.trim().toLowerCase() || "";
+
+  const filteredProducts = useMemo(() => {
+    const result: Record<string, IProduct[]> = {};
+
+    Object.entries(productsByCategory as Record<string, IProduct[]>).forEach(
+      ([category, products]) => {
+        let filtered = [...products];
+
+        if (selectedCategory && category !== selectedCategory) return;
+
+        if (keyword) {
+          filtered = filtered.filter((p) =>
+            p.name.ua.toLowerCase().includes(keyword)
+          );
+        }
+
+        if (selectedVolume) {
+          const volumeNum = Number(selectedVolume.replace(/[^\d]/g, ""));
+          filtered = filtered.filter((p) =>
+            p.priceByVolume.some((v) => v.volume === volumeNum)
+          );
+        }
+
+        if (filtered.length > 0) {
+          result[category] = filtered;
+        }
+      }
     );
-  }, [dispatch, category, volume, keyword]);
+
+    return result;
+  }, [productsByCategory, selectedCategory, selectedVolume, keyword]);
+
+  if (isLoadingHome) return <Loader />;
 
   return (
     <>
       <BackButton href="/">Головна</BackButton>
+
       <div className="container">
         <Filter />
-        <ProductsList products={products} />
+
+        {Object.keys(filteredProducts).length === 0 && (
+          <p className="text-center text-xl my-20">Нічого не знайдено...</p>
+        )}
+
+        {Object.keys(filteredProducts).map((category) => (
+          <div key={category} className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">
+              {categoryNames[category] || category}
+            </h2>
+            <ProductsList products={filteredProducts[category]} />
+          </div>
+        ))}
       </div>
     </>
   );

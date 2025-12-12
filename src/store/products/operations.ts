@@ -54,6 +54,24 @@ export const fetchProducts = createAsyncThunk<
   }
 );
 
+export const fetchProductsHome = createAsyncThunk<
+  { data: Record<string, IProduct[]> },
+  void,
+  { rejectValue: string }
+>("products/fetchHome", async (_, { rejectWithValue }) => {
+  try {
+    const response = await instance.get("/products/home");
+    return response.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(
+        error.response?.data?.message ?? "Failed to fetch home products"
+      );
+    }
+    return rejectWithValue("Failed to fetch home products");
+  }
+});
+
 export const fetchProductById = createAsyncThunk<
   IProduct,
   string,

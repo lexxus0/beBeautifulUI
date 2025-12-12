@@ -34,7 +34,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
           width: "208px",
           display: "flex",
           alignItems: "center",
-          zIndex: 999999,
+          zIndex: 9,
           position: "relative",
           "&:hover": {
             borderColor: "#2d2d2d",
