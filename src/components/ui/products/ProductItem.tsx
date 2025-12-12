@@ -14,6 +14,7 @@ import StarRating from "@/helpers/StarRating";
 import { IProduct } from "@/types/types";
 import { IUIReview } from "@/types/reviews";
 import { useResponsiveImage } from "@/helpers/hooks/useResponsiveImage";
+import styles from "./ProductItem.module.scss";
 
 interface ProductItemProps {
   item: IProduct;
@@ -85,8 +86,8 @@ export default function ProductItem({ item }: ProductItemProps) {
   };
 
   const { size, srcPlaceholder } = useResponsiveImage(
-    { w: 124, h: 112 },
-    { w: 94, h: 94 },
+    { w: 158, h: 158 },
+    { w: 242, h: 306 },
     { w: 196, h: 156 }
   );
 
@@ -95,15 +96,12 @@ export default function ProductItem({ item }: ProductItemProps) {
   return (
     <>
       <Link href={`/products/${item._id}`}>
-        <div className="relative flex flex-col items-center p-4 md:w-[322px] lg:w-[400px]">
-          <button
-            onClick={handleFavoriteClick}
-            className="absolute top-6 right-4"
-          >
+        <div className={styles.itemWrapper}>
+          <button onClick={handleFavoriteClick} className={styles.hardBtn}>
             {isFavorite ? (
-              <Icon name="icon-hard" className="w-7 h-6" />
+              <Icon name="icon-hard" className={styles.hardIcon} />
             ) : (
-              <Icon name="icon-empty-heart" className="w-7 h-6" />
+              <Icon name="icon-empty-heart" className={styles.hardIcon} />
             )}
           </button>
 
@@ -113,7 +111,7 @@ export default function ProductItem({ item }: ProductItemProps) {
               alt={item.name.ua}
               width={size.w}
               height={size.h}
-              className="lg:w-[384px] object-cover"
+              className={styles.image}
               onError={() => setImgError(true)}
             />
           ) : (
@@ -122,35 +120,29 @@ export default function ProductItem({ item }: ProductItemProps) {
               alt={item.name.ua}
               width={size.w}
               height={size.h}
-              className="lg:w-[384px] object-cover"
+              className={styles.image}
             />
           )}
 
-          <div className="my-6 text-center flex flex-col items-center w-full">
-            <p className="font-lato font-semibold text-2xl mb-2 h-16 line-clamp-2 overflow-hidden">
-              {item.name.ua}
-            </p>
-            <p className="font-roboto text-xl capitalize mb-2">
-              {item.category}
-            </p>
-            <div className="flex items-center gap-3 justify-center">
-              <StarRating rating={getAverageRating(item.reviews)} />
-              <p>{item.reviews?.length ?? 0} відгуків</p>
+          <div className={styles.description}>
+            <p className={styles.productName}>{item.name.ua}</p>
+            <p className={styles.productCategory}>{item.category}</p>
+            <div className={styles.reviews}>
+              <StarRating size={16} rating={getAverageRating(item.reviews)} />
+              <p className={styles.textReviews}>({item.reviews?.length ?? 0} відгуків)</p>
             </div>
 
-            <div className="flex justify-between items-center mt-4 w-full">
-              <p className="font-roboto text-xl">
-                <span className="font-semibold">{selectedVolume?.price} ₴</span>
-              </p>
-              <div className="flex gap-2">
+            <div className={styles.priceVolumeWrap}>
+              <p className={styles.price}>{selectedVolume?.price} грн</p>
+              <div className={styles.volumeWrapper}>
                 {item.priceByVolume.map((option) => (
                   <button
                     key={option._id}
                     onClick={(e) => handleVolumeClick(e, option._id)}
-                    className={`border px-3 py-1 rounded text-sm ${
+                    className={`${styles.volumeButton} ${
                       selectedVolume._id === option._id
-                        ? "bg-black text-white border-black"
-                        : "bg-white text-black border-gray-300"
+                        ? styles.volumeButtonActive
+                        : styles.volumeButtonDefault
                     }`}
                   >
                     {option.volume}ml
@@ -160,10 +152,7 @@ export default function ProductItem({ item }: ProductItemProps) {
             </div>
           </div>
 
-          <button
-            onClick={handleAddToCart}
-            className="add-to-cart-btn-bg rounded-lg w-full h-14 text-center font-open-sans text-xl text-white"
-          >
+          <button onClick={handleAddToCart} className={styles.addCartBtn}>
             Додати до кошика
           </button>
         </div>
