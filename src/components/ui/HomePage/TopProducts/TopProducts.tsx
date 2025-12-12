@@ -26,34 +26,10 @@ const TopProducts: React.FC = () => {
 
     const cartProduct = {
       _id: product.id.toString(),
-      name: {
-        en: product.title,
-        ua: product.title,
-      },
-      sku: "",
-      volumeOptions: ["default"],
-      priceByVolume: [
-        { volume: 0, price: Number(product.price), _id: "top-volume-id" }
-      ],
-      stockQuantity: 999,
-      features: [],
-      description: "",
-      instructions: "",
-      activeIngredients: [],
-      inciList: [],
+      name: product.title,
+      priceByVolume: [{ volume: "default", price: product.price }],
       category: "top",
-      isVegan: false,
       reviews: [],
-      isPromoted: false,
-      imageUrl: product.imageDesktop,
-      inStock: true,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      // _id: product.id.toString(),
-      // name: product.title,
-      // priceByVolume: [{ volume: "default", price: product.price }],
-      // category: "top",
-      // reviews: [],
     };
 
     dispatch(
