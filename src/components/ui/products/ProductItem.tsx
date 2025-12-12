@@ -20,7 +20,9 @@ interface ProductItemProps {
 }
 
 const ProductItem = ({ item }: ProductItemProps) => {
-  const [selectedVolume, setSelectedVolume] = useState(item.priceByVolume[0]);
+  const [selectedVolume, setSelectedVolume] = useState(
+    item.priceByVolume?.[0] ?? null
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
@@ -38,7 +40,8 @@ const ProductItem = ({ item }: ProductItemProps) => {
     volume: number
   ) => {
     e.preventDefault();
-    const selected = item.priceByVolume.find((v) => v.volume === volume);
+    const selected =
+      item.priceByVolume.find((v) => v.volume === volume) ?? null;
     if (selected) {
       setSelectedVolume(selected);
     }
@@ -55,7 +58,7 @@ const ProductItem = ({ item }: ProductItemProps) => {
 
     if (!selectedVolume) return;
 
-    setAddedProductName(item.name.en);
+    setAddedProductName(item.name?.en ?? "");
 
     if (!isLoggedIn) {
       // Гостьовий кошик: зберігаємо повний продукт
@@ -91,8 +94,8 @@ const ProductItem = ({ item }: ProductItemProps) => {
 
   return (
     <>
-        <div className="relative flex flex-col items-center p-4 md:w-[322px] lg:w-[400px]">
-      <Link href={`/products/${item._id}`}>
+      <div className="relative flex flex-col items-center p-4 md:w-[322px] lg:w-[400px]">
+        <Link href={`/products/${item._id}`}>
           <button
             onClick={handleFavoriteClick}
             className="absolute top-6 right-4"
@@ -106,7 +109,7 @@ const ProductItem = ({ item }: ProductItemProps) => {
 
           <Image
             src={"https://picsum.photos/id/237/290/306"}
-            alt={item.name.en}
+            alt={item.name?.en ?? "Product"}
             width={230}
             height={260}
             className="lg:w-[384px] object-cover"
@@ -117,46 +120,45 @@ const ProductItem = ({ item }: ProductItemProps) => {
               {item.name.en}
             </p>
             <p className="font-roboto text-xl capitalize mb-6">
-            {/* {item.name.ua} */}
+              {/* {item.name.ua} */}
               {item.category}
             </p>
             <div className="flex items-center gap-3 justify-center">
-              <StarRating rating={getAverageRating(item.reviews)} />
+              <StarRating rating={getAverageRating(item.reviews ?? [])} />
               <p>{item.reviews?.length ?? 0} відгуків</p>
             </div>
-            </div>
-            </Link>
+          </div>
+        </Link>
 
-            <div className="w-full flex justify-between items-center mb-6">
-              <p className="font-roboto text-xl">
-                <span className="font-semibold">{selectedVolume?.price} ₴</span>
-              </p>
+        <div className="w-full flex justify-between items-center mb-6">
+          <p className="font-roboto text-xl">
+            <span className="font-semibold">{selectedVolume?.price} ₴</span>
+          </p>
 
-              <div className="flex gap-2">
-                {item.priceByVolume.map((option) => (
-                  <button
-                    key={option._id}
-                    onClick={(e) => handleVolumeClick(e, option.volume)}
-                    className={`text-sm ${
-                      selectedVolume.volume === option.volume
-                        && "border-b border-b-black "
-                        // : "bg-white text-black border-gray-300"
-                    }`}
-                  >
-                    {option.volume} мл
-                  </button>
-                ))}
-              </div>
-            </div>
-     
-
-          <button
-            onClick={handleAddToCart}
-            className="add-to-cart-btn-bg rounded-lg w-full h-14 text-center font-open-sans text-xl text-white"
-          >
-            Додати до кошика
-          </button>
+          <div className="flex gap-2">
+            {item.priceByVolume.map((option) => (
+              <button
+                key={option._id}
+                onClick={(e) => handleVolumeClick(e, option.volume)}
+                className={`text-sm ${
+                  selectedVolume.volume === option.volume &&
+                  "border-b border-b-black "
+                  // : "bg-white text-black border-gray-300"
+                }`}
+              >
+                {option.volume} мл
+              </button>
+            ))}
+          </div>
         </div>
+
+        <button
+          onClick={handleAddToCart}
+          className="add-to-cart-btn-bg rounded-lg w-full h-14 text-center font-open-sans text-xl text-white"
+        >
+          Додати до кошика
+        </button>
+      </div>
       {isModalOpen && (
         <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <div className="relative w-[150px] h-[150px] object-contain mb-4 mx-auto">

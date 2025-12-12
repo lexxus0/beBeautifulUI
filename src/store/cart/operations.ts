@@ -24,9 +24,11 @@ export const addCartItem = createAsyncThunk<
   ICartItem[],
   { productId: string; quantity: number; selectedVolume?: number },
   { rejectValue: string }
->("cart/addItem", async ({ productId, quantity, selectedVolume }, { rejectWithValue }) => {
+// >("cart/addItem", async ({ productId, quantity, selectedVolume }, { rejectWithValue }) => {
+>("cart/addItem", async ({ productId, quantity }, { rejectWithValue }) => {
   try {
-    await instance.post("/cart", { productId, quantity, selectedVolume });
+    // await instance.post("/cart", { productId, quantity, selectedVolume });
+    await instance.post("/cart", { productId, quantity });
     const res = await instance.get("/cart");
     // console.log('cart add: ', res.data);
     const items = mapCartResponseToItems(res.data);
@@ -41,9 +43,11 @@ export const updateCartItem = createAsyncThunk<
   ICartItem[],
   { productId: string; selectedVolume: number, quantity: number },
   { rejectValue: string }
->("cart/updateItem", async ({ productId, quantity, selectedVolume }, { rejectWithValue }) => {
+// >("cart/updateItem", async ({ productId, quantity, selectedVolume }, { rejectWithValue }) => {
+>("cart/updateItem", async ({ productId, quantity }, { rejectWithValue }) => {
   try {
-    await instance.put(`/cart/${productId}`, { quantity, selectedVolume });
+    // await instance.put(`/cart/${productId}`, { quantity, selectedVolume });
+    await instance.put(`/cart/${productId}`, { quantity });
     const res = await instance.get("/cart");
     // console.log('cart put: ', res.data);
 
@@ -59,9 +63,11 @@ export const deleteCartItem = createAsyncThunk<
   ICartItem[],
   { productId: string; selectedVolume: number },
   { rejectValue: string }
->("cart/deleteItem", async ({ productId, selectedVolume }, { rejectWithValue }) => {
+// >("cart/deleteItem", async ({ productId, selectedVolume }, { rejectWithValue }) => {
+>("cart/deleteItem", async ({ productId }, { rejectWithValue }) => {
   try {
-    await instance.delete(`/cart/${productId}`, { data: { selectedVolume } });
+    // await instance.delete(`/cart/${productId}`, { data: { selectedVolume } });
+    await instance.delete(`/cart/${productId}`);
     const res = await instance.get("/cart");
     // console.log('cart delete: ', res.data);
 

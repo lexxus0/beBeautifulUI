@@ -19,7 +19,7 @@ interface ProductProps {
 const Product = ({ product, productId }: ProductProps) => {
   return (
     <>
-      <NavigationPanel category={product.category} name={product.name} />
+      <NavigationPanel category={product.category} name={product.name.en} />
       <section className="container">
         <VisitedProduct productId={productId} />
         <div className={css.productContainer}>

@@ -1,4 +1,17 @@
-// Types for reviews API integration
+export interface IReviewInProduct {
+  _id: string;
+  productId?: string;
+  userId?: string;
+  rating: number;
+  comment?: string;
+  likes?: number;
+  dislikes?: number;
+  likedBy?: string[];
+  dislikedBy?: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface IWebReview {
   _id: string;
   name: string;
