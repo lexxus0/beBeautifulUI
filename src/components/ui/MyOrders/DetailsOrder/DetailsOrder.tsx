@@ -69,14 +69,14 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
               >
                 <Image
                   src={item.product.imageUrl}
-                  alt={item.product.description}
+                  alt={item.product.description.ua}
                   width={124}
                   height={172}
                   className="h-[172px] mr-[14px] md:hidden"
                 />
                 <Image
                   src={item.product.imageUrl}
-                  alt={item.product.description}
+                  alt={item.product.description.ua}
                   width={86}
                   height={80}
                   className="hidden md:block md:mr-10"

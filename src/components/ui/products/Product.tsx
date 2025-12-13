@@ -10,6 +10,7 @@ import ProductReviews from "@/components/ui/ProductReviews/ProductReviews";
 import NavigationPanel from "@/components/ui/NavigationPanel/NavigationPanel";
 import { IProduct } from "@/types/types";
 import css from "./page.module.scss";
+// import { mockProduct } from "./mockProduct";
 
 interface ProductProps {
   product: IProduct;
@@ -25,6 +26,7 @@ const Product = ({ product, productId }: ProductProps) => {
         <div className={css.productContainer}>
           <div className={css.header}>
             <ProductHeader product={product} />
+            {/* <ProductHeader product={mockProduct.outOfStockProduct} /> */}
           </div>
           <div className={css.gallery}>
             <ProductGallery product={product} />
@@ -34,6 +36,8 @@ const Product = ({ product, productId }: ProductProps) => {
           </div>
           <div className={css.actions}>
             <ProductActions product={product} />
+            {/* <ProductActions product={mockProduct.outOfStockProduct} /> */}
+            {/* <ProductActions product={mockProduct.missing500ml} /> */}
           </div>
         </div>
 
@@ -41,10 +45,7 @@ const Product = ({ product, productId }: ProductProps) => {
           <BrandPhilosophy dynamicText="Цей шампунь — як свіже «доброго ранку» собі. І як щоденне нагадування: ти — варта найкращого." />
         </div>
 
-        <ProductReviews
-          productId={productId}
-          productName={product.name.en}
-        />
+        <ProductReviews productId={productId} productName={product.name.en} />
       </section>
     </>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { IProduct } from "@/types/types";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import css from "@/components/ui/ProductActions/ProductActions.module.scss";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -11,8 +11,6 @@ import { addCartItem } from "@/store/cart/operations";
 import { BaseModal } from "@/components/shared/Modal";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import BaseSelect from "@/components/elements/BaseSelect";
-import { getFormattedVolume } from "@/helpers/getFormattedVolume";
 import Icon from "@/components/shared/Icon";
 
 export interface ProductActionsProps {
@@ -23,17 +21,34 @@ const ProductActions = ({ product }: ProductActionsProps) => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
-  const [selectedVolume, setSelectedVolume] = useState<number>(
-    product.priceByVolume[0]?.volume
+  const availableVolumes = product.priceByVolume.filter(
+    (v) => v.stockQuantity > 0
   );
-  const [quantity, setQuantity] = useState<number>(1);
+
+  const isOutOfStock =
+    product.inStock === false || availableVolumes.length === 0;
+
+  const [selectedVolume, setSelectedVolume] = useState(
+    availableVolumes[0] ?? product.priceByVolume[0]
+  );
+
+  const [quantity, setQuantity] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const isSelectedVolumeOut =
+    !selectedVolume || selectedVolume.stockQuantity === 0;
+
+  useEffect(() => {
+    if (!isOutOfStock && isSelectedVolumeOut && availableVolumes.length > 0) {
+      setSelectedVolume(availableVolumes[0]);
+    }
+  }, [isSelectedVolumeOut, availableVolumes, isOutOfStock]);
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if (!selectedVolume) {
-      toast.error("Будь ласка, оберіть обʼєм перед додаванням у кошик.");
+    if (isOutOfStock || isSelectedVolumeOut) {
+      toast.error("Товар відсутній");
       return;
     }
 
@@ -41,14 +56,13 @@ const ProductActions = ({ product }: ProductActionsProps) => {
       dispatch(
         addToGuestCart({
           product,
-          selectedVolume,
+          selectedVolume: selectedVolume.volume,
           quantity,
         })
       );
 
       setIsModalOpen(true);
       setTimeout(() => setIsModalOpen(false), 1500);
-
       return;
     }
 
@@ -56,7 +70,7 @@ const ProductActions = ({ product }: ProductActionsProps) => {
       await dispatch(
         addCartItem({
           productId: product._id,
-          selectedVolume,
+          selectedVolume: selectedVolume.volume,
           quantity,
         })
       ).unwrap();
@@ -68,78 +82,72 @@ const ProductActions = ({ product }: ProductActionsProps) => {
     }
   };
 
-  const price =
-    product.priceByVolume.find((opt) => opt.volume === selectedVolume)?.price ||
-    product.priceByVolume[0].price;
-
-  const quantityOptions = Array.from({ length: 10 }, (_, i) => ({
-    value: String(i + 1),
-    label: String(i + 1),
-  }));
-
   return (
     <div className={css.actionsWrapper}>
       <div className={css.actionsContainer}>
-        <div>
-          <p className={css.label}>Об&apos;єм</p>
-          <div className={css.actionValueButton}>
-            {product.volumeOptions && product.volumeOptions.length !== 0 ? (
-              product.volumeOptions.map((vol) => {
-                const volNum = parseInt(vol);
-                return (
-                  <button
-                    key={vol}
-                    onClick={() => setSelectedVolume(volNum)}
-                    className={`${css.volumeButton} ${
-                      selectedVolume === volNum ? css.active : ""
-                    }`}
-                  >
-                    {getFormattedVolume(vol)}
-                  </button>
-                );
-              })
-            ) : (
-              <button
-                className={`${css.volumeButton} ${css.active}`}
-                onClick={() => setSelectedVolume(product.stockQuantity)}
-              >
-                {product.stockQuantity} мл
-              </button>
-            )}
-          </div>
-        </div>
+        {isOutOfStock ? (
+          <p className={css.noStock}>Немає в наявності</p>
+        ) : (
+          <>
+            <div>
+              <p className={css.label}>Об&apos;єм</p>
+              <div className={css.actionValueButton}>
+                {product.priceByVolume.map((option) => {
+                  const disabled = option.stockQuantity === 0;
 
-        <div className={css.priceQuantityContainer}>
-          <div className={css.priceQuantityItem}>
-            <p className={css.label}>Ціна</p>
-            <div className={css.price}>
-              <p>{price} грн</p>
+                  return (
+                    <button
+                      key={option._id}
+                      disabled={disabled}
+                      onClick={() => setSelectedVolume(option)}
+                      className={`${css.volumeButton}
+                        ${selectedVolume._id === option._id ? css.active : ""}
+                        ${disabled ? css.volumeDisabled : ""}
+                      `}
+                    >
+                      {option.volume}ml
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-          <div className={css.priceQuantityItem}>
-            <p className={css.label}>Кількість</p>
 
-            <BaseSelect
-              options={quantityOptions}
-              value={String(quantity)}
-              onSelect={(val) => setQuantity(Number(val))}
-              placeholder="Оберіть кількість"
-              className={css.selectQuantity}
-              iconRight="icon-arrow-down"
-            />
-          </div>
-        </div>
+            <div className={css.priceQuantityContainer}>
+              <div className={css.priceQuantityItem}>
+                <p className={css.label}>Ціна</p>
+                <div className={css.price}>
+                  <p>{selectedVolume.price} грн</p>
+                </div>
+              </div>
+
+              <div className={css.priceQuantityItem}>
+                <p className={css.label}>Кількість</p>
+                <input
+                  type="number"
+                  min={1}
+                  max={10}
+                  value={quantity}
+                  onChange={(e) => setQuantity(Number(e.target.value))}
+                  className={css.selectQuantity}
+                />
+              </div>
+            </div>
+          </>
+        )}
       </div>
 
       <div className={css.addButtonContainer}>
         <button
-          className={css.addShoppingCartButton}
+          className={`${css.addShoppingCartButton} ${
+            isOutOfStock ? css.addCartBtnDisabled : ""
+          }`}
           type="button"
           onClick={handleAddToCart}
-          aria-label="Додати до кошика"
+          disabled={isOutOfStock}
         >
           Додати до кошика
         </button>
+
         <button
           className={css.addToFavoriteButton}
           type="button"
@@ -151,7 +159,7 @@ const ProductActions = ({ product }: ProductActionsProps) => {
       </div>
 
       {isModalOpen && (
-        <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <BaseModal isOpen onClose={() => setIsModalOpen(false)}>
           <div className="relative w-[150px] h-[150px] object-contain mb-4 mx-auto">
             <Image
               src="/gif/cart.gif"

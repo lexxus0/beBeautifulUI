@@ -39,7 +39,7 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
           </div>
         </button>
         {activeIndex === 0 && (
-          <p className={css.accordionContent}>{product.description}</p>
+          <p className={css.accordionContent}>{product.description.ua}</p>
         )}
       </div>
 
