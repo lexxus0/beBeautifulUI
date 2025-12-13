@@ -31,7 +31,10 @@ export interface IProduct {
   priceByVolume: IPriceByVolume[];
   stockQuantity: number;
   features: string[];
-  description: string;
+  description: {
+    en: string;
+    ua: string;
+  };
   instructions: string;
   activeIngredients: {
     name: {
