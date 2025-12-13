@@ -15,6 +15,10 @@
     top: 10px;
     right: 14px;
 
+    &:hover {
+      transform: scale(1.1);
+    }
+
     .hardIcon {
       width: 24px;
       height: 20px;
@@ -35,10 +39,10 @@
       line-height: 150%;
       margin-bottom: 16px;
       height: 3em;
-        overflow: hidden; 
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
     .productCategory {
       font-weight: 300;
@@ -151,7 +155,7 @@
         font-size: 24px;
         margin-bottom: 16px;
         line-height: 120%;
-            height: calc(1.2em * 2);
+        height: calc(1.2em * 2);
       }
 
       .productCategory {
@@ -255,4 +259,15 @@
       font-size: 20px;
     }
   }
+}
+
+.volumeDisabled {
+  opacity: 0.4;
+  pointer-events: none;
+  text-decoration: line-through;
+}
+
+.addCartBtnDisabled {
+  background: #e0e0e0;
+  pointer-events: none;
 }

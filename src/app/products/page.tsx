@@ -10,6 +10,7 @@ import Filter from "@/components/ui/products/Filter/Filter";
 import Loader from "@/components/ui/Loader/Loader";
 import { categoryNames } from "@/constants/categoryNames";
 import { IProduct } from "@/types/types";
+// import { mockProducts } from "./mockProducts";
 
 export default function ProductsPage() {
   const dispatch = useAppDispatch();
@@ -77,6 +78,7 @@ export default function ProductsPage() {
               {categoryNames[category] || category}
             </h2>
             <ProductsList products={filteredProducts[category]} />
+            {/* <ProductsList products={mockProducts} /> */}
           </div>
         ))}
       </div>

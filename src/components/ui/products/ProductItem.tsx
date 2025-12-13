@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -18,21 +18,41 @@ import styles from "./ProductItem.module.scss";
 
 interface ProductItemProps {
   item: IProduct;
-  // productId: string;
 }
 
 export default function ProductItem({ item }: ProductItemProps) {
-  const [selectedVolume, setSelectedVolume] = useState(item.priceByVolume[0]);
+  const availableVolumes = item.priceByVolume.filter(
+    (v) => v.stockQuantity > 0
+  );
+
+  const [selectedVolume, setSelectedVolume] = useState(
+    availableVolumes[0] ?? item.priceByVolume[0]
+  );
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addedProductName, setAddedProductName] = useState<string | null>(null);
   const [imgError, setImgError] = useState(false);
+
+  /* Товару немає внаявності */
   const isOutOfStock = item.inStock === false;
-  // const isOutOfStock = true;
+
+  /* Відсутній конкретний об'єм */
+  const isSelectedVolumeOut =
+    !selectedVolume || selectedVolume.stockQuantity === 0;
 
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  const favorites = useAppSelector((state) => state.favorites.items);
+  const favorites = useAppSelector(
+    (state): IProduct[] => state.favorites.items
+  );
+
   const isFavorite = favorites.some((fav: IProduct) => fav._id === item._id);
+
+  useEffect(() => {
+    if (isSelectedVolumeOut && availableVolumes.length > 0) {
+      setSelectedVolume(availableVolumes[0]);
+    }
+  }, [isSelectedVolumeOut, availableVolumes]);
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -45,7 +65,9 @@ export default function ProductItem({ item }: ProductItemProps) {
   ) => {
     e.preventDefault();
     const selected = item.priceByVolume.find((v) => v._id === volumeId);
-    if (selected) setSelectedVolume(selected);
+    if (selected && selected.stockQuantity > 0) {
+      setSelectedVolume(selected);
+    }
   };
 
   const getAverageRating = (reviews?: IUIReview[]) => {
@@ -55,7 +77,8 @@ export default function ProductItem({ item }: ProductItemProps) {
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!selectedVolume) return;
+
+    if (isOutOfStock || isSelectedVolumeOut) return;
 
     setAddedProductName(item.name.ua);
 
@@ -72,20 +95,16 @@ export default function ProductItem({ item }: ProductItemProps) {
       return;
     }
 
-    try {
-      await dispatch(
-        addCartItem({
-          productId: item._id,
-          selectedVolume: selectedVolume.volume,
-          quantity: 1,
-        })
-      ).unwrap();
+    await dispatch(
+      addCartItem({
+        productId: item._id,
+        selectedVolume: selectedVolume.volume,
+        quantity: 1,
+      })
+    );
 
-      setIsModalOpen(true);
-      setTimeout(() => setIsModalOpen(false), 1500);
-    } catch (error) {
-      console.error("Не вдалося додати в кошик:", error);
-    }
+    setIsModalOpen(true);
+    setTimeout(() => setIsModalOpen(false), 1500);
   };
 
   const { size, srcPlaceholder } = useResponsiveImage(
@@ -105,39 +124,25 @@ export default function ProductItem({ item }: ProductItemProps) {
           }`}
         >
           <button onClick={handleFavoriteClick} className={styles.hardBtn}>
-            {isFavorite ? (
-              <Icon name="icon-hard" className={styles.hardIcon} />
-            ) : (
-              <Icon name="icon-empty-heart" className={styles.hardIcon} />
-            )}
+            <Icon
+              name={isFavorite ? "icon-hard" : "icon-empty-heart"}
+              className={styles.hardIcon}
+            />
           </button>
 
-          {canRenderImage ? (
-            <Image
-              src={item.imageUrl}
-              alt={item.name.ua}
-              width={size.w}
-              height={size.h}
-              className={styles.image}
-              onError={() => setImgError(true)}
-            />
-          ) : (
-            <Image
-              src={srcPlaceholder}
-              alt={item.name.ua}
-              width={size.w}
-              height={size.h}
-              className={styles.image}
-            />
-          )}
+          <Image
+            src={canRenderImage ? item.imageUrl : srcPlaceholder}
+            alt={item.name.ua}
+            width={size.w}
+            height={size.h}
+            className={styles.image}
+            onError={() => setImgError(true)}
+          />
 
-          <div
-            className={`${styles.description} ${
-              isOutOfStock ? styles.textDisabled : ""
-            }`}
-          >
+          <div className={styles.description}>
             <p className={styles.productName}>{item.name.ua}</p>
             <p className={styles.productCategory}>{item.category}</p>
+
             <div className={styles.reviews}>
               <StarRating size={16} rating={getAverageRating(item.reviews)} />
               <p className={styles.textReviews}>
@@ -149,32 +154,42 @@ export default function ProductItem({ item }: ProductItemProps) {
               <p className={styles.noStock}>Немає в наявності</p>
             ) : (
               <div className={styles.priceVolumeWrap}>
-                <p className={styles.price}>{selectedVolume?.price} грн</p>
+                <p className={styles.price}>{selectedVolume.price} грн</p>
 
                 <div className={styles.volumeWrapper}>
-                  {item.priceByVolume.map((option) => (
-                    <button
-                      key={option._id}
-                      onClick={(e) => handleVolumeClick(e, option._id)}
-                      className={`${styles.volumeButton} ${
-                        selectedVolume._id === option._id
-                          ? styles.volumeButtonActive
-                          : styles.volumeButtonDefault
-                      }`}
-                    >
-                      {option.volume}ml
-                    </button>
-                  ))}
+                  {item.priceByVolume.map((option) => {
+                    const disabled = option.stockQuantity === 0;
+
+                    return (
+                      <button
+                        key={option._id}
+                        disabled={disabled}
+                        onClick={(e) => handleVolumeClick(e, option._id)}
+                        className={`${styles.volumeButton}
+                          ${
+                            selectedVolume._id === option._id
+                              ? styles.volumeButtonActive
+                              : styles.volumeButtonDefault
+                          }
+                          ${disabled ? styles.volumeDisabled : ""}
+                        `}
+                      >
+                        {option.volume}ml
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             )}
           </div>
 
           <button
-            onClick={isOutOfStock ? undefined : handleAddToCart}
-            disabled={isOutOfStock}
+            onClick={handleAddToCart}
+            disabled={isOutOfStock || isSelectedVolumeOut}
             className={`${styles.addCartBtn} ${
-              isOutOfStock ? styles.addCartBtnDisabled : ""
+              isOutOfStock || isSelectedVolumeOut
+                ? styles.addCartBtnDisabled
+                : ""
             }`}
           >
             Додати до кошика
@@ -183,24 +198,8 @@ export default function ProductItem({ item }: ProductItemProps) {
       </Link>
 
       {isModalOpen && (
-        <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <div className="relative w-[150px] h-[150px] mb-4 mx-auto">
-            <Image
-              src="/gif/cart.gif"
-              alt="Товар додано до кошика"
-              fill
-              className="object-contain"
-              unoptimized
-            />
-          </div>
-          {addedProductName && (
-            <p className="font-open-sans text-lg text-gray-600 text-center">
-              <span className="block font-bold text-black">
-                {addedProductName}
-              </span>
-              <span className="block">додано до кошику.</span>
-            </p>
-          )}
+        <BaseModal isOpen onClose={() => setIsModalOpen(false)}>
+          <p>{addedProductName} додано до кошика</p>
         </BaseModal>
       )}
     </>
