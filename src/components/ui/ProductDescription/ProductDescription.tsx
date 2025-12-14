@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import css from "@/components/ui/ProductDescription/ProductDescription.module.css";
 import { IProduct } from "@/types/types";
-import Icon from "@/components/elements/Icons";
+import Icon from "@/components/shared/Icon";
 
 export interface ProductDescriptionProps {
   product: IProduct;
@@ -34,7 +34,6 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
               name="icon-down-arrow"
               width={12}
               height={24}
-              color="#2D2D2D"
             />
           </div>
         </button>
@@ -62,13 +61,13 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
               name="icon-down-arrow"
               width={12}
               height={24}
-              color="#2D2D2D"
             />
           </div>
         </button>
         {activeIndex === 1 && (
           <p className={css.accordionContent}>
-            Це просто додатковий текст або пояснення.
+            {product.description.ua}
+            {/* Це просто додатковий текст або пояснення. */}
           </p>
         )}
       </div>
@@ -92,18 +91,24 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
               name="icon-down-arrow"
               width={12}
               height={24}
-              color="#2D2D2D"
             />
           </div>
         </button>
         {activeIndex === 2 && (
-          <div className={css.accordionContent}>
+          <ul className={css.accordionContent}>
             {product.activeIngredients.length > 0
               ? product.activeIngredients.map((item) => (
-                  <p key={item._id}>ID: {item._id}</p>
+                  <li key={item._id} className="flex gap-1 items-center">
+                    <Icon
+                      name="icon-dot"
+                      width={5}
+                      height={5}
+                    />
+                    <p>{item.name.ua}</p>
+                  </li>
                 ))
               : "Немає активних компонентів"}
-          </div>
+          </ul>
         )}
       </div>
 
@@ -124,7 +129,6 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
               name="icon-down-arrow"
               width={12}
               height={24}
-              color="#2D2D2D"
             />
           </div>
         </button>
@@ -150,7 +154,6 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
               name="icon-down-arrow"
               width={12}
               height={24}
-              color="#2D2D2D"
             />
           </div>
         </button>
@@ -176,7 +179,6 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
               name="icon-down-arrow"
               width={12}
               height={24}
-              color="#2D2D2D"
             />
           </div>
         </button>
@@ -204,7 +206,7 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
               name="icon-down-arrow"
               width={12}
               height={24}
-              color="#2D2D2D"
+              // className="fill-[#2d2d2d]"
             />
           </div>
         </button>
