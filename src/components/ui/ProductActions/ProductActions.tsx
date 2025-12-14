@@ -12,6 +12,7 @@ import { BaseModal } from "@/components/shared/Modal";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import Icon from "@/components/shared/Icon";
+import BaseSelect from "@/components/elements/BaseSelect";
 
 export interface ProductActionsProps {
   product: IProduct;
@@ -82,6 +83,12 @@ const ProductActions = ({ product }: ProductActionsProps) => {
     }
   };
 
+
+  const quantityOptions = Array.from({ length: 10 }, (_, i) => ({
+    value: String(i + 1),
+    label: String(i + 1),
+  }));
+
   return (
     <div className={css.actionsWrapper}>
       <div className={css.actionsContainer}>
@@ -122,14 +129,14 @@ const ProductActions = ({ product }: ProductActionsProps) => {
 
               <div className={css.priceQuantityItem}>
                 <p className={css.label}>Кількість</p>
-                <input
-                  type="number"
-                  min={1}
-                  max={10}
-                  value={quantity}
-                  onChange={(e) => setQuantity(Number(e.target.value))}
-                  className={css.selectQuantity}
-                />
+                <BaseSelect
+              options={quantityOptions}
+              value={String(quantity)}
+              onSelect={(val) => setQuantity(Number(val))}
+              placeholder="Оберіть кількість"
+              className={css.selectQuantity}
+              iconRight="icon-arrow-down"
+            />
               </div>
             </div>
           </>
