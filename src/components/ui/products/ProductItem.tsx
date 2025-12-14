@@ -162,7 +162,7 @@ export default function ProductItem({ item }: ProductItemProps) {
 
                     return (
                       <button
-                        key={option._id}
+                        key={`${option._id}+${option.volume}`}
                         disabled={disabled}
                         onClick={(e) => handleVolumeClick(e, option._id)}
                         className={`${styles.volumeButton}

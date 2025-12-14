@@ -1,6 +1,6 @@
 export default function Certificates() {
   return (
-    <div className="mt-10 container">
+    <div id='certificates' className="container py-5 md:py-10 lg:py-20">
       <h3 className="font-lato font-semibold text-3xl text-center mb-5.5 md:text-[42px] lg:text-[80px]">
         Турбота, яку можна подарувати
       </h3>
@@ -35,7 +35,7 @@ export default function Certificates() {
           <p className="certificate-text">2000</p>
         </div>
       </div>
-      <button className="border block md:hidden   my-10 border-[#2d2d2d] rounded-sm text-lg font-inter w-full h-14">
+      <button className="border block md:hidden   mt-10 border-[#2d2d2d] rounded-sm text-lg font-inter w-full h-14">
         Детальніше
       </button>
     </div>

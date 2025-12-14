@@ -14,7 +14,7 @@ const categories: CategoryData[] = categoriesData.map(item => ({
 
 const Category = () => {
   return (
-    <section className="container">
+    <section className="container relative">
       <div className={styles.category}>
         <div className={styles.header}>
           <h2 className={styles.title}>
@@ -31,6 +31,7 @@ const Category = () => {
           ))}
         </div>
       </div>
+      <div className="w-screen h-px bg-[#e0e0e0] absolute left-1/2 -translate-x-1/2 bottom-0 lg:-bottom-0"></div>
     </section>
   );
 };

@@ -77,18 +77,24 @@
   }
 
   .nav {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 28px;
 
     @media screen and (min-width: 744px) {
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      flex-direction: row;
+      gap: 64px;
     }
 
     @media screen and (min-width: 1440px) {
-      gap: 30px;
+      gap: 107px;
     }
+  }
+
+  .navWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
   }
 
   .navLink {

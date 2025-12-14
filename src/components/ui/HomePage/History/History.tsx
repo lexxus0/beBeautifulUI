@@ -10,7 +10,7 @@ const History: React.FC = () => {
   const paragraphs: string[] = historyData.paragraphs;
 
   return (
-    <section className="container">
+    <section className="container relative">
       <div className={styles.history}>
         <h2>
           Історія, що надихає.
@@ -54,6 +54,7 @@ const History: React.FC = () => {
           </div>
         </div>
       </div>
+      <div className="w-screen h-px bg-[#e0e0e0] absolute left-1/2 -translate-x-1/2 bottom-0 lg:-bottom-0"></div>
     </section>
   );
 };
