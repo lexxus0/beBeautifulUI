@@ -2,19 +2,39 @@ import Logo from "@/components/shared/Logo";
 import styles from "./Footer.module.scss";
 import Link from "next/link";
 import Icon from "@/components/shared/Icon";
+import { useCallback } from "react";
+import { useRouter } from "next/navigation";
 
 const navData = [
-  ["Про бренд", "/about"],
-  ["Каталог", "/products"],
-  ["Блог", "/blog"],
-  ["Книга", "/book"],
-  ["Оплата і доставка", "/pay-and-delivery"],
-  ["Подарункові сертифікати", "/certificates"],
-  ["FAQ", "/faq"],
-  ["Контакти", "/contacts"],
+  { href: "/#history", label: "Про бренд" },
+  { href: "/products", label: "Каталог" },
+  { href: "/blog", label: "Блог" },
+  // {href: "/book", label: "Книга" },
+  { href: "/pay-and-delivery", label: "Оплата і доставка" },
+  { href: "/#certificates", label: "Подарункові сертифікати" },
+  { href: "/#faq", label: "FAQ" },
+  { href: "/contacts", label: "Контакти" },
 ];
 
+const firstColumn = navData.slice(0, 3);
+const secondColumn = navData.slice(3);
+
 const Footer: React.FC = () => {
+  const router = useRouter();
+
+  const handleLinkClick = useCallback(
+    (href: string) => {
+      if (href.startsWith("/#")) {
+        const id = href.split("#")[1];
+        sessionStorage.setItem("scrollTo", id);
+        router.push("/");
+      } else {
+        router.push(href);
+      }
+    },
+    [router]
+  );
+
   return (
     <footer id="footer" className={styles.footer}>
       <div className="container">
@@ -26,11 +46,30 @@ const Footer: React.FC = () => {
               </Link>
 
               <nav className={styles.nav}>
-                {navData.map(([label, href]) => (
-                  <Link key={href} href={href} className={styles.navLink}>
-                    {label}
-                  </Link>
-                ))}
+                <div className={styles.navWrap}>
+                  {firstColumn.map(({ label, href }) => (
+                    <Link
+                      key={href}
+                      href={href}
+                      className={styles.navLink}
+                      onClick={() => handleLinkClick(href)}
+                    >
+                      {label}
+                    </Link>
+                  ))}
+                </div>
+                <div className={styles.navWrap}>
+                  {secondColumn.map(({ label, href }) => (
+                    <Link
+                      key={href}
+                      href={href}
+                      className={styles.navLink}
+                      onClick={() => handleLinkClick(href)}
+                    >
+                      {label}
+                    </Link>
+                  ))}
+                </div>
               </nav>
             </div>
             <div className={styles.socialWrap}>
