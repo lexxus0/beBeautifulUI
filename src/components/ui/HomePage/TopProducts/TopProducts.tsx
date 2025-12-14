@@ -75,7 +75,7 @@ const TopProducts: React.FC = () => {
   );
 
   return (
-    <section className="container">
+    <section className="container relative">
       <div className={styles.topProducts}>
         <div className={styles.header}>
           <h2>Топ-товари</h2>
@@ -114,12 +114,15 @@ const TopProducts: React.FC = () => {
           </div>
           {addedProductName && (
             <p className="font-open-sans text-lg text-gray-600 text-center">
-              <span className="block font-bold text-black">{addedProductName}</span>{" "}
+              <span className="block font-bold text-black">
+                {addedProductName}
+              </span>{" "}
               <span className="block">додано до кошику.</span>
             </p>
           )}
         </BaseModal>
       )}
+      <div className="w-screen h-px bg-[#e0e0e0] absolute left-1/2 -translate-x-1/2 bottom-0 lg:-bottom-0"></div>
     </section>
   );
 };

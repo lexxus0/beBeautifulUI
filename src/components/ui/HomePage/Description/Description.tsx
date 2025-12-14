@@ -2,7 +2,7 @@ import styles from "./Description.module.scss";
 
 const Description: React.FC = () => {
   return (
-    <section className="container" id="history">
+    <section className="container relative" id="history">
       <div className={styles.description}>
         <div className={styles.top}>
           <h3>
@@ -33,6 +33,7 @@ const Description: React.FC = () => {
           </p>
         </div>
       </div>
+      <div className="w-screen h-px bg-[#e0e0e0] absolute left-1/2 -translate-x-1/2 bottom-0 lg:-bottom-0"></div>
     </section>
   );
 };

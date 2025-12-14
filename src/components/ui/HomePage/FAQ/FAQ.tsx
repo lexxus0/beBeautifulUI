@@ -12,7 +12,7 @@ const FAQ = () => {
   };
 
   return (
-    <div id="faq" className="container py-5 md:py-10 lg:py-20">
+    <div id="faq" className="container py-5 md:py-10 lg:py-20 relative">
       <h2 className="font-lato font-semibold text-3xl text-center text-[#333] mb-8 md:text-5xl md:uppercase md:mt-10">
         Часті запитання
       </h2>
@@ -26,7 +26,6 @@ const FAQ = () => {
             className="border-b border-[#2d2d2d] mb-4 pb-2 cursor-pointer"
             onClick={() => toggleAccordion(index)}
           >
-
             <div className="flex items-center gap-6 w-full">
               <span className="font-lato font-semibold text-3xl text-[#2d2d2d] md:text-4xl">
                 {item.num}
@@ -46,11 +45,14 @@ const FAQ = () => {
               <div
                 className={`
                   ml-auto transition-transform duration-500 
-                  ${isActive ? "rotate-[90deg] scale-[1.1]" : "rotate-0 scale-100"}
+                  ${
+                    isActive
+                      ? "rotate-[90deg] scale-[1.1]"
+                      : "rotate-0 scale-100"
+                  }
                 `}
                 style={{
-                  transitionTimingFunction:
-                    "cubic-bezier(0.34, 1.56, 0.64, 1)",
+                  transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)",
                 }}
               >
                 <Icon name="icon-long-right-arrow" className="w-8 h-8" />
@@ -61,9 +63,10 @@ const FAQ = () => {
               className={`
                 text-[#666] overflow-hidden transition-all duration-500
                 ease-[cubic-bezier(.4,0,.2,1)]
-                ${isActive 
-                  ? "max-h-[500px] opacity-100 translate-y-0" 
-                  : "max-h-0 opacity-0 -translate-y-2"
+                ${
+                  isActive
+                    ? "max-h-[500px] opacity-100 translate-y-0"
+                    : "max-h-0 opacity-0 -translate-y-2"
                 }
 
                 /* typography mobile */
@@ -84,8 +87,9 @@ const FAQ = () => {
           </div>
         );
       })}
+      <div className="w-screen h-px bg-[#e0e0e0] absolute left-1/2 -translate-x-1/2 bottom-0 lg:-bottom-0"></div>
     </div>
   );
-}
+};
 
 export default FAQ;
