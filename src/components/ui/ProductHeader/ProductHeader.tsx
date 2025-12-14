@@ -39,7 +39,7 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
     <div className={css.headercontainer}>
       <div className={css.categoryContainer}>
         <h3 className={css.name}>{product.name.en}</h3>
-        <div className={css.rate}>
+        {/* <div className={css.rate}>
           <div className={css.inStockContainer}>
             <div
               className={`w-2 h-2 rounded-full ${
@@ -50,7 +50,7 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
               {product.inStock ? "У наявності" : "Немає в наявності"}
             </p>
           </div>
-        </div>
+        </div> */}
         {isTablet && (
           <div className={css.stars}>
             <ProductRating
