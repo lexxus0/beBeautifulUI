@@ -19,7 +19,7 @@ const NavigationPanel: React.FC<NavigationPanelProps> = ({
     router.push(path);
   };
 
-  const firstWord = name.split(" ")[0];
+  const firstWord = name?.split(" ")[0];
 
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 

@@ -85,11 +85,11 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
                   <div className="flex flex-col gap-2">
                     <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-6">
                       <p className="font-lato font-bold text-black text-lg">
-                        {item.product.name.en}
+                        {item.product.name?.ua}
                       </p>
                       <div className="flex gap-2">
                         <p className="font-light text-sm md:text-lg">
-                          {item.product.name.ua}
+                          {item.product.name?.ua}
                         </p>
                         <p className="font-light text-sm md:text-lg">
                           {item.selectedVolume}
@@ -97,10 +97,10 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
                       </div>
                     </div>
                     <p className="font-light text-xs md:text-lg">
-                      {item.product.features.map((feature, index) => (
+                      {item.product.features.ua.map((feature, index) => (
                         <span key={index}>
                           {feature}
-                          {index < item.product.features.length - 1 && (
+                          {index < item.product.features.ua.length - 1 && (
                             <span className="mx-1 text-black">|</span>
                           )}
                         </span>

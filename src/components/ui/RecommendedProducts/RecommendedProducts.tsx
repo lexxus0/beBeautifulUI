@@ -4,24 +4,32 @@ import ProductItem from "@/components/ui/products/ProductItem";
 import styles from "./RecommendedProducts.module.scss";
 import { IProduct } from "@/types/types";
 import { useEffect } from "react";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchProducts } from "@/store/products/operations";
-import { useSelector } from "react-redux";
-import { selectProducts } from "@/store/products/selectors";
+import { selectProductsById, selectProductsList } from "@/store/products/selectors";
+// import { useSelector } from "react-redux";
+// import { selectProducts } from "@/store/products/selectors";
 
 const RecommendedProducts = () => {
   const dispatch = useAppDispatch();
-  const products = useSelector(selectProducts);
+  // const products = useSelector(selectProducts);
+  const productsById = useAppSelector(selectProductsById);
+  const productsList = useAppSelector(selectProductsList);
 
   useEffect(() => {
-    dispatch(fetchProducts({ limit: 3, currentPage: 1, category: "Hair" }));
+    dispatch(fetchProducts({ limit: 3, currentPage: 1, category: "hair" }));
   }, [dispatch]);
+
+  const recommended = productsList
+  .map((id: string) => productsById[id])
+  .filter(Boolean)
+  .slice(0, 3);
 
   return (
     <section className={styles.recommended}>
       <h2 className={styles.title}>Рекомендовані товари</h2>
       <div className={styles.grid}>
-        {products.slice(0, 3).map((product: IProduct) => (
+        {recommended.map((product: IProduct) => (
           <ProductItem
             key={product._id}
             item={product}

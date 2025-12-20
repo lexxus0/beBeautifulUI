@@ -9,8 +9,8 @@ export interface IState {
 export interface IPagination {
   total: number;
   page: number;
-  perPage: number;
-  totalPages: number;
+  perPage?: number;
+  totalPages?: number;
 }
 
 export interface IPriceByVolume {
@@ -23,22 +23,30 @@ export interface IPriceByVolume {
 export interface IProduct {
   _id: string;
   name: {
-    en: string;
+    en?: string;
     ua: string;
   };
   sku: string;
-  volumeOptions: string[];
+  volumeOptions: string[];          //number[]
   priceByVolume: IPriceByVolume[];
   stockQuantity: number;
-  features: string[];
+  // features: string[];
+  features: {
+    en?: string[];
+    ua: string[];
+  };
   description: {
-    en: string;
+    en?: string;
     ua: string;
   };
-  instructions: string;
+  // instructions: string;
+  instructions: {
+    en?: string;
+    ua: string;
+  };
   activeIngredients: {
     name: {
-      en: string;
+      en?: string;
       ua: string;
     };
     _id: string;
@@ -55,7 +63,8 @@ export interface IProduct {
 }
 
 export interface IProductResponse {
-  data: IProduct[];
+  productsById: Record<string, IProduct>;
+  productsListIds: string[];
   pagination: IPagination;
 }
 

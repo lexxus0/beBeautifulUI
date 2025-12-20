@@ -110,7 +110,7 @@ export default function ProductItem({ item }: ProductItemProps) {
   const { size, srcPlaceholder } = useResponsiveImage(
     { w: 158, h: 158 },
     { w: 242, h: 306 },
-    { w: 196, h: 156 }
+    { w: 242, h: 306 }
   );
 
   const canRenderImage = !!item.imageUrl && !imgError;
@@ -132,15 +132,16 @@ export default function ProductItem({ item }: ProductItemProps) {
 
           <Image
             src={canRenderImage ? item.imageUrl : srcPlaceholder}
-            alt={item.name.ua}
+            alt={item.name?.ua || "Product"}
             width={size.w}
             height={size.h}
+            loading="eager"
             className={styles.image}
             onError={() => setImgError(true)}
           />
 
           <div className={styles.description}>
-            <p className={styles.productName}>{item.name.ua}</p>
+            <p className={styles.productName}>{item.name?.ua}</p>
             <p className={styles.productCategory}>{item.category}</p>
 
             <div className={styles.reviews}>

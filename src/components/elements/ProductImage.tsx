@@ -27,7 +27,7 @@ export default function ProductImage({ product, className }: ProductImageProps) 
     <div className={className}>
       <Image
         src={imgSrc || fallbackSrc}
-        alt={product.name.en}
+        alt={product.name?.ua || "product"}
         fill
         className="object-cover"
         onError={() => setImgSrc(fallbackSrc)}

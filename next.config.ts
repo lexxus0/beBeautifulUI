@@ -50,6 +50,14 @@ const nextConfig: NextConfig = {
         port: "3001",
         pathname: "/uploads/**",
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'res.cloudinary.com',
+      },
     ],
   },
 };

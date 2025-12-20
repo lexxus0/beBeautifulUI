@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { IProduct } from "@/types/types";
 import ProductImage from "@/components/elements/ProductImage";
 import ProductRating from "@/components/ui/ProductRating/ProductRating";
@@ -18,7 +17,7 @@ export const RecentlyViewedItem = ({ product }: { product: IProduct }) => {
       <div className="flex flex-col items-center">
         <div className="h-18 mb-2 md:mb-7 flex flex-col gap-[2px] items-center">
           <p className="font-lato font-bold text-lg lg:font-semibold lg:text-2xl text-center text-black">
-            {product.name.en}
+            {product.name?.ua}
           </p>
           <p className="font-roboto font-light text-sm lg:text-lg text-black">
             {product.category}

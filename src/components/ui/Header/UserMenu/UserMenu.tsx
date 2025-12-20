@@ -47,11 +47,13 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
   return (
     <div className={styles.wrapper} ref={wrapperRef}>
       <div className="flex gap-[13px] items-center">
-        {user.avatarUrl ? (
+        {user.photo ? (
           <Image
-            src={user.avatarUrl}
-            alt={user.name}
-            fill
+            src={user.photo}
+            alt={user.first_name || "User"}
+            width={48}
+            height={48}
+            unoptimized
             className="w-12 h-12 rounded-lg lg:w-10 lg:h-10 object-cover"
           />
         ) : (
@@ -61,8 +63,8 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
           >
             <span>
               {" "}
-              {(user?.name
-                ? user.name[0]
+              {(user?.first_name
+                ? user.first_name[0]
                 : user?.email
                 ? user.email[0]
                 : "U"
@@ -73,8 +75,8 @@ export default function UserMenu({ onCloseMobileModal }: UserMenuProps) {
 
         {user ? (
           <p className={styles.text}>
-            {user.name
-              ? user.name.charAt(0).toUpperCase() + user.name.slice(1)
+            {user.first_name
+              ? user.first_name.charAt(0).toUpperCase() + user.first_name.slice(1)
               : user.email
               ? user.email.split("@")[0].charAt(0).toUpperCase() +
                 user.email.split("@")[0].slice(1)
