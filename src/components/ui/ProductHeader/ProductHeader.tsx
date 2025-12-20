@@ -38,7 +38,7 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
   return (
     <div className={css.headercontainer}>
       <div className={css.categoryContainer}>
-        <h3 className={css.name}>{product.name.en}</h3>
+        <h3 className={css.name}>{product.name?.ua}</h3>
         {/* <div className={css.rate}>
           <div className={css.inStockContainer}>
             <div
@@ -63,8 +63,8 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
         )}
 
         <p className={css.features}>
-          {product.features && product.features.length > 0
-            ? product.features.join(" | ")
+          {product.features && product.features.ua.length > 0
+            ? product.features.ua.join(" | ")
             : ""}
         </p>
       </div>

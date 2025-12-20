@@ -63,7 +63,7 @@ const BasketItem = ({
           <Image
             // className={styles.img}
             src={item.product.imageUrl}
-            alt={item.product.name.en}
+            alt={item.product.name?.ua}
             width={size.w}
             height={size.h}
             onError={() => setImgError(true)}
@@ -72,13 +72,13 @@ const BasketItem = ({
           <Image
             // className={styles.img}
             src={srcPlaceholder}
-            alt={item.product.name.en}
+            alt={item.product.name?.ua}
             width={size.w}
             height={size.h}
           />
         )}
         <div className={styles.info}>
-          <p className={styles.titleEn}>{item.product.name.en}</p>
+          <p className={styles.titleEn}>{item.product.name?.ua}</p>
           <p className={styles.titleUk}>
             {/* {item.product.name.ua} */}
             {item.product.category.charAt(0).toUpperCase() +

@@ -40,7 +40,7 @@ const BasketPage = () => {
   }, [isLoggedIn, dispatch]);
 
   const showRemoveModal = (item: ICartItem) => {
-    setRemovedProductName(item.product.name.en);
+    setRemovedProductName(item.product.name?.ua);
     setIsModalOpen(true);
     setTimeout(() => setIsModalOpen(false), 1500);
   };

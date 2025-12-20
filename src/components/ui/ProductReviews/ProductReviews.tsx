@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, memo, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchProductReviews } from "@/store/reviews/operations";
 import {
-  selectProductReviews,
+  makeSelectProductReviews,
   selectReviewsLoading,
 } from "@/store/reviews/selectors";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
@@ -30,9 +30,13 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
   const hasMounted = useHasMounted();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
-  const reviews = useAppSelector((state) =>
-    selectProductReviews(state, productId)
+  const selectReviewsByProduct = useMemo(
+    () => makeSelectProductReviews(productId),
+    [productId]
   );
+  
+  const reviews = useAppSelector(selectReviewsByProduct);
+  console.log('reviews: ', reviews);
   const currentUserId = useAppSelector((s) => s.auth.user?._id);
 
   const isLoading = useAppSelector(selectReviewsLoading);

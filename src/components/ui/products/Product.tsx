@@ -18,9 +18,10 @@ interface ProductProps {
 }
 
 const Product = ({ product, productId }: ProductProps) => {
+  console.log('product: ', product);
   return (
     <>
-      <NavigationPanel category={product.category} name={product.name.en} />
+      <NavigationPanel category={product.category} name={product.name?.ua} />
       <section className="container">
         <VisitedProduct productId={productId} />
         <div className={css.productContainer}>
@@ -45,7 +46,7 @@ const Product = ({ product, productId }: ProductProps) => {
           <BrandPhilosophy dynamicText="Цей шампунь — як свіже «доброго ранку» собі. І як щоденне нагадування: ти — варта найкращого." />
         </div>
 
-        <ProductReviews productId={productId} productName={product.name.en} />
+        <ProductReviews productId={productId} productName={product.name?.ua} />
       </section>
     </>
   );

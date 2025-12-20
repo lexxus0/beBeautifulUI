@@ -75,7 +75,7 @@ const ProductGallery = ({ product }: ProductGalleryProps) => {
         {canRenderImage ? (
           <Image
             src={product.imageUrl}
-            alt={product.name.en}
+            alt={product.name?.ua}
             width={imageWidth}
             height={imageHeight}
             className={css.productImage}
@@ -85,7 +85,7 @@ const ProductGallery = ({ product }: ProductGalleryProps) => {
         ) : (
           <Image
             src={imagePlaceholder}
-            alt={product.name.en}
+            alt={product.name?.ua}
             width={imageWidth}
             height={imageHeight}
             className={css.productImage}
