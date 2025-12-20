@@ -1,7 +1,6 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { selectUser } from "@/store/auth/selectors";
-// import Image from "next/image";
 import { signoutUser } from "@/store/auth/operations";
 import ProfileForm from "./ProfileForm/ProfileForm";
 import Icon from "@/components/shared/Icon";
@@ -11,6 +10,7 @@ export default function UserCabinet() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const user = useAppSelector(selectUser);
+  // console.log('user: ', user);
 
   const handleLogout = async () => {
     try {

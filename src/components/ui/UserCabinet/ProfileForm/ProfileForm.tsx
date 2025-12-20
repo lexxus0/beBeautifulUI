@@ -40,7 +40,6 @@ export const toU = <T,>(v: T | null | undefined): T | undefined =>
   v == null ? undefined : v;
 
 export default function ProfileForm({ user }: ProfileFormProp) {
-  // console.log('user: ', user);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -67,9 +66,6 @@ export default function ProfileForm({ user }: ProfileFormProp) {
 
   const avatarFile = watch("photo");
 
-  // src для відображення аватара:
-  // 1) якщо вибрано новий файл — blob URL
-  // 2) інакше — user.photo (який вже нормалізований у thunks)
   const previewSrc = useMemo(() => {
     if (avatarFile instanceof File) {
       return URL.createObjectURL(avatarFile);
@@ -81,7 +77,6 @@ export default function ProfileForm({ user }: ProfileFormProp) {
     return null;
   }, [avatarFile, user.photo]);
 
-  // 3) при зміні файлу/унмаунті — прибираємо тимчасовий URL
   useEffect(() => {
     if (avatarFile instanceof File) {
       const url = previewSrc!;
@@ -91,7 +86,6 @@ export default function ProfileForm({ user }: ProfileFormProp) {
     }
   }, [avatarFile, previewSrc]);
 
-  // чистимо blob URL коли він більше не потрібен
   useEffect(() => {
     if (!previewSrc || !previewSrc.startsWith("blob:")) return;
 
@@ -100,12 +94,6 @@ export default function ProfileForm({ user }: ProfileFormProp) {
     };
   }, [previewSrc]);
 
-  // const isRenderableImageSrc = (src?: string | null) => {
-  //   if (!src) return false;
-  //   return src.startsWith("http://") || src.startsWith("https://") || src.startsWith("blob:") || src.startsWith("/");
-  // };
-
-  // const canRenderImage = isRenderableImageSrc(previewSrc);
   const canRenderImage = !!previewSrc && !imageError;
 
   const onSubmit = (data: ProfileFormInputs) => {
@@ -141,17 +129,6 @@ export default function ProfileForm({ user }: ProfileFormProp) {
       <div className="w-45 mx-auto mb-12 md:mb-[50px] lg:w-[306px] lg:flex gap-[134px] items-center lg:mb-0 relative">
         <div className="relative w-45 h-45 lg:w-[306px] lg:h-[306px] shrink-0">
           {canRenderImage ? (
-            // Якщо це blob: можна безпечно показати <img>, Next/Image інколи вередує з blob:
-            // previewSrc.startsWith("blob:") ? (
-            //   <Image
-            //     src={previewSrc}
-            //     alt="Avatar preview"
-            //     fill
-            //     className="w-45 h-45 rounded-lg lg:w-[306px] lg:h-[306px] object-cover mx-auto"
-            //     onError={() => setImageError(true)}
-            //   />
-            // ) : (
-            // {user.avatarUrl ? (
             <Image
               src={previewSrc as string}
               alt={user.first_name || "User"}
@@ -161,7 +138,6 @@ export default function ProfileForm({ user }: ProfileFormProp) {
               onError={() => setImageError(true)}
             />
           ) : (
-            // )
             <span
               className="w-45 h-45 lg:w-[306px] lg:h-[306px] rounded-lg border-1 border-black-10 bg-gray-10
           text-7xl font-medium text-white-30 flex items-center justify-center mx-auto lg:mx-0"
