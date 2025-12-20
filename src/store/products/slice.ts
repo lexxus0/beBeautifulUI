@@ -8,10 +8,10 @@ import {
 import { IProduct, IProductResponse } from "@/types/types";
 
 interface ProductState {
-  products: IProduct[];
-  productDetails: IProduct | null;
-  productsByCategory: Record<string, IProduct[]>;
-  recentlyViewed: IProduct[];
+  productsListIds: string[];
+  productsById: Record<string, IProduct>;
+  productsByCategoryIds: Record<string, string[]>;
+  recentlyViewedIds: string[];
   totalItems: number | null;
   limit: number | null;
   totalPages: number | null;
@@ -23,10 +23,10 @@ interface ProductState {
 }
 
 const initialState: ProductState = {
-  products: [],
-  productDetails: null,
-  productsByCategory: {},
-  recentlyViewed: [],
+  productsListIds: [],
+  productsById: {},
+  productsByCategoryIds: {},
+  recentlyViewedIds: [],
   totalItems: null,
   limit: null,
   totalPages: null,
@@ -50,11 +50,15 @@ const productSlice = createSlice({
         fetchProducts.fulfilled,
         (state, action: PayloadAction<IProductResponse>) => {
           state.isLoadingProduct = false;
-          state.products = action.payload.data;
+
+          // зберігаємо всі товари в глобальний кеш
+          Object.assign(state.productsById, action.payload.productsById);
+
+          state.productsListIds = action.payload.productsListIds;
           state.totalItems = action.payload?.pagination.total ?? 0;
-          state.limit = action.payload?.pagination.perPage;
-          state.totalPages = action.payload?.pagination.totalPages;
-          state.currentPage = action.payload?.pagination.page;
+          state.limit = action.payload?.pagination.perPage ?? null;
+          state.totalPages = action.payload?.pagination.totalPages ?? null;
+          state.currentPage = action.payload?.pagination.page ?? 1;
         }
       )
       .addCase(fetchProducts.rejected, (state, action) => {
@@ -69,10 +73,8 @@ const productSlice = createSlice({
       .addCase(fetchProductById.fulfilled, (state, action) => {
         state.isLoadingProduct = false;
 
-        if (state.productDetails?._id === action.payload._id) {
-          return;
-        }
-        state.productDetails = action.payload;
+        const { product, productId } = action.payload;
+        state.productsById[productId] = product;
       })
 
       .addCase(fetchProductById.rejected, (state, action) => {
@@ -85,7 +87,10 @@ const productSlice = createSlice({
       })
       .addCase(fetchProductsByIds.fulfilled, (state, action) => {
         state.isLoadingRecently = false;
-        state.recentlyViewed = action.payload;
+
+        Object.assign(state.productsById, action.payload.productsById);
+
+        state.recentlyViewedIds = action.payload.recentlyViewedIds;
       })
       .addCase(fetchProductsByIds.rejected, (state, action) => {
         state.isLoadingRecently = false;
@@ -99,10 +104,16 @@ const productSlice = createSlice({
         fetchProductsHome.fulfilled,
         (
           state,
-          action: PayloadAction<{ data: Record<string, IProduct[]> }>
+          action: PayloadAction<{
+            productsById: Record<string, IProduct>;
+            productsByCategoryIds: Record<string, string[]>;
+          }>
         ) => {
           state.isLoadingHome = false;
-          state.productsByCategory = action.payload.data;
+
+          Object.assign(state.productsById, action.payload.productsById);
+
+          state.productsByCategoryIds = action.payload.productsByCategoryIds;
         }
       )
       .addCase(fetchProductsHome.rejected, (state, action) => {
