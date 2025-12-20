@@ -9,6 +9,19 @@ export const selectProductReviews = (state: RootState, productId: string) =>
   state.reviews.productReviews[productId] || [];
 
 //  MEMOIZED selectors (фабрики)
+
+export const makeSelectWebReviews = () =>
+  createSelector(
+    [(state: RootState) => state.reviews.webReviews],
+    (list) => list
+  );
+
+export const makeSelectProductReviews = (productId: string) =>
+  createSelector(
+    [(state: RootState) => state.reviews.productReviews],
+    (reviewsById) => reviewsById?.[productId] ?? []
+  );
+
 /** Universal "any reviews" selector — returns product or web reviews */
 export const makeSelectAnyReviews = () =>
   createSelector(

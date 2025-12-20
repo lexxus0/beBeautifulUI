@@ -106,7 +106,6 @@ const reviewsSlice = createSlice({
             productId
           ].filter((r) => r._id !== id);
         });
-        // state.reviews = state.reviews.filter(r => r._id !== action.payload.id);
         state.error = null;
       })
       .addCase(deleteReview.rejected, handleRejected);
