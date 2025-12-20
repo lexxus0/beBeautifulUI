@@ -9,16 +9,18 @@ import BackButton from "@/components/ui/BackButton/BackButton";
 import Filter from "@/components/ui/products/Filter/Filter";
 import Loader from "@/components/ui/Loader/Loader";
 import { categoryNames } from "@/constants/categoryNames";
-import { IProduct } from "@/types/types";
+import { IPriceByVolume, IProduct } from "@/types/types";
+import { selectIsLoadingHome, selectProductsByCategoryIds, selectProductsById } from "@/store/products/selectors";
 // import { mockProducts } from "./mockProducts";
 
 export default function ProductsPage() {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
 
-  const { productsByCategory, isLoadingHome } = useAppSelector(
-    (state) => state.products
-  );
+  const productsById = useAppSelector(selectProductsById);
+  const productsByCategoryIds = useAppSelector(selectProductsByCategoryIds);
+  const isLoadingHome = useAppSelector(selectIsLoadingHome);
+
 
   useEffect(() => {
     dispatch(fetchProductsHome());
@@ -31,9 +33,13 @@ export default function ProductsPage() {
   const filteredProducts = useMemo(() => {
     const result: Record<string, IProduct[]> = {};
 
-    Object.entries(productsByCategory as Record<string, IProduct[]>).forEach(
-      ([category, products]) => {
-        let filtered = [...products];
+    if (!productsByCategoryIds) return result;
+
+    Object.entries(productsByCategoryIds as Record<string, string[]>).forEach(
+      ([category, ids]) => {
+        let filtered = ids
+        .map((id) => productsById[id])
+        .filter(Boolean); // convert ids to products
 
         if (selectedCategory && category !== selectedCategory) return;
 
@@ -46,7 +52,7 @@ export default function ProductsPage() {
         if (selectedVolume) {
           const volumeNum = Number(selectedVolume.replace(/[^\d]/g, ""));
           filtered = filtered.filter((p) =>
-            p.priceByVolume.some((v) => v.volume === volumeNum)
+            p.priceByVolume.some((v: IPriceByVolume) => v.volume === volumeNum)
           );
         }
 
@@ -57,7 +63,9 @@ export default function ProductsPage() {
     );
 
     return result;
-  }, [productsByCategory, selectedCategory, selectedVolume, keyword]);
+  }, [productsByCategoryIds, productsById, selectedCategory, selectedVolume, keyword]);
+  console.log('filteredProducts: ', filteredProducts);
+
 
   if (isLoadingHome) return <Loader />;
 
