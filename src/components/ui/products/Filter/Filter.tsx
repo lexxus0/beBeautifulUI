@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 import CustomSelect from "@/components/ui/CustomSelect/CustomSelect";
@@ -27,11 +27,13 @@ export default function Filter() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<
-    string | undefined
-  >();
-  const [selectedVolume, setSelectedVolume] = useState<string | undefined>();
+  const [searchTerm, setSearchTerm] = useState(searchParams.get("keyword") || "");
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
+    searchParams.get("category") || undefined
+  );
+  const [selectedVolume, setSelectedVolume] = useState<string | undefined>(
+    searchParams.get("volume") || undefined
+  );
 
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [isVolumeMenuOpen, setIsVolumeMenuOpen] = useState(false);
@@ -50,15 +52,31 @@ export default function Filter() {
     left: 0,
   });
 
-  useEffect(() => {
-    const category = searchParams.get("category") || undefined;
-    const volume = searchParams.get("volume") || undefined;
-    const keyword = searchParams.get("keyword") || "";
+  const updateQuery = useCallback((category?: string, volume?: string, keyword?: string) => {
+    const params = new URLSearchParams();
+    if (category) params.set("category", category);
+    if (volume) params.set("volume", volume);
+    if (keyword?.trim()) params.set("keyword", keyword.trim());
 
-    setSelectedCategory(category);
-    setSelectedVolume(volume);
-    setSearchTerm(keyword);
+    router.push(`/products?${params.toString()}`);
+  }, [router]);
+
+ useEffect(() => {
+    setSelectedCategory(searchParams.get("category") || undefined);
+    setSelectedVolume(searchParams.get("volume") || undefined);
+    setSearchTerm(searchParams.get("keyword") || "");
   }, [searchParams]);
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      const currentUrlKeyword = searchParams.get("keyword") || "";
+      if (searchTerm !== currentUrlKeyword) {
+        updateQuery(selectedCategory, selectedVolume, searchTerm);
+      }
+    }, 600);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm, selectedCategory, selectedVolume, updateQuery, searchParams]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -93,21 +111,7 @@ export default function Filter() {
         left: volumeButtonRef.current.offsetLeft,
       });
     }
-  }, []);
-
-  const updateQuery = (
-    category?: string,
-    volume?: string,
-    keyword?: string
-  ) => {
-    const params = new URLSearchParams();
-
-    if (category) params.set("category", category);
-    if (volume) params.set("volume", volume);
-    if (keyword) params.set("keyword", keyword);
-
-    router.push(`/products?${params.toString()}`);
-  };
+  }, [isCategoryMenuOpen, isVolumeMenuOpen]);
 
   const handleCategoryChange = (option: { value: string } | null) => {
     const value = option?.value;
@@ -123,10 +127,6 @@ export default function Filter() {
     setIsVolumeMenuOpen(false);
   };
 
-  const handleSearch = () => {
-    updateQuery(selectedCategory, selectedVolume, searchTerm);
-  };
-
   const handleResetFilters = () => {
     setSelectedCategory(undefined);
     setSelectedVolume(undefined);
@@ -134,8 +134,7 @@ export default function Filter() {
     router.push("/products");
   };
 
-  const isFilterActive =
-    selectedCategory || selectedVolume || searchTerm.trim() !== "";
+  const isFilterActive = !!(selectedCategory || selectedVolume || searchTerm.trim());
 
   return (
     <div className={styles.filterContainer}>
@@ -145,12 +144,10 @@ export default function Filter() {
           placeholder="Пошук"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           className={styles.searchInput}
         />
         <HiMiniMagnifyingGlass
           className={styles.searchIcon}
-          onClick={handleSearch}
         />
       </div>
 

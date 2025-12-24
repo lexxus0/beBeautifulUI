@@ -63,17 +63,17 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
         )}
 
         <p className={css.features}>
-          {product.features && product.features.ua.length > 0
+          {product.features?.ua?.length > 0
             ? product.features.ua.join(" | ")
             : ""}
         </p>
       </div>
 
-      <p className={css.volumeOption}>
+      {/* <p className={css.volumeOption}>
         {product.volumeOptions && product.volumeOptions.length > 0
           ? product.volumeOptions.join(" / ")
           : product.stockQuantity + " мл"}
-      </p>
+      </p> */}
     </div>
   );
 };

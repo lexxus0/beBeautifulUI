@@ -7,10 +7,9 @@ import ProductHeader from "@/components/ui/ProductHeader/ProductHeader";
 import BrandPhilosophy from "@/components/ui/BrandPhilosophy/BrandPhilosophy";
 import VisitedProduct from "@/app/products/[productId]/VisitedProduct";
 import ProductReviews from "@/components/ui/ProductReviews/ProductReviews";
-import NavigationPanel from "@/components/ui/NavigationPanel/NavigationPanel";
+import NavigationPanel from "@/components/ui/Breadcrumbs/Breadcrumbs";
 import { IProduct } from "@/types/types";
 import css from "./page.module.scss";
-// import { mockProduct } from "./mockProduct";
 
 interface ProductProps {
   product: IProduct;
@@ -18,7 +17,7 @@ interface ProductProps {
 }
 
 const Product = ({ product, productId }: ProductProps) => {
-  console.log('product: ', product);
+  console.log("product: ", product);
   return (
     <>
       <NavigationPanel category={product.category} name={product.name?.ua} />
@@ -27,7 +26,6 @@ const Product = ({ product, productId }: ProductProps) => {
         <div className={css.productContainer}>
           <div className={css.header}>
             <ProductHeader product={product} />
-            {/* <ProductHeader product={mockProduct.outOfStockProduct} /> */}
           </div>
           <div className={css.gallery}>
             <ProductGallery product={product} />
@@ -37,8 +35,6 @@ const Product = ({ product, productId }: ProductProps) => {
           </div>
           <div className={css.actions}>
             <ProductActions product={product} />
-            {/* <ProductActions product={mockProduct.outOfStockProduct} /> */}
-            {/* <ProductActions product={mockProduct.missing500ml} /> */}
           </div>
         </div>
 

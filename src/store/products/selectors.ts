@@ -17,6 +17,13 @@ export const selectProductsByCategoryIds = (state: RootState) =>
 export const selectRecentlyViewedIds = (state: RootState) =>
   state.products.recentlyViewedIds;
 
+export const selectPagination = (state: RootState) => ({
+  total: state.products.totalItems || 0,
+  totalPages: state.products.totalPages || 1,
+  currentPage: state.products.currentPage || 1,
+  perPage: state.products.limit || 12,
+});
+
 export const selectIsLoadingProduct = (state: RootState) =>
   state.products.isLoadingProduct;
 
@@ -26,19 +33,20 @@ export const selectIsLoadingRecently = (state: RootState) =>
 export const selectIsLoadingHome = (state: RootState) =>
   state.products.isLoadingHome;
 
-export const selectProductsError = (state: RootState) =>
-  state.products.error;
+export const selectProductsError = (state: RootState) => state.products.error;
 
 // SELECTORS (DERIVED DATA)
 
 export const selectProductsList = createSelector(
   [selectProductsById, selectProductsListIds],
-  (productsById, ids) => ids.map((id: string) => productsById[id]).filter(Boolean)
+  (productsById, ids) =>
+    (ids || []).map((id: string) => productsById[id]).filter(Boolean)
 );
 
 export const selectRecentlyViewed = createSelector(
   [selectProductsById, selectRecentlyViewedIds],
-  (productsById, ids) => ids.map((id: string) => productsById[id]).filter(Boolean)
+  (productsById, ids) =>
+    ids.map((id: string) => productsById[id]).filter(Boolean)
 );
 
 export const makeSelectProductById = (productId: string) =>
