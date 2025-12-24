@@ -25,8 +25,8 @@ export const fetchProducts = createAsyncThunk<
           perPage: limit,
           page: currentPage,
           category,
-          volumeOptions,
-          keyword,
+          volumeOptions: volumeOptions ? parseInt(volumeOptions.replace(/\D/g, "")) : undefined,
+          keyword: keyword,
         },
       });
 

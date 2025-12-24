@@ -63,7 +63,7 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
         )}
 
         <p className={css.features}>
-          {product.features && product.features.ua.length > 0
+          {product.features?.ua?.length > 0
             ? product.features.ua.join(" | ")
             : ""}
         </p>

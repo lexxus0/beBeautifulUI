@@ -1,27 +1,24 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import styles from "./NavigationPanel.module.scss";
+import styles from "./Breadcrumbs.module.scss";
 import Icon from "@/components/shared/Icon";
+import { categoryNames } from "@/constants/categoryNames";
 
-interface NavigationPanelProps {
+interface BreadcrumbsProps {
   category: string;
   name: string;
 }
 
-const NavigationPanel: React.FC<NavigationPanelProps> = ({
-  category,
-  name,
-}) => {
+const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ category, name }) => {
   const router = useRouter();
 
   const handleNavigate = (path: string) => {
     router.push(path);
   };
 
+  const translatedCategory = categoryNames[category] || category;
   const firstWord = name?.split(" ")[0];
-
-  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
   return (
     <div className={styles.navigationWrapper}>
@@ -40,7 +37,7 @@ const NavigationPanel: React.FC<NavigationPanelProps> = ({
             className={styles.link}
             onClick={() => handleNavigate(`/products?category=${category}`)}
           >
-            {capitalize(category)}
+            {translatedCategory}
           </button>
           <Icon name="icon-double-arrow" className={styles.icon} />
 
@@ -51,4 +48,4 @@ const NavigationPanel: React.FC<NavigationPanelProps> = ({
   );
 };
 
-export default NavigationPanel;
+export default Breadcrumbs;
