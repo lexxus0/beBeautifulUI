@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -10,17 +10,23 @@ import { toggleFavorite } from "@/store/favorites/slice";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
 import { BaseModal } from "@/components/shared/Modal";
 import Icon from "@/components/shared/Icon";
-import StarRating from "@/helpers/StarRating";
 import { IProduct } from "@/types/types";
-import { IUIReview } from "@/types/reviews";
 import { useResponsiveImage } from "@/helpers/hooks/useResponsiveImage";
+import { useReviewData } from "@/helpers/hooks/useReviewData";
 import styles from "./ProductItem.module.scss";
+import ProductRating from "../ProductRating/ProductRating";
+import { categoryNames } from "@/constants/categoryNames";
 
 interface ProductItemProps {
   item: IProduct;
 }
 
 export default function ProductItem({ item }: ProductItemProps) {
+  const dispatch = useAppDispatch();
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const { avgRating, count } = useReviewData(item._id);
+  const displayCategory = categoryNames[item.category] || item.category;
+
   const availableVolumes = item.priceByVolume.filter(
     (v) => v.stockQuantity > 0
   );
@@ -40,13 +46,28 @@ export default function ProductItem({ item }: ProductItemProps) {
   const isSelectedVolumeOut =
     !selectedVolume || selectedVolume.stockQuantity === 0;
 
-  const dispatch = useAppDispatch();
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const favorites = useAppSelector(
     (state): IProduct[] => state.favorites.items
   );
 
   const isFavorite = favorites.some((fav: IProduct) => fav._id === item._id);
+
+  const sizeConfig = useMemo(
+    () => ({
+      mobile: 16,
+      tablet: 16,
+      desktop: 18,
+    }),
+    []
+  );
+
+  const layoutConfig = useMemo(
+    () => ({
+      gap: { mobile: 4, tablet: 4, desktop: 6 },
+      marginRight: { mobile: 0, tablet: 8, desktop: 0 },
+    }),
+    []
+  );
 
   useEffect(() => {
     if (isSelectedVolumeOut && availableVolumes.length > 0) {
@@ -68,11 +89,6 @@ export default function ProductItem({ item }: ProductItemProps) {
     if (selected && selected.stockQuantity > 0) {
       setSelectedVolume(selected);
     }
-  };
-
-  const getAverageRating = (reviews?: IUIReview[]) => {
-    if (!Array.isArray(reviews) || reviews.length === 0) return 0;
-    return reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
   };
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -142,13 +158,16 @@ export default function ProductItem({ item }: ProductItemProps) {
 
           <div className={styles.description}>
             <p className={styles.productName}>{item.name?.ua}</p>
-            <p className={styles.productCategory}>{item.category}</p>
+            <p className={styles.productCategory}>{displayCategory}</p>
 
             <div className={styles.reviews}>
-              <StarRating size={16} rating={getAverageRating(item.reviews)} />
-              <p className={styles.textReviews}>
-                ({item.reviews?.length ?? 0} відгуків)
-              </p>
+              <ProductRating
+                value={avgRating}
+                reviews={count}
+                sizeConfig={sizeConfig}
+                layoutConfig={layoutConfig}
+                className="w-full"
+              />
             </div>
 
             {isOutOfStock ? (

@@ -54,14 +54,11 @@
 
     .reviews {
       display: flex;
-      justify-content: space-between;
+      width: 100%;
       margin-bottom: 10px;
 
-      .textReviews {
-        font-weight: 300;
-        font-size: 12px;
-        line-height: 132%;
-        letter-spacing: 0.01em;
+      :global(.star-assessment) > div {
+        justify-content: space-between;
       }
     }
 
@@ -168,10 +165,6 @@
         width: 258px;
         margin-bottom: 24px;
         margin-inline: auto;
-
-        .textReviews {
-          font-size: 14px;
-        }
       }
 
       .priceVolumeWrap {
