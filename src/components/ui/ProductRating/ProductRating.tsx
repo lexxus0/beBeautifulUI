@@ -18,6 +18,7 @@ export interface ProductRatingProps {
     gap?: number | ResponsiveConfig;
     marginRight?: number | ResponsiveConfig;
   };
+  className?: string;
 }
 
 // Допоміжна функція для адаптивних значень
@@ -47,6 +48,7 @@ const ProductRating: React.FC<ProductRatingProps> = ({
   size,
   sizeConfig,
   layoutConfig,
+  className = "",
 }) => {
   const { width } = useViewport();
 
@@ -73,12 +75,14 @@ const ProductRating: React.FC<ProductRatingProps> = ({
   const hasHalfStar = remainder >= 0.25 && remainder < 0.75;
   const emptyStars = max - fullStars - (hasHalfStar ? 1 : 0);
 
-    if (width === null) return null;
-    
+  if (width === null) return null;
+
   return (
-    <div className="star-assessment">
+    <div className={`star-assessment ${className}`}>
       <div
-        className="w-full flex items-center"
+        className={`w-full flex items-center ${
+          className.includes("justify-between") ? "justify-between" : ""
+        }`}
         style={{ gap: `${gap}px`, marginRight: `${marginRight}px` }}
       >
         <div className="flex items-center">
