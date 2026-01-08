@@ -4,12 +4,7 @@ export const calculateCartTotal = (items: ICartItem[]): number => {
   if (!items || items.length === 0) return 0;
 
   const sum = items.reduce((total, item) => {
-    const option =
-      item.product.priceByVolume.find(
-        (opt) => opt.volume === item.selectedVolume
-      ) || item.product.priceByVolume[0];
-
-    const price = option ? option.price : 0;
+    const price = item.variant.price;
 
     return total + item.quantity * price;
   }, 0);
