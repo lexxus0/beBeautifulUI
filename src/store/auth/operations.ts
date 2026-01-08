@@ -13,7 +13,6 @@ import { RootState } from "../store";
 import { clearAuth } from "./slice";
 import { AxiosError, isAxiosError } from "axios";
 import { clearCartState } from "../cart/slice";
-import { syncCartFromGuest } from "../cart/operations";
 import { clearAuthTokens, getAuthTokens } from "@/helpers/authUtils";
 import { appendIf } from "@/helpers/hooks/appendIf";
 import { normalizeBackendImageUrl } from "@/helpers/normalizeImage";
@@ -79,19 +78,14 @@ export const registerUser = createAsyncThunk<
 export const loginUser = createAsyncThunk<
   IUserResponse & { user: IUser },
   Partial<IUser>
->("users/signin", async (credentials, { rejectWithValue, dispatch }) => {
+>("users/signin", async (credentials, { rejectWithValue }) => {
   try {
     const res = await instance.post("auth/login", credentials);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { accessToken, refreshToken } = res.data.data;
 
     if (accessToken) {
       setAuthHeader(accessToken);
     }
-
-    await dispatch(syncCartFromGuest()).unwrap();
-
-    // Fetch current user info immediately after login
     const userRes = await instance.get("/auth/current");
 
     return {
