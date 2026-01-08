@@ -44,15 +44,29 @@ const cartSlice = createSlice({
       }>
     ) {
       const { product, selectedVolume, quantity = 1 } = action.payload;
+
+      const variant =
+        product.priceByVolume.find((v) => v.volume === selectedVolume) ??
+        product.priceByVolume[0];
+
+      if (!variant) {
+        console.warn("Не знайшовся variant для selectedVolume", selectedVolume);
+        return;
+      }
+
       const existing = state.items.find(
-        (i) =>
-          i.product._id === product._id && i.selectedVolume === selectedVolume
+        (i) => i.product._id === product._id && i.variant._id === variant._id
       );
 
       if (existing) {
         existing.quantity += quantity;
       } else {
-        state.items.push({ product, selectedVolume, quantity });
+        state.items.push({
+          product,
+          variant,
+          quantity,
+          selectedVolume: variant.volume,
+        });
       }
 
       state.isGuest = true;
@@ -70,7 +84,7 @@ const cartSlice = createSlice({
       const { productId, selectedVolume, quantity } = action.payload;
       const existing = state.items.find(
         (i) =>
-          i.product._id === productId && i.selectedVolume === selectedVolume
+          i.product._id === productId && i.variant.volume === selectedVolume
       );
       if (existing) {
         existing.quantity = quantity;
@@ -79,7 +93,7 @@ const cartSlice = createSlice({
             (i) =>
               !(
                 i.product._id === productId &&
-                i.selectedVolume === selectedVolume
+                i.variant.volume === selectedVolume
               )
           );
         }
@@ -95,7 +109,7 @@ const cartSlice = createSlice({
 
       state.items = state.items.filter(
         (i) =>
-          !(i.product._id === productId && i.selectedVolume === selectedVolume)
+          !(i.product._id === productId && i.variant.volume === selectedVolume)
       );
       saveGuestCart(state.items);
     },
@@ -104,13 +118,10 @@ const cartSlice = createSlice({
     builder
       .addCase(fetchCart.pending, handlePending)
       .addCase(fetchCart.fulfilled, (state, action) => {
-        console.log("🟢 FETCH CART:", action.payload);
         state.isLoading = false;
         state.isGuest = false;
         state.error = null;
         state.items = action.payload;
-
-        console.log("serverItems fetchCart: ", action.payload);
       })
       .addCase(fetchCart.rejected, handleRejected)
       .addCase(addCartItem.pending, (state) => {
@@ -121,31 +132,6 @@ const cartSlice = createSlice({
         state.isGuest = false;
         state.error = null;
         state.items = action.payload;
-
-        // const { productId, selectedVolume } = action.meta.arg;
-        // const serverItems = action.payload;
-        // console.log("serverItems addCartItem: ", serverItems);
-
-        // state.items = serverItems.map((item) => {
-        //   const existing = state.items.find(
-        //     (i) => i.product._id === item.product._id
-        //   );
-        //   if (existing) {
-        //     return {
-        //       ...item,
-        //       selectedVolume: existing.selectedVolume,
-        //     };
-        //   }
-        //   // 2) якщо це новий продукт і це якраз той, що ми тільки що додали з selectedVolume
-        //   if (selectedVolume && item.product._id === productId) {
-        //     return {
-        //       ...item,
-        //       selectedVolume,
-        //     };
-        //   }
-        //   // 3) інакше залишаємо те, що виставив mapCartResponseToItems (defaultVolume)
-        //   return item;
-        // });
       })
       .addCase(addCartItem.rejected, handleRejected)
       .addCase(updateCartItem.pending, (state) => {
@@ -155,17 +141,24 @@ const cartSlice = createSlice({
         state.isLoading = false;
         state.isGuest = false;
         state.error = null;
-        state.items = action.payload;
-        // state.items = action.payload.map((item) => {
-        //   const existing = state.items.find(
-        //     (i) => i.product._id === item.product._id
-        //   );
-        //   return {
-        //     ...item,
-        //     selectedVolume: existing?.selectedVolume ?? item.selectedVolume,
-        //   };
-        // });
-        // console.log("serverItems addCartItem: ", state.items);
+
+        const { productId, selectedVolume, quantity } = action.meta.arg;
+
+        const item = state.items.find(
+          (i) =>
+            i.product._id === productId && i.selectedVolume === selectedVolume
+        );
+
+        if (item) {
+          item.quantity = quantity;
+
+          const newVariant = item.product.priceByVolume.find(
+            (v) => v.volume === selectedVolume
+          );
+          if (newVariant) {
+            item.variant = newVariant;
+          }
+        }
       })
       .addCase(updateCartItem.rejected, handleRejected)
       .addCase(deleteCartItem.pending, (state) => {
@@ -175,16 +168,15 @@ const cartSlice = createSlice({
         state.isLoading = false;
         state.isGuest = false;
         state.error = null;
-        state.items = action.payload;
-        // state.items = action.payload.map((item) => {
-        //   const existing = state.items.find(
-        //     (i) => i.product._id === item.product._id
-        //   );
-        //   return {
-        //     ...item,
-        //     selectedVolume: existing?.selectedVolume ?? item.selectedVolume,
-        //   };
-        // });
+
+        const { productId, selectedVolume } = action.meta.arg;
+
+        state.items = state.items.filter(
+          (i) =>
+            !(
+              i.product._id === productId && i.selectedVolume === selectedVolume
+            )
+        );
       })
       .addCase(deleteCartItem.rejected, handleRejected)
       // синк після логіну
@@ -192,7 +184,6 @@ const cartSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(syncCartFromGuest.fulfilled, (state, action) => {
-        console.log("🔄 SYNC FROM GUEST:", action.payload);
         state.isLoading = false;
         state.error = null;
         state.items = action.payload;
