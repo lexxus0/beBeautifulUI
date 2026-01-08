@@ -24,9 +24,7 @@ const BasketItem = ({
 }: BasketItemProps) => {
   const [imgError, setImgError] = useState(false);
 
-  const { product, quantity, selectedVolume } = item;
-  // console.log('selectedVolume: ', selectedVolume);
-  // console.log("item: ", item);
+  const { product, quantity, variant } = item;
 
   const { size, srcPlaceholder } = useResponsiveImage(
     { w: 124, h: 112 },
@@ -34,12 +32,8 @@ const BasketItem = ({
     { w: 196, h: 156 }
   );
 
-  const option =
-    product.priceByVolume.find((opt) => opt.volume === selectedVolume) ||
-    product.priceByVolume[0];
-
-  const unitPrice = option?.price ?? 0;
-  const volumeLabel = option?.volume ?? "";
+  const unitPrice = variant.price ?? 0;
+  const volumeLabel = variant.volume ?? "";
   const totalPrice = Math.round(unitPrice * quantity * 100) / 100;
 
   const imageSrc = useMemo(() => {
@@ -61,7 +55,6 @@ const BasketItem = ({
       <Link href={`/products/${product._id}`} className={styles.wrapperInfo}>
         {canRenderImage ? (
           <Image
-            // className={styles.img}
             src={item.product.imageUrl}
             alt={item.product.name?.ua}
             width={size.w}
