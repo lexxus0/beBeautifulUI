@@ -18,76 +18,53 @@ export const changeCartQuantity = ({
   isGuest: boolean;
   onRemove?: (item: ICartItem) => void;
 }) => {
-  const { product, selectedVolume, quantity } = item;
+  const { product, variant, quantity, selectedVolume } = item;
 
-  // === DECREMENT LOGIC ===
+  const volume = selectedVolume ?? variant.volume;
+  const isServerCart = isLoggedIn && !isGuest;
+
   const removeItem = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    onRemove && onRemove(item);
+    onRemove?.(item);
 
-    if (isLoggedIn && !isGuest) {
-      dispatch(deleteCartItem({ productId: product._id, selectedVolume }));
+    if (isServerCart) {
+      dispatch(deleteCartItem({ productId: product._id, selectedVolume: volume }));
     } else {
       dispatch(
         removeGuestItem({
           productId: product._id,
-          selectedVolume,
+          selectedVolume: volume,
         })
       );
     }
   };
 
-  // 🔴 явно видалити (по кнопці "кошик")
   if (type === "remove") {
     removeItem();
     return;
   }
 
-  // === DECREMENT LOGIC ===
-  if (type === "dec") {
-    if (quantity === 1) {
-      removeItem();
-      return;
-    }
+  const newQuantity = type === "inc" ? quantity + 1 : quantity - 1;
 
-    if (isLoggedIn && !isGuest) {
-      dispatch(
-        updateCartItem({
-          productId: product._id,
-          selectedVolume,
-          quantity: quantity - 1,
-        })
-      );
-    } else {
-      dispatch(
-        updateGuestItemQuantity({
-          productId: product._id,
-          selectedVolume,
-          quantity: quantity - 1,
-        })
-      );
-    }
+  if (newQuantity <= 0) {
+    removeItem();
     return;
   }
 
-  // === INCREMENT LOGIC ===
-  if (type === "inc") {
-    if (isLoggedIn && !isGuest) {
-      dispatch(
-        updateCartItem({
-          productId: product._id,
-          selectedVolume,
-          quantity: quantity + 1,
-        })
-      );
-    } else {
-      dispatch(
-        updateGuestItemQuantity({
-          productId: product._id,
-          selectedVolume,
-          quantity: quantity + 1,
-        })
-      );
-    }
+  if (isServerCart) {
+    dispatch(
+      updateCartItem({
+        productId: product._id,
+        selectedVolume: volume,
+        quantity: newQuantity,
+      })
+    );
+  } else {
+    dispatch(
+      updateGuestItemQuantity({
+        productId: product._id,
+        selectedVolume: volume,
+        quantity: newQuantity,
+      })
+    );
   }
 };
