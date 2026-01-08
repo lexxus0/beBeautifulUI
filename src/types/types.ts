@@ -15,6 +15,7 @@ export interface IPagination {
 
 export interface IPriceByVolume {
   _id: string;
+  id?: string;
   stockQuantity: number;
   volume: number;
   price: number;
@@ -27,7 +28,7 @@ export interface IProduct {
     ua: string;
   };
   sku: string;
-  volumeOptions: string[];          //number[]
+  volumeOptions: string[]; //number[]
   priceByVolume: IPriceByVolume[];
   stockQuantity: number;
   // features: string[];
@@ -79,7 +80,7 @@ export type CategoryData = {
   description: string;
   imageMobile: string;
   imageDesktop: string;
-  category: string; 
+  category: string;
   href: UrlObject;
 };
 
