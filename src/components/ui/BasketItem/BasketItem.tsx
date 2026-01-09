@@ -59,11 +59,12 @@ const BasketItem = ({
             alt={item.product.name?.ua}
             width={size.w}
             height={size.h}
+            className={styles.img}
             onError={() => setImgError(true)}
           />
         ) : (
           <Image
-            // className={styles.img}
+            className={styles.img}
             src={srcPlaceholder}
             alt={item.product.name?.ua}
             width={size.w}
