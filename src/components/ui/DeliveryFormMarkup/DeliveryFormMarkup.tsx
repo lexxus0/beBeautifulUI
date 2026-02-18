@@ -17,7 +17,7 @@ import {
   setDelivery,
   setPaymentMethod,
 } from "@/store/orders/slice";
-import { fetchCertificateByNumber } from "@/store/orders/operations";
+import { createOrder, fetchCertificateByNumber } from "@/store/orders/operations";
 import { BaseModal } from "@/components/shared/Modal";
 import Image from "next/image";
 import Icon from "@/components/shared/Icon";
@@ -139,12 +139,13 @@ export default function DeliveryFormMarkup() {
 
   // --- SYNC city & warehouse with react-hook-form ---
   useEffect(() => {
-    if (selectedCity) {
+    if (!selectedCity || cities.length === 0) {
+      setValue("city", "");
+      return;
+    }
+
       const found = cities.find((c) => c.Ref === selectedCity);
       setValue("city", found ? found.Description : "");
-    } else {
-      setValue("city", "");
-    }
   }, [selectedCity, cities, setValue]);
 
   useEffect(() => {
@@ -153,7 +154,7 @@ export default function DeliveryFormMarkup() {
 
   const certValue = watch("certificate");
 
-  const onSubmit = (data: DeliveryFormValues) => {
+  const onSubmit = async (data: DeliveryFormValues) => {
     const delivery =
       data.deliveryType === "warehouse"
         ? {
@@ -190,13 +191,21 @@ export default function DeliveryFormMarkup() {
 
     if (data.payment === "card") {
       router.push("/payment");
-    } else {
+      return;
+    } 
+    
+    try {
+      const created = await dispatch(createOrder()).unwrap();
+      console.log("🟢 ORDER CREATED:", created);
+
       setModalIsOpen(true);
 
       setTimeout(() => {
         setModalIsOpen(false);
         router.push("/");
       }, 3000);
+    } catch (err) {
+      console.error("❌ ORDER CREATE ERROR:", err);
     }
   };
 
@@ -502,7 +511,7 @@ export default function DeliveryFormMarkup() {
                     <p className="font-roboto font-light text-sm md:text-lg lg:text-[22px] text-[#af1818] text-end">
                       Сертифікат:
                       <span className="ml-[10px]">{`${
-                        draft.certificate.balance || "0"
+                        draft.certificate?.balance ?? 0
                       } грн`}</span>
                     </p>
                     <p className="font-lato font-bold lg:font-semibold text-sm md:text-lg lg:text-2xl text-end">

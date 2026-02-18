@@ -25,6 +25,7 @@ export interface ICertificate {
   owner: string | null;
   activatedAt: string | null;
   expiresAt: string | null;
+  activatedBy: string | null;
   balance: number;
   createdAt: string;
   updatedAt: string;
