@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { handleError, instance } from "../init";
 import { RootState } from "../store";
-import { ICertificate, IOrder } from "@/types/orders";
-import { ICartItem } from "@/types/cart";
+import { ICertificate, IOrder, IOrderItem } from "@/types/orders";
+// import { ICartItem } from "@/types/cart";
 
 export const fetchAllOrders = createAsyncThunk<
   IOrder[],
@@ -78,24 +78,24 @@ export const createOrder = createAsyncThunk<
 
     const payload = {
       clientId: user?._id,
-      items: draft.items.map((item: ICartItem) => ({
+      items: draft.items.map((item: IOrderItem) => ({
         product: item.product._id,
         selectedVolume: item.selectedVolume,
         quantity: item.quantity,
       })),
       customerName: `${user?.first_name ?? ""} ${user?.last_name ?? ""}`,
-      phone: user?.phone ?? "",
+      phone: user?.telephone ?? "",
       email: user?.email ?? "",
       comment: draft.comment ?? "",
-      deliveryMethod: "nova_poshta",
-      city: draft.delivery?.city ?? "",
-      warehouse: draft.delivery?.warehouse ?? "",
-      street: draft.delivery?.street ?? "",
-      house: draft.delivery?.house ?? "",
-      apartment: draft.delivery?.apartment ?? "",
-      certificate: draft.certificate ?? null,
-      totalAmount: draft.totalAmount,
-      paymentMethod: draft.paymentMethod,
+      // deliveryMethod: "nova_poshta",
+      // city: draft.delivery?.city ?? "",
+      // warehouse: draft.delivery?.warehouse ?? "",
+      // street: draft.delivery?.street ?? "",
+      // house: draft.delivery?.house ?? "",
+      // apartment: draft.delivery?.apartment ?? "",
+      // certificate: draft.certificate?.number ?? null,
+      // totalAmount: draft.totalAmount,
+      // paymentMethod: draft.paymentMethod,
     };
 
     console.log("📦 ORDER PAYLOAD:", payload);
@@ -103,7 +103,8 @@ export const createOrder = createAsyncThunk<
 
     console.log("🟢 ORDER CREATED ON BACKEND:", res.data);
     return res.data.order; // тут буде paymentLink
-  } catch {
+  } catch (e: any) {
+    console.error("❌ RAW ORDER ERROR:", e?.response?.data || e);
     return rejectWithValue("Не вдалося створити замовлення");
   }
 });
