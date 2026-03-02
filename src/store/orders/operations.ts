@@ -10,11 +10,25 @@ export const fetchAllOrders = createAsyncThunk<
 >("orders/fetchAll", async (_, { rejectWithValue }) => {
   try {
     const res = await instance.get("/orders");
-    return res.data.data as IOrderResponse[];
+    return res.data as IOrderResponse[];
   } catch (e: unknown) {
     return rejectWithValue(handleError(e, "Failed to fetch all orders"));
   }
 });
+
+export const fetchOrderById = createAsyncThunk<
+  IOrderResponse,
+  string,
+  { rejectValue: string }
+>("orders/fetchById", async (id, { rejectWithValue }) => {
+  try {
+    const res = await instance.get(`/orders/${id}`);
+    return res.data as IOrderResponse;
+  } catch (e: unknown) {
+    return rejectWithValue(handleError(e, "Failed to fetch order by id"));
+  }
+});
+
 
 export const fetchAllCertificates = createAsyncThunk<
   ICertificate[],

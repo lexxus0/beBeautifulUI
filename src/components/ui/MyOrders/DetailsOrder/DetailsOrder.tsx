@@ -1,16 +1,17 @@
 "use client";
-import React from "react";
 
 import styles from "./DetailsOrder.module.scss";
-import { IOrder, IOrderItem } from "@/types/orders";
+import { IOrderResponse } from "@/types/orders";
 import Link from "next/link";
 import Image from "next/image";
 
 interface IDetailsOrderProps {
-  order: IOrder;
+  order: IOrderResponse;
 }
 
 export default function DetailsOrder({ order }: IDetailsOrderProps) {
+  console.log("order DetailsOrder: ", order);
+
   return (
     <div className="container px-0 pt-[10px] pb-10 md:pb-15 lg:pt-[34px]">
       <h2 className="font-lato font-semibold text-black text-2xl mb-7 md:text-[32px] md:mb-15 lg:mb-[50px]">
@@ -19,10 +20,10 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
       <div className="lg:px-[220px]">
         <p className={styles.text}>Деталі замовлення</p>
         <ul className={styles.listOrder}>
-          <li>
+          {/* <li>
             <p className={styles.textOrder}>№ Замовлення:</p>
             <span className={styles.spanOrder}>{order?.orderNumber}</span>
-          </li>
+          </li> */}
           <li>
             <p className={styles.textOrder}>Дата оформлення:</p>
             <span className={styles.spanOrder}>{order?.createdAt}</span>
@@ -33,7 +34,7 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
           </li> */}
           <li>
             <p className={styles.textOrder}>Спосіб доставки:</p>
-            <span className={styles.spanOrder}>{order?.delivery.deliveryMethod}</span>
+            <span className={styles.spanOrder}>{order?.deliveryMethod}</span>
           </li>
           {/* <li>
             <p className={styles.textOrder}>Номер ТТН:</p>
@@ -52,31 +53,39 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
         <ul className={styles.address}>
           <li>
             <p className={styles.addressText}>Місто:</p>
-            <span className={styles.addressSpan}>{order?.delivery.city}</span>
+            <span className={styles.addressSpan}>{order?.city}</span>
           </li>
           <li>
             <p className={styles.addressText}>Відділення:</p>
-            <span className={styles.addressSpan}>{order?.delivery.warehouse}</span>
+            <span className={styles.addressSpan}>{order?.branchNumber}</span>
           </li>
         </ul>
         <p className={styles.text}>Склад замовлення:</p>
         <ul className="flex flex-col gap-5 mb-9">
-          {order?.items.map(
-            (item: IOrderItem) => (
+          {order.items.map((item, idx) => {
+            const src =
+              item.product?.imageUrl ??
+              "/images/placeholder/placeholder-mob.png";
+            const alt =
+              item.product?.description?.ua ??
+              item.product?.name?.ua ??
+              "Товар";
+            const features = item.product?.features.ua ?? [];
+            return (
               <li
-                key={item.product._id}
+                key={`${item.product?._id}-${idx}`}
                 className="flex gap-4 items-center md:gap-6"
               >
                 <Image
-                  src={item.product.imageUrl}
-                  alt={item.product.description.ua}
+                  src={src}
+                  alt={alt}
                   width={124}
                   height={172}
                   className="h-[172px] mr-[14px] md:hidden"
                 />
                 <Image
-                  src={item.product.imageUrl}
-                  alt={item.product.description.ua}
+                  src={src}
+                  alt={alt}
                   width={86}
                   height={80}
                   className="hidden md:block md:mr-10"
@@ -85,11 +94,11 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
                   <div className="flex flex-col gap-2">
                     <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-6">
                       <p className="font-lato font-bold text-black text-lg">
-                        {item.product.name?.ua}
+                        {item.product?.name?.en}
                       </p>
                       <div className="flex gap-2">
                         <p className="font-light text-sm md:text-lg">
-                          {item.product.name?.ua}
+                          {item.product?.name?.ua}
                         </p>
                         <p className="font-light text-sm md:text-lg">
                           {item.selectedVolume}
@@ -97,10 +106,10 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
                       </div>
                     </div>
                     <p className="font-light text-xs md:text-lg">
-                      {item.product.features.ua.map((feature, index) => (
+                      {features.map((feature: string, index: number) => (
                         <span key={index}>
                           {feature}
-                          {index < item.product.features.ua.length - 1 && (
+                          {index < features.length - 1 && (
                             <span className="mx-1 text-black">|</span>
                           )}
                         </span>
@@ -112,8 +121,8 @@ export default function DetailsOrder({ order }: IDetailsOrderProps) {
                   </p>
                 </div>
               </li>
-            )
-          )}
+            );
+          })}
           {/* <li className="flex gap-4 items-center md:gap-6">
               <p className="font-lato font-black text-lg">01</p>
               <div className="flex flex-col gap-1 md:flex-row md:gap-9">

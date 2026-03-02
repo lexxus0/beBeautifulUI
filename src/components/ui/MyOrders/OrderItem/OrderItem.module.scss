@@ -26,6 +26,20 @@
   }
 }
 
+.items {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  @media (min-width: 744px) {
+    display: grid;
+    grid-template-columns: 24px 1fr 40px;
+  }
+  @media (min-width: 1440px) {
+    display: grid;
+    grid-template-columns: 24px 1fr 80px;
+  }
+}
+
 .textOrder {
   font-family: var(--font-lato);
   font-weight: 700;

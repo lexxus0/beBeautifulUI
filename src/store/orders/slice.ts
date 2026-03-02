@@ -12,6 +12,7 @@ import {
   fetchAllCertificates,
   fetchAllOrders,
   fetchCertificateByNumber,
+  fetchOrderById,
   spendCertificate,
 } from "./operations";
 
@@ -108,7 +109,7 @@ const ordersSlice = createSlice({
 
     resetOrderState(state) {
       state.draft = initialDraft;
-      state.currentOrder = null; // delete (state.draft as any).certificate;
+      state.currentOrder = null;
     },
   },
   extraReducers: (builder) => {
@@ -123,6 +124,20 @@ const ordersSlice = createSlice({
         state.orders = action.payload;
       })
       .addCase(fetchAllOrders.rejected, (state, action) => {
+        state.error =
+          typeof action.payload === "string"
+            ? action.payload
+            : "Не вдалося завантажити замовлення";
+        state.isLoading = false;
+      })
+      .addCase(fetchOrderById.pending, (state) => {
+        state.error = null;
+        state.isLoading = true;
+      })
+      .addCase(fetchOrderById.fulfilled, (state, action) => {
+        state.currentOrder = action.payload;
+      })
+      .addCase(fetchOrderById.rejected, (state, action) => {
         state.error =
           typeof action.payload === "string"
             ? action.payload

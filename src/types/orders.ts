@@ -86,7 +86,8 @@ export interface IOrderResponse {
   customerName?: string;
   phone?: string;
   email?: string;
-  items: IOrderItem[];
+  // items: IOrderItem[];
+  items: IOrderItemDraft[];
 
   deliveryMethod: "nova_poshta";
   deliveryType: DeliveryType;

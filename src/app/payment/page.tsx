@@ -5,7 +5,7 @@
 // import Liqpay from "@/components/ui/Payment/Liqpay/Liqpay";
 // import CardPay from "@/components/ui/Payment/CardPay/CardPay";
 
-// export default function PaymentPage() {
+export default function PaymentPage() {
 //   const [openCard, setOpenCard] = useState<boolean>(false);
 
 //   return (
@@ -20,4 +20,4 @@
 //       </div>
 //     </>
 //   );
-// }
+}

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { setFromBasket } from "@/store/orders/slice";
 import Link from "next/link";
 import { ICartItem } from "@/types/cart";
-import { IOrderItem } from "@/types/orders";
+import { IOrderItemDraft } from "@/types/orders";
 import { initGuestCart } from "@/store/cart/slice";
 import { changeCartQuantity } from "@/helpers/changeCartQuantity";
 import { calculateCartTotal } from "@/helpers/calculateCartTotal";
@@ -79,7 +79,7 @@ const BasketPage = () => {
   const handleCheckout = () => {
     if (!items || items.length === 0) return;
 
-    const orderItems: IOrderItem[] = items.map((item: ICartItem) => ({
+    const orderItems: IOrderItemDraft[] = items.map((item: ICartItem) => ({
       product: item.product,
       quantity: item.quantity,
       selectedVolume: item.selectedVolume,
