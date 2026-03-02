@@ -1,18 +1,17 @@
 "use client";
 
 import BaseSelect from "@/components/elements/BaseSelect";
-import { PaymentChoice } from "@/types/orders";
+import { PaymentMethod } from "@/types/orders";
 
-// export type PaymentChoice = "card" | "invoice" | "cod";
 export type PaymentOption = {
-  value: PaymentChoice;
+  value: PaymentMethod;
   label: string;
   note?: string;
 };
 
 type PaymentSelectProps = {
-  value: PaymentChoice | undefined;
-  onChange: (v: PaymentChoice) => void;
+  value: PaymentMethod | undefined;
+  onChange: (v: PaymentMethod) => void;
   options?: PaymentOption[];
   label?: string;
   placeholder?: string;
@@ -21,12 +20,12 @@ type PaymentSelectProps = {
 
 const DEFAULT_OPTIONS: PaymentOption[] = [
   {
-    value: "card",
+    value: "liqpay",
     label:
       "Онлайн-оплата (на сайті банківською карткою або через Apple Pay / Google Pay)",
   },
   {
-    value: "invoice",
+    value: "requisites",
     label: "Через термінал або Приват24 — за реквізитами",
   },
   {
@@ -49,7 +48,7 @@ export default function PaymentSelect({
       label={label}
       options={options}
       value={value}
-      onSelect={(v) => onChange(v as PaymentChoice)}
+      onSelect={(v) => onChange(v as PaymentMethod)}
       placeholder={placeholder}
       error={error}
       iconRight="icon-arrow-down"

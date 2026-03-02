@@ -21,6 +21,9 @@ type BaseSelectProps = {
   iconLeft?: string;
   iconRight?: string;
   searchable?: boolean;
+  onClear?: () => void;
+  clearable?: boolean;
+  clearMode?: "replace" | "both" | "none";
 };
 
 export default function BaseSelect({
@@ -35,6 +38,9 @@ export default function BaseSelect({
   iconLeft,
   iconRight,
   searchable = false,
+  onClear,
+  clearable,
+  clearMode = "none",
 }: BaseSelectProps) {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -52,12 +58,15 @@ export default function BaseSelect({
       )
     : options;
 
-    useEffect(() => {
-        // Якщо вибрали нове місто — записуємо його в інпут
-        if (selected && !open) {
-          setQuery(selected.label);
-        }
-      }, [selected, open]);
+  useEffect(() => {
+    if (!value) {
+      setQuery("");
+      return;
+    }
+    if (selected && !open) {
+      setQuery(selected.label);
+    }
+  }, [value, selected, open]);
 
   // Закриття при кліку поза елементом
   useEffect(() => {
@@ -89,6 +98,9 @@ export default function BaseSelect({
     }
   };
 
+  const showClear = !!(clearable && value);
+  const mode = clearMode ?? "none";
+
   return (
     <div
       ref={rootRef}
@@ -118,12 +130,12 @@ export default function BaseSelect({
             ref={inputRef}
             value={query || selected?.label || ""}
             onChange={(e) => {
-                const val = e.target.value;
-                setQuery(val);
-                setOpen(true);
+              const val = e.target.value;
+              setQuery(val);
+              setOpen(true);
               if (val === "") {
-                  onSelect("");
-                }
+                onSelect("");
+              }
             }}
             placeholder={placeholder}
             onClick={() => setOpen(true)}
@@ -137,28 +149,62 @@ export default function BaseSelect({
               iconLeft ? "pl-[48px]" : ""
             }`}
           >
-            <span className={`block font-roboto font-light text-start ${className}`}>
+            <span
+              className={`block font-roboto font-light text-start ${className}`}
+            >
               {selected?.label ?? placeholder}
             </span>
           </button>
         )}
-        {iconRight && (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              setOpen((prev) => !prev);
-            }}
-            className={`absolute right-2 ${className}`}
-          >
-            <Icon
-              name={iconRight}
-              className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
-                open ? "rotate-180" : ""
-              }`}
-            />
-          </button>
-        )}
+
+        <div className={`absolute right-2 ${className}`}>
+          {/* ❌ clear */}
+          {mode !== "none" && showClear && (
+            <button
+              type="button"
+              aria-label="Очистити"
+              onClick={(e) => {
+                e.stopPropagation();
+                onClear?.();
+                onSelect("");
+                setQuery("");
+                setActiveIndex(0);
+                setOpen(false);
+              }}
+            >
+              <Icon
+                name="icon-close"
+                className="w-4 h-4 text-gray-500 fill-transparent"
+              />
+            </button>
+          )}
+
+          {/* ⬇️ arrow */}
+          {iconRight &&
+            (mode === "both" ||
+              mode === "none" ||
+              (mode === "replace" && !showClear)) && (
+              <button
+                type="button"
+                aria-label="Відкрити список"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClear?.();
+                  onSelect("");
+                  setQuery("");
+                  setActiveIndex(0);
+                  setOpen((prev) => !prev);
+                }}
+              >
+                <Icon
+                  name={iconRight}
+                  className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+                    open ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+            )}
+        </div>
       </div>
 
       {error && (
