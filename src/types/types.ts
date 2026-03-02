@@ -28,34 +28,35 @@ export interface IProduct {
     ua: string;
   };
   sku: string;
-  volumeOptions: string[]; //number[]
+  volumeOptions: number[]; // | string[];
   priceByVolume: IPriceByVolume[];
-  stockQuantity: number;
-  // features: string[];
   features: {
     en?: string[];
     ua: string[];
   };
   description: {
     en?: string;
-    ua: string;
+    ua?: string;
   };
-  // instructions: string;
   instructions: {
     en?: string;
-    ua: string;
+    ua?: string;
   };
   activeIngredients: {
     name: {
       en?: string;
       ua: string;
     };
+    description: {
+      en?: string;
+      ua?: string;
+    };
     _id: string;
   }[];
   inciList: string[];
   category: string;
-  isVegan: boolean;
   reviews: IUIReview[];
+  isVegan: boolean;
   isPromoted: boolean;
   imageUrl: string;
   inStock: boolean;
