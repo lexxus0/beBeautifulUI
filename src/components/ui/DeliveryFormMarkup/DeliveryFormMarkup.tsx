@@ -236,13 +236,16 @@ export default function DeliveryFormMarkup() {
       dispatch(setPaymentMethod(data.paymentMethod));
     }
 
-    if (data.paymentMethod === "liqpay") {
-      router.push("/payment");
-      return;
-    }
-
     try {
-      await dispatch(createOrder()).unwrap();
+      const created = await dispatch(createOrder()).unwrap();
+
+      if (data.paymentMethod === "liqpay") {
+        if (created?.paymentLink) {
+          window.location.href = created.paymentLink;
+          return;
+        }
+        console.error("❌ liqpay payment link not found");
+      }
 
       const certCode = draft.certificateCode;
       const certDiscount = draft.certificateDiscount ?? 0;
@@ -479,7 +482,7 @@ export default function DeliveryFormMarkup() {
           />
 
           {/* ДОДАТКОВІ ПОЛЯ */}
-          <div className="mb-6 flex flex-col gap-[18px] lg:gap-[26px] lg:mb-11">
+          <div className="mb-8 flex flex-col gap-[18px] lg:gap-[26px] lg:mb-11">
             <button
               type="button"
               className={styles.btnPlus}
@@ -561,8 +564,8 @@ export default function DeliveryFormMarkup() {
             )}
           </div>
 
-          <div className="flex flex-col gap-4 mb-10 mb:mb-12 lg:mb-[70px] pl-1 lg:pl-[6px]">
-            {/* <label className={styles.cb}>
+          <div className="flex flex-col gap-4 mb-10 mb:mb-12 lg:mb-[50px] pl-1 lg:pl-[6px]">
+            <label className={styles.cb}>
               <input
                 type="checkbox"
                 id="noCall"
@@ -573,8 +576,8 @@ export default function DeliveryFormMarkup() {
               <span>
                 Мені можна не телефонувати для підтвердження замовлення.
               </span>
-            </label> */}
-            <label className={styles.cb}>
+            </label>
+            {/* <label className={styles.cb}>
               <input
                 type="checkbox"
                 id="saveCard"
@@ -583,7 +586,7 @@ export default function DeliveryFormMarkup() {
               />
               <span className={styles.cbBox} />
               <span>Зберегти картку для майбутніх покупок.</span>
-            </label>
+            </label> */}
           </div>
           {showCert ? (
             <div className="lg:h-[186px] lg:mb-41">
@@ -631,9 +634,15 @@ export default function DeliveryFormMarkup() {
               </div>
             </div>
           ) : (
-            <button disabled={isSubmitting} className={styles.submit}>
-              Оформити замовлення
-            </button>
+            <div>
+              <p className="font-lato font-bold lg:font-semibold text-sm md:text-lg lg:text-2xl text-end mb-4">
+                Сума замовлення:
+                <span className="ml-[10px]">{`${draft.amount} грн`}</span>
+              </p>
+              <button disabled={isSubmitting} className={styles.submit}>
+                Оформити замовлення
+              </button>
+            </div>
           )}
         </div>
       </form>
