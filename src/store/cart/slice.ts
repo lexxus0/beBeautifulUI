@@ -6,6 +6,7 @@ import {
   updateCartItem,
   deleteCartItem,
   syncCartFromGuest,
+  clearServerCart,
 } from "./operations";
 import { handlePending, handleRejected } from "../init";
 import { clearGuestCart, loadGuestCart, saveGuestCart } from "./utils";
@@ -50,7 +51,6 @@ const cartSlice = createSlice({
         product.priceByVolume[0];
 
       if (!variant) {
-        console.warn("Не знайшовся variant для selectedVolume", selectedVolume);
         return;
       }
 
@@ -193,6 +193,12 @@ const cartSlice = createSlice({
       .addCase(syncCartFromGuest.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload || "Не вдалося синхронізувати кошик";
+      })
+      .addCase(clearServerCart.fulfilled, (state) => {
+        state.items = [];
+        state.error = null;
+        state.isLoading = false;
+        state.isGuest = false;
       });
   },
 });

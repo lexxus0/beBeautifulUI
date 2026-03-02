@@ -107,3 +107,16 @@ export const syncCartFromGuest = createAsyncThunk<
     return rejectWithValue(handleError(e, "Не вдалося синхронізувати кошик"));
   }
 });
+
+export const clearServerCart = createAsyncThunk<
+  void,
+  void,
+  { rejectValue: string }
+>("cart/clearServer", async (_, { rejectWithValue }) => {
+  try {
+    await instance.delete("/cart");
+  } catch (e: unknown) {
+    return rejectWithValue(handleError(e, "Не вдалося очистити кошик на сервері"));
+  }
+});
+
