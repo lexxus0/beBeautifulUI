@@ -1,24 +1,24 @@
 import {
   ICertificate,
-  IDelivery,
-  IOrder,
+  IDeliveryDraft,
+  IOrderItemDraft,
   IOrderDraft,
-  IOrderItem,
-  PaymentChoice,
+  IOrderResponse,
+  PaymentMethod,
 } from "@/types/orders";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   createOrder,
   fetchAllCertificates,
   fetchAllOrders,
-  // fetchCertificateById,
   fetchCertificateByNumber,
+  spendCertificate,
 } from "./operations";
 
 interface OrderState {
   draft: IOrderDraft;
-  currentOrder: IOrder | null;
-  orders: IOrder[] | null;
+  currentOrder: IOrderResponse | null;
+  orders: IOrderResponse[] | null;
   certificates: ICertificate[] | null;
   error: string | null;
   isLoading: boolean;
@@ -28,8 +28,10 @@ const initialDraft: IOrderDraft = {
   items: [],
   delivery: null,
   paymentMethod: null,
+  customer: null,
   comment: "",
-  certificate: null,
+  certificateCode: null,
+  certificateDiscount: 0,
   amount: 0,
   totalAmount: 0,
 };
@@ -49,17 +51,32 @@ const ordersSlice = createSlice({
   reducers: {
     setFromBasket(
       state,
-      action: PayloadAction<{ items: IOrderItem[]; amount: number }>
+      action: PayloadAction<{ items: IOrderItemDraft[]; amount: number }>
     ) {
       state.draft.items = action.payload.items;
       state.draft.amount = action.payload.amount;
-      state.draft.totalAmount = action.payload.amount;
+
+      const discount = state.draft.certificateDiscount ?? 0;
+      state.draft.totalAmount = Math.max(action.payload.amount - discount, 0);
     },
-    setDelivery(state, action: PayloadAction<IDelivery>) {
+    setCustomer(
+      state,
+      action: PayloadAction<{
+        customerName: string;
+        phone: string;
+        email?: string;
+      }>
+    ) {
+      state.draft.customer = action.payload;
+    },
+    clearCustomer(state) {
+      state.draft.customer = null;
+    },
+    setDelivery(state, action: PayloadAction<IDeliveryDraft>) {
       state.draft.delivery = action.payload;
     },
 
-    setPaymentMethod(state, action: PayloadAction<PaymentChoice>) {
+    setPaymentMethod(state, action: PayloadAction<PaymentMethod>) {
       state.draft.paymentMethod = action.payload;
     },
 
@@ -67,8 +84,22 @@ const ordersSlice = createSlice({
       state.draft.comment = action.payload;
     },
 
-    setCertificate(state, action: PayloadAction<ICertificate | null>) {
-      state.draft.certificate = action.payload;
+    setCertificateCode(state, action: PayloadAction<string | null>) {
+      state.draft.certificateCode = action.payload;
+    },
+
+    setCertificateDiscount(state, action: PayloadAction<number>) {
+      state.draft.certificateDiscount = action.payload;
+      state.draft.totalAmount = Math.max(
+        state.draft.amount - action.payload,
+        0
+      );
+    },
+
+    clearCertificate(state) {
+      state.draft.certificateCode = null;
+      state.draft.certificateDiscount = 0;
+      state.draft.totalAmount = state.draft.amount;
     },
 
     setTotalAmount(state, action: PayloadAction<number>) {
@@ -77,7 +108,7 @@ const ordersSlice = createSlice({
 
     resetOrderState(state) {
       state.draft = initialDraft;
-      state.currentOrder = null;
+      state.currentOrder = null; // delete (state.draft as any).certificate;
     },
   },
   extraReducers: (builder) => {
@@ -90,7 +121,6 @@ const ordersSlice = createSlice({
         state.error = null;
         state.isLoading = false;
         state.orders = action.payload;
-        // console.log("state.orders: ", state.draft.certificate);
       })
       .addCase(fetchAllOrders.rejected, (state, action) => {
         state.error =
@@ -107,7 +137,6 @@ const ordersSlice = createSlice({
         state.error = null;
         state.isLoading = false;
         state.certificates = action.payload;
-        // console.log("state.draft.certificate: ", state.draft.certificate);
       })
       .addCase(fetchAllCertificates.rejected, (state, action) => {
         state.error =
@@ -121,24 +150,29 @@ const ordersSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchCertificateByNumber.fulfilled, (state, action) => {
-        console.log("🎉 CERTIFICATE LOADED:", action.payload);
-        console.log("💰 TOTAL AMOUNT BEFORE:", state.draft.totalAmount);
         state.error = null;
         state.isLoading = false;
-        state.draft.certificate = action.payload;
-        // console.log("state.draft.certificate: ", state.draft.certificate);
-         // 🟢 Перерахунок totalAmount
-  const cert = action.payload;
-  // console.log('cert: ', cert);
-  const amount = state.draft.amount;
 
-  // Приклад: якщо сертифікат дає суму знижки
-  const discount = cert.balance ?? cert.amount ?? 0;
-  // console.log('discount: ', discount);
+        const cert = action.payload;
 
-  state.draft.totalAmount = Math.max(amount - discount, 0);
+        if (!cert.isActive || (cert.balance ?? 0) <= 0) {
+          state.error = !cert.isActive
+            ? "Сертифікат не активний. Зверніться до менеджера"
+            : "На сертифікаті нульовий баланс";
 
-  console.log("💰 TOTAL AMOUNT AFTER:", state.draft.totalAmount);
+          state.draft.certificateCode = null;
+          state.draft.certificateDiscount = 0;
+          state.draft.totalAmount = state.draft.amount;
+          return;
+        }
+
+        const amount = state.draft.amount;
+        const certBalance = cert.balance ?? cert.amount ?? 0;
+        const discount = Math.min(amount, certBalance);
+
+        state.draft.certificateCode = cert.number;
+        state.draft.certificateDiscount = discount;
+        state.draft.totalAmount = Math.max(amount - discount, 0);
       })
       .addCase(fetchCertificateByNumber.rejected, (state, action) => {
         state.error =
@@ -147,23 +181,22 @@ const ordersSlice = createSlice({
             : "Не вдалося завантажити сертифікати";
         state.isLoading = false;
       })
-      // .addCase(fetchCertificateById.pending, (state) => {
-      //   state.error = null;
-      //   state.isLoading = true;
-      // })
-      // .addCase(fetchCertificateById.fulfilled, (state, action) => {
-      //   state.error = null;
-      //   state.isLoading = false;
-      //   state.draft.certificate = action.payload;
-      //   // console.log("state.draft.certificate: ", state.draft.certificate);
-      // })
-      // .addCase(fetchCertificateById.rejected, (state, action) => {
-      //   state.error =
-      //     typeof action.payload === "string"
-      //       ? action.payload
-      //       : "Не вдалося завантажити сертифікати";
-      //   state.isLoading = false;
-      // })
+      .addCase(spendCertificate.pending, (state) => {
+        state.error = null;
+        state.isLoading = true;
+      })
+
+      .addCase(spendCertificate.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(spendCertificate.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error =
+          typeof action.payload === "string"
+            ? action.payload
+            : "Не вдалося списати сертифікат";
+      })
       .addCase(createOrder.pending, (state) => {
         state.error = null;
         state.isLoading = true;
@@ -185,10 +218,14 @@ const ordersSlice = createSlice({
 
 export const {
   setFromBasket,
+  setCustomer,
+  clearCustomer,
   setDelivery,
   setPaymentMethod,
   setComment,
-  setCertificate,
+  setCertificateCode,
+  setCertificateDiscount,
+  clearCertificate,
   setTotalAmount,
   resetOrderState,
 } = ordersSlice.actions;
