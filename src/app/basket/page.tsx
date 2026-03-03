@@ -16,6 +16,7 @@ import RecommendedProducts from "@/components/ui/RecommendedProducts/Recommended
 import BackButton from "@/components/ui/BackButton/BackButton";
 import Loader from "@/components/ui/Loader/Loader";
 import { BaseModal } from "@/components/shared/Modal";
+import Image from "next/image";
 import styles from "./Basket.module.scss";
 
 const BasketPage = () => {
@@ -84,7 +85,6 @@ const BasketPage = () => {
       quantity: item.quantity,
       selectedVolume: item.selectedVolume,
     }));
-    // console.log("orderItems: ", orderItems);
 
     dispatch(
       setFromBasket({
@@ -156,7 +156,7 @@ const BasketPage = () => {
       </div>
       {isModalOpen && (
         <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <img
+          <Image
             src="/images/basketDel.webp"
             alt="Товар видалено з кошика"
             className="w-[150px] h-[150px] object-contain mb-4 mx-auto"

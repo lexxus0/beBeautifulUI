@@ -1,5 +1,9 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { IOrderItemDraft, IOrderResponse } from "@/types/orders";
-
+import { useRepeatOrder } from "@/helpers/hooks/useRepeatOrder";
+import { BaseModal } from "@/components/shared/Modal";
+import Image from "next/image";
 import styles from "./OrderItem.module.scss";
 
 interface IOrderItemProps {
@@ -8,6 +12,28 @@ interface IOrderItemProps {
 }
 
 export default function OrderItem({ order, onDetailsClick }: IOrderItemProps) {
+  const router = useRouter();
+  const { repeatOrder } = useRepeatOrder();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    const timer = setTimeout(() => {
+      setIsModalOpen(false);
+      router.push("/basket");
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [isModalOpen, router]);
+
+  const handleRepeat = async () => {
+    const ok = await repeatOrder(order);
+    if (ok) {
+      setIsModalOpen(true);
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col lg:gap-[74px] gap-10 lg:py-5 lg:mx-auto lg:w-[856px]">
@@ -94,7 +120,11 @@ export default function OrderItem({ order, onDetailsClick }: IOrderItemProps) {
           </ul>
         </div>
         <div className="flex flex-col pt-8 gap-6 md:flex-row md:gap-5 md:pt-10 lg:pt-15 lg:gap-6 relative">
-          <button type="button" onClick={() => {}} className={styles.btnOrder}>
+          <button
+            type="button"
+            onClick={handleRepeat}
+            className={styles.btnOrder}
+          >
             Повторити замовлення
           </button>
           <button
@@ -107,6 +137,28 @@ export default function OrderItem({ order, onDetailsClick }: IOrderItemProps) {
           <div className="w-screen h-px bg-gray-10 absolute left-1/2 -translate-x-1/2 -bottom-10 lg:-bottom-16"></div>
         </div>
       </div>
+      {isModalOpen && (
+        <BaseModal
+          isOpen
+          onClose={() => {
+            setIsModalOpen(false);
+            router.push("/basket");
+          }}
+        >
+          <div className="relative w-[150px] h-[150px] object-contain mb-4 mx-auto">
+            <Image
+              src="/gif/cart.gif"
+              alt="Товар додано до кошика"
+              fill
+              className="object-contain"
+              unoptimized
+            />
+          </div>
+          <p className="font-roboto font-light text-xl italic uppercase text-center text-[#808080] mb-4">
+            Товар додано до кошика.
+          </p>
+        </BaseModal>
+      )}
     </>
   );
 }
