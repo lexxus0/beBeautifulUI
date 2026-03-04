@@ -36,7 +36,6 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({
   );
   
   const reviews = useAppSelector(selectReviewsByProduct);
-  console.log('reviews: ', reviews);
   const currentUserId = useAppSelector((s) => s.auth.user?._id);
 
   const isLoading = useAppSelector(selectReviewsLoading);

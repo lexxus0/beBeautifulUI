@@ -1,21 +1,29 @@
 import { IProduct } from "./types";
 
-export interface IOrderItem {
-    product: IProduct;
-    selectedVolume: string;
-    quantity: number;
-  }
-  
-  export interface IDelivery {
-    deliveryMethod: "nova_poshta";
-    city: string;
-    warehouse?: string;
-    street?: string;
-    house?: string;
-    apartment?: string;
-  }
+export type DeliveryType = "branch" | "address";
+export type PaymentMethod = "liqpay" | "requisites" | "cod";
+export type OrderStatus = "draft" | "ordered" | "payed" | "done";
 
-  export type PaymentChoice = "card" | "invoice" | "cod";
+export interface IOrderItemDraft {
+  product?: IProduct;
+  selectedVolume: number;
+  quantity: number;
+}
+
+export interface IOrderItem {
+  productId: string;
+  selectedVolume: number;
+  quantity: number;
+}
+
+export interface IDeliveryDraft {
+  deliveryType: DeliveryType;
+  city: string;
+  branchNumber?: string;
+  street?: string;
+  house?: string;
+  apartment?: string;
+}
 
 export interface ICertificate {
   _id: string;
@@ -25,42 +33,82 @@ export interface ICertificate {
   owner: string | null;
   activatedAt: string | null;
   expiresAt: string | null;
+  activatedBy: string | null;
   balance: number;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface IOrderDraft {
-    items: IOrderItem[];
-    delivery: IDelivery | null;
-    paymentMethod: PaymentChoice | null;
-    comment?: string;
-    certificate?: ICertificate | null;
-    amount: number; // сума товарів
-    totalAmount: number; // з урахуванням знижок/сертифіката/доставки
-  }
+  items: IOrderItemDraft[];
+  delivery: IDeliveryDraft | null;
+  paymentMethod: PaymentMethod | null;
 
-  export type OrderStatus = "draft" | "ordered" | "payed" | "done";
+  customer: {
+    customerName: string;
+    phone: string;
+    email?: string;
+  } | null;
 
-export interface IOrder {
+  comment?: string;
+  certificateCode?: string | null;
+  certificateDiscount?: number;
+  amount: number; // сума товарів
+  totalAmount: number; // з урахуванням сертифіката
+}
+
+export interface CreateOrderDto {
+  clientId: string | null;
+
+  items: IOrderItem[];
+
+  deliveryType: DeliveryType;
+  city: string;
+  street?: string;
+  house?: string;
+  apartment?: string;
+  branchNumber?: string;
+
+  paymentMethod: PaymentMethod;
+
+  customerName: string;
+  phone: string;
+  email?: string;
+
+  comment?: string | null;
+
+  certificateCode?: string;
+}
+
+export interface IOrderResponse {
   _id: string;
-  clientId: string;
+  clientId: string | null;
   customerName?: string;
   phone?: string;
   email?: string;
-  items: IOrderItem[];
-  orderNumber: string;
-  date: string;
-  status: OrderStatus;
-  // DeliveryMethod: "nova_poshta";
+  // items: IOrderItem[];
+  items: IOrderItemDraft[];
+
+  deliveryMethod: "nova_poshta";
+  deliveryType: DeliveryType;
+  city: string;
+  street?: string;
+  house?: string;
+  apartment?: string;
+  branchNumber?: string;
+
+  paymentMethod: PaymentMethod;
+  paymentLink?: string;
   comment?: string;
-  certificate?: string;
+  certificateCode?: string | null;
+  certificateDiscount: number;
+
   totalAmount: number;
-  delivery: IDelivery;
-  paymentLink: string;
+  finalAmount: number;
+
   lowStockWarning?: boolean;
-  // ttn: string;
-  // amount: number;
+  status: OrderStatus;
+
   createdAt?: string;
   updatedAt?: string;
 }

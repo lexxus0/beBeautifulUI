@@ -24,20 +24,20 @@
       gap: 34px;
     }
 
-    // .img {
-    //   width: 124px;
-    //   height: 112px;
-    //   object-fit: cover;
+    .img {
+      width: 124px;
+      height: 112px;
+      object-fit: contain;
 
-    //   @media (min-width: 744px) {
-    //     width: 94px;
-    //     height: 100px;
-    //   }
-    //   @media (min-width: 1440px) {
-    //     width: 196px;
-    //     height: 156px;
-    //   }
-    // }
+      @media (min-width: 744px) {
+        // width: 94px;
+        // height: 94px;
+      }
+      @media (min-width: 1440px) {
+        // width: 196px;
+        // height: 156px;
+      }
+    }
 
     .info {
       flex: 1;

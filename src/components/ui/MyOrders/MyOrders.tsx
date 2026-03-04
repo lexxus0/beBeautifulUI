@@ -1,51 +1,43 @@
 "use client";
 
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Icon from "@/components/shared/Icon";
 import OrdersList from "./OrdersList/OrdersList";
-// import { IOrder } from "@/types/orders";
-// import ordersData from "./orders.json";
-
-import styles from "./MyOrders.module.scss";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { selectOrders } from "@/store/orders/selectors";
+import { selectIsLoadingOrder, selectOrders } from "@/store/orders/selectors";
 import { fetchAllOrders } from "@/store/orders/operations";
+import Loader from "../Loader/Loader";
+import styles from "./MyOrders.module.scss";
 
 export default function MyOrders() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const orders = useAppSelector(selectOrders);
-
-  // const [orders, setOrders] = useState<IOrder[] | null>(null);
-
-  const handleOrderDetails = (id: string) => {
-    router.push(`/orders/${id}`);
-  };
+  const isLoading = useAppSelector(selectIsLoadingOrder);
 
   useEffect(() => {
     dispatch(fetchAllOrders());
   }, [dispatch]);
 
-  return (
-    <div className="container pt-[10px] pb-15 md:pb-[42px] lg:pt-[34px] lg:b-15">
-      <div className="flex flex-col items-start gap-4 mb-10 md:mb-[62px] md:flex-row md:items-center md:justify-between">
-        <h2 className="font-lato font-semibold text-2xl lg:text-[32px] text-[#49454f]">
-          Мої замовлення
-        </h2>
-        <div className="relative w-full md:w-[207px] lg:w-[306px]">
-          <input
-            type="text"
-            name="search"
-            className={styles.input}
-            placeholder="Пошук"
-          />
-          <Icon name="icon-search" className={styles.iconSearch} />
-        </div>
+  if (isLoading)
+    return (
+      <div>
+        <Loader />
       </div>
-      {orders === null ? (
+    );
+
+  const handleOrderDetails = (id: string) => {
+    router.push(`/orders/${id}`);
+  };
+
+  return (
+    <div className="container pt-5 pb-15 md:pt-[30px] md:pb-[42px] lg:pt-[50px] lg:pb-15">
+      <h2 className="font-lato font-semibold text-2xl mb-5 md:text-[28px] md:mb-[22px] lg:text-[32px] text-[#49454f] text-center">
+        Мої замовлення
+      </h2>
+      {orders.length === 0 || !orders ? (
         <>
           <p className="font-lato font-bold text-base leading-relaxed text-black mb-6 md:text-lg lg:font-semibold lg:text-2xl lg:mb-[50px] text-center">
             Слідкуйте за статусом ваших замовлень у зручному форматі

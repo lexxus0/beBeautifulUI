@@ -13,7 +13,7 @@ const BasketItemsList: React.FC<CartItemsListProps> = ({
     <div className={styles.items}>
       {basketItems.map((item) => (
         <BasketItem
-          key={`${item.product._id}-${item.selectedVolume}`}
+          key={`${item.variant._id}-${item.variant.volume}`}
           item={item}
           onIncrement={() => onIncrement(item)}
           onDecrement={() => onDecrement(item)}

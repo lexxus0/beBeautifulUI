@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { selectDraft } from "@/store/orders/selectors";
-import { PaymentChoice } from "@/types/orders";
+import { selectDraft, selectErrorOrder } from "@/store/orders/selectors";
+import { PaymentMethod } from "@/types/orders";
 import { Controller, Resolver, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
@@ -12,25 +12,35 @@ import {
   schemaDelivery,
 } from "@/validation/deliveryValidation";
 import {
-  setCertificate,
+  clearCertificate,
+  resetOrderState,
   setComment,
   setDelivery,
   setPaymentMethod,
 } from "@/store/orders/slice";
-import { fetchCertificateByNumber } from "@/store/orders/operations";
+import {
+  createOrder,
+  fetchCertificateByNumber,
+  spendCertificate,
+} from "@/store/orders/operations";
 import { BaseModal } from "@/components/shared/Modal";
 import Image from "next/image";
 import Icon from "@/components/shared/Icon";
 import PaymentSelect from "../PaymentSelect/PaymentSelect";
 import BaseSelect from "@/components/elements/BaseSelect";
 import styles from "./DeliveryFormMarkup.module.scss";
+import { clearCartState } from "@/store/cart/slice";
+import { clearServerCart } from "@/store/cart/operations";
+import { selectIsLoggedIn } from "@/store/auth/selectors";
+import { clearGuestCart } from "@/store/cart/utils";
+import toast from "react-hot-toast";
 
 type City = {
   Ref: string;
   Description: string;
 };
 
-type Warehouse = {
+type Branch = {
   SiteKey: string;
   Description: string;
 };
@@ -39,22 +49,45 @@ export default function DeliveryFormMarkup() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const draft = useAppSelector(selectDraft);
-  console.log("📄 PAYMENT PAGE LOADED:", draft);
-  
   const [cities, setCities] = useState<City[]>([]);
-  const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
+  const [branches, setBranches] = useState<Branch[]>([]);
   const [selectedCity, setSelectedCity] = useState<string>("");
-  const [selectedWarehouse, setSelectedWarehouse] = useState<string>("");
+  const [selectedBranch, setSelectedBranch] = useState<string>("");
+  const [citiesLoading, setCitiesLoading] = useState(false);
+  const [branchesLoading, setBranchesLoading] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [showCert, setShowCert] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [certTried, setCertTried] = useState(false);
+
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const draft = useAppSelector(selectDraft);
+  const errorCertificate = useAppSelector(selectErrorOrder);
 
   useEffect(() => {
+    if (modalIsOpen) return;
+
     if (!draft?.items.length) {
-      router.push("/"); // або "/basket"
+      router.push("/");
+      return;
     }
-  }, [draft.items.length, router]);
+
+    if (!isLoggedIn && !draft.customer) {
+      router.push("/checkout");
+      return;
+    }
+  }, [draft.items.length, draft?.customer, isLoggedIn, router, modalIsOpen]);
+
+  useEffect(() => {
+    if (!modalIsOpen) return;
+
+    const t = setTimeout(() => {
+      setModalIsOpen(false);
+      router.push("/");
+    }, 2000);
+
+    return () => clearTimeout(t);
+  }, [modalIsOpen, router]);
 
   const {
     register,
@@ -62,19 +95,20 @@ export default function DeliveryFormMarkup() {
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<DeliveryFormValues>({
     resolver: yupResolver(schemaDelivery) as Resolver<DeliveryFormValues>,
     defaultValues: {
       city: "",
-      deliveryType: "warehouse",
-      warehouse: "",
+      deliveryType: "branch",
+      branchNumber: "",
       street: "",
       house: "",
       apartment: "",
       comment: "",
-      certificate: "",
-      payment: undefined,
+      certificateCode: "",
+      paymentMethod: undefined,
       // noCall: false,
       saveCard: false,
     },
@@ -85,6 +119,7 @@ export default function DeliveryFormMarkup() {
 
   useEffect(() => {
     const fetchCities = async () => {
+      setCitiesLoading(true);
       try {
         const res = await fetch(
           "https://be-beautiful-backend.onrender.com/api/np/cities"
@@ -97,10 +132,11 @@ export default function DeliveryFormMarkup() {
         }
 
         const json = await res.json();
-        console.log("city: ", json);
         setCities(json.data || []);
       } catch (err) {
         console.error("❌ error fetching cities:", err);
+      } finally {
+        setCitiesLoading(false);
       }
     };
     fetchCities();
@@ -108,13 +144,14 @@ export default function DeliveryFormMarkup() {
 
   useEffect(() => {
     if (!selectedCity) {
-      setWarehouses([]);
-      setSelectedWarehouse("");
-      setValue("warehouse", "");
+      setBranches([]);
+      setSelectedBranch("");
+      setValue("branchNumber", "");
       return;
     }
 
     const fetchWarehouses = async () => {
+      setBranchesLoading(true);
       try {
         const res = await fetch(
           `https://be-beautiful-backend.onrender.com/api/np/warehouses/${selectedCity}`
@@ -123,15 +160,16 @@ export default function DeliveryFormMarkup() {
         if (!res.ok) {
           const text = await res.text();
           console.error("❌ warehouses not ok:", res.status, text);
-          setWarehouses([]);
+          setBranches([]);
           return;
         }
 
         const json = await res.json();
-        console.log("warehouses: ", json.data);
-        setWarehouses(json.data);
+        setBranches(json.data);
       } catch (err) {
         console.error("❌ error fetching warehouses:", err);
+      } finally {
+        setBranchesLoading(false);
       }
     };
     fetchWarehouses();
@@ -139,71 +177,124 @@ export default function DeliveryFormMarkup() {
 
   // --- SYNC city & warehouse with react-hook-form ---
   useEffect(() => {
-    if (selectedCity) {
-      const found = cities.find((c) => c.Ref === selectedCity);
-      setValue("city", found ? found.Description : "");
-    } else {
+    if (!selectedCity || cities.length === 0) {
       setValue("city", "");
+      return;
     }
+
+    const found = cities.find((c) => c.Ref === selectedCity);
+    setValue("city", found ? found.Description : "");
   }, [selectedCity, cities, setValue]);
 
   useEffect(() => {
-    setValue("warehouse", selectedWarehouse || "");
-  }, [selectedWarehouse, setValue]);
+    setValue("branchNumber", selectedBranch || "");
+  }, [selectedBranch, setValue]);
 
-  const certValue = watch("certificate");
+  const clearCity = () => {
+    setSelectedCity("");
+    setSelectedBranch("");
+    setBranches([]);
+    setValue("city", "");
+    setValue("branchNumber", "");
+  };
 
-  const onSubmit = (data: DeliveryFormValues) => {
+  const clearBranch = () => {
+    setSelectedBranch("");
+    setValue("branchNumber", "");
+  };
+
+  const certValue = watch("certificateCode");
+
+  useEffect(() => {
+    if (!certValue?.trim()) setCertTried(false);
+  }, [certValue]);
+
+  const onSubmit = async (data: DeliveryFormValues) => {
     const delivery =
-      data.deliveryType === "warehouse"
+      data.deliveryType === "branch"
         ? {
-            deliveryMethod: "nova_poshta" as const,
+            deliveryType: "branch" as const,
             city: data.city,
-            warehouse: data.warehouse,
+            branchNumber: data.branchNumber,
           }
         : {
-            deliveryMethod: "nova_poshta" as const,
+            deliveryType: "address" as const,
             city: data.city,
             street: data.street,
             house: data.house,
             apartment: data.apartment,
           };
-    console.log("📦 DELIVERY FORM SUBMIT:", data);
     dispatch(setDelivery(delivery));
-    console.log("📦 SET DELIVERY:", delivery);
 
     if (data.comment) {
       dispatch(setComment(data.comment));
     }
-    if (data.certificate) {
-      dispatch(fetchCertificateByNumber(data.certificate));
-      // тут за бажанням можна ще перерахувати totalAmount і зробити setTotalAmount(...)
-    } else {
-      dispatch(setCertificate(null)); // якщо очищено
+    if (!data.certificateCode?.trim()) {
+      dispatch(clearCertificate());
     }
 
-    if (data.payment) {
-      console.log("🎫 APPLY CERTIFICATE:", certValue);
-      dispatch(setPaymentMethod(data.payment));
-      // тут за бажанням можна ще перерахувати totalAmount і зробити setTotalAmount(...)
+    if (data.paymentMethod) {
+      dispatch(setPaymentMethod(data.paymentMethod));
     }
 
-    if (data.payment === "card") {
-      router.push("/payment");
-    } else {
+    try {
+      const created = await dispatch(createOrder()).unwrap();
+
+      if (data.paymentMethod === "liqpay") {
+        if (created?.paymentLink) {
+          window.location.href = created.paymentLink;
+          return;
+        }
+        toast.error("Не вдалося отримати посилання для оплати");
+      }
+
+      const certCode = draft.certificateCode;
+      const certDiscount = draft.certificateDiscount ?? 0;
+
+      if (certCode && certDiscount > 0) {
+        try {
+          await dispatch(
+            spendCertificate({ number: certCode, amount: certDiscount })
+          ).unwrap();
+        } catch (err: unknown) {
+          toast.error("Не вдалося списати сертифікат");
+        }
+      }
+
+      if (isLoggedIn) {
+        await dispatch(clearServerCart()).unwrap();
+      } else {
+        clearGuestCart();
+      }
+
+      dispatch(resetOrderState());
+      dispatch(clearCartState());
+
+      reset({
+        city: "",
+        deliveryType: "branch",
+        branchNumber: "",
+        street: "",
+        house: "",
+        apartment: "",
+        comment: "",
+        certificateCode: "",
+        paymentMethod: undefined,
+        saveCard: false,
+      });
+
+      setSelectedCity("");
+      setSelectedBranch("");
+      setBranches([]);
+
+      setShowComment(false);
+      setShowCert(false);
+
       setModalIsOpen(true);
-
-      setTimeout(() => {
-        setModalIsOpen(false);
-        router.push("/");
-      }, 3000);
+    } catch (err) {
+      toast.error("Не вдалося створити замовлення. Спробуйте ще раз.");
     }
   };
-
-  // useEffect(()=> {
-  //  const sert =  dispatch(fetchCertificates())
-  //  console.log('sert: ', sert);
-  // })
 
   return (
     <div className="pb-16 md:w-[436px] md:pt-[6px] md:pb-20 lg:w-full lg:pt-9 lg:pb-10 mx-auto lg:mr-0">
@@ -215,15 +306,22 @@ export default function DeliveryFormMarkup() {
           {/* МІСТО */}
           <BaseSelect
             label="Місто"
-            placeholder="Пошук міста"
-            options={cities.map((c) => ({
-              value: c.Ref,
-              label: c.Description,
-            }))}
+            placeholder="Виберіть місто"
+            options={
+              citiesLoading
+                ? [{ value: "__loading__", label: "Завантаження..." }]
+                : cities.map((c) => ({
+                    value: c.Ref,
+                    label: c.Description,
+                  }))
+            }
             value={selectedCity}
             onSelect={setSelectedCity}
             iconLeft="icon-search"
             iconRight="icon-arrow-down"
+            clearable
+            clearMode="replace"
+            onClear={clearCity}
             searchable
             className="font-roboto font-light text-base"
           />
@@ -243,7 +341,7 @@ export default function DeliveryFormMarkup() {
               <label className={styles.subTabLabel}>
                 <input
                   type="radio"
-                  value="warehouse"
+                  value="branch"
                   {...register("deliveryType")}
                 />
                 <span>Відділення</span>
@@ -266,18 +364,25 @@ export default function DeliveryFormMarkup() {
           </div>
 
           {/* ВІДДІЛЕННЯ */}
-          {deliveryType === "warehouse" && (
+          {deliveryType === "branch" && (
             <BaseSelect
               label="Відділення"
               placeholder="Відділення"
-              options={warehouses.map((w) => ({
-                value: w.SiteKey,
-                label: w.Description,
-              }))}
-              value={selectedWarehouse}
-              onSelect={setSelectedWarehouse}
+              options={
+                branchesLoading
+                  ? [{ value: "__loading__", label: "Завантаження..." }]
+                  : branches.map((w) => ({
+                      value: w.SiteKey,
+                      label: w.Description,
+                    }))
+              }
+              value={selectedBranch}
+              onSelect={setSelectedBranch}
               iconLeft="icon-search"
               iconRight="icon-arrow-down"
+              clearable
+              clearMode="replace"
+              onClear={clearBranch}
               searchable
               className="font-roboto font-light text-base"
             />
@@ -365,11 +470,11 @@ export default function DeliveryFormMarkup() {
         <div className="lg:w-[526px]">
           {/* ВАРІАНТ ОПЛАТИ */}
           <Controller
-            name="payment"
+            name="paymentMethod"
             control={control}
             render={({ field, fieldState }) => (
               <PaymentSelect
-                value={field.value as PaymentChoice | undefined}
+                value={field.value as PaymentMethod | undefined}
                 onChange={field.onChange}
                 placeholder="Варіант оплати"
                 error={fieldState.error?.message}
@@ -378,7 +483,7 @@ export default function DeliveryFormMarkup() {
           />
 
           {/* ДОДАТКОВІ ПОЛЯ */}
-          <div className="mb-6 flex flex-col gap-[18px] lg:gap-[26px] lg:mb-11">
+          <div className="mb-8 flex flex-col gap-[18px] lg:gap-[26px] lg:mb-11">
             <button
               type="button"
               className={styles.btnPlus}
@@ -431,17 +536,25 @@ export default function DeliveryFormMarkup() {
                     Номер сертифіката
                   </label>
                   <input
-                    {...register("certificate")}
+                    {...register("certificateCode")}
                     id="certificate"
                     placeholder="Номер сертифіката"
                     className={`${styles.input} ${styles.house}`}
                   />
                 </div>
+                {errorCertificate &&
+                  showCert &&
+                  certTried &&
+                  !!certValue?.trim() && (
+                    <p className="mb-2 text-sm text-rose-600">
+                      {errorCertificate}
+                    </p>
+                  )}
                 <button
                   type="button"
                   onClick={() => {
+                    setCertTried(true);
                     if (!certValue?.trim()) return;
-                    console.log("🎫 APPLY CERTIFICATE:", certValue);
                     dispatch(fetchCertificateByNumber(certValue));
                   }}
                   className={`${styles.submit} ${styles.certifictBtn}`}
@@ -452,8 +565,8 @@ export default function DeliveryFormMarkup() {
             )}
           </div>
 
-          <div className="flex flex-col gap-4 mb-10 mb:mb-12 lg:mb-[70px] pl-1 lg:pl-[6px]">
-            {/* <label className={styles.cb}>
+          <div className="flex flex-col gap-4 mb-10 mb:mb-12 lg:mb-[50px] pl-1 lg:pl-[6px]">
+            <label className={styles.cb}>
               <input
                 type="checkbox"
                 id="noCall"
@@ -464,8 +577,8 @@ export default function DeliveryFormMarkup() {
               <span>
                 Мені можна не телефонувати для підтвердження замовлення.
               </span>
-            </label> */}
-            <label className={styles.cb}>
+            </label>
+            {/* <label className={styles.cb}>
               <input
                 type="checkbox"
                 id="saveCard"
@@ -474,7 +587,7 @@ export default function DeliveryFormMarkup() {
               />
               <span className={styles.cbBox} />
               <span>Зберегти картку для майбутніх покупок.</span>
-            </label>
+            </label> */}
           </div>
           {showCert ? (
             <div className="lg:h-[186px] lg:mb-41">
@@ -502,7 +615,7 @@ export default function DeliveryFormMarkup() {
                     <p className="font-roboto font-light text-sm md:text-lg lg:text-[22px] text-[#af1818] text-end">
                       Сертифікат:
                       <span className="ml-[10px]">{`${
-                        draft.certificate.balance || "0"
+                        draft.certificateDiscount ?? 0
                       } грн`}</span>
                     </p>
                     <p className="font-lato font-bold lg:font-semibold text-sm md:text-lg lg:text-2xl text-end">
@@ -522,9 +635,15 @@ export default function DeliveryFormMarkup() {
               </div>
             </div>
           ) : (
-            <button disabled={isSubmitting} className={styles.submit}>
-              Оформити замовлення
-            </button>
+            <div>
+              <p className="font-lato font-bold lg:font-semibold text-sm md:text-lg lg:text-2xl text-end mb-4">
+                Сума замовлення:
+                <span className="ml-[10px]">{`${draft.amount} грн`}</span>
+              </p>
+              <button disabled={isSubmitting} className={styles.submit}>
+                Оформити замовлення
+              </button>
+            </div>
           )}
         </div>
       </form>

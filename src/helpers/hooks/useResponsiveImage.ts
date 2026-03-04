@@ -26,7 +26,7 @@ export const useResponsiveImage = (
 
   const srcPlaceholder =
     bp === "mobile"
-      ? "/images/placeholder/placeholder-tab.png"
+      ? "/images/placeholder/placeholder-mob.png"
       : bp === "tablet"
       ? "/images/placeholder/placeholder-tab.png"
       : "/images/placeholder/placeholder-desk.png";

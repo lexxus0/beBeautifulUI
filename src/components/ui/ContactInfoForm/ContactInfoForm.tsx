@@ -8,8 +8,11 @@ import { schemaContactInfo } from "@/validation/contactInfoValidation";
 import { ContactInfoInputs } from "@/types/types";
 import styles from "./ContactInfoForm.module.scss";
 import { useState } from "react";
+import { useAppDispatch } from "@/store/hooks";
+import { setCustomer } from "@/store/orders/slice";
 
 const ContactInfoForm = () => {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const [showSuccessMsg, setShowSuccessMsg] = useState(false);
 
@@ -27,9 +30,16 @@ const ContactInfoForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<ContactInfoInputs> = async () => {
-    // Remove sensitive contact data logging for security
-    console.log("Contact info form submitted successfully");
+  const onSubmit: SubmitHandler<ContactInfoInputs> = async (values) => {
+    const customerName = `${values.firstName} ${values.lastName}`.trim();
+
+    dispatch(
+      setCustomer({
+        customerName,
+        phone: values.phone.trim(),
+        email: values.email.trim(),
+      })
+    )
 
     setShowSuccessMsg(true);
     setTimeout(() => {

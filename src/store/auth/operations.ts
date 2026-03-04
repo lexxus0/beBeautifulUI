@@ -13,7 +13,6 @@ import { RootState } from "../store";
 import { clearAuth } from "./slice";
 import { AxiosError, isAxiosError } from "axios";
 import { clearCartState } from "../cart/slice";
-import { syncCartFromGuest } from "../cart/operations";
 import { clearAuthTokens, getAuthTokens } from "@/helpers/authUtils";
 import { appendIf } from "@/helpers/hooks/appendIf";
 import { normalizeBackendImageUrl } from "@/helpers/normalizeImage";
@@ -79,19 +78,14 @@ export const registerUser = createAsyncThunk<
 export const loginUser = createAsyncThunk<
   IUserResponse & { user: IUser },
   Partial<IUser>
->("users/signin", async (credentials, { rejectWithValue, dispatch }) => {
+>("users/signin", async (credentials, { rejectWithValue }) => {
   try {
     const res = await instance.post("auth/login", credentials);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { accessToken, refreshToken } = res.data.data;
 
     if (accessToken) {
       setAuthHeader(accessToken);
     }
-
-    await dispatch(syncCartFromGuest()).unwrap();
-
-    // Fetch current user info immediately after login
     const userRes = await instance.get("/auth/current");
 
     return {
@@ -164,7 +158,6 @@ export const getCurrentUser = createAsyncThunk<
   try {
     const state = thunkAPI.getState();
     let accessToken = state.auth.accessToken;
-    // console.log(accessToken);
 
     if (!accessToken) {
       const loaded = getAuthTokens();
@@ -245,7 +238,6 @@ export const updateUser = createAsyncThunk<IUser, IUpdateUserPayload>(
   "users/updateUser",
   async (payload, { rejectWithValue }) => {
     try {
-      // console.log("🟢 payload перед відправкою:", payload);
       const form = new FormData();
 
       appendIf(form, "first_name", payload.first_name);
@@ -261,18 +253,11 @@ export const updateUser = createAsyncThunk<IUser, IUpdateUserPayload>(
         form.append("photo", payload.photo);
       }
 
-      // Для діагностики:
-      // for (const [k, v] of form.entries()) {
-      //   console.log("📦 FormData", k, v);
-      // }
-
       const res = await instance.patch<{
         status: number;
         message: string;
         data: IUpdateUserApiUser;
       }>("auth/update-current-user", form);
-
-      // console.log("✅ server:", res.data);
 
       const user = res.data.data;
 

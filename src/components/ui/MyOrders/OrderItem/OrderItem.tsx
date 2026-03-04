@@ -1,21 +1,46 @@
-import React from "react";
-import { IOrderItem, IOrder} from "@/types/orders";
-
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { IOrderItemDraft, IOrderResponse } from "@/types/orders";
+import { useRepeatOrder } from "@/helpers/hooks/useRepeatOrder";
+import { BaseModal } from "@/components/shared/Modal";
+import Image from "next/image";
 import styles from "./OrderItem.module.scss";
 
 interface IOrderItemProps {
-  order: IOrder;
+  order: IOrderResponse;
   onDetailsClick: (id: string) => void;
 }
 
 export default function OrderItem({ order, onDetailsClick }: IOrderItemProps) {
+  const router = useRouter();
+  const { repeatOrder } = useRepeatOrder();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    const timer = setTimeout(() => {
+      setIsModalOpen(false);
+      router.push("/basket");
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [isModalOpen, router]);
+
+  const handleRepeat = async () => {
+    const ok = await repeatOrder(order);
+    if (ok) {
+      setIsModalOpen(true);
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col lg:gap-[74px] gap-10 lg:py-5 lg:mx-auto lg:w-[856px]">
         <ul className={styles.listOrder}>
           <li>
             <p className={styles.textOrder}>№ Замовлення:</p>
-            <span className={styles.spanOrder}>{order.orderNumber}</span>
+            <span className={styles.spanOrder}>43242424</span>
           </li>
           {/* <li>
             <p className={styles.textOrder}>Статус:</p>
@@ -27,42 +52,46 @@ export default function OrderItem({ order, onDetailsClick }: IOrderItemProps) {
           {/* </li> */}
           <li>
             <p className={styles.textOrder}>Дата:</p>
-            <span className={styles.spanOrder}>{order.date}</span>
+            <span className={styles.spanOrder}>
+              {" "}
+              {order.createdAt
+                ? new Date(order.createdAt).toLocaleDateString("uk-UA")
+                : ""}
+            </span>
           </li>
           <li>
             <p className={styles.textOrder}>Тип доставки:</p>
-            <span className={styles.spanOrder}>{order.delivery.deliveryMethod}</span>
+            <span className={styles.spanOrder}>{order.deliveryMethod}</span>
           </li>
           <li>
             <p className={styles.textOrder}>Сума:</p>
-            <span className={styles.spanOrder}>{order.totalAmount}</span>
+            <span className={styles.spanOrder}>{order.totalAmount} грн</span>
           </li>
         </ul>
         <div>
           <p className="font-lato font-semibold text-xl pt-1 border-b border-b-[#e4e4e4] mb-5 md:font-bold md:text-lg">
             Товари:
           </p>
-          <ul className="flex flex-col gap-5 md:w-[500px]">
-            {order.items.map(
-              (
-                item: IOrderItem,
-                idx: number
-              ) => (
+          <ul className="flex flex-col gap-5">
+            {order.items.map((item: IOrderItemDraft, idx: number) => {
+              return (
                 <li
-                  key={item.product._id}
-                  className="flex gap-4 items-center md:gap-6"
+                  key={`${item.product?._id}-${idx}`}
+                  className={styles.items}
                 >
                   <p className="font-lato font-black text-lg">
                     {(idx + 1).toString().padStart(2, "0")}
                   </p>
-                  <div className="flex flex-col gap-1 md:flex-row md:gap-9">
-                    <p className="w-[100px] font-lato text-black text-lg">
-                      {item.product.name?.ua}
+                  <div className="flex flex-col gap-1 md:grid md:grid-cols-[3fr_4fr] md:gap-5">
+                    <p className="font-lato text-black text-lg">
+                      {item.product?.name?.en ?? "Товар"}
                     </p>
-                    <div className="flex gap-2">
-                      <p className="font-light text-lg">{item.product.name?.ua}</p>
+                    <div className="flex flex-col gap-1 md:flex-row md:gap-2">
                       <p className="font-light text-lg">
-                        {item.selectedVolume}
+                        {item.product?.name?.ua}
+                      </p>
+                      <p className="font-light text-sm md:text-lg">
+                        {item.selectedVolume} мл
                       </p>
                     </div>
                   </div>
@@ -70,8 +99,8 @@ export default function OrderItem({ order, onDetailsClick }: IOrderItemProps) {
                     {item.quantity} шт
                   </p>
                 </li>
-              )
-            )}
+              );
+            })}
             {/* <li className="flex gap-4 items-center md:gap-6">
               <p className="font-lato font-black text-lg">01</p>
               <div className="flex flex-col gap-1 md:flex-row md:gap-9">
@@ -91,7 +120,11 @@ export default function OrderItem({ order, onDetailsClick }: IOrderItemProps) {
           </ul>
         </div>
         <div className="flex flex-col pt-8 gap-6 md:flex-row md:gap-5 md:pt-10 lg:pt-15 lg:gap-6 relative">
-          <button type="button" onClick={() => {}} className={styles.btnOrder}>
+          <button
+            type="button"
+            onClick={handleRepeat}
+            className={styles.btnOrder}
+          >
             Повторити замовлення
           </button>
           <button
@@ -104,6 +137,28 @@ export default function OrderItem({ order, onDetailsClick }: IOrderItemProps) {
           <div className="w-screen h-px bg-gray-10 absolute left-1/2 -translate-x-1/2 -bottom-10 lg:-bottom-16"></div>
         </div>
       </div>
+      {isModalOpen && (
+        <BaseModal
+          isOpen
+          onClose={() => {
+            setIsModalOpen(false);
+            router.push("/basket");
+          }}
+        >
+          <div className="relative w-[150px] h-[150px] object-contain mb-4 mx-auto">
+            <Image
+              src="/gif/cart.gif"
+              alt="Товар додано до кошика"
+              fill
+              className="object-contain"
+              unoptimized
+            />
+          </div>
+          <p className="font-roboto font-light text-xl italic uppercase text-center text-[#808080] mb-4">
+            Товар додано до кошика.
+          </p>
+        </BaseModal>
+      )}
     </>
   );
 }

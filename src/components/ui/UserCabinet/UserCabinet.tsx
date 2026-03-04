@@ -10,7 +10,6 @@ export default function UserCabinet() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const user = useAppSelector(selectUser);
-  // console.log('user: ', user);
 
   const handleLogout = async () => {
     try {

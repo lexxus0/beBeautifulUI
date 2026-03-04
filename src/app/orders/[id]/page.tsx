@@ -1,24 +1,26 @@
 "use client";
 
 import DetailsOrder from "@/components/ui/MyOrders/DetailsOrder/DetailsOrder";
-import ordersData from "@/components/ui/MyOrders/orders.json";
-import { IOrder } from "@/types/orders";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchOrderById } from "@/store/orders/operations";
+import { selectCurrentOrder } from "@/store/orders/selectors";
 import { useParams } from "next/navigation";
-  
-  export default function OrderDetailPage() {
-    const { id } = useParams<{ id: string }>(); 
+import { useEffect } from "react";
 
-    const orders = ordersData as unknown as IOrder[];
+export default function OrderDetailPage() {
+  const { id } = useParams<{ id: string }>();
+  const dispatch = useAppDispatch();
 
-    const order = orders.find((o) => o._id === id);
+  const current = useAppSelector(selectCurrentOrder);
+  const order = current?._id === id ? current : null;
 
-    if (!order) {
-      return (
-        <div className="container py-10">
-          Замовлення не знайдено
-        </div>
-      );
-    }
-  
-    return <DetailsOrder order={order} />;
+  useEffect(() => {
+    dispatch(fetchOrderById(id));
+  }, [dispatch, id]);
+
+  if (!order) {
+    return <div className="container py-10">Замовлення не знайдено</div>;
   }
+
+  return <DetailsOrder order={order} />;
+}

@@ -1,10 +1,9 @@
-import React from "react";
 import OrderItem from "../OrderItem/OrderItem";
-import { IOrder } from "@/types/orders";
+import { IOrderResponse } from "@/types/orders";
 import styles from "./OrdersList.module.scss";
 
 interface IOrdersListProps {
-  orders: IOrder[];
+  orders: IOrderResponse[];
   onOrderDetails: (id: string) => void;
 }
 

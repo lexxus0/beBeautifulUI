@@ -1,7 +1,5 @@
+import { DeliveryType, PaymentMethod } from "@/types/orders";
 import * as yup from "yup";
-
-export type DeliveryType = "warehouse" | "address";
-export type PaymentChoice = "card" | "invoice" | "cod";
 
 export const schemaDelivery = yup.object({
   city: yup
@@ -12,14 +10,14 @@ export const schemaDelivery = yup.object({
 
   deliveryType: yup
     .mixed<DeliveryType>()
-    .oneOf(["warehouse", "address"])
+    .oneOf(["branch", "address"])
     .required(),
 
-  warehouse: yup
+  branchNumber: yup
     .string()
     .trim()
     .when("deliveryType", {
-      is: "warehouse",
+      is: "branch",
       then: (s) => s.required("Вкажіть відділення"),
       otherwise: (s) => s.strip(),
     }),
@@ -51,13 +49,13 @@ export const schemaDelivery = yup.object({
       otherwise: (s) => s.strip(),
     }),
 
-  payment: yup
-    .mixed<PaymentChoice>()
-    .oneOf(["card", "invoice", "cod"], "Оберіть спосіб оплати")
+  paymentMethod: yup
+    .mixed<PaymentMethod>()
+    .oneOf(["liqpay", "requisites", "cod"], "Оберіть спосіб оплати")
     .required("Оберіть спосіб оплати"),
 
   comment: yup.string().trim().max(500, "До 500 символів").optional(),
-  certificate: yup.string().trim().optional(),
+  certificateCode: yup.string().trim().optional(),
   noCall: yup.boolean().default(false),
   saveCard: yup.boolean().default(false),
 });
