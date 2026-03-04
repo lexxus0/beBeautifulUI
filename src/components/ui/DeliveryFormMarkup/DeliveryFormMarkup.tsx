@@ -33,6 +33,7 @@ import { clearCartState } from "@/store/cart/slice";
 import { clearServerCart } from "@/store/cart/operations";
 import { selectIsLoggedIn } from "@/store/auth/selectors";
 import { clearGuestCart } from "@/store/cart/utils";
+import toast from "react-hot-toast";
 
 type City = {
   Ref: string;
@@ -244,7 +245,7 @@ export default function DeliveryFormMarkup() {
           window.location.href = created.paymentLink;
           return;
         }
-        console.error("❌ liqpay payment link not found");
+        toast.error("Не вдалося отримати посилання для оплати");
       }
 
       const certCode = draft.certificateCode;
@@ -256,7 +257,7 @@ export default function DeliveryFormMarkup() {
             spendCertificate({ number: certCode, amount: certDiscount })
           ).unwrap();
         } catch (err: unknown) {
-          console.log("❌ CERT SPEND ERROR:", err);
+          toast.error("Не вдалося списати сертифікат");
         }
       }
 
@@ -291,7 +292,7 @@ export default function DeliveryFormMarkup() {
 
       setModalIsOpen(true);
     } catch (err) {
-      console.error("❌ ORDER CREATE ERROR:", err);
+      toast.error("Не вдалося створити замовлення. Спробуйте ще раз.");
     }
   };
 

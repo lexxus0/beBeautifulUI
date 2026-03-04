@@ -16,8 +16,6 @@ type MobileMenuProps = {
 
 export default function MobileMenu({ onClose }: MobileMenuProps) {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  // const user = useAppSelector(selectUser);
-  // console.log("user: ", user);
 
   return (
     <div className={styles.modal}>

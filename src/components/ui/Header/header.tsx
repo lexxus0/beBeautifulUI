@@ -18,9 +18,6 @@ import BasketHeader from "./BasketHeader/BasketHeader";
 
 export default function Header() {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  // const user = useAppSelector(selectUser);
-  // console.log("user: ", user);
-  // console.log("isLoggedIn", isLoggedIn);
 
   const [menu, setMenu] = useState(false);
 

@@ -46,7 +46,6 @@ const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
     ...data,
     agree: data.agree ? "true" : "false",
   };
-    console.log("Данні для реєстрації:", fixedData);
     const resultAction = await dispatch(registerUser(fixedData));
 
     if (registerUser.fulfilled.match(resultAction)) {

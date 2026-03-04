@@ -32,7 +32,6 @@ const cartSlice = createSlice({
     // завантажити гостьовий кошик з localStorage при старті / коли не залогінені
     initGuestCart(state) {
       state.items = loadGuestCart();
-      console.log("🛒 INIT GUEST CART:", state.items);
       state.isGuest = true;
     },
     // додати товар у гостьовий кошик
