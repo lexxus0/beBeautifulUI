@@ -1,11 +1,8 @@
-import React from "react";
 import Image from "next/image";
-import ProtectedPage from "@/components/elements/ProtectedPage";
 import Icon from "@/components/shared/Icon";
 
 export default function PayAndDeliveryPage() {
   return (
-    <ProtectedPage>
       <div className="container pt-5 pb-10 md:pt-10 md:pb-17 lg:pb-20">
         <p className="px-5 font-lato text-xl text-black text-center mb-6 md:text-2xl md:px-15 lg:text-[28px]">
           Ми прагнемо зробити процес покупки максимально зручним для Вас.
@@ -238,6 +235,5 @@ export default function PayAndDeliveryPage() {
           </li> */}
         </ul>
       </div>
-    </ProtectedPage>
   );
 }
