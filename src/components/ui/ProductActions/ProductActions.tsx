@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import Image from "next/image";
 import Icon from "@/components/shared/Icon";
 import BaseSelect from "@/components/elements/BaseSelect";
+import { toggleFavorite } from "@/store/favorites/slice";
 
 export interface ProductActionsProps {
   product: IProduct;
@@ -44,6 +45,11 @@ const ProductActions = ({ product }: ProductActionsProps) => {
       setSelectedVolume(availableVolumes[0]);
     }
   }, [isSelectedVolumeOut, availableVolumes, isOutOfStock]);
+
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    dispatch(toggleFavorite(product));
+  };
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -89,6 +95,8 @@ const ProductActions = ({ product }: ProductActionsProps) => {
     label: String(i + 1),
   }));
 
+  const summ = quantity > 1 ? selectedVolume.price * quantity : selectedVolume.price;
+
   return (
     <div className={css.actionsWrapper}>
       <div className={css.actionsContainer}>
@@ -123,7 +131,7 @@ const ProductActions = ({ product }: ProductActionsProps) => {
               <div className={css.priceQuantityItem}>
                 <p className={css.label}>Ціна</p>
                 <div className={css.price}>
-                  <p>{selectedVolume.price} грн</p>
+                  <p>{summ} грн</p>
                 </div>
               </div>
 
@@ -158,6 +166,7 @@ const ProductActions = ({ product }: ProductActionsProps) => {
         <button
           className={css.addToFavoriteButton}
           type="button"
+          onClick={handleFavoriteClick}
           aria-label="Додати до обраного"
         >
           <p>Додати до обраного</p>

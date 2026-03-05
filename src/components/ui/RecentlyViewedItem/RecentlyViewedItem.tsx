@@ -3,15 +3,19 @@ import { IProduct } from "@/types/types";
 import ProductImage from "@/components/elements/ProductImage";
 import ProductRating from "@/components/ui/ProductRating/ProductRating";
 import { useReviewData } from "@/helpers/hooks/useReviewData";
+import Link from "next/link";
 
 export const RecentlyViewedItem = ({ product }: { product: IProduct }) => {
   const { avgRating, count } = useReviewData(product._id);
 
   return (
-    <div className="flex flex-col items-center">
+    <Link
+      href={`/products/${product._id}`}
+      className="flex flex-col items-center"
+    >
       <ProductImage
         product={product}
-        className="relative w-[130px] h-[130px] sm:w-[158px] sm:h-[158px] md:w-[208px] md:h-[272px] lg:w-[268px] lg:h-[306px] mb-2 object-cover"
+        className="relative w-[130px] h-[130px] sm:w-[158px] sm:h-[158px] md:w-[208px] md:h-[272px] lg:w-[268px] lg:h-[306px] mb-2"
       />
 
       <div className="flex flex-col items-center">
@@ -30,6 +34,6 @@ export const RecentlyViewedItem = ({ product }: { product: IProduct }) => {
           {product.priceByVolume[0].price} грн
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
