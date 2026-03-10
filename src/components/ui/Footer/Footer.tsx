@@ -9,11 +9,9 @@ const navData = [
   { href: "/#history", label: "Про бренд" },
   { href: "/products", label: "Каталог" },
   { href: "/blog", label: "Блог" },
-  // {href: "/book", label: "Книга" },
   { href: "/pay-and-delivery", label: "Оплата і доставка" },
   { href: "/#certificates", label: "Подарункові сертифікати" },
   { href: "/#faq", label: "FAQ" },
-  { href: "/contacts", label: "Контакти" },
 ];
 
 const firstColumn = navData.slice(0, 3);

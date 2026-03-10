@@ -256,7 +256,7 @@ export default function DeliveryFormMarkup() {
           await dispatch(
             spendCertificate({ number: certCode, amount: certDiscount })
           ).unwrap();
-        } catch (err: unknown) {
+        } catch {
           toast.error("Не вдалося списати сертифікат");
         }
       }
@@ -291,7 +291,7 @@ export default function DeliveryFormMarkup() {
       setShowCert(false);
 
       setModalIsOpen(true);
-    } catch (err) {
+    } catch {
       toast.error("Не вдалося створити замовлення. Спробуйте ще раз.");
     }
   };

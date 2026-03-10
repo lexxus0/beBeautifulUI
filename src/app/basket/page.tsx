@@ -16,7 +16,6 @@ import RecommendedProducts from "@/components/ui/RecommendedProducts/Recommended
 import BackButton from "@/components/ui/BackButton/BackButton";
 import Loader from "@/components/ui/Loader/Loader";
 import { BaseModal } from "@/components/shared/Modal";
-import Image from "next/image";
 import styles from "./Basket.module.scss";
 
 const BasketPage = () => {
@@ -149,14 +148,14 @@ const BasketPage = () => {
                   Оформити замовлення
                 </button>
               </div>
-              <RecommendedProducts />
+              <RecommendedProducts classNameTitle="font-semibold text-[24px] md:font-normal md:text-[36px] md:tracking-[0.01em]" />
             </>
           )}
         </div>
       </div>
       {isModalOpen && (
         <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <Image
+          <img
             src="/images/basketDel.webp"
             alt="Товар видалено з кошика"
             className="w-[150px] h-[150px] object-contain mb-4 mx-auto"

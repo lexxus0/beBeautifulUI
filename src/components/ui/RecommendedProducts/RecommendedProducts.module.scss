@@ -1,32 +1,30 @@
-.recommended {
-  .title {
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 120%;
-    margin-bottom: 48px;
-
+.navButton {
+    width: 112px;
+    height: 40px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    fill: #3e4f34;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  
     @media (min-width: 744px) {
-      font-weight: 400;
-      font-size: 42px;
-      line-height: 140%;
-      letter-spacing: 0.01em;
-      margin-bottom: 56px;
+      width: 88px;
+    }
+  
+    &:hover {
+      border-bottom: 1px solid #3e4f34;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    }
+  
+    &.swiper-button-disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
     }
   }
-
-  .grid {
-    display: grid;
-    gap: 72px;
-    grid-template-columns: 1fr;
-
-    @media (min-width: 744px) {
-      gap: 36px;
-      grid-template-columns: repeat(2, 1fr);
-      justify-content: center;
-    }
-
-    @media (min-width: 1440px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-}
+  

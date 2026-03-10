@@ -9,6 +9,7 @@ import VisitedProduct from "@/app/products/[productId]/VisitedProduct";
 import ProductReviews from "@/components/ui/ProductReviews/ProductReviews";
 import NavigationPanel from "@/components/ui/Breadcrumbs/Breadcrumbs";
 import { IProduct } from "@/types/types";
+import RecommendedProducts from "../RecommendedProducts/RecommendedProducts";
 import css from "./page.module.scss";
 
 interface ProductProps {
@@ -17,7 +18,6 @@ interface ProductProps {
 }
 
 const Product = ({ product, productId }: ProductProps) => {
-  console.log("product: ", product);
   return (
     <>
       <NavigationPanel category={product.category} name={product.name?.ua} />
@@ -41,7 +41,15 @@ const Product = ({ product, productId }: ProductProps) => {
         <div className={css.fullWidthWrapper}>
           <BrandPhilosophy dynamicText="Цей шампунь — як свіже «доброго ранку» собі. І як щоденне нагадування: ти — варта найкращого." />
         </div>
-
+        <RecommendedProducts
+          category={product.category}
+          title="Товари цієї ж серії"
+          classNameTitle="text-black text-[24px] font-lato font-semibold text-center leading-[28.8px]
+          md:text-[28px] md:font-normal md:text-left
+          lg:text-[32px] lg:font-semibold lg:mb-6"
+          classNameWrap="relative pt-10 pb-10 lg:pt-15 lf:pb-15"
+          borderShow={true}
+        />
         <ProductReviews productId={productId} productName={product.name?.ua} />
       </section>
     </>

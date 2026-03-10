@@ -1,12 +1,13 @@
 .productImage {
   width: 335px;
   height: 320px;
-  object-fit: cover;
+  object-fit: contain;
   cursor: pointer;
 
   @media screen and (min-width: 744px) {
     width: 322px;
     height: 461px;
+    object-fit: cover;
   }
 
   @media screen and (min-width: 1440px) {
