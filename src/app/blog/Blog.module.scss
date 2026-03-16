@@ -1,0 +1,447 @@
+.themeBlock {
+  margin-top: 46px;
+  border-bottom: 1px solid #e0e0e0;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding-left: calc(50vw - 50%);
+  padding-right: calc(50vw - 50%);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+@media (min-width: 744px) {
+  .themeBlock:nth-child(even) {
+    .blogCard .cardContent {
+      flex-direction: row-reverse;
+
+      .textContent {
+        .date,
+        .readMoreBtn {
+          margin-left: 0;
+          margin-right: auto;
+        }
+      }
+    }
+  }
+}
+
+.blogCard {
+  margin-bottom: 60px;
+
+  .cardContent {
+    display: flex;
+    flex-direction: column;
+
+    .imageWrapperDesktop {
+      display: none;
+    }
+
+    .textContent {
+      display: flex;
+      flex-direction: column;
+
+      .date {
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 132%;
+        color: #2d2d2d;
+        margin-bottom: 26px;
+        margin-left: auto;
+      }
+
+      .articleTitle {
+        font-weight: 600;
+        font-size: 32px;
+        line-height: 150%;
+        margin-bottom: 20px;
+      }
+
+      .text1 {
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 132%;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 16px;
+        margin-bottom: 20px;
+      }
+
+      .text2 {
+        font-weight: 300;
+        font-size: 18px;
+        line-height: 134%;
+        text-align: justify;
+      }
+
+      .imageWrapperMobile {
+        display: block;
+        margin-bottom: 20px;
+        .img {
+          width: 100%;
+          height: auto;
+        }
+      }
+
+      .readMoreBtn {
+        font-family: var(--font-open-sans);
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 120%;
+        text-align: right;
+        border-bottom: 0.8px solid rgba(45, 45, 45, 0.8);
+        padding: 6px 0;
+        width: fit-content;
+        transition: all 0.3s ease;
+        margin-left: auto;
+        margin-top: 30px;
+
+        &:hover {
+          border-bottom: 1.8px solid #403e3e;
+          box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+  }
+
+  @media (min-width: 744px) {
+    .cardContent {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      align-items: flex-start;
+
+      .imageWrapperDesktop {
+        display: block;
+        flex: 1;
+        width: 50%;
+        .img {
+          width: 100%;
+          height: auto;
+          object-fit: cover;
+        }
+      }
+
+      .textContent {
+        flex: 1;
+        width: 50%;
+
+        .date {
+          font-size: 18px;
+        }
+
+        .imageWrapperMobile {
+          display: none;
+        }
+
+        .date {
+          margin-bottom: 12px;
+        }
+
+        .articleTitle {
+          font-size: 24px;
+          margin-bottom: 16px;
+        }
+
+        .text {
+          font-size: 16px;
+          margin-bottom: 12px;
+        }
+
+        .readMoreBtn {
+          margin-top: auto;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  @media (min-width: 1440px) {
+    margin-bottom: 100px;
+
+    .cardContent {
+      gap: 24px;
+
+      .textContent {
+        .articleTitle {
+          font-size: 32px;
+          margin-bottom: 24px;
+        }
+        .text {
+          font-size: 18px;
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+}
+
+/* ----- Стилі для повної сторінки статті ------*/
+
+.fullArticleWrapper {
+  max-width: 1296px;
+  margin: 0 auto;
+  padding: 30px 0;
+}
+
+.articleRichText {
+  img {
+    border-radius: 0;
+    object-fit: cover;
+  }
+
+  // БЛОК 1
+  .articleBlock {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    .fullDate {
+      color: #8d8d8d;
+      font-weight: 300;
+      font-size: 16px;
+      margin-bottom: 30px;
+      display: block;
+    }
+    .fullTitle {
+      font-weight: 400;
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .blockText {
+      .mainParagraph {
+        font-size: 18px;
+        margin-bottom: 20px;
+        text-align: end;
+      }
+      .paragraph {
+        margin-bottom: 16px;
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 150%;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .mobileOnlyImage {
+      display: block;
+      margin-bottom: 20px;
+      img {
+        width: 100%;
+        height: 180px;
+      }
+    }
+    .desktopOnlyImage {
+      display: none;
+    }
+
+    @media (min-width: 744px) {
+      flex-direction: row;
+      margin-bottom: 24px;
+      gap: 24px;
+      .blockText {
+        width: 322px;
+        flex: none;
+        .fullDate {
+          font-size: 18px;
+        }
+        .fullTitle {
+          font-size: 32px;
+        }
+        .mainParagraph{
+          font-size: 20px;
+        }
+        .paragraph{
+          font-size: 16px;
+        }
+      }
+      .desktopOnlyImage {
+        display: block;
+        width: 322px;
+        img {
+          height: 532px;
+        }
+      }
+      .mobileOnlyImage {
+        display: none;
+      }
+    }
+    @media (min-width: 1440px) {
+      gap: 24px;
+      .blockText {
+        width: 636px;
+        .fullTitle {
+          font-size: 42px;
+        }
+        .mainParagraph{
+          font-size: 28px;
+        }
+        .paragraph{
+          font-size: 22px;
+        }
+      }
+      .desktopOnlyImage {
+        width: 636px;
+        img {
+          height: 474px;
+        }
+      }
+    }
+  }
+
+  // СТИЛІ ДЛЯ БЛОКІВ 2, 3, 4, 5...
+  .articleBlockSide {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+
+    &:last-child { margin-bottom: 0; }
+
+    .sideImage {
+      width: 158px;
+      height: 224px;
+      order: 2;
+      margin-bottom: 20px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .blockText {
+      width: 100%;
+      display: contents;
+
+      h2 {
+        width: 158px;
+        font-family: "Lato", sans-serif;
+        font-size: 20px;
+        font-weight: 400;
+        margin: 0;
+        line-height: 1.2;
+        order: 1;
+        display: flex;
+        align-items: center;
+      }
+
+      .paragraph,
+      p,
+      ul {
+        width: 100%;
+        order: 3;
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 150%;
+        margin-bottom: 16px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .paragraphList {
+        list-style-type: disc;
+        padding-left: 20px;
+        margin-top: -16px;
+
+        .paragraphListItem {
+          display: list-item;
+        }
+      }
+    }
+
+    // Чергування на мобільці
+    &:nth-child(even) {
+      .sideImage {
+        order: 2;
+      }
+      h2 {
+        order: 1;
+      }
+    }
+    &:nth-child(odd) {
+      .sideImage {
+        order: 1;
+      }
+      h2{
+        order: 2;
+      }
+    }
+
+    // --- ПЛАНШЕТ ---
+    @media (min-width: 744px) {
+      margin-bottom: 24px;
+      flex-wrap: nowrap;
+      gap: 24px;
+
+      .sideImage {
+        width: 322px;
+        height: 600px;
+        order: unset;
+        flex: none;
+        margin-bottom: 0;
+      }
+
+      .blockText {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 322px;
+        flex: none;
+
+        h2 {
+          width: 100%;
+          font-size: 26px;
+          margin-bottom: 20px;
+          order: unset;
+          line-height: 1.5;
+        }
+
+        .paragraph,
+        p,
+        ul {
+          width: 100%;
+          margin-top: 0;
+          font-size: 16px;
+          order: unset;
+        }
+      }
+
+      &:nth-child(even) {
+        flex-direction: row-reverse;
+      }
+      &:nth-child(odd) {
+        flex-direction: row;
+      }
+    }
+
+    // --- ДЕСКТОП ---
+    @media (min-width: 1440px) {
+      // gap: 24px;
+
+      .sideImage {
+        width: 636px;
+        height: 800px;
+      }
+
+      .blockText {
+        width: 636px;
+        h2 {
+          font-size: 32px;
+          margin-bottom: 24px;
+        }
+        .paragraph,
+        p,
+        ul {
+          font-size: 22px;
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+}
