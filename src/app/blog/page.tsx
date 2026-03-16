@@ -13,7 +13,6 @@ export default function BlogPage() {
       <div className="container">
         {themes.map((theme) => (
           <section key={theme} className={styles.themeBlock}>
-            {/* <h2 className={styles.themeName}>{theme}</h2> */}
             
             <div className={styles.articlesList}>
               {blogList

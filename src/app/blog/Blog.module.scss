@@ -251,10 +251,10 @@
         .fullTitle {
           font-size: 32px;
         }
-        .mainParagraph{
+        .mainParagraph {
           font-size: 20px;
         }
-        .paragraph{
+        .paragraph {
           font-size: 16px;
         }
       }
@@ -276,10 +276,10 @@
         .fullTitle {
           font-size: 42px;
         }
-        .mainParagraph{
+        .mainParagraph {
           font-size: 28px;
         }
-        .paragraph{
+        .paragraph {
           font-size: 22px;
         }
       }
@@ -300,7 +300,9 @@
     margin-bottom: 20px;
     align-items: center;
 
-    &:last-child { margin-bottom: 0; }
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     .sideImage {
       width: 158px;
@@ -355,8 +357,34 @@
       }
     }
 
-    // Чергування на мобільці
-    &:nth-child(even) {
+    // --- БЛОК ВИСНОВОК ---
+    &.conclusionBlock {
+      justify-content: center;
+      margin-bottom: 40px;
+
+      .blockText {
+        display: block;
+        width: 100% !important;
+        max-width: none;
+
+        h2 {
+          width: 100%;
+          justify-content: center;
+          margin-bottom: 20px;
+          text-align: center;
+        }
+
+        .paragraph,
+        p {
+          width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+    }
+
+    // Чергування на мобільці (тільки для звичайних блоків, не для висновку)
+    &:not(.conclusionBlock):nth-child(even) {
       .sideImage {
         order: 2;
       }
@@ -364,11 +392,11 @@
         order: 1;
       }
     }
-    &:nth-child(odd) {
+    &:not(.conclusionBlock):nth-child(odd) {
       .sideImage {
         order: 1;
       }
-      h2{
+      h2 {
         order: 2;
       }
     }
@@ -378,6 +406,12 @@
       margin-bottom: 24px;
       flex-wrap: nowrap;
       gap: 24px;
+
+      &.conclusionBlock {
+        .blockText h2 {
+          margin-bottom: 24px;
+        }
+      }
 
       .sideImage {
         width: 322px;
@@ -412,17 +446,30 @@
         }
       }
 
-      &:nth-child(even) {
+      &:not(.conclusionBlock):nth-child(even) {
         flex-direction: row-reverse;
       }
-      &:nth-child(odd) {
+      &:not(.conclusionBlock):nth-child(odd) {
         flex-direction: row;
       }
     }
 
     // --- ДЕСКТОП ---
     @media (min-width: 1440px) {
-      // gap: 24px;
+      &.conclusionBlock {
+        .blockText {
+          width: 100%;
+          h2 {
+            font-size: 32px;
+            margin-bottom: 24px;
+          }
+          .paragraph,
+          p {
+            max-width: 856px;
+            font-size: 22px;
+          }
+        }
+      }
 
       .sideImage {
         width: 636px;

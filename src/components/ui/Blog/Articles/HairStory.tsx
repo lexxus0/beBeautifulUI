@@ -2,9 +2,9 @@ import Image from "next/image";
 import styles from "@/app/blog/Blog.module.scss";
 import blogData from "@/data/blog-list.json";
 
-export const ShampooFoams = () => {
+export const HairStory = () => {
   const article = blogData.find(
-    (item) => item.slug === "why-does-shampoo-foam",
+    (item) => item.slug === "what-hair-can-tell-about-our-body",
   );
   if (!article) return null;
 
@@ -80,7 +80,7 @@ export const ShampooFoams = () => {
             src="/images/blog/shampoo/hair-in-foam-1.png"
             width={636}
             height={800}
-            alt="hair in foam"
+            alt="hair-in-foam"
           />
         </div>
       </section>
@@ -140,7 +140,7 @@ export const ShampooFoams = () => {
             src="/images/blog/shampoo/hair-in-foam-2.png"
             width={636}
             height={800}
-            alt="hair in foam"
+            alt="hair-in-foam"
           />
         </div>
       </section>
@@ -161,7 +161,7 @@ export const ShampooFoams = () => {
             src="/images/blog/shampoo/hands-in-foam.png"
             width={636}
             height={800}
-            alt="hands in foam"
+            alt="hands-in-foam"
           />
         </div>
       </section>
