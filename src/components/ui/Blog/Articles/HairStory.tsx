@@ -15,32 +15,32 @@ export const HairStory = () => {
         <div className={styles.blockText}>
           <span className={styles.fullDate}>{article.date}</span>
           <h1 className={styles.fullTitle}>{article.title}</h1>
-          <p className={styles.mainParagraph}>Хімія бульбашок у ванній</p>
+          <p className={styles.mainParagraph}>
+            Волосся як дзеркало нашого здоров’я: що можуть сказати пасма про ваш
+            стан
+          </p>
           <div className={styles.mobileOnlyImage}>
             <Image
-              src="/images/blog/shampoo/foam-1.png"
+              src="/images/blog/hair/hair.png"
               width={335}
               height={180}
-              alt="foam"
+              alt="hair"
               priority
             />
           </div>
           <p className={styles.paragraph}>
-            Ви коли-небудь задумувались, чому шампунь під час миття
-            перетворюється на густу піну?
-          </p>
-          <p className={styles.paragraph}>
-            Здається, що це така проста річ — намочити волосся, нанести засіб і
-            отримати м’які бульбашки. Але насправді за цим стоїть справжня хімія
-            поверхонь і молекул.
+            Волосся — це не лише естетика, а ще й відображення того, що
+            відбувається всередині організму. Його стан залежить від хімічних
+            процесів у клітинах, обміну речовин та зовнішніх факторів. Давайте
+            розглянемо, які саме наукові факти стоять за цим.
           </p>
         </div>
         <div className={styles.desktopOnlyImage}>
           <Image
-            src="/images/blog/shampoo/foam-1.png"
+            src="/images/blog/hair/hair.png"
             width={600}
             height={400}
-            alt="foam"
+            alt="hair"
             priority
           />
         </div>
@@ -49,38 +49,26 @@ export const HairStory = () => {
       {/* БЛОК 2 */}
       <section className={styles.articleBlockSide}>
         <div className={styles.blockText}>
-          <h2>Таємниця бульбашок: роль ПАР</h2>
+          <h2>Волосся як індикатор стану організму</h2>
           <p className={styles.paragraph}>
-            У будь-якому шампуні є так звані поверхнево-активні речовини (ПАР).
+            Волосина на 95% складається з кератину — міцного білка, зшитого
+            дисульфідними містками (зв’язки між атомами сірки в амінокислотах,
+            зокрема цистеїні). Саме вони визначають міцність і пружність
+            волосся.
           </p>
           <p className={styles.paragraph}>
-            Це молекули, які мають «подвійну природу»:
-          </p>
-          <ul className={styles.paragraphList}>
-            <li className={styles.paragraphListItem}>
-              одна частина «любить» воду (гідрофільна),
-            </li>
-            <li className={styles.paragraphListItem}>
-              інша — «любить» жир (гідрофобна).
-            </li>
-          </ul>
-          <p className={styles.paragraph}>
-            Коли ви миєте волосся, ці молекули працюють як маленькі «місточки»
-            між водою та частинками бруду чи себуму. Вони обгортають забруднення
-            і змивають їх.
-          </p>
-          <p className={styles.paragraph}>
-            А піна — це побічний, але приємний ефект. Коли ми збовтуємо шампунь
-            у воді, ПАР утворюють плівку навколо бульбашок повітря. І саме тому
-            з’являється густа та стійка піна.
+            Якщо організм відчуває дефіцит поживних речовин (заліза, цинку,
+            вітамінів групи B), це відображається на хімічних процесах у
+            клітинах фолікула. Ріст волосся сповільнюється, структура стає
+            слабшою, а зовні воно виглядає тьмяним.
           </p>
         </div>
         <div className={styles.sideImage}>
           <Image
-            src="/images/blog/shampoo/hair-in-foam-1.png"
+            src="/images/blog/hair/hair-2.png"
             width={636}
             height={800}
-            alt="hair-in-foam"
+            alt="hair"
           />
         </div>
       </section>
@@ -88,31 +76,26 @@ export const HairStory = () => {
       {/* БЛОК 3 */}
       <section className={styles.articleBlockSide}>
         <div className={styles.blockText}>
-          <h2>Чому піна така важлива для нас?</h2>
+          <h2>Як стрес впливає на випадіння</h2>
           <p className={styles.paragraph}>
-            Піна сама по собі не «миє». Але вона створює відчуття, що процес
-            відбувається якісно:
+            Хронічний стрес підвищує рівень кортизолу. Цей гормон впливає на
+            мікроциркуляцію шкіри голови та порушує живлення клітин волосяних
+            фолікулів. Науково доведено, що стрес може переводити волосся у фазу
+            спокою (телоген), після чого воно передчасно випадає.
           </p>
-          <ul className={styles.paragraphList}>
-            <li className={styles.paragraphListItem}>
-              рівномірно розподіляє шампунь по волоссю,
-            </li>
-            <li className={styles.paragraphListItem}>
-              допомагає масажувати шкіру голови,
-            </li>
-            <li>дарує приємний ритуал миття.</li>
-          </ul>
+
           <p className={styles.paragraph}>
-            Фактично піна — це як візуальний і тактильний індикатор, що шампунь
-            почав працювати.
+            Крім того, при стресі в клітинах зростає кількість вільних радикалів
+            (окислювачів), які пошкоджують білкові структури та ДНК клітин
+            фолікула. Це прискорює старіння і випадіння волосся.
           </p>
         </div>
         <div className={styles.sideImage}>
           <Image
-            src="/images/blog/shampoo/foam-2.png"
+            src="/images/blog/hair/hair-3.png"
             width={636}
             height={800}
-            alt="foam"
+            alt="hair"
           />
         </div>
       </section>
@@ -120,27 +103,35 @@ export const HairStory = () => {
       {/* БЛОК 4 */}
       <section className={styles.articleBlockSide}>
         <div className={styles.blockText}>
-          <h2>А як щодо складу?</h2>
+          <h2>Роль харчування</h2>
           <p className={styles.paragraph}>
-            Сьогодні у формулах шампунів використовують різні типи ПАР. Є більш
-            «сильні», які миють дуже інтенсивно, а є м’якші — з рослинних чи
-            біотехнологічних джерел.
+            Ріст волосся напряму залежить від синтезу білків і ферментів.
           </p>
+          <ul className={styles.paragraphList}>
+            <li className={styles.paragraphListItem}>
+              Білки (амінокислоти, зокрема метіонін і цистеїн) — будівельний
+              матеріал кератину.
+            </li>
+            <li className={styles.paragraphListItem}>
+              Мікроелементи (залізо, цинк, магній, мідь) — активатори ферментів,
+              які запускають реакції синтезу.
+            </li>
+            <li>
+              Вітаміни групи B (особливо B7 — біотин, B12, B9) — беруть участь у
+              метаболізмі амінокислот і нуклеїнових кислот.
+            </li>
+          </ul>
           <p className={styles.paragraph}>
-            Саме такі сучасні інгредієнти часто поєднують у формулах, щоб
-            досягти балансу між ефективністю та ніжністю.
-          </p>
-          <p className={styles.paragraph}>
-            Тому шампунь може одночасно гарно пінитися й бути м’яким до шкіри та
-            волосся.
+            Якщо цих елементів бракує, волосся росте повільніше і стає слабшим.
+            Це підтверджено численними клінічними дослідженнями.
           </p>
         </div>
         <div className={styles.sideImage}>
           <Image
-            src="/images/blog/shampoo/hair-in-foam-2.png"
+            src="/images/blog/hair/hair-4.png"
             width={636}
             height={800}
-            alt="hair-in-foam"
+            alt="hair"
           />
         </div>
       </section>
@@ -148,21 +139,131 @@ export const HairStory = () => {
       {/* БЛОК 5 */}
       <section className={styles.articleBlockSide}>
         <div className={styles.blockText}>
-          <h2>Маленька наукова поезія</h2>
+          <h2>Сезонні зміни у волоссі</h2>
           <p className={styles.paragraph}>
-            Кожна бульбашка у вашій долоні — це не просто повітря. Це цілий
-            мікросвіт, де молекули працюють як архітектори: створюють тоненькі
-            стінки, утримують форму й дозволяють нам насолоджуватися ніжною
-            піною.
+            Сезонність випадіння — науково підтверджений факт.
+          </p>
+          <ul className={styles.paragraphList}>
+            <li className={styles.paragraphListItem}>
+              Восени кількість волосся у фазі телогену збільшується через
+              зниження рівня вітаміну D та зміни гормонального фону.
+            </li>
+            <li className={styles.paragraphListItem}>
+              Взимку волосся часто стає сухішим через низьку вологість і
+              перепади температур, які впливають на ліпідний шар волосини.
+            </li>
+            <li>
+              Навесні організм може відчувати дефіцит мікроелементів після зими,
+              що теж відображається на структурі волосся.
+            </li>
+          </ul>
+        </div>
+        <div className={styles.sideImage}>
+          <Image
+            src="/images/blog/hair/hair-5.png"
+            width={636}
+            height={800}
+            alt="hair"
+          />
+        </div>
+      </section>
+
+      {/* БЛОК 6 */}
+      <section className={styles.articleBlockSide}>
+        <div className={styles.blockText}>
+          <h2>Жирність волосся і що насправді на неї впливає</h2>
+          <p className={styles.paragraph}>
+            Жирність волосся визначається активністю сальних залоз у шкірі
+            голови. Вони виділяють себум — суміш жирних кислот, тригліцеридів і
+            воскових ефірів, яка створює природний захист волосся.
+          </p>
+          <p className={styles.paragraph}>На роботу сальних залоз впливають:</p>
+          <ul className={styles.paragraphList}>
+            <li className={styles.paragraphListItem}>
+              гормони (зокрема андрогени),
+            </li>
+            <li className={styles.paragraphListItem}>
+              рівень стресу (кортизол може стимулювати посилене виділення
+              себуму),
+            </li>
+            <li>
+              харчування (надлишок простих вуглеводів і жирної їжі може
+              підсилювати жирність),
+            </li>
+            <li>
+              сон і відновлення (нестача сну порушує гормональний баланс),
+            </li>
+            <li>
+              механічні фактори (часте доторкання до волосся чи агресивне
+              розчісування розподіляють себум по довжині).
+            </li>
+          </ul>
+          <p className={styles.paragraph}>
+            {" "}
+            А ось шампунь не «робить волосся жирним». Він лише змиває надлишки
+            себуму. Якщо волосся швидко жирніє, це сигнал від організму, а не
+            «помилка шампуню»
           </p>
         </div>
         <div className={styles.sideImage}>
           <Image
-            src="/images/blog/shampoo/hands-in-foam.png"
+            src="/images/blog/hair/hair-6.png"
             width={636}
             height={800}
-            alt="hands-in-foam"
+            alt="hair"
           />
+        </div>
+      </section>
+
+      {/* БЛОК 7 */}
+      <section className={styles.articleBlockSide}>
+        <div className={styles.blockText}>
+          <h2>Маленькі звички, які допомагають</h2>
+          <ul className={styles.paragraphList}>
+            <li className={styles.paragraphListItem}>
+              Регулярне миття — видаляє себум, пил і продукти окислення.
+            </li>
+            <li className={styles.paragraphListItem}>
+              Захист від сонця та холоду — ультрафіолет і мороз руйнують білкові
+              та ліпідні структури.
+            </li>
+            <li>
+              Збалансоване харчування — забезпечує організм амінокислотами,
+              мікроелементами й антиоксидантами.
+            </li>
+            <li>
+              Повноцінний сон — нормалізує гормональний фон і роботу сальних
+              залоз
+            </li>
+            <li>
+              М’яке розчісування — запобігає механічним пошкодженням і
+              надмірному розподілу себуму по довжині.
+            </li>
+          </ul>
+        </div>
+        <div className={styles.sideImage}>
+          <Image
+            src="/images/blog/hair/hair-7.png"
+            width={636}
+            height={800}
+            alt="hair"
+          />
+        </div>
+      </section>
+
+      {/* ВИСНОВОК */}
+      <section
+        className={`${styles.articleBlockSide} ${styles.conclusionBlock}`}
+      >
+        <div className={styles.blockText}>
+          <h2>Висновок:</h2>
+          <p className={styles.paragraph}>
+            Волосся реагує на хімію нашого організму: білки, вітаміни, гормони,
+            ферменти та баланс жирних кислот. Його стан — це точний «відбиток»
+            внутрішніх процесів. І коли ми бачимо випадіння, сухість чи
+            жирність, варто шукати причину не у шампуні, а в харчуванні, режимі,
+            рівні стресу й догляді.
+          </p>
         </div>
       </section>
     </div>

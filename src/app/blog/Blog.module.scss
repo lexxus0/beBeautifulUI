@@ -416,7 +416,7 @@
       .sideImage {
         width: 322px;
         height: 600px;
-        order: unset;
+        order: unset !important;
         flex: none;
         margin-bottom: 0;
       }
@@ -428,12 +428,17 @@
         width: 322px;
         flex: none;
 
+        h2, .paragraph, p, ul {
+          order: 0 !important; 
+        }
+
         h2 {
           width: 100%;
           font-size: 26px;
           margin-bottom: 20px;
-          order: unset;
+          // order: unset;
           line-height: 1.5;
+          display: block;
         }
 
         .paragraph,
